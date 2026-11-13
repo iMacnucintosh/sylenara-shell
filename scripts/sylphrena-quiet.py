@@ -211,6 +211,8 @@ def _sync_qt6ct(colours: dict[str, str], mode: str, light_apps: bool = False) ->
 # --- Greeter (Quickshell): palette + wallpaper for /etc/greetd/sylphrena -------
 
 _GREETER_DIR = _env_dir("GREETER_DIR", Path("/etc/greetd/sylphrena"))
+# The only part of it the session may write (scripts/system/10-greeter.sh): the rest is root's
+_GREETER_DATA = _GREETER_DIR / "user"
 _STATE = _app_dir(_XDG_STATE)
 _SCHEME_JSON = _STATE / "scheme.json"
 _WALLPAPER_LINK = _STATE / "wallpaper/current"
@@ -245,37 +247,6 @@ def _greeter_copy(src: Path, dst: Path) -> None:
         pass
 
 
-def _sync_greeter_ui() -> None:
-    """Mirror the Quickshell greeter config into /etc/greetd/sylphrena/qs.
-
-    The greeter session runs as user `greeter` and should not depend on
-    reading files under the session user's home.
-    """
-    import shutil
-
-    src = Path(__file__).resolve().parent.parent / "greeter"
-    dst = _GREETER_DIR / "qs"
-    if not src.is_dir() or not _GREETER_DIR.is_dir():
-        return
-    try:
-        # Full replace so renames (e.g. Resources → ResourcePanel) do not leave
-        # stale QML that clashes with singletons.
-        if dst.exists():
-            shutil.rmtree(dst)
-        dst.mkdir(parents=True, exist_ok=True)
-        for name in ("shell.qml", "components", "modules", "services"):
-            s = src / name
-            d = dst / name
-            if not s.exists():
-                continue
-            if s.is_dir():
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
-    except OSError:
-        pass
-
-
 def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     """Push greeter assets: scheme.json, greeter.json, wallpaper, face, font.
 
@@ -285,8 +256,8 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     """
     import json
 
-    if not _GREETER_DIR.is_dir():
-        return  # greeter not installed / dir not chown'ed yet
+    if not _GREETER_DATA.is_dir():
+        return  # login screen not installed (or installed before user/ existed: install-system.sh moves it)
 
     # Palette: prefer the live colours dict, else the persisted scheme.json.
     scheme: dict = {}
@@ -305,7 +276,7 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     if scheme.get("colours"):
         try:
             _atomic_write(
-                _GREETER_DIR / "scheme.json",
+                _GREETER_DATA / "scheme.json",
                 json.dumps(scheme, indent=2) + "\n",
             )
         except OSError:
@@ -319,20 +290,17 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
         "location": _weather_location(),
     }
     try:
-        _atomic_write(_GREETER_DIR / "greeter.json", json.dumps(greeter_cfg, indent=2) + "\n")
+        _atomic_write(_GREETER_DATA / "greeter.json", json.dumps(greeter_cfg, indent=2) + "\n")
     except OSError:
         pass
 
-    # Wallpaper: raw copy for the Quickshell greeter; also keep wallpaper.jpg in
-    # sync for the legacy regreet.toml background path.
-    _greeter_copy(_WALLPAPER_LINK, _GREETER_DIR / "wallpaper")
-    _greeter_copy(_WALLPAPER_LINK, _GREETER_DIR / "wallpaper.jpg")
+    # Wallpaper: a raw copy (the greeter blurs it). The login screen's QML is not copied from here: it is root's
+    # and comes with install-system.sh (also run by the installer's update when the shell changes)
+    _greeter_copy(_WALLPAPER_LINK, _GREETER_DATA / "wallpaper")
     # Avatar: greeter user cannot read ~/.face.
-    _greeter_copy(_FACE, _GREETER_DIR / "face")
+    _greeter_copy(_FACE, _GREETER_DATA / "face")
     # Google Sans Flex: copied once at install, refreshed if the asset changes.
-    fonts = _GREETER_DIR / "fonts"
-    _greeter_copy(_FONT_SRC, fonts / "GoogleSansFlex.ttf")
-    _sync_greeter_ui()
+    _greeter_copy(_FONT_SRC, _GREETER_DATA / "fonts" / "GoogleSansFlex.ttf")
 
 
 def _light_gtk_css(filename: str, text: str) -> str:

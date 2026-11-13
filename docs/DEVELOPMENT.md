@@ -63,6 +63,7 @@ Para arrancar, `scripts/start-shell-with-tray-watcher.sh`: deja vivo el watcher 
 
 ```sh
 ./scripts/install-system.sh   # pide root una vez; greetd + greeter Material You + ajustes de logind
+                              # también para ver en el login un cambio de greeter/ (es de root, no se sincroniza solo)
 ```
 
 ## Arrancar y actualizar

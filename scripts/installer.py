@@ -40,6 +40,7 @@ sys.path.insert(0, str(HERE))
 import installer_ui as ui  # noqa: E402
 ROOT = HERE.parent
 INSTALLED_SHELL = Path("/etc/xdg/quickshell/sylphrena")
+GREETER_DIR = Path("/etc/greetd/sylphrena")
 GITHUB = "https://github.com/iMacnucintosh"
 # Our packages, in the order they have to be installed (the shell depends on the other three)
 PACKAGES = [("sylphrena-cli-git", "sylphrena-cli"), ("seeker-git", "seeker"), ("things-git", "things"),
@@ -121,6 +122,7 @@ ES = {
     "First-run settings": "Ajustes del primer arranque", "the recommended settings, one activity with its wallpaper, and kitty connected to the colours": "los ajustes recomendados, una actividad con su fondo y kitty conectado a los colores",
     "Sylphrena login screen": "Pantalla de inicio de sesión de Sylphrena", "greetd with the Material You greeter; it replaces %s": "greetd con el greeter Material You; sustituye a %s",
     "greetd with the Material You greeter": "greetd con el greeter Material You",
+    "Update the login screen": "Actualizar la pantalla de inicio de sesión", "brings it to the new version of the shell": "la pone al día con la versión nueva de la shell",
     "yes": "sí", "no": "no",
     "A Material You shell for Hyprland": "Una shell Material You para Hyprland",
     "This is what Sylphrena needs on this computer. Nothing is changed until you press Enter.": "Esto es lo que Sylphrena necesita en este equipo. No se cambia nada hasta que pulses Intro.",
@@ -169,6 +171,7 @@ class Facts:
     hyprland_needed: bool = True                            # setup-hyprland.py --check says it would change something
     first_run_needed: bool = True                           # same for the first-run settings and kitty
     greeter_installed: bool = False
+    greeter_version: str = ""                               # the shell the login screen was copied from (its version file)
     versions: dict[str, str] = field(default_factory=dict)  # our packages that are installed → their version
     releases: dict[str, str] = field(default_factory=dict)  # our repositories → the tag of their latest release
     browser: str | None = None                              # a web browser that is already there (then Zen is not preselected)
@@ -255,7 +258,11 @@ def scan(from_main: bool = False) -> Facts:
         f.display_manager = os.path.basename(os.readlink(unit)).removesuffix(".service")
     f.hyprland_needed = check_status("setup-hyprland.py") in ("needed", "failed")
     f.first_run_needed = any(check_status(n) == "needed" for n in ("setup-defaults.py", "setup-kitty.py"))
-    f.greeter_installed = Path("/etc/greetd/sylphrena").is_dir() and f.display_manager == "greetd"
+    f.greeter_installed = GREETER_DIR.is_dir() and f.display_manager == "greetd"
+    try:
+        f.greeter_version = (GREETER_DIR / "version").read_text().strip()
+    except OSError:
+        f.greeter_version = ""
     f.browser = next((b for b in BROWSERS if shutil.which(b)), None)
     f.versions = {p: v for p, _ in PACKAGES if (v := installed_version(p))}
     # Friends get what has been released, not every commit (--main builds the latest commit instead)
@@ -350,9 +357,17 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         steps = [Step("pacman", [p for p in ("greetd", "rsync") if not f.have(p)])] if not (f.have("greetd") and f.have("rsync")) else []
         # install-system.sh (10-greeter.sh) also makes greetd the display manager: it disables the one in use
         steps += [Step("root", [str(shell_dir / "scripts" / "install-system.sh")])]
-        add("login-screen", "Login screen", "Sylphrena login screen",
-            "greetd with the Material You greeter; it replaces %s" if dm else "greetd with the Material You greeter",
-            True, todo=not f.greeter_installed, steps=steps)
+        if not f.greeter_installed:
+            add("login-screen", "Login screen", "Sylphrena login screen",
+                "greetd with the Material You greeter; it replaces %s" if dm else "greetd with the Material You greeter",
+                True, todo=True, steps=steps)
+        else:
+            # Its QML and scripts are root's (a copy of the shell's): when the shell changes, copy them again
+            shell = next((i for i in items if i.id == "sylphrena-shell-git"), None)
+            stale = (shell is not None and shell.todo) or (f.have("sylphrena-shell-git")
+                                                           and f.greeter_version != f.versions.get("sylphrena-shell-git", ""))
+            add("login-screen", "Login screen", "Update the login screen", "brings it to the new version of the shell",
+                True, todo=stale, steps=steps)
     return items
 
 

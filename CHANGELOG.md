@@ -2,6 +2,12 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
+## Sin publicar
+
+- **Pantalla de login más segura:** lo que ejecuta (sus scripts y el QML que recibe la contraseña) es de root; tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). Antes todo era de tu usuario, y en un equipo con varias cuentas una podía cambiarlo y leer la contraseña de otra. Al actualizar Sylphrena, la pantalla de login se pone al día sola.
+- **`Super+E` abre Seeker también con el paquete** (buscaba solo en `~/.local/bin`).
+- **Login:** el error de autenticación se traduce, el registro ya no apunta la longitud de la contraseña, y el teclado de reserva es `us`.
+
 ## 0.5.7 (2026-11-13)
 
 - **Things marca las actualizaciones:** la shell comparte su lista de actualizaciones (`qs -c sylphrena ipc call updates list`) y abre Nexus en una página concreta (`ipc call nexus openPage updates`); Things 0.1.5 las usa para marcar los paquetes con versión nueva y llevar a Nexus → Actualizaciones.

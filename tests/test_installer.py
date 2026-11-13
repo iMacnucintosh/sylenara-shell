@@ -185,10 +185,28 @@ class Plan(unittest.TestCase):
         f.hyprland_needed = False
         f.first_run_needed = False
         f.greeter_installed = True
+        f.installed |= {"sylphrena-shell-git"}
+        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.7.r0.gabc-1"
+        f.releases["sylphrena-shell"] = "v0.5.7"
         items = {i.id: i for i in inst.build_plan(f)}
         for i in ("hyprland-config", "first-run", "login-screen"):
             self.assertFalse(items[i].todo)
             self.assertFalse(items[i].on)
+
+    def test_the_login_screen_follows_the_shell(self):
+        # its QML and scripts are root's copies of the shell's: copied again when the shell changes
+        f = bare()
+        f.greeter_installed = True
+        f.installed |= {"sylphrena-shell-git"}
+        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.6.r0.gabc-1"
+        f.releases["sylphrena-shell"] = "v0.5.7"
+        login = {i.id: i for i in inst.build_plan(f)}["login-screen"]
+        self.assertTrue(login.todo and login.on)
+        self.assertEqual(login.title, "Update the login screen")
+        # copied from another build than the one installed (installed before it kept a version)
+        f.releases["sylphrena-shell"] = "v0.5.6"
+        f.greeter_version = ""
+        self.assertTrue({i.id: i for i in inst.build_plan(f)}["login-screen"].todo)
 
 
 class Run(unittest.TestCase):

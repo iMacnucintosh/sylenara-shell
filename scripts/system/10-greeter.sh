@@ -1,10 +1,9 @@
 # Greeter Quickshell for greetd.
 # Sourced as root by scripts/install-system.sh. Defines step_main.
-# Safe to re-run. Migrates /etc/greetd/sylphrena → sylphrena and leaves
-# the old name as a symlink.
+# Safe to re-run. Scripts and QML are root's; the session user only writes user/ (theme, wallpaper, avatar, font).
 
 step_main() {
-  local greeter_dir old_dir session_user qs_dst
+  local greeter_dir data_dir session_user qs_dst
 
   # What this step needs; the Sylphrena installer (./install.sh) installs them first
   local tool
@@ -13,28 +12,27 @@ step_main() {
   done
   [[ -x /usr/bin/greetd ]] || { echo "Missing greetd: install it (pacman -S greetd) and run this again." >&2; return 1; }
   greeter_dir="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
-  old_dir="/etc/greetd/sylphrena"
+  data_dir="$greeter_dir/user"
   qs_dst="$greeter_dir/qs"
 
-  # Migration from an older directory name. Since the rename both names are the same path: then
-  # there is nothing to move nor to link (comparing the dir with itself reported a false conflict).
-  if [[ "$old_dir" != "$greeter_dir" ]]; then
-    if [[ -d "$old_dir" && ! -L "$old_dir" && ! -e "$greeter_dir" ]]; then
-      echo "Moving $old_dir → $greeter_dir"
-      mv "$old_dir" "$greeter_dir"
+  # Everything the login screen runs (its scripts and its QML, which receives the passwords) is root's: on a
+  # computer with several accounts, one of them could otherwise change it and read another's password. Only
+  # user/ (the theme, wallpaper, avatar and font the session copies there) belongs to the user.
+  mkdir -p "$greeter_dir" "$data_dir"
+  # Before user/ existed those files were at the top, owned by the user: move them in
+  local f
+  for f in scheme.json greeter.json wallpaper face fonts; do
+    if [[ -e "$greeter_dir/$f" && ! -e "$data_dir/$f" ]]; then
+      mv "$greeter_dir/$f" "$data_dir/$f"
+    else
+      rm -rf "${greeter_dir:?}/$f"
     fi
-    if [[ -e "$greeter_dir" && -e "$old_dir" && ! -L "$old_dir" && ! -L "$greeter_dir" ]]; then
-      echo "Both $old_dir and $greeter_dir are real directories. Not merging." >&2
-      return 1
-    fi
-  fi
-  mkdir -p "$greeter_dir"
-  if [[ "$old_dir" != "$greeter_dir" && ! -e "$old_dir" ]]; then
-    ln -s "$(basename "$greeter_dir")" "$old_dir"
-  fi
+  done
+  # The old regreet background and the copy markers (the session writes them again in user/)
+  rm -f "$greeter_dir"/wallpaper.jpg "$greeter_dir"/*.sha256
 
   mkdir -p "$qs_dst"
-  rsync -a --delete \
+  rsync -a --delete --chown=root:root \
     --exclude 'install-greeter.sh' \
     --exclude 'hyprland-greeter.lua' \
     --exclude 'launch-qs.sh' \
@@ -59,7 +57,15 @@ step_main() {
   }
 
   install_wrappers
-  chown -R "$SYLPHRENA_OWNER:$SYLPHRENA_OWNER" "$greeter_dir"
+  chown -R root:root "$greeter_dir"
+  chmod 755 "$greeter_dir" "$qs_dst"
+  chown -R "$SYLPHRENA_OWNER:$SYLPHRENA_OWNER" "$data_dir"
+  chmod 755 "$data_dir"
+  # Which shell the login screen was copied from (the installer's update refreshes it when the shell changes)
+  local version
+  version="$(pacman -Q sylphrena-shell-git 2>/dev/null | awk '{print $2}')"
+  [[ -n "$version" ]] || version="$(git -C "$SYLPHRENA_ROOT" describe --tags --always 2>/dev/null || echo unknown)"
+  printf '%s\n' "$version" >"$greeter_dir/version"
 
   # Scheme, wallpaper and face come from the session user. Path.home()
   # would be /root if this ran as root.
@@ -79,9 +85,6 @@ exec(compile(src if cut < 0 else src[:cut], str(quiet), "exec"), ns)
 ns["_sync_greeter"]()
 print(f"Synced greeter assets into {ns['_GREETER_DIR']}")
 PY
-
-  install_wrappers
-  chown -R "$SYLPHRENA_OWNER:$SYLPHRENA_OWNER" "$greeter_dir"
 
   install -m 644 "$SYLPHRENA_ROOT/greeter/hyprland-greeter.lua" /etc/greetd/hyprland-greeter.lua
 
@@ -137,7 +140,7 @@ EOF
   systemctl enable -f greetd.service
   echo "greetd is enabled: it takes over at the next boot"
 
-  echo "Greeter dir: $greeter_dir (symlink $old_dir)"
+  echo "Greeter dir: $greeter_dir (the session writes only $data_dir)"
   echo "greetd initial_session user: $session_user"
   echo "Logs: /var/lib/regreet/state/qs.log and /tmp/sylphrena-greeter-qs.log"
 }
