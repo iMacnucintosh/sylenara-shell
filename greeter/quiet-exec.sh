@@ -9,7 +9,7 @@ if (( $# < 1 )); then
   exit 2
 fi
 
-log="${SYLPHRENA_QUIET_LOG:-${SYLPHRENA_QUIET_LOG:-/tmp/sylphrena-quiet.log}}"
+log="${SYLPHRENA_QUIET_LOG:-/tmp/sylphrena-quiet.log}"
 mkdir -p "$(dirname "$log")" 2>/dev/null || log=/tmp/sylphrena-quiet.log
 
 exec /usr/bin/python3 - "$log" "$@" <<'PY'

@@ -28,7 +28,7 @@ Singleton {
         root.pending = password;
         root.recreateAfterCancel = false;
 
-        console.info(`greeter: auth submit user=${Theme.user} available=${root.available} state=${Greetd.state} len=${password.length}`);
+        console.info(`greeter: auth submit user=${Theme.user} available=${root.available} state=${Greetd.state}`);
 
         if (root.available) {
             if (Greetd.state === GreetdState.Inactive)
@@ -152,7 +152,7 @@ Singleton {
 
         function onError(error: string): void {
             console.warn(`greeter: greetd error ${error}`);
-            root.fail(`Error de autenticación: ${error}`);
+            root.fail(Tr.tr("Authentication error: %1").arg(error));
         }
 
         function onStateChanged(): void {

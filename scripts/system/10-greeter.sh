@@ -25,7 +25,7 @@ step_main() {
     fi
     if [[ -e "$greeter_dir" && -e "$old_dir" && ! -L "$old_dir" && ! -L "$greeter_dir" ]]; then
       echo "Both $old_dir and $greeter_dir are real directories. Not merging." >&2
-      exit 1
+      return 1
     fi
   fi
   mkdir -p "$greeter_dir"

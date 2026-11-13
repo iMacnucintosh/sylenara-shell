@@ -11,8 +11,8 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    readonly property string dir: Quickshell.env("SYLPHRENA_GREETER_DIR") || Quickshell.env("SYLPHRENA_GREETER_DIR") || "/etc/greetd/sylphrena"
-    readonly property bool demo: Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1" || Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1"
+    readonly property string dir: Quickshell.env("SYLPHRENA_GREETER_DIR") || "/etc/greetd/sylphrena"
+    readonly property bool demo: Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1"
 
     property var scheme: ({})
     property var config: ({})
