@@ -884,13 +884,12 @@ Singleton {
         if (action.global)
             return `hl.dsp.global("${Strings.luaString(action.global)}")`;
         if (action.id === "openFiles") {
-            // Hyprland's PATH has no ~/.local/bin — resolve seeker (and any
-            // bare explorer name) to an absolute path when needed.
+            // Hyprland runs it through sh, and its PATH has no ~/.local/bin: put it first, so a user-local build
+            // (development) wins and a packaged one (/usr/bin) is found otherwise. Each word single-quoted.
             const parts = GlobalConfig.general.apps.explorer;
-            let bin = (parts && parts.length) ? String(parts[0]) : "seeker";
-            if (bin && !bin.includes("/"))
-                bin = `${Quickshell.env("HOME")}/.local/bin/${bin}`;
-            return `hl.dsp.exec_cmd("${Strings.luaString(bin)}")`;
+            const argv = (parts && parts.length) ? Array.from(parts).map(String) : ["seeker"];
+            const cmd = argv.map(a => `'${a.replace(/'/g, "'\\''")}'`).join(" ");
+            return `hl.dsp.exec_cmd("${Strings.luaString(`PATH="$HOME/.local/bin:$PATH" exec ${cmd}`)}")`;
         }
         if (action.dispatch)
             return action.dispatch;
