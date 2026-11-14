@@ -49,7 +49,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 > - `lock`: `enableFprint`, `enableHowdy`, `maxFprintTries`, `maxHowdyTries`, `triggerHowdyOnWake`
 > - `nexus`: `networkRescanInterval`
 > - `notifs`: `actionOnClick`, `defaultExpireTimeout`, `expire`, `fullscreen`, `fullscreenExpireTimeout`
-> - `paths`: `lyricsDir`, `wallpaperDir`
+> - `paths`: `lyricsDir`, `wallpaperDir`, `screenshotsDir`, `recordingsDir` (vacías = carpeta de imágenes/vídeos + nombre en el idioma de la shell; se fijan al primer uso)
 > - `services`: `audioIncrement`, `brightnessIncrement`, `clockFormat`, `dataUnits`, `defaultPlayer`, `gpuType`, `lyricsBackend`, `maxVolume`, `playerAliases`, `sensorUnits`, `smartScheme`, `visualiserBars`, `weatherLocation`, `weatherUnits`
 > - `utilities`: `toasts.*`, `vpn.*` (un proveedor con `type` = `ext:<extensión>` es una conexión de un tipo aportado por una extensión: su `options` es de la extensión y nunca lleva secretos; p. ej. FortiClient guarda la contraseña en `~/.config/sylphrena/vpn/<id>.conf`)
 >
@@ -774,6 +774,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
     "paths": {
         "wallpaperDir": "~/Pictures/Wallpapers",
         "lyricsDir": "~/Music/lyrics/",
+        "screenshotsDir": "",
+        "recordingsDir": "",
         "noNotifsPic": "root:/assets/dino.png",
         "lockNoNotifsPic": "root:/assets/dino.png"
     }

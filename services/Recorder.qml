@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.services
+import qs.utils
 
 Singleton {
     id: root
@@ -23,7 +24,8 @@ Singleton {
 
         root.arming = true;
         // Detached: must not be tied to the utilities panel Process lifetime
-        Quickshell.execDetached([root.startScript, ...extraArgs]);
+        Paths.pinRecsDir();
+        Quickshell.execDetached(["env", `SYLPHRENA_RECORDINGS_DIR=${Paths.recsdir}`, root.startScript, ...extraArgs]);
         props.running = true;
         props.paused = false;
         props.elapsed = 0;
@@ -37,7 +39,7 @@ Singleton {
         if (!props.running && !root.arming)
             return;
         root.arming = false;
-        Quickshell.execDetached([root.recordScript]);
+        Quickshell.execDetached(["env", `SYLPHRENA_RECORDINGS_DIR=${Paths.recsdir}`, root.recordScript]);
         props.running = false;
         props.paused = false;
         checkTimer.restart();

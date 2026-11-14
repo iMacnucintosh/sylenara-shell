@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:30+0100\n"
+"POT-Creation-Date: 2026-11-15 00:41+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -106,10 +106,6 @@ msgstr "Clic en un escritorio para cambiar · Arrastra ventanas para mover · Es
 msgid "Empty"
 msgstr "Vacío"
 
-#: modules/areapicker/ShotPreview.qml services/Keybinds.qml
-msgid "Screenshots"
-msgstr "Capturas de pantalla"
-
 #: modules/areapicker/ShotPreview.qml
 msgid "Screenshot copied"
 msgstr "Captura copiada"
@@ -131,6 +127,22 @@ msgstr "En %1"
 #: modules/areapicker/ShotPreview.qml
 msgid "Screenshot saved"
 msgstr "Captura guardada"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Free line"
+msgstr "Línea libre"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Arrow"
+msgstr "Flecha"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Rectangle"
+msgstr "Rectángulo"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Eraser"
+msgstr "Goma de borrar"
 
 #: modules/areapicker/ShotPreview.qml
 msgid "Discard"
@@ -3227,6 +3239,27 @@ msgstr "Tamaño del historial"
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximum number of clipboard entries to keep"
 msgstr "Número máximo de entradas del portapapeles a conservar"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Folders"
+msgstr "Carpetas"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: utils/Paths.qml
+msgid "Screenshots"
+msgstr "Capturas de pantalla"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml utils/Paths.qml
+msgid "Screen recordings"
+msgstr "Videocapturas de pantalla"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screenshots"
+msgstr "Elige dónde guardar las capturas"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screen recordings"
+msgstr "Elige dónde guardar las videocapturas"
 
 #: modules/nexus/pages/PanelsPage.qml
 msgctxt "panel status"

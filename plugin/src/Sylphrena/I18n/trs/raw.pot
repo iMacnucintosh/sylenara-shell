@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:30+0100\n"
+"POT-Creation-Date: 2026-11-15 00:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,10 +107,6 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: modules/areapicker/ShotPreview.qml services/Keybinds.qml
-msgid "Screenshots"
-msgstr ""
-
 #: modules/areapicker/ShotPreview.qml
 msgid "Screenshot copied"
 msgstr ""
@@ -131,6 +127,22 @@ msgstr ""
 
 #: modules/areapicker/ShotPreview.qml
 msgid "Screenshot saved"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Free line"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Arrow"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Rectangle"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Eraser"
 msgstr ""
 
 #: modules/areapicker/ShotPreview.qml
@@ -3225,6 +3237,27 @@ msgstr ""
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximum number of clipboard entries to keep"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Folders"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: utils/Paths.qml
+msgid "Screenshots"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml utils/Paths.qml
+msgid "Screen recordings"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screenshots"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screen recordings"
 msgstr ""
 
 #: modules/nexus/pages/PanelsPage.qml

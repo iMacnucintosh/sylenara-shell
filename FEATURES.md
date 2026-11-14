@@ -94,8 +94,9 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Nexus → A
 ## Capturas de pantalla
 
 - Captura de una zona o de una ventana (al pasar por encima se marca con el redondeo de Hyprland y el color principal del esquema).
-- Tras capturar sale una **previsualización** propia: **Copiar** (`Ctrl+C` o `Intro`), **Guardar** (`Ctrl+S`) o **Descartar** (`Esc`); cualquiera de las tres la cierra y avisa con un aviso emergente.
-- Se guardan en **`~/Imágenes/Capturas de pantalla`** (la carpeta de imágenes de XDG; override: env `SYLPHRENA_SCREENSHOTS_DIR`) como `Captura de pantalla_AAAAMMDD_HHMMSS.png`.
+- Tras capturar sale una **previsualización** propia con herramientas para marcar encima: **línea libre**, **flecha**, **rectángulo** y **goma** (borra un trazo entero al pasar por encima), seis colores y deshacer (`Ctrl+Z`). Las marcas se graban en la imagen al copiar o guardar.
+- **Copiar** (`Ctrl+C` o `Intro`), **Guardar** (`Ctrl+S`) o **Descartar** (`Esc`); cualquiera de las tres la cierra y avisa con un aviso emergente.
+- Se guardan como `Captura de pantalla_AAAAMMDD_HHMMSS.png` en la carpeta de **Nexus → Paneles → Utilidades → Carpetas** (`paths.screenshotsDir`). Vacía, es la carpeta de imágenes de XDG más «Capturas de pantalla» en el idioma de la shell, y se fija en la configuración la primera vez que se guarda algo: cambiar de idioma después no reparte las capturas en dos carpetas. Override: env `SYLPHRENA_SCREENSHOTS_DIR`.
 - La captura «al portapapeles» no enseña la previsualización.
 
 ---
@@ -107,7 +108,7 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Nexus → A
 - Mientras grabas, utilities/sidebar **permanecen abiertos** al salir el puntero (evita teardowns mid-capture).
 - Indicador **REC** / **PAUSE** bajo el reloj en la barra mientras hay grabación activa.
 - El chip principal del recorder no re-dispara start mientras ya está grabando (evita toggle-stop accidental).
-- Archivos en **`~/Vídeos/Videocapturas de pantalla`** (override: env `SYLPHRENA_RECORDINGS_DIR`).
+- Archivos en la carpeta de **Nexus → Paneles → Utilidades → Carpetas** (`paths.recordingsDir`; vacía = carpeta de vídeos de XDG + «Videocapturas de pantalla» en el idioma de la shell, fijada al primer uso; override: env `SYLPHRENA_RECORDINGS_DIR`).
 - Desde la lista: reproducir, abrir carpeta (Seeker) o borrar.
 
 ---
