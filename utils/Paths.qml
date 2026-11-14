@@ -25,7 +25,8 @@ Singleton {
     readonly property string libdir: envVar("LIB_DIR") || `${home}/.local/lib`
 
     function envVar(name: string): string {
-        return Quickshell.env(`SYLPHRENA_${name}`);
+        // Unset is null, and the string return type would turn it into "null" (screenshots went to ~/null)
+        return Quickshell.env(`SYLPHRENA_${name}`) ?? "";
     }
 
     function toLocalFile(path: url): string {
