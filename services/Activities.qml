@@ -102,6 +102,19 @@ Singleton {
     // On openwindow, only follow this address home — never every pinned app
     property string enforceFollowAddress: ""
     readonly property string styleCli: Quickshell.shellPath("scripts/apply-activity-style.py")
+    // Quick toggle "Dark mode": a session override over every activity's look (dark scheme, no light apps). It lives
+    // in the state dir, never in the activities, so turning it off brings each look back as configured
+    property bool forceDark
+
+    function setForceDark(on: bool): void {
+        if (root.forceDark === on)
+            return;
+        root.forceDark = on;
+        darkModeFile.setText(JSON.stringify({
+                forceDark: on
+            }, null, 4) + "\n");
+        root.refreshLiveStyle();
+    }
 
     function bumpStyleRevision(): void {
         root.styleRevision++;
@@ -148,7 +161,7 @@ Singleton {
         const a = entry || {};
         const wallFallback = Wallpapers.actualCurrent || Wallpapers.fallback || "";
         const modeFallback = Colours.currentLight ? "light" : "dark";
-        return {
+        const style = {
             wallpaper: root.pickStr(a.wallpaper || "", p.wallpaper || "", wallFallback),
             scheme: root.pickStr(a.scheme || "", p.scheme || "", Colours.scheme || "dynamic"),
             flavour: root.pickStr(a.flavour || "", p.flavour || "", Colours.flavour || "default"),
@@ -157,6 +170,11 @@ Singleton {
             transparency: root.pickTri(a.transparency ?? -1, p.transparency ?? -1, GlobalConfig.appearance.transparency.enabled ? 1 : 0),
             lightApps: root.pickTri(a.lightApps ?? -1, p.lightApps ?? -1, Colours.lightApps ? 1 : 0)
         };
+        if (root.forceDark) {
+            style.mode = "dark";
+            style.lightApps = 0;
+        }
+        return style;
     }
 
     function ensurePrincipalStyle(): void {
@@ -171,11 +189,12 @@ Singleton {
             p.flavour = Colours.flavour || "default";
         if (!(p.variant || "") && (Colours.variant || ""))
             p.variant = Colours.variant;
-        if (!(p.mode || ""))
+        // While dark mode is forced the live mode/light apps are not Principal's own: do not save them as its look
+        if (!(p.mode || "") && !root.forceDark)
             p.mode = Colours.currentLight ? "light" : "dark";
         if ((p.transparency ?? -1) < 0)
             p.transparency = GlobalConfig.appearance.transparency.enabled ? 1 : 0;
-        if ((p.lightApps ?? -1) < 0)
+        if ((p.lightApps ?? -1) < 0 && !root.forceDark)
             p.lightApps = Colours.lightApps ? 1 : 0;
     }
 
@@ -879,6 +898,45 @@ Singleton {
         function onCountChanged(): void {
             root.syncSoon();
         }
+    }
+
+    // Read before the first style apply (blockLoading), so a forced dark mode does not flash the light look at startup
+    FileView {
+        id: darkModeFile
+
+        path: `${Paths.state}/dark-mode.json`
+        blockLoading: true
+        printErrors: false
+        onLoaded: {
+            try {
+                root.forceDark = !!JSON.parse(text()).forceDark;
+            } catch (e) {
+                root.forceDark = false;
+            }
+        }
+    }
+
+    IpcHandler {
+        function toggle(): string {
+            root.setForceDark(!root.forceDark);
+            return root.forceDark ? "on" : "off";
+        }
+
+        function enable(): string {
+            root.setForceDark(true);
+            return "on";
+        }
+
+        function disable(): string {
+            root.setForceDark(false);
+            return "off";
+        }
+
+        function status(): string {
+            return root.forceDark ? "on" : "off";
+        }
+
+        target: "darkMode"
     }
 
     FileView {

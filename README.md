@@ -50,7 +50,7 @@ Transitions can be chosen too: by default, a vertical slide between desktops and
 A side bar with your desktops and the icons of their apps, the system tray, the clock and the indicators. The panels come out of the bar itself:
 
 - **Dashboard** with the weather, media, how the computer is doing and a carousel of widgets (a calendar, plus whatever extensions add).
-- **Side panel** with notifications and quick toggles (wifi, bluetooth, microphone, screen recording…).
+- **Side panel** with notifications and quick toggles (wifi, bluetooth, microphone, dark mode, screen recording…).
 - **App launcher** with search, a calculator and wallpapers.
 - **Show desktop**: click the desktop you are already on and the windows slide away; click it again and they come back.
 

@@ -97,7 +97,14 @@ def _apply_scheme(
 
     if mode and mode != scheme._mode:
         if mode not in get_scheme_modes(scheme._name, scheme._flavour):
-            raise ValueError(f'Invalid scheme mode: "{mode}"')
+            # A flavour with one mode only (Catppuccin Latte is light): the mode wins, as the dark mode quick toggle
+            # asks, so take the scheme's first flavour that has it
+            sibling = next((f for f in get_scheme_flavours(scheme._name)
+                            if mode in get_scheme_modes(scheme._name, f)), None)
+            if sibling is None:
+                raise ValueError(f'Invalid scheme mode: "{mode}"')
+            print(f"{scheme._name} {scheme._flavour} has no {mode} mode: using {sibling}", file=sys.stderr)
+            scheme._flavour = sibling
         scheme._mode = mode
         dirty = True
 

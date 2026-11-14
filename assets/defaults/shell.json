@@ -203,6 +203,10 @@
             },
             {
                 "enabled": true,
+                "id": "darkMode"
+            },
+            {
+                "enabled": true,
                 "id": "gameMode"
             },
             {

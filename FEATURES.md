@@ -186,6 +186,16 @@ require("sylphrena-monitors")
 
 ---
 
+## Utilities / modo oscuro
+
+- En **interruptores rápidos**: luna (**Modo oscuro**). Lo pone todo oscuro por encima del aspecto de cada actividad: esquema en modo oscuro y sin apps claras (GTK, Qt, portal, Chromium/Electron, kitty, Seeker, Things…).
+- Es un ajuste **temporal**: no toca las actividades. Al apagarlo cada una vuelve a su aspecto tal cual. Mientras está activo, Nexus marca «En pausa» el tema oscuro y las apps claras de cada actividad.
+- Un sabor que solo es claro (Catppuccin Latte, Rosé Pine Dawn) pasa al primer sabor oscuro del mismo esquema.
+- Persiste en `~/.local/state/sylphrena/dark-mode.json`. Atajo **sin asignar** (Nexus → Atajos → «Modo oscuro») e IPC: `qs -c sylphrena ipc call darkMode toggle | enable | disable | status`.
+- Se activa o quita de la fila en Nexus → Paneles → Utilidades → Interruptores rápidos.
+
+---
+
 ## Utilities / mantener activo
 
 - En **interruptores rápidos**: icono de café (**Keep awake**), a la izquierda del gamepad.

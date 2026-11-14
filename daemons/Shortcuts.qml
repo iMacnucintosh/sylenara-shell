@@ -110,6 +110,12 @@ Scope {
     }
 
     CustomShortcut {
+        name: "toggleDarkMode"
+        description: "Toggle the dark mode override"
+        onPressed: Activities.setForceDark(!Activities.forceDark)
+    }
+
+    CustomShortcut {
         name: "workspaceNext"
         description: "Switch to next workspace / desktop"
         onPressed: Activities.focusWorkspaceByOffset(1)

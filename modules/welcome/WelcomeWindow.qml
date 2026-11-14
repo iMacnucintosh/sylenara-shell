@@ -662,7 +662,8 @@ FloatingWindow {
                             });
                     }
                     for (const a of acts) {
-                        if (isNumbered(a.id))
+                        // Unbound by default (dark mode): nothing to show
+                        if (isNumbered(a.id) || !Keybinds.bindFor(a.id))
                             continue;
                         out.push({
                             label: a.label(),

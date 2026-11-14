@@ -128,6 +128,14 @@ PageBase {
         }
 
         ToggleRow {
+            text: Tr.tr("Dark mode")
+            subtext: Tr.tr("Everything dark, light apps included, over every activity's look")
+            disabled: !Config.utilities.cards.quickToggles
+            checked: root.isToggleOn("darkMode")
+            onToggled: root.setToggleOn("darkMode", checked)
+        }
+
+        ToggleRow {
             text: Tr.tr("Compact layout")
             subtext: Tr.tr("Maximise screen use: no frame or gaps")
             disabled: !Config.utilities.cards.quickToggles

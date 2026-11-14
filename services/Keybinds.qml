@@ -412,6 +412,14 @@ Singleton {
             category: "shell"
         },
         {
+            id: "toggleDarkMode",
+            label: () => Tr.tr("Dark mode"),
+            description: () => Tr.tr("Turn the dark mode quick toggle on or off"),
+            defaultBind: "",
+            global: "sylphrena:toggleDarkMode",
+            category: "shell"
+        },
+        {
             id: "showall",
             label: () => Tr.tr("Show panels"),
             description: () => Tr.tr("Toggle launcher, dashboard and OSD"),

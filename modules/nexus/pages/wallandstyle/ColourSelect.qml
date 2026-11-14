@@ -100,7 +100,7 @@ PageBase {
             first: true
             Layout.bottomMargin: 0
             text: Tr.tr("Dark theme")
-            subtext: Tr.tr("Shell and bar colours")
+            subtext: Activities.forceDark ? Tr.tr("Paused: dark mode is on in the quick toggles") : Tr.tr("Shell and bar colours")
             checked: root.look.mode !== "light"
             onToggled: Activities.setActivityMode(root.targetActivityId, checked ? "dark" : "light")
         }
@@ -110,7 +110,7 @@ PageBase {
             Layout.topMargin: Tokens.spacing.extraSmall / 2
             Layout.bottomMargin: Tokens.spacing.medium
             text: Tr.tr("Light apps")
-            subtext: Tr.tr("Keep GTK/Qt apps light even if the shell is dark")
+            subtext: Activities.forceDark ? Tr.tr("Paused: dark mode is on in the quick toggles") : Tr.tr("Keep GTK/Qt apps light even if the shell is dark")
             checked: root.look.lightApps > 0
             onToggled: Activities.setActivityLightApps(root.targetActivityId, checked)
         }

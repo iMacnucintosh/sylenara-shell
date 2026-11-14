@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 00:33+0100\n"
+"POT-Creation-Date: 2026-11-14 19:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3153,6 +3153,14 @@ msgstr ""
 msgid "Prevent sleep / idle suspend"
 msgstr ""
 
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+msgid "Dark mode"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Everything dark, light apps included, over every activity's look"
+msgstr ""
+
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximise screen use: no frame or gaps"
 msgstr ""
@@ -3644,6 +3652,11 @@ msgstr ""
 #: modules/nexus/pages/ShellPage.qml
 #: modules/nexus/pages/wallandstyle/ColourSelect.qml
 msgid "Dark theme"
+msgstr ""
+
+#: modules/nexus/pages/ShellPage.qml
+#: modules/nexus/pages/wallandstyle/ColourSelect.qml
+msgid "Paused: dark mode is on in the quick toggles"
 msgstr ""
 
 #: modules/nexus/pages/ShellPage.qml
@@ -4817,6 +4830,10 @@ msgstr ""
 
 #: services/Keybinds.qml
 msgid "Toggle utilities panel"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Turn the dark mode quick toggle on or off"
 msgstr ""
 
 #: services/Keybinds.qml
