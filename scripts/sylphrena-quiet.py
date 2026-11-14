@@ -372,6 +372,10 @@ def _trigger_gtk_color_reload() -> None:
     """
     import time
 
+    # gtk.css is read back below: while staged it is not published yet
+    if _Stage.active is not None:
+        _Stage.active.after.insert(0, _trigger_gtk_color_reload)
+        return
     stamp = f"/* sylphrena-reload {time.time_ns()} */\n"
     for ver in ("gtk-3.0", "gtk-4.0"):
         base = Path.home() / f".config/{ver}"
@@ -388,6 +392,92 @@ def _trigger_gtk_color_reload() -> None:
             colors.write_text(stamp + text)
         except OSError:
             pass
+
+
+class _Stage:
+    """Hold back what the apps see until everything is ready, then publish it in one go.
+
+    Each app repaints when its own file (or a dconf key) changes, and the apply writes them one after another over
+    ~150 ms. While a stage is open, atomic renames (``os.replace``, which every theme file goes through) and
+    ``dconf write`` are recorded instead; ``commit`` renames all files, writes the dconf keys that end up different
+    (one value per key: no adw-gtk3-dark → adw-gtk3 flip) and then runs what had to wait for them (GTK colour reload,
+    the CLI postHook). The temp files are already on disk, so publishing takes a few milliseconds.
+    """
+
+    active: "_Stage | None" = None
+
+    def __init__(self) -> None:
+        self.renames: dict[str, str] = {}
+        self.dconf: dict[str, str] = {}
+        self.after: list = []
+        self._replace = os.replace
+        self._run = subprocess.run
+
+    def __enter__(self) -> "_Stage":
+        def replace(src, dst, *args, **kwargs):
+            if args or kwargs:
+                return self._replace(src, dst, *args, **kwargs)
+            dst = os.fspath(dst)
+            old = self.renames.pop(dst, None)
+            if old is not None and old != os.fspath(src):
+                try:
+                    os.unlink(old)
+                except OSError:
+                    pass
+            self.renames[dst] = os.fspath(src)
+
+        def run(cmd, *args, **kwargs):
+            if isinstance(cmd, (list, tuple)) and len(cmd) >= 3 and cmd[0] == "dconf":
+                if cmd[1] == "write" and len(cmd) == 4:
+                    self.dconf[cmd[2]] = cmd[3]
+                    return subprocess.CompletedProcess(cmd, 0, "", "")
+                if cmd[1] == "read" and cmd[2] in self.dconf:
+                    out = self.dconf[cmd[2]] + "\n"
+                    return subprocess.CompletedProcess(cmd, 0, out if kwargs.get("text") else out.encode(), "")
+            # The CLI postHook (a shell string: kitty reload, prefer-light) must see the published files
+            if kwargs.get("shell"):
+                self.after.append(lambda: self._run(cmd, *args, **kwargs))
+                return subprocess.CompletedProcess(cmd, 0, "", "")
+            return self._run(cmd, *args, **kwargs)
+
+        os.replace = replace
+        subprocess.run = run
+        _Stage.active = self
+        return self
+
+    def __exit__(self, *exc) -> None:
+        os.replace = self._replace
+        subprocess.run = self._run
+        _Stage.active = None
+        self.commit()
+
+    def commit(self) -> None:
+        for dst, src in self.renames.items():
+            try:
+                os.replace(src, dst)
+            except OSError:
+                pass
+        self.renames.clear()
+        changed = {}
+        for key, value in self.dconf.items():
+            cur = subprocess.run(["dconf", "read", key], check=False, capture_output=True, text=True,
+                                 stdin=subprocess.DEVNULL).stdout.strip()
+            if cur != value:  # a write is a change event for every running app
+                changed[key] = value
+        # One dconf process for every key, so the portal and the GTK theme change together
+        by_dir: dict[str, list[str]] = {}
+        for key, value in changed.items():
+            folder, name = key.rsplit("/", 1)
+            by_dir.setdefault(folder + "/", []).append(f"{name}={value}")
+        for folder, lines in by_dir.items():
+            subprocess.run(["dconf", "load", folder], input="[/]\n" + "\n".join(lines) + "\n", text=True,
+                           check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        for fn in self.after:
+            try:
+                fn()
+            except Exception:
+                pass
+        self.after.clear()
 
 
 def _patch_theme() -> None:
@@ -527,23 +617,25 @@ def _patch_theme() -> None:
         except Exception:
             pass
 
-        orig_apply_colours(colours, mode)
-        # Always push GTK/Thunar + colors.css reload stamp (colorreload watches
-        # colors.css, not gtk.css — without this, open Thunar keeps stale styles).
-        try:
-            theme.apply_gtk(colours, mode)
-        except Exception:
-            pass
-        _sync_qt6ct(colours, mode, (_STATE / "force-apps-light").is_file())
-        _sync_seeker(colours, mode)
-        _sync_things(colours, mode)
-        _sync_greeter(colours)
-        # OpenCode TUI: theme file + cli.json mode follow the activity scheme.
-        _sync_opencode_theme(colours, mode)
+        # Everything the apps see is prepared first and published at once (_Stage), the shell's scheme.json just
+        # after it: the shell and the apps switch in the same few milliseconds
+        with _Stage():
+            orig_apply_colours(colours, mode)
+            # Always push GTK/Thunar + colors.css reload stamp (colorreload watches
+            # colors.css, not gtk.css — without this, open Thunar keeps stale styles).
+            try:
+                theme.apply_gtk(colours, mode)
+            except Exception:
+                pass
+            _sync_qt6ct(colours, mode, (_STATE / "force-apps-light").is_file())
+            _sync_seeker(colours, mode)
+            _sync_things(colours, mode)
+        flush_saves()
         # Templates land inside apply_colours; refresh Kitty after that.
         _reload_kitty()
-        # Last: the shell follows scheme.json, so it switches with the apps, not before them
-        flush_saves()
+        # Not on screen now (login screen, OpenCode theme file): after the switch
+        _sync_greeter(colours)
+        _sync_opencode_theme(colours, mode)
 
     theme.apply_terms = apply_terms_quiet
     theme.apply_colours = apply_colours_quiet

@@ -4,7 +4,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## Sin publicar
 
-- **La shell y las apps cambian de tema a la vez:** antes la shell se adelantaba casi medio segundo a Seeker, Things, GTK, Qt y Zen; ahora cambian todos en ~0,2 s. Activar o quitar las apps claras regenera además en el acto el CSS de GTK y la paleta de Qt (antes esperaban al siguiente cambio de tema).
+- **La shell y las apps cambian de tema a la vez:** antes la shell se adelantaba casi medio segundo a Seeker, Things, GTK, Qt y Zen; ahora todo se publica de golpe, en unos 30 ms, y el tema GTK ya no parpadea a oscuro y vuelta. Activar o quitar las apps claras regenera además en el acto el CSS de GTK y la paleta de Qt (antes esperaban al siguiente cambio de tema).
 - **Modo oscuro en los ajustes rápidos:** un interruptor que lo pone todo oscuro (esquema y apps claras) por encima del aspecto de cada actividad, sin tocarlo: al quitarlo cada una vuelve a como estaba. También con atajo (sin asignar por defecto) y `qs -c sylphrena ipc call darkMode toggle`.
 - **Pantalla de login más segura:** lo que ejecuta (sus scripts y el QML que recibe la contraseña) es de root; tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). Antes todo era de tu usuario, y en un equipo con varias cuentas una podía cambiarlo y leer la contraseña de otra. Al actualizar Sylphrena, la pantalla de login se pone al día sola.
 - **`Super+E` abre Seeker también con el paquete** (buscaba solo en `~/.local/bin`).

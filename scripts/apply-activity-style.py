@@ -39,7 +39,7 @@ def _set_light_apps(quiet, on: bool) -> None:
         flag.unlink(missing_ok=True)
     # cli.json: Qt theming off while apps stay light
     subprocess.run([sys.executable, str(Path(__file__).with_name("sync-light-apps-cli.py")),
-                    "--light-apps" if on else "--no-light-apps"], check=False, stdin=subprocess.DEVNULL)
+                    "--light-apps" if on else "--no-light-apps", "--skip-css"], check=False, stdin=subprocess.DEVNULL)
 
 
 def _set_wallpaper_files(wall: Path) -> None:
