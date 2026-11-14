@@ -129,8 +129,13 @@ void HyprExtras::refreshOptions() {
 
         for (const auto& o : std::as_const(options)) {
             const auto obj = o.toObject();
-            const auto key = obj.value(u"value"_s).toString();
-            const auto value = obj.value(u"data"_s).toObject().value(u"current"_s).toVariant();
+            // Hyprland 0.57 lists {name, current}; older ones {value, data: {current}}
+            const auto key = obj.contains(u"name"_s) ? obj.value(u"name"_s).toString() : obj.value(u"value"_s).toString();
+            const auto value = obj.contains(u"current"_s) ? obj.value(u"current"_s).toVariant()
+                                                          : obj.value(u"data"_s).toObject().value(u"current"_s).toVariant();
+            if (key.isEmpty()) {
+                continue;
+            }
             if (m_options.value(key) != value) {
                 dirty = true;
                 m_options.insert(key, value);
