@@ -65,7 +65,9 @@ StyledWindow {
         Paths.pinShotsDir();
         const dir = Paths.shotsdir;
         const name = `${Tr.tr("Screenshot")}_${Qt.formatDateTime(new Date(), "yyyyMMdd_HHmmss")}.png`;
-        Quickshell.execDetached(["sh", "-c", 'mkdir -p "$1" && mv "$2" "$1/$3"', "_", dir, win.path, name]);
+        // Copied under a hidden name and renamed: /tmp is another filesystem, and a plain mv would show file
+        // managers a file that is still being written
+        Quickshell.execDetached(["sh", "-c", 'mkdir -p "$1" && cp "$2" "$1/.$3.part" && mv "$1/.$3.part" "$1/$3" && rm -f "$2"', "_", dir, win.path, name]);
         // TRANSLATORS: %1 = folder the screenshot was saved to
         const where = Tr.tr("In %1").arg(Paths.shortenHome(dir));
         Toaster.toast(Tr.tr("Screenshot saved"), where, "save");
