@@ -262,8 +262,11 @@ Singleton {
         const modeMismatch = !!(style.mode && (style.mode === "light") !== Colours.currentLight);
         const variantMismatch = !!(style.variant && style.variant !== Colours.variant);
         const schemeMismatch = !!(style.scheme && schemeWant !== schemeNow);
+        // Light apps change GTK CSS, the Qt palette and the icons: that goes in the same apply, so the apps switch
+        // together with the shell (afterwards they waited for the next apply)
+        const appsMismatch = Colours.lightAppsLoaded && (style.lightApps > 0) !== Colours.lightApps;
         // Wallpaper file change must regenerate dynamic colours with the activity mode.
-        const needScheme = wallpaperChanged || schemeMismatch || variantMismatch || modeMismatch;
+        const needScheme = wallpaperChanged || schemeMismatch || variantMismatch || modeMismatch || appsMismatch;
 
         root.pendingLightApps = style.lightApps;
         root.pendingTransparency = style.transparency;
@@ -298,6 +301,8 @@ Singleton {
             if (style.variant)
                 cmd.push("--variant", style.variant);
         }
+        if (appsMismatch)
+            cmd.push("--light-apps", style.lightApps > 0 ? "on" : "off");
 
         if (styleApplyProc.running)
             styleApplyProc.running = false;

@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 
-def _patch_theme_quiet() -> None:
+def _patch_theme_quiet():
     import importlib.util
 
     # Reuse sylphrena-quiet patches (GTK live theme, Papirus via qt6ct, Kitty).
@@ -23,6 +23,23 @@ def _patch_theme_quiet() -> None:
     assert spec.loader is not None
     spec.loader.exec_module(quiet)
     quiet._patch_theme()
+    return quiet
+
+
+def _set_light_apps(quiet, on: bool) -> None:
+    """Light apps on or off before the apply, so GTK CSS, Qt palette and icons come out right in the same pass
+    (the shell used to switch them after it, and they waited for the next apply)."""
+    import subprocess
+
+    flag = quiet._STATE / "force-apps-light"
+    if on:
+        flag.parent.mkdir(parents=True, exist_ok=True)
+        flag.touch()
+    else:
+        flag.unlink(missing_ok=True)
+    # cli.json: Qt theming off while apps stay light
+    subprocess.run([sys.executable, str(Path(__file__).with_name("sync-light-apps-cli.py")),
+                    "--light-apps" if on else "--no-light-apps"], check=False, stdin=subprocess.DEVNULL)
 
 
 def _set_wallpaper_files(wall: Path) -> None:
@@ -135,26 +152,29 @@ def main() -> int:
     parser.add_argument("--flavour", default="", help="scheme flavour")
     parser.add_argument("--mode", default="", choices=["", "dark", "light"])
     parser.add_argument("--variant", default="", help="scheme variant")
+    parser.add_argument("--light-apps", default="", choices=["", "on", "off"], help="switch light apps in this apply")
     args = parser.parse_args()
 
-    if not args.wallpaper and not any((args.name, args.flavour, args.mode, args.variant)):
+    if not args.wallpaper and not any((args.name, args.flavour, args.mode, args.variant, args.light_apps)):
         print("nothing to apply", file=sys.stderr)
         return 1
 
-    _patch_theme_quiet()
+    quiet = _patch_theme_quiet()
+    if args.light_apps:
+        _set_light_apps(quiet, args.light_apps == "on")
 
     wall_set = False
     if args.wallpaper:
         _set_wallpaper_files(Path(args.wallpaper))
         wall_set = True
 
-    if wall_set or any((args.name, args.flavour, args.mode, args.variant)):
+    if wall_set or any((args.name, args.flavour, args.mode, args.variant, args.light_apps)):
         _apply_scheme(
             args.name or None,
             args.flavour or None,
             args.mode or None,
             args.variant or None,
-            force=wall_set,
+            force=wall_set or bool(args.light_apps),
         )
     return 0
 

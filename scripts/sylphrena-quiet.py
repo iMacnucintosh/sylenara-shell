@@ -391,8 +391,49 @@ def _trigger_gtk_color_reload() -> None:
 
 
 def _patch_theme() -> None:
+    import atexit
+
+    import sylphrena.utils.scheme as scheme_mod
     import sylphrena.utils.theme as theme
     from sylphrena.utils.paths import c_state_dir
+
+    # The shell repaints the moment scheme.json changes; the apps when their own files do, written by
+    # apply_colours a few hundred ms later. Save scheme.json last so the shell and the apps switch together;
+    # atexit covers a save with no apply after it
+    orig_save = scheme_mod.Scheme.save
+    pending_saves: list = []
+
+    def deferred_save(self) -> None:
+        if self not in pending_saves:
+            pending_saves.append(self)
+
+    def flush_saves() -> None:
+        while pending_saves:
+            orig_save(pending_saves.pop(0))
+
+    scheme_mod.Scheme.save = deferred_save
+    atexit.register(flush_saves)
+
+    # Chrome's policy refresh blocks ~0.3 s in the middle of the apply: let it finish on its own
+    orig_apply_chromium = theme.apply_chromium
+
+    def apply_chromium_detached(colours: dict[str, str]) -> None:
+        real_run = subprocess.run
+
+        def run(cmd, *args, **kwargs):
+            if isinstance(cmd, (list, tuple)) and "--refresh-platform-policy" in cmd:
+                subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL, start_new_session=True)
+                return subprocess.CompletedProcess(cmd, 0)
+            return real_run(cmd, *args, **kwargs)
+
+        subprocess.run = run
+        try:
+            orig_apply_chromium(colours)
+        finally:
+            subprocess.run = real_run
+
+    theme.apply_chromium = apply_chromium_detached
 
     def apply_terms_quiet(sequences: str) -> None:
         state = c_state_dir / "sequences.txt"
@@ -501,6 +542,8 @@ def _patch_theme() -> None:
         _sync_opencode_theme(colours, mode)
         # Templates land inside apply_colours; refresh Kitty after that.
         _reload_kitty()
+        # Last: the shell follows scheme.json, so it switches with the apps, not before them
+        flush_saves()
 
     theme.apply_terms = apply_terms_quiet
     theme.apply_colours = apply_colours_quiet
