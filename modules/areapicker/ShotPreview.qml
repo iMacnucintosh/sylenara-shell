@@ -339,7 +339,7 @@ StyledWindow {
                     Repeater {
                         model: [
                             { id: "pen", icon: "draw", label: Tr.tr("Free line") },
-                            { id: "arrow", icon: "north_east", label: Tr.tr("Arrow") },
+                            { id: "arrow", icon: "swap_horiz", label: Tr.tr("Arrow") },
                             { id: "rect", icon: "rectangle", label: Tr.tr("Rectangle") },
                             { id: "eraser", icon: "ink_eraser", label: Tr.tr("Eraser") }
                         ]
