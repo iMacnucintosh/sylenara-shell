@@ -89,7 +89,7 @@ MouseArea {
                 // Path via argv ($1), never interpolated into the shell string.
                 Quickshell.execDetached(["sh", "-c", `wl-copy --type image/png < \"$1\"`, "_", path]);
             } else {
-                Quickshell.execDetached(["swappy", "-f", path]);
+                root.loader.preview(path, root.screen);
             }
             closeAnim.start();
         });

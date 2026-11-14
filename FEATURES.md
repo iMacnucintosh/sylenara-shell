@@ -91,6 +91,15 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Nexus → A
 
 ---
 
+## Capturas de pantalla
+
+- Captura de una zona o de una ventana (al pasar por encima se marca con el redondeo de Hyprland y el color principal del esquema).
+- Tras capturar sale una **previsualización** propia: **Copiar** (`Ctrl+C` o `Intro`), **Guardar** (`Ctrl+S`) o **Descartar** (`Esc`); cualquiera de las tres la cierra y avisa con un aviso emergente.
+- Se guardan en **`~/Imágenes/Capturas de pantalla`** (la carpeta de imágenes de XDG; override: env `SYLPHRENA_SCREENSHOTS_DIR`) como `Captura de pantalla_AAAAMMDD_HHMMSS.png`.
+- La captura «al portapapeles» no enseña la previsualización.
+
+---
+
 ## Grabación de pantalla
 
 - Card de **Screen recorder** en el panel de utilities (fullscreen / región, con o sin audio).

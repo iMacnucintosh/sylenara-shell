@@ -15,6 +15,13 @@ Scope {
         property bool closing
         property bool clipboardOnly
 
+        // The capture goes to the preview window, which outlives the picker
+        function preview(path: string, screen: ShellScreen): void {
+            previewLoader.path = path;
+            previewLoader.screen = screen;
+            previewLoader.active = true;
+        }
+
         Variants {
             model: Screens.screens
 
@@ -44,6 +51,19 @@ Scope {
                     screen: win.modelData
                 }
             }
+        }
+    }
+
+    LazyLoader {
+        id: previewLoader
+
+        property string path
+        property ShellScreen screen
+
+        ShotPreview {
+            screen: previewLoader.screen
+            path: previewLoader.path
+            onFinished: previewLoader.active = false
         }
     }
 

@@ -42,7 +42,6 @@ pkgbase = sylphrena-shell-git
 	depends = wtype
 	depends = grim
 	depends = slurp
-	depends = swappy
 	depends = playerctl
 	depends = libnotify
 	depends = qt6ct

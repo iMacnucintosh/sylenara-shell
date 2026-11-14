@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 19:27+0100\n"
+"POT-Creation-Date: 2026-11-15 00:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,44 @@ msgstr ""
 
 #: modules/activities/WorkspaceCard.qml
 msgid "Empty"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml services/Keybinds.qml
+msgid "Screenshots"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot copied"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copied to the clipboard"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot"
+msgstr ""
+
+#. TRANSLATORS: %1 = folder the screenshot was saved to
+#: modules/areapicker/ShotPreview.qml
+#, qt-format
+msgid "In %1"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot saved"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Discard"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml modules/launcher/DesktopEditDialog.qml
+msgid "Save"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copy"
 msgstr ""
 
 #: modules/background/Wallpaper.qml
@@ -850,10 +888,6 @@ msgstr ""
 
 #: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/KeybindsPage.qml
 msgid "Cancel"
-msgstr ""
-
-#: modules/launcher/DesktopEditDialog.qml
-msgid "Save"
 msgstr ""
 
 #: modules/launcher/DesktopEditDialog.qml
@@ -5064,10 +5098,6 @@ msgstr ""
 
 #: services/Keybinds.qml
 msgid "Shell"
-msgstr ""
-
-#: services/Keybinds.qml
-msgid "Screenshots"
 msgstr ""
 
 #: services/Keybinds.qml

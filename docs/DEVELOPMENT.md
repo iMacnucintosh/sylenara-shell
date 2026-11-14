@@ -11,7 +11,7 @@ Runtime (Arch):
 - `brightnessctl`, `libcava`, `networkmanager`, `lm_sensors`, `aubio`, `libpipewire`, `libqalculate`, `power-profiles-daemon`; `ddcutil` para el brillo de monitores externos
 - Fuentes: `ttf-material-symbols-variable`, `ttf-rubik-vf`, `ttf-cascadia-code-nerd`
 - Qt 6: `qt6-base`, `qt6-declarative`, `qt6-imageformats`, `qt6-multimedia`, [`qt6-m3shapes-git`](https://github.com/soramanew/m3shapes)
-- `swappy`, `fish`, `bash`
+- `fish`, `bash`
 - Portapapeles: `cliphist`, `wl-clipboard`, `wtype`
 - Hyprland y portales (`xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`), `qt6ct`, `papirus-icon-theme` y `adw-gtk-theme` (la shell escribe su configuración)
 
