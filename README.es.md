@@ -29,7 +29,7 @@ El instalador mira qué tiene tu sistema, te enseña qué va a instalar y por qu
 
 Puedes repetirlo cuando quieras: solo hace lo que falte. Para ver qué haría sin cambiar nada, `./install.sh --dry-run`.
 
-Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Nexus → Actualizaciones); desde una terminal, `sylph update`.
+Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Ajustes → Actualizaciones); desde una terminal, `sylph update`.
 
 Compila algunos paquetes, así que tómatelo con calma; en un equipo con poca memoria (una máquina virtual de 2 GB, por ejemplo) compila de uno en uno y tarda más.
 
@@ -56,15 +56,15 @@ Una barra lateral con tus escritorios y los iconos de sus apps, la bandeja del s
 
 <!-- captura: docs/media/dashboard.webp — el dashboard abierto -->
 
-### Nexus, los ajustes
+### Ajustes
 
-Todo se configura desde **Nexus** (`Super+,`), sin tocar ficheros: actividades y su aspecto, paneles, atajos de teclado (los graba pulsando la combinación), red y VPN, bluetooth, audio, pantallas (resolución, frecuencia, escala y VRR), idioma, notificaciones y actualizaciones.
+Todo se configura desde **Ajustes** (`Super+,`), sin tocar ficheros: actividades y su aspecto, paneles, atajos de teclado (los graba pulsando la combinación), red y VPN, bluetooth, audio, pantallas (resolución, frecuencia, escala y VRR), idioma, notificaciones y actualizaciones.
 
-<!-- captura: docs/media/nexus.webp — Nexus en la página de Actividades -->
+<!-- captura: docs/media/nexus.webp — Ajustes en la página de Actividades -->
 
 ### Actualizaciones del sistema
 
-Cuando hay paquetes nuevos (Arch, AUR o Flatpak), aparece un aviso en la barra. Desde ahí o desde Nexus actualizas con tu contraseña y ves el progreso en directo, sin abrir una terminal.
+Cuando hay paquetes nuevos (Arch, AUR o Flatpak), aparece un aviso en la barra. Desde ahí o desde Ajustes actualizas con tu contraseña y ves el progreso en directo, sin abrir una terminal.
 
 <!-- captura: docs/media/updates.webp — la página de actualizaciones con el progreso -->
 
@@ -107,13 +107,13 @@ Las apps GTK y Qt también siguen el esquema de colores, y puedes pedir que cier
 | `Super+Ctrl+←` / `→` | Actividad anterior / siguiente |
 | `Super+Tab` | Vista general de actividades |
 | `Super+D` | Dashboard |
-| `Super+,` | Nexus (ajustes) |
+| `Super+,` | Ajustes |
 | `Super+Shift+V` | Portapapeles |
 | `Super+L` | Bloquear |
 | `Impr Pant` | Captura de una zona, al portapapeles |
 | `Alt+Impr Pant` | Captura de una zona, para editarla |
 
-Todos se cambian en Nexus → Teclado y ratón.
+Todos se cambian en Ajustes → Teclado y ratón.
 
 ## Más información
 

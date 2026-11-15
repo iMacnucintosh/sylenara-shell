@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 03:09+0100\n"
+"POT-Creation-Date: 2026-11-15 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2309,7 +2309,7 @@ msgid "Commands"
 msgstr ""
 
 #: modules/nexus/pages/network/AddVpnPage.qml
-msgid "This provider type comes from an extension that is disabled. Enable it in Nexus → Extensions to edit the connection."
+msgid "This provider type comes from an extension that is disabled. Enable it in Settings → Extensions to edit the connection."
 msgstr ""
 
 #: modules/nexus/pages/network/AddVpnPage.qml
@@ -3196,7 +3196,8 @@ msgid "Mute or unmute the default source"
 msgstr ""
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
-#: modules/nexus/pages/ShellPage.qml
+#: modules/nexus/pages/ShellPage.qml modules/welcome/WelcomeWindow.qml
+#: services/Keybinds.qml
 msgid "Settings"
 msgstr ""
 
@@ -3942,7 +3943,7 @@ msgstr ""
 
 #: modules/nexus/WindowFactory.qml
 #, qt-format
-msgid "Nexus — %1"
+msgid "Settings — %1"
 msgstr ""
 
 #. TRANSLATORS: the count itself is rendered separately, immediately to the left
@@ -4088,7 +4089,7 @@ msgid "What Sylphrena gives you"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "A quick look. Everything is in Nexus, the settings window."
+msgid "A quick look. You can change all of it in Settings."
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
@@ -4224,15 +4225,15 @@ msgid "Your shortcuts"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "These are the ones in use now. Change any of them in Nexus and they update here."
+msgid "These are the ones in use now. Change any of them in Settings and they update here."
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "In Nexus you can also export and import them."
+msgid "In Settings you can also export and import them."
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Edit in Nexus"
+msgid "Edit in Settings"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
@@ -4240,7 +4241,7 @@ msgid "You are all set"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Open Nexus whenever you want to change something. This guide is in Nexus → About."
+msgid "Open Settings whenever you want to change something. This guide is in Settings → About."
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
@@ -4256,7 +4257,7 @@ msgid "Sylphrena Hub"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Open Nexus"
+msgid "Open Settings"
 msgstr ""
 
 #. TRANSLATORS: %1 = the version, e.g. 0.6.0
@@ -4913,10 +4914,6 @@ msgid "Toggle the app launcher"
 msgstr ""
 
 #: services/Keybinds.qml
-msgid "Settings (Nexus)"
-msgstr ""
-
-#: services/Keybinds.qml
 msgid "Open Sylphrena settings"
 msgstr ""
 
@@ -5456,7 +5453,7 @@ msgid "VPN connection failed"
 msgstr ""
 
 #: services/VPN.qml
-msgid "Enable the extension of this provider in Nexus → Extensions"
+msgid "Enable the extension of this provider in Settings → Extensions"
 msgstr ""
 
 #: services/VPN.qml

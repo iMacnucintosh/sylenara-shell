@@ -29,7 +29,7 @@ The installer looks at your system, shows what it is going to install and why, a
 
 You can run it again whenever you want: it only does what is still missing. To see what it would do without changing anything, `./install.sh --dry-run`.
 
-To update later, the shell offers new versions in its updates list (bar icon and Nexus → Updates); from a terminal, `sylph update`.
+To update later, the shell offers new versions in its updates list (bar icon and Settings → Updates); from a terminal, `sylph update`.
 
 It compiles a few packages, so give it some time; on a machine with little memory (a 2 GB virtual machine, say) it compiles one thing at a time and takes longer.
 
@@ -56,15 +56,15 @@ A side bar with your desktops and the icons of their apps, the system tray, the 
 
 <!-- screenshot: docs/media/dashboard.webp — the dashboard open -->
 
-### Nexus, the settings
+### Settings
 
-Everything is set up from **Nexus** (`Super+,`), without editing files: activities and their look, panels, keyboard shortcuts (recorded by pressing the keys), network and VPN, bluetooth, audio, displays (resolution, refresh rate, scale and VRR), language, notifications and updates.
+Everything is set up from **Settings** (`Super+,`), without editing files: activities and their look, panels, keyboard shortcuts (recorded by pressing the keys), network and VPN, bluetooth, audio, displays (resolution, refresh rate, scale and VRR), language, notifications and updates.
 
-<!-- screenshot: docs/media/nexus.webp — Nexus on the Activities page -->
+<!-- screenshot: docs/media/nexus.webp — Settings on the Activities page -->
 
 ### System updates
 
-When there are new packages (Arch, AUR or Flatpak), a notice shows up in the bar. From there or from Nexus you update with your password and watch the progress live, without opening a terminal.
+When there are new packages (Arch, AUR or Flatpak), a notice shows up in the bar. From there or from Settings you update with your password and watch the progress live, without opening a terminal.
 
 <!-- screenshot: docs/media/updates.webp — the updates page with its progress -->
 
@@ -107,13 +107,13 @@ GTK and Qt apps follow the colour scheme as well, and you can ask for some apps 
 | `Super+Ctrl+←` / `→` | Previous / next activity |
 | `Super+Tab` | Overview of the activities |
 | `Super+D` | Dashboard |
-| `Super+,` | Nexus (settings) |
+| `Super+,` | Settings |
 | `Super+Shift+V` | Clipboard |
 | `Super+L` | Lock |
 | `Print` | Screenshot of an area, to the clipboard |
 | `Alt+Print` | Screenshot of an area, to edit it |
 
-All of them can be changed in Nexus → Keyboard & mouse.
+All of them can be changed in Settings → Keyboard & mouse.
 
 ## More information
 

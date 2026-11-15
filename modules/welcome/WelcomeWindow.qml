@@ -348,7 +348,7 @@ FloatingWindow {
 
             PageHeader {
                 title: Tr.tr("What Sylphrena gives you")
-                subtitle: Tr.tr("A quick look. Everything is in Nexus, the settings window.")
+                subtitle: Tr.tr("A quick look. You can change all of it in Settings.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -367,8 +367,8 @@ FloatingWindow {
                             text: Tr.tr("A look for each part of your day: wallpaper, colours and the apps pinned to its desktops.")
                         },
                         {
-                            icon: "tune",
-                            title: "Nexus",
+                            icon: "settings",
+                            title: Tr.tr("Settings"),
                             text: Tr.tr("Every setting in one window, with search.")
                         },
                         {
@@ -677,7 +677,7 @@ FloatingWindow {
 
             PageHeader {
                 title: Tr.tr("Your shortcuts")
-                subtitle: Tr.tr("These are the ones in use now. Change any of them in Nexus and they update here.")
+                subtitle: Tr.tr("These are the ones in use now. Change any of them in Settings and they update here.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -789,7 +789,7 @@ FloatingWindow {
 
                 StyledText {
                     Layout.fillWidth: true
-                    text: Tr.tr("In Nexus you can also export and import them.")
+                    text: Tr.tr("In Settings you can also export and import them.")
                     color: Colours.palette.m3onSurfaceVariant
                     font: Tokens.font.body.small
                     wrapMode: Text.WordWrap
@@ -800,7 +800,7 @@ FloatingWindow {
                     isRound: true
                     horizontalPadding: Tokens.padding.large
                     verticalPadding: Tokens.padding.small
-                    text: Tr.tr("Edit in Nexus")
+                    text: Tr.tr("Edit in Settings")
                     onClicked: WindowFactory.openPage("keybinds")
                 }
             }
@@ -816,7 +816,7 @@ FloatingWindow {
 
             PageHeader {
                 title: Tr.tr("You are all set")
-                subtitle: Tr.tr("Open Nexus whenever you want to change something. This guide is in Nexus → About.")
+                subtitle: Tr.tr("Open Settings whenever you want to change something. This guide is in Settings → About.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -901,7 +901,7 @@ FloatingWindow {
                 horizontalPadding: Tokens.padding.large
                 verticalPadding: Tokens.padding.medium
                 icon: "tune"
-                text: Tr.tr("Open Nexus")
+                text: Tr.tr("Open Settings")
                 onClicked: WindowFactory.openPage("activities")
             }
 

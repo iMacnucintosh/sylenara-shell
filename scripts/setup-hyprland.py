@@ -6,7 +6,7 @@
 Adds to ~/.config/hypr/hyprland.lua a block between markers that
   - starts the shell with the session (unless the file already starts it),
   - sets QT_QPA_PLATFORMTHEME=qt6ct (unless the file sets it),
-  - loads the files Sylphrena writes from Nexus (sylphrena-monitors, -input, -binds, -activity-rules, -animation), each
+  - loads the files Sylphrena writes from its Settings (sylphrena-monitors, -input, -binds, -activity-rules, -animation), each
     through pcall because they do not exist until the shell has run once.
 If there is no hyprland.lua yet it starts from Hyprland's own default (/usr/share/hypr/hyprland.lua). An existing
 file keeps everything it has: the block goes at the end, a copy is left in hyprland.lua.sylphrena-backup (once), and
@@ -82,7 +82,7 @@ def keyboard_line(rest: str) -> str | None:
 
 def render(shell_dir: Path, rest: str) -> str:
     """The block, leaving out what the rest of the file already does."""
-    lines = [BEGIN, "-- Sylphrena writes the files below from Nexus; they do not exist until the shell has run once (pcall)."]
+    lines = [BEGIN, "-- Sylphrena writes the files below from its Settings; they do not exist until the shell has run once (pcall)."]
     if "QT_QPA_PLATFORMTHEME" not in rest:
         lines.append('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")')
     if not starts_shell(rest):

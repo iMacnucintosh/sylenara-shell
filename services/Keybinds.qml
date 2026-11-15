@@ -373,7 +373,7 @@ Singleton {
         },
         {
             id: "nexus",
-            label: () => Tr.tr("Settings (Nexus)"),
+            label: () => Tr.tr("Settings"),
             description: () => Tr.tr("Open Sylphrena settings"),
             defaultBind: "SUPER + COMMA",
             global: "sylphrena:nexus",

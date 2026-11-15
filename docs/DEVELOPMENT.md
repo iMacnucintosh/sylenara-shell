@@ -47,12 +47,12 @@ Con `ENABLE_MODULES=plugin` no se sobrescribe `shell.qml`. `sylph shell` exporta
 
 ### Hyprland
 
-`scripts/setup-hyprland.py` añade a `~/.config/hypr/hyprland.lua` un bloque marcado con el arranque de la shell, `QT_QPA_PLATFORMTHEME` y los ficheros que Sylphrena genera desde Nexus (con copia de seguridad y validación). A mano, sería:
+`scripts/setup-hyprland.py` añade a `~/.config/hypr/hyprland.lua` un bloque marcado con el arranque de la shell, `QT_QPA_PLATFORMTHEME` y los ficheros que Sylphrena genera desde Ajustes (con copia de seguridad y validación). A mano, sería:
 
 ```lua
-pcall(require, "sylphrena-binds")            -- atajos (Nexus → Teclado y ratón)
+pcall(require, "sylphrena-binds")            -- atajos (Ajustes → Teclado y ratón)
 pcall(require, "sylphrena-activity-rules")   -- actividades y apps ancladas
-pcall(require, "sylphrena-monitors")         -- modos y VRR (Nexus → Pantalla)
+pcall(require, "sylphrena-monitors")         -- modos y VRR (Ajustes → Pantalla)
 pcall(require, "sylphrena-input")            -- foco del ratón
 pcall(require, "sylphrena-animation")        -- transiciones (después de tus animaciones)
 ```
