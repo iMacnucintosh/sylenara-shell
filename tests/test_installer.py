@@ -16,6 +16,15 @@ def bare() -> "inst.Facts":
                       display_manager="sddm")
 
 
+def with_repo(**k) -> "inst.Facts":
+    """A bare system where the package repository answers."""
+    f = bare()
+    f.repo_online = True
+    for a, v in k.items():
+        setattr(f, a, v)
+    return f
+
+
 def ids(items, **where):
     return [i.id for i in items if all(getattr(i, k) == v for k, v in where.items())]
 
@@ -375,13 +384,62 @@ class Look(unittest.TestCase):
         self.assertEqual(ui.title_words("para que funcione sylph record"), "Para Que Funcione Sylph Record")
 
 
+class Repository(unittest.TestCase):
+    def test_with_the_repository_everything_comes_ready_built(self):
+        items = inst.build_plan(with_repo())
+        order = [i.id for i in items]
+        self.assertLess(order.index("repo"), order.index("aur-deps"))
+        for it in items:
+            if it.id == "aur-deps" or it.id in dict(inst.PACKAGES):
+                self.assertEqual([s.kind for s in it.steps], ["sync"], it.id)
+        # yay is only offered for Zen (no browser here), and not with a browser
+        self.assertNotIn("aur-helper", ids(inst.build_plan(with_repo(browser="firefox")), on=True))
+
+    def test_without_it_or_from_source_it_builds_as_before(self):
+        for f in (bare(), with_repo(from_source=True)):
+            items = inst.build_plan(f)
+            self.assertNotIn("repo", [i.id for i in items])
+            kinds = {s.kind for i in items if i.id in dict(inst.PACKAGES) for s in i.steps}
+            self.assertNotIn("sync", kinds)
+
+    def test_a_configured_repository_is_not_set_up_again(self):
+        items = inst.build_plan(with_repo(repo_configured=True))
+        self.assertFalse(next(i for i in items if i.id == "repo").todo)
+
+    def test_sync_upgrades_the_whole_system_never_a_partial_upgrade(self):
+        r = inst.Runner(dry=True, helper="yay", log=None)
+        out = io.StringIO()
+        with redirect_stdout(out):
+            r.step(inst.Step("sync", ["veo-git"]))
+        self.assertIn("pacman -Syu --needed --noconfirm veo-git", out.getvalue())
+
+    def test_the_section_is_added_once_and_only_trusts_its_key(self):
+        import subprocess
+        import tempfile
+
+        steps = inst.repo_steps()
+        self.assertEqual(steps[2].args, ["pacman-key", "--lsign-key", inst.REPO_KEY])
+        self.assertIn("BEGIN PGP PUBLIC KEY BLOCK", steps[0].args[1])
+        with tempfile.TemporaryDirectory() as d:
+            conf = Path(d) / "pacman.conf"
+            conf.write_text("[core]\nInclude = /etc/pacman.d/mirrorlist\n")
+            cmd = [*steps[3].args[:4], str(conf), steps[3].args[5]]
+            for _ in range(2):
+                subprocess.run(cmd, check=True)
+            text = conf.read_text()
+            self.assertEqual(text.count("[sylphrena]"), 1)
+            self.assertIn("SigLevel = Required", text)
+            self.assertTrue(inst.repo_configured(conf))
+            self.assertFalse(inst.repo_configured(Path(d) / "missing"))
+
+
 class Translations(unittest.TestCase):
     def test_every_string_the_installer_shows_has_its_spanish(self):
         import re
 
         src = (Path(__file__).resolve().parent.parent / "scripts/installer.py").read_text()
         wanted = set(re.findall(r'\btr\(\s*"((?:[^"\\]|\\.)*)"', src)) | set(inst.GROUPS)
-        for f in (bare(), inst.Facts(arch=True, helper="yay", installed={"quickshell"})):
+        for f in (bare(), inst.Facts(arch=True, helper="yay", installed={"quickshell"}), with_repo()):
             for it in inst.build_plan(f):
                 wanted |= {it.title, it.why}
         self.assertEqual(sorted(w for w in wanted if w not in inst.ES), [])

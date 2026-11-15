@@ -145,7 +145,7 @@ ColumnLayout {
                                 return `${frm} → ${to}`;
                             // TRANSLATORS: an app of Sylphrena installed by this update; %1 = its version
                             if (row.modelData.isNew)
-                                return Tr.tr("New · %1").arg(to);
+                                return (to ? Tr.tr("New · %1").arg(to) : Tr.trCtx("New", "update list"));
                             return to || frm;
                         }
                         color: Colours.palette.m3onSurfaceVariant

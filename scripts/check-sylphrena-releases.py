@@ -6,7 +6,11 @@
 
 Listed: the packages that are installed and behind their latest release, and (on a machine that installed Sylphrena
 from packages) the ones of the family it does not have yet, with "new": true, so the update installs them; a machine
-that runs the shell from a clone (no packages) gets an empty list. The tag comes from the web page of the release (not limited like the API, which
+that runs the shell from a clone (no packages) gets an empty list.
+
+With Sylphrena's package repository in pacman.conf, the installed packages update with the system's (pacman lists
+them): only the missing ones are listed here. A machine installed from packages without it gets one entry,
+"sylphrena-repo", while the repository answers: updating sets it up (installer.py --update). The tag comes from the web page of the release (not limited like the API, which
 allows 60 requests an hour without an account); the API is only asked for the notes of a tag not seen before.
 """
 from __future__ import annotations
@@ -20,7 +24,8 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from installer import PACKAGES, behind, installed_version, latest_release as latest_tag, version_tuple  # noqa: E402
+from installer import (PACKAGES, REPO_NAME, behind, installed_version, latest_release as latest_tag,  # noqa: E402
+                       repo_configured, repo_online, version_tuple)
 
 NAMES = {"sylphrena-shell-git": "Sylphrena", "sylphrena-cli-git": "sylphrena-cli", "seeker-git": "Seeker", "things-git": "Things",
          "veo-git": "Veo"}
@@ -102,6 +107,9 @@ def main() -> int:
     pretend = json.loads(os.environ.get("SYLPHRENA_TEST_INSTALLED") or "{}")
     # Installed from packages (not a clone): a package of the family it does not have yet comes with the next update
     packaged = bool(pretend.get("sylphrena-shell-git") if pretend else installed_version("sylphrena-shell-git"))
+    # Tests: SYLPHRENA_TEST_REPO = configured | online | off
+    test_repo = os.environ.get("SYLPHRENA_TEST_REPO")
+    in_conf = test_repo == "configured" if test_repo else repo_configured()
     for pkg, repo in PACKAGES:
         have = pretend.get(pkg) if pretend else installed_version(pkg)
         if not have:
@@ -110,11 +118,16 @@ def main() -> int:
                 updates.append({"pkg": pkg, "name": NAMES.get(pkg, pkg), "repo": repo, "installed": "",
                                 "latest": rel["tag"].lstrip("v"), "notes": rel["notes"], "url": rel["url"], "new": True})
             continue
+        if in_conf:
+            continue                            # comes with the system's updates
         rel = latest(repo, cache)
         if rel and behind(have, rel["tag"]):
             updates.append({"pkg": pkg, "name": NAMES.get(pkg, pkg), "repo": repo,
                             "installed": have.split(".r")[0].split("-")[0], "latest": rel["tag"].lstrip("v"),
                             "notes": rel["notes"], "url": rel["url"]})
+    if packaged and not in_conf and (test_repo == "online" if test_repo else repo_online()):
+        updates.append({"pkg": f"{REPO_NAME}-repo", "name": "Sylphrena packages", "repo": "", "installed": "", "latest": "",
+                        "notes": "", "url": "https://github.com/iMacnucintosh/sylphrena-packages", "new": True})
     save_cache(cache)
     print(json.dumps({"updates": updates, "extensions": extension_updates(pretend), "checked": int(time.time())}))
     return 0

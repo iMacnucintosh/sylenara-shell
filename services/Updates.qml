@@ -154,12 +154,14 @@ Singleton {
         }
         if (!root.checkAur && !root.checkArch && !root.checkFlatpak)
             args.push("--arch");
-        // Sylphrena and its extensions, after the system
-        if (SylphrenaUpdates.updates.length)
+        // Sylphrena and its extensions, after the system. Its packages may also be among the system's (from its
+        // package repository): the installer then finishes what comes after them (the login screen, its setup)
+        const family = root.packages.filter(p => SylphrenaUpdates.familyPackages.includes(p.name));
+        if (SylphrenaUpdates.updates.length || family.length)
             args.push("--sylphrena");
         for (const e of SylphrenaUpdates.extensions)
             args.push("--extension", e.id);
-        root._shellUpdating = !!SylphrenaUpdates.shell;
+        root._shellUpdating = !!SylphrenaUpdates.shell || family.some(p => p.name === "sylphrena-shell-git");
         return args;
     }
 

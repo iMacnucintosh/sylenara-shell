@@ -31,7 +31,7 @@ You can run it again whenever you want: it only does what is still missing. To s
 
 To update later, the shell offers new versions in its updates list (bar icon and Settings → Updates); from a terminal, `sylph update`.
 
-It compiles a few packages, so give it some time; on a machine with little memory (a 2 GB virtual machine, say) it compiles one thing at a time and takes longer.
+Sylphrena's packages come ready-built and signed from its own pacman repository (`[sylphrena]`, which the installer adds with its key), so installing takes a few minutes and updates arrive with the system's. If the repository does not answer, or with `./install.sh --from-source`, it builds them from source.
 
 <!-- screenshot: docs/media/installer.webp — the installer with its list of steps -->
 

@@ -31,7 +31,7 @@ Puedes repetirlo cuando quieras: solo hace lo que falte. Para ver qué haría si
 
 Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Ajustes → Actualizaciones); desde una terminal, `sylph update`.
 
-Compila algunos paquetes, así que tómatelo con calma; en un equipo con poca memoria (una máquina virtual de 2 GB, por ejemplo) compila de uno en uno y tarda más.
+Los paquetes de Sylphrena llegan ya compilados y firmados desde su propio repositorio de pacman (`[sylphrena]`, que el instalador añade con su clave), así que instalar lleva unos minutos y las actualizaciones llegan con las del sistema. Si el repositorio no responde, o con `./install.sh --from-source`, los compila desde el código.
 
 <!-- captura: docs/media/installer.webp — el instalador con la lista de pasos -->
 

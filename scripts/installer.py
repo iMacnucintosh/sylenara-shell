@@ -4,19 +4,21 @@
   ./install.sh [options]            (install.sh makes sure git, base-devel and python are there, then runs this)
 
 It looks at the system, shows what is missing and why, asks, and does it with a single password:
-  Required      an AUR helper (yay) if there is none, the AUR packages the shell builds on, and the four
-                packages of Sylphrena: sylphrena-cli, seeker, things and the shell itself
+  Required      the Sylphrena package repository (signed, ready-built packages), the libraries the shell builds on
+                and the five packages of Sylphrena: sylphrena-cli, seeker, things, veo and the shell itself
   Recommended   the Zen browser (the clock font, the screen recorder and DDC/CI brightness come with the shell)
   Setup         hook the shell into Hyprland, create the first-run settings, connect kitty
   Login screen  greetd with the Sylphrena greeter (replaces the display manager you have)
 Nothing is changed before you confirm. It can be run again: it only does what is still missing.
 Extensions are not part of it: they are installed later from Things.
 
-Packages are built from the latest release of each repository; --main builds the latest commit instead.
+Packages come ready-built and signed from Sylphrena's own pacman repository ([sylphrena] in /etc/pacman.conf), so
+updates arrive with the system's. Without it (unreachable, or --from-source) they are built from the latest release of
+each repository, with the AUR for the libraries; --main builds the latest commit instead (implies --from-source).
 --update only brings the installed packages and their setup up to date (what the shell runs when it offers a new version).
 
 Options:  --yes (accept the defaults)   --dry-run (show the commands, run nothing)   --list (what it found, JSON)
-          --only ID[,ID]   --skip ID[,ID]   --no-login-screen   --demo (preview on a bare system)   --verbose (show the output of every command)   --help
+          --from-source (build instead of using the package repository)   --only ID[,ID]   --skip ID[,ID]   --no-login-screen   --demo (preview on a bare system)   --verbose (show the output of every command)   --help
 Log: ~/.local/state/sylphrena/install.log
 """
 from __future__ import annotations
@@ -49,6 +51,22 @@ PACKAGES = [("sylphrena-cli-git", "sylphrena-cli"), ("seeker-git", "seeker"), ("
 BROWSERS = ["zen-browser", "firefox", "chromium", "google-chrome-stable", "brave", "librewolf", "vivaldi-stable", "epiphany"]
 # Dependencies of the shell package that are not in the Arch repositories (makepkg -s cannot install them)
 AUR_DEPS = ["quickshell-git", "qt6-m3shapes-git", "python-materialyoucolor", "libcava", "ttf-rubik-vf"]
+# Sylphrena's pacman repository: built and signed by iMacnucintosh/sylphrena-packages (GitHub Actions)
+REPO_NAME = "sylphrena"
+REPO_SERVER = "https://github.com/iMacnucintosh/sylphrena-packages/releases/download/x86_64"
+REPO_KEY = "D48895A048042C67AB45D200903338E0D2D31CEC"
+REPO_KEY_FILE = "/etc/pacman.d/sylphrena.gpg"
+REPO_KEY_ARMOR = """-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEavmvkxYJKwYBBAHaRw8BAQdAF+DnckVK/I8VeKsmAXFpjuIR/y3z6x/dx04E
++5U7lpS0ElN5bHBocmVuYSBwYWNrYWdlc4iQBBMWCgA4FiEE1IiVoEgELGerRdIA
+kDM44NLTHOwFAmr5r5MCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQkDM4
+4NLTHOywlwD/R1eYlonRGO2vKh9eJQ2DKWGv4jZMOKDBKsz97mW4f/IA+gNgIgaB
+2TwsC4UFZQqVVO3PlgUY3F7I8KeR9BsXsSEE
+=yZmw
+-----END PGP PUBLIC KEY BLOCK-----
+"""
+PACMAN_CONF = Path("/etc/pacman.conf")
 STATE = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "sylphrena"
 CACHE = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "sylphrena-install"
 
@@ -106,6 +124,8 @@ ES = {
     "Base tools": "Herramientas base", "to build packages from the AUR and run this installer": "para construir paquetes del AUR y ejecutar este instalador",
     "Hyprland": "Hyprland", "the compositor Sylphrena runs on": "el compositor sobre el que corre Sylphrena",
     "AUR helper (yay)": "Ayudante del AUR (yay)", "to install packages that are only in the AUR": "para instalar paquetes que solo están en el AUR",
+    "Sylphrena package repository": "Repositorio de paquetes de Sylphrena",
+    "signed, ready-built packages: installing and updating takes seconds instead of compiling, and comes with the system's updates": "paquetes firmados y ya compilados: instalar y actualizar lleva segundos en vez de compilar, y llega con las actualizaciones del sistema",
     "Libraries from the AUR": "Librerías del AUR", "Quickshell (git version), the Material shapes, the colour library, the audio visualiser and the clock font the shell is built on": "Quickshell (versión git), las formas Material, la librería de color, el visualizador de audio y la fuente del reloj sobre los que se construye la shell",
     "Remove the stable Quickshell": "Quitar el Quickshell estable", "it conflicts with the git version the shell needs": "choca con la versión git que necesita la shell",
     "sylphrena-cli": "sylphrena-cli", "the sylph command (shell, themes, wallpapers, screenshots)": "el comando sylph (shell, temas, fondos, capturas)",
@@ -178,6 +198,13 @@ class Facts:
     versions: dict[str, str] = field(default_factory=dict)  # our packages that are installed → their version
     releases: dict[str, str] = field(default_factory=dict)  # our repositories → the tag of their latest release
     browser: str | None = None                              # a web browser that is already there (then Zen is not preselected)
+    repo_configured: bool = False                           # [sylphrena] is in pacman.conf
+    repo_online: bool = False                               # its database answers (only asked when not configured)
+    from_source: bool = False                               # --from-source / --main: build, even with the repository
+
+    @property
+    def use_repo(self) -> bool:
+        return not self.from_source and (self.repo_configured or self.repo_online)
 
     def have(self, pkg: str) -> bool:
         return pkg in self.installed
@@ -219,6 +246,22 @@ def latest_release(repo: str) -> str | None:
     return None
 
 
+def repo_configured(conf: Path = PACMAN_CONF) -> bool:
+    try:
+        return re.search(rf"^\s*\[{REPO_NAME}\]\s*$", conf.read_text(), re.M) is not None
+    except OSError:
+        return False
+
+
+def repo_online() -> bool:
+    req = urllib.request.Request(f"{REPO_SERVER}/{REPO_NAME}.db", method="HEAD", headers={"User-Agent": "sylphrena-installer"})
+    try:
+        with urllib.request.urlopen(req, timeout=8) as r:
+            return r.status == 200
+    except (OSError, urllib.error.URLError):
+        return False
+
+
 def installed_version(pkg: str) -> str | None:
     code, out = sh(["pacman", "-Q", pkg])
     return out.split()[1] if code == 0 and len(out.split()) > 1 else None
@@ -248,8 +291,11 @@ def check_status(script: str) -> str:
         return "needed" if code else "unknown"
 
 
-def scan(from_main: bool = False) -> Facts:
+def scan(from_main: bool = False, from_source: bool = False) -> Facts:
     f = Facts()
+    f.from_source = from_source or from_main
+    f.repo_configured = repo_configured()
+    f.repo_online = f.repo_configured or (not f.from_source and repo_online())
     f.arch = Path("/etc/arch-release").exists() or shutil.which("pacman") is not None
     f.is_root = os.geteuid() == 0
     f.helper = next((h for h in ("yay", "paru") if shutil.which(h)), None)
@@ -278,7 +324,7 @@ def scan(from_main: bool = False) -> Facts:
 
 @dataclass
 class Step:
-    kind: str            # pacman | aur | build | user | root | write-root
+    kind: str            # pacman | sync (pacman -Syu with them) | aur | build | user | root | write-root
     args: list = field(default_factory=list)
 
 
@@ -301,6 +347,16 @@ def installed_shell_dir() -> Path:
     return INSTALLED_SHELL if INSTALLED_SHELL.is_dir() else ROOT
 
 
+def repo_steps() -> list[Step]:
+    """Trust the repository's key (only for it: a local signature) and add it at the end of pacman.conf."""
+    section = f"\n[{REPO_NAME}]\nSigLevel = Required\nServer = {REPO_SERVER}\n"
+    return [Step("write-root", [REPO_KEY_FILE, REPO_KEY_ARMOR]),
+            Step("root", ["pacman-key", "--add", REPO_KEY_FILE]),
+            Step("root", ["pacman-key", "--lsign-key", REPO_KEY]),
+            Step("root", ["sh", "-c", f'grep -q "^\\[{REPO_NAME}\\]" "$1" || printf "%s" "$2" >> "$1"', "_",
+                          str(PACMAN_CONF), section])]
+
+
 def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
     items: list[Item] = []
     helper = f.helper or "yay"
@@ -316,9 +372,14 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         required=True, steps=[Step("pacman", missing_tools)] if missing_tools else [])
     add("hyprland", "Required", "Hyprland", "the compositor Sylphrena runs on", True, todo=not f.have("hyprland"), required=True,
         steps=[Step("pacman", ["hyprland"])])
+    if f.use_repo:
+        add("repo", "Required", "Sylphrena package repository",
+            "signed, ready-built packages: installing and updating takes seconds instead of compiling, and comes with the system's updates",
+            True, todo=not f.repo_configured, required=True, steps=repo_steps())
     need_aur = [p for p in AUR_DEPS if not f.have(p)]
     own_from_aur = [p for p, _ in PACKAGES if not f.have(p) and p in f.in_aur]
-    need_helper = f.helper is None and bool(need_aur or own_from_aur
+    # With the repository nothing of ours comes from the AUR: the helper is only for Zen
+    need_helper = f.helper is None and bool((not f.use_repo and (need_aur or own_from_aur))
                                             or (f.browser is None and not f.have("zen-browser-bin")))
     add("aur-helper", "Required", "AUR helper (yay)", "to install packages that are only in the AUR", True, todo=need_helper,
         required=True, steps=[Step("build", ["yay-bin", "https://aur.archlinux.org/yay-bin.git"])])
@@ -328,7 +389,7 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
             True, required=True, steps=[Step("root", ["pacman", "-Rdd", "--noconfirm", "quickshell"])])
     add("aur-deps", "Required", "Libraries from the AUR",
         "Quickshell (git version), the Material shapes, the colour library, the audio visualiser and the clock font the shell is built on", True, todo=bool(need_aur),
-        required=True, steps=[Step("aur", need_aur)] if need_aur else [])
+        required=True, steps=[Step("sync" if f.use_repo else "aur", need_aur)] if need_aur else [])
     labels = {"sylphrena-cli-git": ("sylphrena-cli", "the sylph command (shell, themes, wallpapers, screenshots)"),
               "seeker-git": ("Seeker", "the file manager of Sylphrena"), "things-git": ("Things", "the package manager and extension manager"),
               "veo-git": ("Veo", "the video player of Sylphrena"),
@@ -336,7 +397,12 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
     for pkg, repo in PACKAGES:
         title, why = labels[pkg]
         tag = f.releases.get(repo, "")
-        step = Step("aur", [pkg]) if pkg in f.in_aur else Step("build", [pkg, f"{GITHUB}/{repo}", "packaging", tag])
+        if f.use_repo:
+            step = Step("sync", [pkg])
+        elif pkg in f.in_aur:
+            step = Step("aur", [pkg])
+        else:
+            step = Step("build", [pkg, f"{GITHUB}/{repo}", "packaging", tag])
         it = add(pkg, "Required", title, why, True, todo=not f.have(pkg) or behind(f.versions.get(pkg), tag), required=True,
                  steps=[step])
         if f.have(pkg) and it.todo:
@@ -480,6 +546,9 @@ class Runner:
         k, a = s.kind, s.args
         if k == "pacman":
             return not a or self.run([*self.sudo, "pacman", "-S", "--needed", "--noconfirm", *a])
+        if k == "sync":
+            # A fresh database with the whole system up to date (never -Sy alone: a partial upgrade breaks Arch)
+            return not a or self.run([*self.sudo, "pacman", "-Syu", "--needed", "--noconfirm", *a])
         if k == "aur":
             return not a or self.run([self.helper, "-S", "--needed", "--noconfirm", *(["--sudoflags=-A"] if self.askpass else []), *a])
         if k == "build":
@@ -623,7 +692,7 @@ def conversation(items: list[Item], f: Facts, yes: bool) -> bool:
 
 def parse(argv: list[str]) -> dict:
     opts = {"demo": False, "yes": False, "dry": False, "list": False, "only": None, "skip": set(), "login": True, "verbose": False,
-            "main": False, "update": False}
+            "main": False, "update": False, "source": False}
     it = iter(argv)
     for a in it:
         if a in ("--yes", "-y"):
@@ -639,6 +708,8 @@ def parse(argv: list[str]) -> dict:
             opts["verbose"] = True
         elif a == "--main":
             opts["main"] = True
+        elif a == "--from-source":
+            opts["source"] = True
         elif a == "--update":
             opts["update"] = True
         elif a == "--no-login-screen":
@@ -687,7 +758,7 @@ def finish(results: list[tuple[Item, str, int]], dry: bool, log: Path) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     opts = parse(sys.argv[1:] if argv is None else argv)
-    f = scan(from_main=opts["main"])
+    f = scan(from_main=opts["main"], from_source=opts["source"])
     if opts["demo"]:
         # What a bare Arch looks like (nothing of ours, no AUR helper, a desktop, another display manager); changes nothing
         f = Facts(arch=True, helper=None, installed={"git"}, in_aur=set(AUR_DEPS),

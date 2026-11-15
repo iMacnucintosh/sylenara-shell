@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 13:35+0100\n"
+"POT-Creation-Date: 2026-11-15 14:15+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -479,6 +479,12 @@ msgstr "%1 Actualizaciones"
 #, qt-format
 msgid "New · %1"
 msgstr "Nuevo · %1"
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+
+msgctxt "update list"
+msgid "New"
+msgstr "Nuevo"
 
 #: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
 msgid "No updates available."
@@ -5283,6 +5289,11 @@ msgstr "Las notificaciones emergentes están ahora activadas"
 msgctxt "track artist and title"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: services/SylphrenaUpdates.qml
+
+msgid "Sylphrena packages"
+msgstr "Paquetes de Sylphrena"
 
 #: services/SylphrenaUpdates.qml
 msgid "Updates available"

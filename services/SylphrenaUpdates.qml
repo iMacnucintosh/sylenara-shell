@@ -19,7 +19,12 @@ Singleton {
     id: root
 
 
-    // [{ pkg, name, repo, installed, latest, notes, url, new }] (new: not installed yet, comes with the update)
+    // The packages of the family: with the package repository they update with the system's (pacman lists them),
+    // and the update then also runs the installer for what comes after them (the login screen, the default player)
+    readonly property list<string> familyPackages: ["sylphrena-shell-git", "sylphrena-cli-git", "seeker-git", "things-git", "veo-git"]
+
+    // [{ pkg, name, repo, installed, latest, notes, url, new }] (new: not installed yet, comes with the update;
+    // "sylphrena-repo": the package repository, set up by the update)
     property var updates: []
     // [{ id, name, installed, latest }]
     property var extensions: []
@@ -31,7 +36,7 @@ Singleton {
 
     // In the shape of Updates.packages: { name, from, to, source, … }
     readonly property var entries: [...updates.map(u => ({
-                name: u.name,
+                name: u.pkg === "sylphrena-repo" ? Tr.tr("Sylphrena packages") : u.name,
                 from: u.installed,
                 to: u.latest,
                 source: "SYLPHRENA",

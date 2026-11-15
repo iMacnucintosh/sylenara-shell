@@ -380,7 +380,7 @@ PageBase {
                                     const frm = pkgRow.modelData.from || "";
                                     const to = pkgRow.modelData.to || "";
                                     if (pkgRow.modelData.isNew)
-                                        return `${s}  ·  ${Tr.tr("New · %1").arg(to)}`;
+                                        return `${s}  ·  ${(to ? Tr.tr("New · %1").arg(to) : Tr.trCtx("New", "update list"))}`;
                                     return `${s}  ·  ${frm} → ${to}`;
                                 }
                                 color: Colours.palette.m3outline
