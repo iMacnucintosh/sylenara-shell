@@ -11,6 +11,9 @@ ToolTip {
 
     property bool shown
 
+    // A popup is not an item: it does not inherit the screen of the control it belongs to
+    Tokens.screen: parent?.Tokens.screen ?? ""
+
     visible: shown && text.length > 0
     delay: 500
     timeout: -1
