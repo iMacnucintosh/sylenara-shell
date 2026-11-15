@@ -31,7 +31,7 @@ Sistema opcional (activado por defecto en este fork) que agrupa desktops de Hypr
 ### Cambiar de actividad
 
 - Por defecto: **Super + Ctrl + ← / →** (al primer desktop de la activity anterior/siguiente).
-- Remapeable en **Ajustes → Keyboard & mouse**.
+- Remapeable en **Ajustes → Teclado y ratón**.
 
 ### Estilo por actividad
 
@@ -49,12 +49,12 @@ El apply es **un solo proceso** (`scripts/apply-activity-style.py`): evita carre
 
 ### Apps ancladas a un desktop
 
-Desde **Ajustes → Activities** puedes asociar aplicaciones a un desktop concreto de una activity.  
+Desde **Ajustes → Actividades** puedes asociar aplicaciones a un desktop concreto de una activity.  
 Hyprland aplica esas reglas al arrancar (archivo generado `~/.config/hypr/sylphrena-activity-rules.lua`).
 
 ### Configuración
 
-**Ajustes → Activities**:
+**Ajustes → Actividades**:
 
 - Siempre activas (puede haber solo Principal o varias; sin interruptor Activar/desactivar)
 - Mostrar iconos de apps en los workspaces de la barra
@@ -70,19 +70,19 @@ Principal no se puede eliminar.
 En tu config Lua de Hyprland:
 
 ```lua
-require("sylphrena-binds")           -- atajos (Ajustes → Keyboard & mouse)
-require("sylphrena-activity-rules")  -- reglas de activities / pins (Ajustes → Activities)
+require("sylphrena-binds")           -- atajos (Ajustes → Teclado y ratón)
+require("sylphrena-activity-rules")  -- reglas de activities / pins (Ajustes → Actividades)
 ```
 
 ---
 
 ## Launcher (menú de aplicaciones)
 
-- Atajo (en tu setup): **Alt + Space** (remapeable en Ajustes → Keyboard & mouse).
+- Atajo: **Super + Espacio** por defecto (se cambia en Ajustes → Teclado y ratón).
 - También se abre al llevar el puntero al **borde inferior**, en la zona centrada del launcher (como un panel).
 - Se cierra al sacar el puntero (como el dashboard), con Escape, al elegir una app, o al perder el foco.
   Si lo abriste con el atajo, se mantiene hasta Escape / elegir app (igual que el resto de paneles por tecla).
-- Se puede desactivar el hover en **Ajustes → Panels → Launcher → Show on hover**.
+- Se puede desactivar el hover en **Ajustes → Paneles → Lanzador → Mostrar al pasar el cursor**.
 - La búsqueda normal compara el **nombre**; después de esos resultados se añaden las apps cuyo `Keywords` del `.desktop` tenga una palabra que empiece por lo escrito (mín. 3 letras). Así «seeker» encuentra *Archivos* y «things» encuentra *Paquetes*.
 - **Clic derecho** sobre una app: menú contextual (un solo menú abierto a la vez) con:
   - Editar nombre / descripción / icono (diálogo centrado; el launcher no se cierra al editar)
@@ -117,7 +117,7 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Ajustes →
 
 Inspirado en [arch-update-checker](https://github.com/iMacnucintosh/arch-update-checker):
 
-- **Ajustes → Updates**: refrescar, contador, actualizar sistema, lista expandable (info / update / uninstall / URL).
+- **Ajustes → Actualizaciones**: refrescar, contador, actualizar sistema, lista expandable (info / update / uninstall / URL).
 - Engranaje → fuentes (Arch / AUR / Flatpak, todas on por defecto), wrapper AUR (**yay**), intervalo, notificaciones, single-package.
 - Icono en status (junto a la VPN FortiClient) **solo si hay paquetes**; badge con el número; popout rápido.
 - Poll cada **30 min**; toast al detectar paquetes nuevos (default on).
@@ -128,7 +128,7 @@ Inspirado en [arch-update-checker](https://github.com/iMacnucintosh/arch-update-
 
 ## Extensiones (v0.2)
 
-Las funciones opcionales viven en `extensions/` y se activan en Ajustes: **widgets** del carrusel (Tareas, Hidratación) en `Panels → Dashboard → Carrusel de widgets` y **extensiones** (VPN FortiClient, Juegos) en `Extensiones`. Nada está activado por defecto y desactivar una extensión no borra sus datos. Para escribir una, ver `AGENTS.md` (sección «Extensiones») y el ejemplo `docs/examples/extension-spike/`; las de usuario se instalan con Things (sección Sylphrena) o con `scripts/ext.py` en `~/.local/share/sylphrena/extensions/<id>/`.
+Las funciones opcionales viven en `extensions/` y se activan en Ajustes: **widgets** del carrusel (Tareas, Hidratación) en `Paneles → Panel → Carrusel de widgets` y **extensiones** (VPN FortiClient, Juegos) en `Extensiones`. Nada está activado por defecto y desactivar una extensión no borra sus datos. Para escribir una, ver `AGENTS.md` (sección «Extensiones») y el ejemplo `docs/examples/extension-spike/`; las de usuario se instalan con Things (sección Sylphrena) o con `scripts/ext.py` en `~/.local/share/sylphrena/extensions/<id>/`.
 
 ## Extensiones
 
@@ -136,8 +136,8 @@ Página **Ajustes → Extensiones** (sustituye el placeholder de Plugins):
 
 - Lista de features opcionales del fork, con icono identificativo por fila.
 - **VPN FortiClient** (extensión aparte, se instala con Things: ver «Extensiones»); después, interruptor on/off. Al activarla aparece el tipo **FortiClient** en Ajustes → Red → Añadir proveedor.
-- **Timers** (base): ya no está en Extensiones; su interruptor on/off y sus presets viven en **Ajustes → Panels → Taskbar → Clock** (`addons.timers.enabled`). Al desactivar se limpian timers activos y se oculta la sección del popout del reloj (el calendario sigue).
-- **Hidratación** (extensión `hydration`, del hub: se instala con Things): se activa en `Panels → Dashboard → Carrusel de widgets` (`extensions.enabled`); apagarla descarga el servicio (recordatorios y seguimiento) pero conserva los datos. Depósito con waves (shader propio `water.frag.qsb`), meta diaria (default 3000 ml), botones +20/+83/+250/+500 configurables, undo del último trago, y recordatorio con acciones si pasan N minutos (default 15) sin registrar un trago. Sus ajustes viven en `~/.config/sylphrena/extensions/hydration.json` (se migran solos desde `addons.hydration`). Estado en `~/.local/state/sylphrena/hydration.json`.
+- **Timers** (base): ya no está en Extensiones; su interruptor on/off y sus presets viven en **Ajustes → Paneles → Barra de tareas → Reloj** (`addons.timers.enabled`). Al desactivar se limpian timers activos y se oculta la sección del popout del reloj (el calendario sigue).
+- **Hidratación** (extensión `hydration`, del hub: se instala con Things): se activa en `Paneles → Panel → Carrusel de widgets` (`extensions.enabled`); apagarla descarga el servicio (recordatorios y seguimiento) pero conserva los datos. Depósito con waves (shader propio `water.frag.qsb`), meta diaria (default 3000 ml), botones +20/+83/+250/+500 configurables, undo del último trago, y recordatorio con acciones si pasan N minutos (default 15) sin registrar un trago. Sus ajustes viven en `~/.config/sylphrena/extensions/hydration.json` (se migran solos desde `addons.hydration`). Estado en `~/.local/state/sylphrena/hydration.json`.
 - **Juegos (Steam)** (extensión `games`, del hub: se instala con Things; ajustes en `~/.config/sylphrena/extensions/games.json`): interruptor on/off (opt-in). Al activar añade la pestaña **Juegos** en el dashboard (a la derecha de Tiempo). Configura API key (oculta por defecto) + Steam ID / vanity / URL de perfil, y el intervalo de refresco (default 10 min). Muestra perfil y nivel, estadísticas globales en shapes Material You (juegos visibles — sin la colección Hidden —, horas, compleción media de logros y juegos al 100 %, amigos en línea), tarjeta del juego destacado con portada y progreso, y un selector de portadas ordenado por última partida. Logros en una lista con scroll: desbloqueados por rareza y bloqueados de más común a más raro, con insignia y descripción. Mapa de calor mensual (puntos = días con logros; el tiempo por día se registra con el shell en marcha). Juegos no Steam desde `shortcuts.vdf`, con horas de Millennium si está instalado. Los logros del perfil deben ser públicos. El muestreo de logros para la compleción media está **capado a 60 juegos** (los más jugados, por orden de playtime) y el refresco periódico **solo corre mientras el dashboard muestra la pestaña Juegos** (no quema API en segundo plano). Caché de logros/schema/% global en disco (`~/.local/state/sylphrena/steam-achievements-cache.json`, TTL ~1 día) para arranques en frío más rápidos; el servicio QML es un façade (`Steam`) con capas en `services/steam/*`.
 
 ## Extensiones: instalar con Things
@@ -223,7 +223,7 @@ require("sylphrena-monitors")
 - En **interruptores rápidos**: icono de café (**Keep awake**), a la izquierda del gamepad.
 - **Activado por defecto** (bloquea idle/suspend del compositor vía idle inhibitor).
 - El estado del interruptor **persiste** entre reinicios de la shell (`sylph shell -r`) vía `RuntimeState` (`/run/user/$UID/sylphrena/state.json`). Tras un logout/reboot de sesión el runtime se pierde y vuelve el default ON.
-- La card grande «Mantener activo» está oculta por defecto (se puede volver a mostrar en Ajustes → Panels → Utilities → Cards).
+- La card grande «Mantener activo» está oculta por defecto (se puede volver a mostrar en Ajustes → Paneles → Utilidades → Tarjetas).
 
 ---
 
@@ -237,23 +237,17 @@ require("sylphrena-monitors")
 
 ---
 
-## Aislamiento de Plasma (fase 2 hecha)
+## Integración con el sistema
 
-Plasma ya no está instalado. Hyprland sigue con qt6ct, Papirus, Thunar y los portales gtk + hyprland.
+Sylphrena no necesita un escritorio completo debajo: con Hyprland, qt6ct, Papirus y los portales gtk + hyprland, todo sigue sus colores.
 
-- **Login**: **greetd + greeter Quickshell Material You** con el teclado del sistema y autologin inicial a `/usr/bin/start-hyprland`. Tras cerrar sesión, el greeter corre sobre un Hyprland mínimo y entrega la sesión con fundido negro corto: tanto el greeter como la sesión arrancan sin TTY de control (el logo ASCII de Hyprland no llega a tty1), la salida va a `session-startup.log` / `hyprland-greeter.log`, y el compositor desechable se desmonta de inmediato (Hyprland 0.57 se quedaba ~5 s y acababa en segfault al salir). systemd no retiene `user@` 10 s ni espera 90 s a coredumps (`UserStopDelaySec=0`, `TimeoutStopSec=8`). Si greetd no confirma el arranque, recupera la UI en vez de dejar una pantalla negra. Se instala/actualiza con `scripts/install-system.sh` (un solo prompt de root; `greeter/install-greeter.sh` hace lo mismo); al actualizar Sylphrena se vuelve a copiar solo. Lo que ejecuta el login es de root: tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). `plasma-login-manager` se desinstaló con Plasma.
-- **Plataforma Qt**: cambio en 3 sitios de `QT_QPA_PLATFORMTHEME=kde` a `qt6ct`
-  (pragma `Env` en `shell.qml`, env en `hyprland.lua`, `~/.config/environment.d/99-qt-platformtheme.conf`)
-  — aplica a processes nuevos; la sesión completa se normaliza al relogin. Los apps Qt ya no dependen de
-  `plasma-integration` (estilo Breeze → Fusion). `scripts/sylphrena-quiet.py` empuja en cada cambio de esquema (`_sync_qt6ct`), de forma atómica (temp+rename, lo pilla el QFileSystemWatcher de qt6ct):
+- **Login**: **greetd + greeter Quickshell Material You** con el teclado del sistema y autologin inicial a `/usr/bin/start-hyprland`. Tras cerrar sesión, el greeter corre sobre un Hyprland mínimo y entrega la sesión con fundido negro corto: tanto el greeter como la sesión arrancan sin TTY de control (el logo ASCII de Hyprland no llega a tty1), la salida va a `session-startup.log` / `hyprland-greeter.log`, y el compositor desechable se desmonta de inmediato (Hyprland 0.57 se quedaba ~5 s y acababa en segfault al salir). systemd no retiene `user@` 10 s ni espera 90 s a coredumps (`UserStopDelaySec=0`, `TimeoutStopSec=8`). Si greetd no confirma el arranque, recupera la UI en vez de dejar una pantalla negra. Se instala/actualiza con `scripts/install-system.sh` (un solo prompt de root; `greeter/install-greeter.sh` hace lo mismo); al actualizar Sylphrena se vuelve a copiar solo. Lo que ejecuta el login es de root: tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`).
+- **Apps Qt**: `QT_QPA_PLATFORMTHEME=qt6ct` en 3 sitios (pragma `Env` en `shell.qml`, env en `hyprland.lua`, `~/.config/environment.d/99-qt-platformtheme.conf`); aplica a procesos nuevos y la sesión completa se normaliza al volver a entrar. `scripts/sylphrena-quiet.py` empuja en cada cambio de esquema (`_sync_qt6ct`), de forma atómica (temp+rename, lo pilla el QFileSystemWatcher de qt6ct):
   - `~/.config/qt6ct/colors/sylphrena.conf`: paleta Qt (22 roles de `QPalette`) mapeada desde los tokens Material de la activity
   - `~/.config/qt6ct/qt6ct.conf`: `icon_theme=Papirus-{Mode}`, `custom_palette=true`, `style=Fusion`
 - **Cursor**: alineado GTK/Qt/Hyprland a **Adwaita** (`gsettings cursor-theme`, `gtk-cursor-theme-name` de `settings.ini`, env `XCURSOR_THEME`/`HYPRCURSOR_THEME`).
-- **módulo `colorreload-gtk-module`** vendorizado: copia a `~/.local/share/gtk-3.0/modules/`. Sobrevive la desinstalación de `kde-gtk-config` en fase 2 (GTK resuelve el módulo por nombre en la ruta `$XDG_DATA_HOME`). Es un build solo de GTK3 (no existe módulo GTK4).
-- **`org.freedesktop.FileManager1`**: Seeker lo sirve. Override a nivel usuario en
-  `~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service` (→ `~/.local/bin/seeker`; dbus-broker ignora los duplicados `/usr/share/dbus-1/services/org.kde.dolphin.*`).
-- **Unidades de Dolphin y KActivity**: se fueron con los paquetes. Las máscaras de usuario se quitaron.
-- **Fase 2 hecha (2026-10-30)**: 238 paquetes KDE/Plasma (~1381 MiB), incluido `plasma-integration` y `kde-gtk-config`. El tema ya no escribe `kdeglobals`. Config, caché y el índice de Baloo se borraron. Siguen `bluez`, `noto-fonts-emoji`, `ttf-hack` y el `colorreload` vendorizado.
+- **Módulo `colorreload-gtk-module`**: copiado a `~/.local/share/gtk-3.0/modules/` (GTK resuelve el módulo por nombre en `$XDG_DATA_HOME`); recarga los colores de las apps GTK3 sin reiniciarlas. No existe versión para GTK4.
+- **`org.freedesktop.FileManager1`**: lo sirve Seeker («Mostrar en carpeta» de navegadores y apps abre Seeker). Override a nivel de usuario en `~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service` (→ `~/.local/bin/seeker`), que gana a los de `/usr/share/dbus-1/services/`.
 
 ---
 
@@ -310,34 +304,29 @@ El reloj lleva siempre la pastilla de fondo; al hover se resalta como el resto d
 ## Barra (otros retoques)
 
 - **Tray**: muestra también ítems en estado Passive (p. ej. Teams en idle); highlight al hover / menú abierto; tamaño de icono estable. El **StatusNotifierWatcher** vive fuera de `qs` (`scripts/status-notifier-watcher.py`, arrancado por `scripts/start-shell-with-tray-watcher.sh` desde Hyprland) para que los trays Electron/Flatpak (Teams) sobrevivan a `sylph shell -r` — sin Plasma ya no hay `xembedsniproxy` que rescate el fallback X11.
-- **Status icons**: pastilla al hover como el tray; el icono de batería se oculta con el toggle de statusIcons (vanilla).
+- **Iconos de estado**: pastilla al pasar el ratón, como la bandeja.
 - **Popouts** de status un poco más anchos para que no se recorten.
-- **Reloj** centrado de forma estable en el slot de la barra (geometría vanilla); la pastilla de hover-complemento sigue y el fondo respeta el toggle "Fondo" del Ajustes (con Fondo off, solo pinta al hover).
+- **Reloj** centrado de forma estable en su hueco de la barra; al pasar el ratón sale su pastilla, y el fondo respeta el interruptor «Fondo» de Ajustes (apagado, solo se pinta al pasar el ratón).
 - Indicador de **grabación** bajo el reloj (ver sección anterior).
-- La batería se muestra/oculta con el toggle de la lista de statusIcons (vanilla); sin batería, status y popout muestran el estado del **perfil de energía** activo (vanilla).
+- La batería se muestra u oculta desde la lista de iconos de estado; sin batería, el icono y su popout muestran el **perfil de energía** activo.
 
 ---
 
 ## Ajustes y atajos
 
-Ya presentes en este fork respecto a un Sylphrena “vanilla” típico:
-
 - **Atajos de Hyprland remapeables** desde Ajustes (genera `sylphrena-binds.lua`), incluyendo teclas **F13+** y **Última ventana** (Super+\` por defecto; cruza escritorios/actividades vía Hyprland).
-- **Exportar / importar atajos** (Ajustes → Keyboard & mouse, botones «Exportar» e «Importar»): «Exportar» guarda `sylphrena-keybinds.json` (formato `{format, version, binds}`: lo que difiere de los atajos por defecto) en la carpeta que elijas con Seeker; «Importar» lo lee, **sustituye** tus atajos y los aplica. Se ignoran las acciones desconocidas y los valores no válidos, y si dos acciones quedan con la misma tecla solo se conserva la primera. Un fichero que no es de atajos no cambia nada. Sirve para pasar la configuración a otro equipo o tener una copia.
-- **Foco del ratón** en Ajustes → Keyboard & mouse: al pasar por encima (Hyprland `follow_mouse = 1`) o al hacer clic (`= 2`). Genera `sylphrena-input.lua`.
+- **Exportar / importar atajos** (Ajustes → Teclado y ratón, botones «Exportar» e «Importar»): «Exportar» guarda `sylphrena-keybinds.json` (formato `{format, version, binds}`: lo que difiere de los atajos por defecto) en la carpeta que elijas con Seeker; «Importar» lo lee, **sustituye** tus atajos y los aplica. Se ignoran las acciones desconocidas y los valores no válidos, y si dos acciones quedan con la misma tecla solo se conserva la primera. Un fichero que no es de atajos no cambia nada. Sirve para pasar la configuración a otro equipo o tener una copia.
+- **Foco del ratón** en Ajustes → Teclado y ratón: al pasar por encima (Hyprland `follow_mouse = 1`) o al hacer clic (`= 2`). Genera `sylphrena-input.lua`.
 - **Distribuciones de teclado** en Ajustes → Idioma y región → Teclado: la lista de distribuciones (la primera es la principal; hasta cuatro, con variantes como catalán), un buscador para añadir más por idioma o código y el atajo para cambiar entre ellas (Alt+Mayús, Ctrl+Mayús o Bloq Mayús; sin atajo, desde la barra). Mientras no cambies nada se muestran las del sistema y Sylphrena no las toca; al cambiar algo las guarda (`general.keyboardLayouts`, `general.keyboardSwitch`) y las escribe en `sylphrena-input.lua`, aplicadas al momento.
-- **Transiciones entre escritorios y entre actividades** en Ajustes → Activities: una animación para moverte entre los escritorios de una actividad (`workspaceAnimation`, por defecto *Deslizar en vertical*) y otra para saltar a otra actividad (`activityAnimation`, por defecto *Fundido*). Estilos: *Fundido* (el de Hyprland), *Deslizar*, *Deslizar en vertical*, *Deslizar y fundir* y *Deslizar y fundir en vertical*; con los de deslizar aparece su *Velocidad* (`…Speed`: lenta, normal, rápida; en Hyprland `speed` es la duración en décimas de segundo, así que menos es más rápido). La de escritorios se escribe en `~/.config/hypr/sylphrena-animation.lua` (se carga con `pcall(require, "sylphrena-animation")` al final de `hyprland.lua`, tras las animaciones por defecto); al saltar a otra actividad por la shell (barra, atajos, vista general) se aplica la suya justo antes del salto y se repone la de escritorios a los ~1,2 s. Saltos que Hyprland haga sin pasar por la shell usan la de escritorios.
+- **Transiciones entre escritorios y entre actividades** en Ajustes → Actividades: una animación para moverte entre los escritorios de una actividad (`workspaceAnimation`, por defecto *Deslizar en vertical*) y otra para saltar a otra actividad (`activityAnimation`, por defecto *Fundido*). Estilos: *Fundido* (el de Hyprland), *Deslizar*, *Deslizar en vertical*, *Deslizar y fundir* y *Deslizar y fundir en vertical*; con los de deslizar aparece su *Velocidad* (`…Speed`: lenta, normal, rápida; en Hyprland `speed` es la duración en décimas de segundo, así que menos es más rápido). La de escritorios se escribe en `~/.config/hypr/sylphrena-animation.lua` (se carga con `pcall(require, "sylphrena-animation")` al final de `hyprland.lua`, tras las animaciones por defecto); al saltar a otra actividad por la shell (barra, atajos, vista general) se aplica la suya justo antes del salto y se repone la de escritorios a los ~1,2 s. Saltos que Hyprland haga sin pasar por la shell usan la de escritorios.
 - Categoría **Activities** en el mapa de teclas (siguiente / anterior / overview).
 - Apariencia **unificada en Activities**: una sola página para el comportamiento (iconos, desktops, apps ancladas) y el look — la tarjeta de **Principal** lleva la etiqueta "Look general" (es el estilo que heredan las demás) y cada activity personaliza o hereda (con botón "Usar look de Principal" para volver). Sin página global duplicada: el toggle "Mostrar fondo de pantalla" (switch maestro) vive en General.
-- **Extensiones** — solo features opcionales (VPN FortiClient, Juegos/Steam). **Portapapeles y Temporizadores son base** (v0.2): el portapapeles se configura en **Ajustes → Panels → Utilities → Portapapeles** (interruptor + tamaño del historial) y los temporizadores en **Panels → Taskbar → Clock**.
-- **Status icons honestos**: el badge de updates y la fila de VPN rigen el auto-ocultado con config explícita (`bar.status.onlyShowUpdatesWithUpdates`; VPN atado al complemento) y es visible en `Panels → Taskbar → Status icons → Auto-hide`. La batería quedó **vanilla**: se muestra/oculta con el toggle de la lista "Visible icons" y su popout es el de siempre («No se ha detectado ninguna batería» o «Power profile: %1» en desktops, con el selector de perfiles intacto).
-- **Workspaces divididos contenido/apariencia**: mostrar ventanas + special workspaces + max icons viven en **Activities → Escritorios de la barra** (junto al resto del modelo de desktops del fork); la apariencia (número, indicador, fondo, por monitor) se queda en `Panels → Taskbar → Workspaces`, con cross-links navegables entre ambas.
+- **Extensiones** — solo features opcionales (VPN FortiClient, Juegos/Steam). **Portapapeles y Temporizadores son base** (v0.2): el portapapeles se configura en **Ajustes → Paneles → Utilidades → Portapapeles** (interruptor + tamaño del historial) y los temporizadores en **Paneles → Barra de tareas → Reloj**.
+- **Iconos que se ocultan solos**: el de actualizaciones solo sale cuando hay alguna (`bar.status.onlyShowUpdatesWithUpdates`) y el de la VPN, cuando hay una extensión de VPN activa; se ajusta en `Paneles → Barra de tareas → Iconos de estado → Auto-ocultar`. La batería se muestra u oculta desde la lista de iconos visibles; en un sobremesa su popout muestra el perfil de energía, con su selector.
+- **Escritorios de la barra**: qué muestran (ventanas, escritorios especiales, número máximo de iconos) se ajusta en **Ajustes → Actividades**, junto al resto de los escritorios; su aspecto (número, indicador, fondo, por monitor), en `Paneles → Barra de tareas → Escritorios`. Cada página enlaza con la otra.
 - **Órdenes de las extensiones desde la terminal:** `sylph ext <id>` lista lo que ofrece una extensión y `sylph ext <id> <orden>` lo ejecuta en la shell. Hidratación: `sylph ext hydration show` (el recordatorio ahora), `add 250` (apunta 250 ml) y `status`.
 - **Vista previa de ventanas:** al pasar el ratón por el icono de una app en los escritorios de la barra sale un popout con la miniatura en vivo de esa ventana, su título y su app; pulsar en la miniatura lleva a la ventana (aunque esté en otro escritorio). Se activa o desactiva en Ajustes → Paneles → Barra de tareas → Escritorios («Vista previa de la ventana al pasar el ratón», `activities.windowPreview`, activada por defecto).
 - **Mostrar escritorio**: pulsar en la barra el escritorio que ya está activo desliza todas sus ventanas fuera de la pantalla (las de la mitad izquierda hacia la izquierda, las de la derecha hacia la derecha, con la animación de mover ventana de Hyprland); siguen en ese escritorio y sus iconos siguen en la barra, pero su pastilla pasa de relleno a solo borde para indicar que están ocultas. Pulsarlo otra vez las devuelve a su sitio. Lo hace `scripts/show-desktop.py` (estado en `$XDG_RUNTIME_DIR/sylphrena/`, `Hypr.hiddenWs` en la shell); también `qs -c sylphrena ipc call hypr toggleShowDesktop`. Ya no abre el scratchpad ni atenúa la pantalla.
-- **IA del sidebar (fase 1)**: títulos de categoría visibles; orden **Escritorio y apariencia** (Activities, Panels, Complements) → Entrada → **Dispositivos** (Network, Connected devices [Bluetooth + Display inline], Audio) → Apps → Sistema → Acerca de. `smartScheme` en Activities; incrementos volumen/brillo en Audio. Display ya no es página top-level del nav.
-- Las páginas del nav llevan **id estable** (`PageRegistry.idxOf`) — los saltos programáticos (Updates → Ajustes) ya no dependen de índices hardcodeados.
-- Traducciones **español** ampliadas para las cadenas nuevas.
 
 ---
 
@@ -351,9 +340,9 @@ Popout flotante junto al cursor (estilo Sylphrena), respaldado por **cliphist** 
 - Al elegir un ítem: se copia y se pega con **Ctrl+V** en la ventana que tenía el foco (`wtype`).
 - Texto, imágenes del portapapeles (miniatura) y rutas/`file://` a imagen copiadas desde el explorador (también con preview). Un `preview` que acaba en `.jpg` solo se trata como imagen **si el fichero existe** (comprobado en lote tras cada parse; si no, queda como texto).
 - Miniaturas decodificadas **al tamaño del thumb** (`sourceSize`), no al del fichero completo; los favoritos de imágenes binarias se emparejan por el **id de cliphist** de origen (el preview genérico `[[ binary data… ]]` ya no provoca estrellas cruzadas).
-- Todos los comandos (`delete`, `wl-copy`, `cliphist decode`…) pasan el contenido del portapapeles **como argv (`"$1"`)**, nunca interpolado en la cadena del shell (lección de inyección: `JSON.stringify` es quoting de JS, no de shell).
+- Todos los comandos (`delete`, `wl-copy`, `cliphist decode`…) reciben el contenido del portapapeles **como argumento (`"$1"`)**, nunca metido en la orden: un texto copiado no puede ejecutar nada.
 - Fondo igual que el panel izquierdo (`m3surface` + blur de Hyprland).
-- Límite de historial configurable (por defecto **50**) en **Ajustes → Complements → Clipboard**.
+- Límite de historial configurable (por defecto **50**) en **Ajustes → Paneles → Utilidades → Portapapeles**.
 - Dependencias: `cliphist`, `wl-clipboard`, `wtype`.
 
 ---
@@ -376,7 +365,7 @@ Popout flotante junto al cursor (estilo Sylphrena), respaldado por **cliphist** 
 
 El resto de atajos de base son los de Caelestia (cerrar Super + C, terminal Super + Q, launcher Super + Espacio, escritorios Super + 1…0, mover a escritorio Super + Shift + 1…0…). La lista completa y los que tengas cambiados salen en el paso «Tus atajos» del asistente de bienvenida, con un botón para editarlos en Ajustes.
 
-Cámbialos en **Ajustes → Keyboard & mouse**.
+Cámbialos en **Ajustes → Teclado y ratón**.
 
 ---
 
@@ -478,9 +467,9 @@ El hueco central del dashboard (antes calendario/hidratación según un interrup
 widget a la vez. Se cambia con los puntos (superpuestos abajo), la rueda del ratón o arrastrando en
 horizontal (en el carrusel el calendario no consume la rueda: `Calendar.scrollable`; el popout del reloj sí); sin rotación automática. Con un solo widget activo no hay controles.
 
-- **Ajustes**: `Ajustes → Panels → Dashboard → Carrusel de widgets`. Cada widget es una fila con flechas ↑/↓ para
+- **Ajustes**: `Ajustes → Paneles → Panel → Carrusel de widgets`. Cada widget es una fila con flechas ↑/↓ para
   **ordenarlo**; Hidratación lleva además su interruptor y sus ajustes desplegables (meta, intervalo, presets).
-- **Nada viene activado por defecto**: cada widget (calendario incluido, `dashboard.calendarEnabled`) tiene su interruptor. Sin ninguno activo el carrusel muestra el botón **«Activa widgets»**, que abre Ajustes directamente en `Panels → Dashboard`.
+- **Nada viene activado por defecto**: cada widget (calendario incluido, `dashboard.calendarEnabled`) tiene su interruptor. Sin ninguno activo el carrusel muestra el botón **«Activa widgets»**, que abre Ajustes directamente en `Paneles → Panel`.
 - **Tareas** (extensión `tasks`, se activa en el carrusel; `extensions.enabled`): checklist con lista vertical desplazable. Se crean escribiendo y pulsando Enter (o `+`), se marcan con el círculo, se eliminan con la ✕ que aparece al pasar el cursor, y las completadas bajan a una sección **«Completadas (n)» plegable** (con botón para vaciarlas). Al pulsar el campo, el panel toma el teclado y se mantiene abierto hasta `Esc` o clic fuera. Datos en `~/.local/state/sylphrena/tasks.json`; desactivar el widget no borra las tareas.
 - **Hidratación** on/off sigue siendo `addons.hydration.enabled` (apagarlo detiene también recordatorios y seguimiento).
 - Config: `dashboard.widgetOrder` (lista de ids, por defecto `["calendar","hydration"]`). Ids desconocidos se ignoran y
