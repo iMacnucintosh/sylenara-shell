@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
@@ -347,6 +346,8 @@ StyledWindow {
                         ]
 
                         IconButton {
+                            id: toolButton
+
                             required property var modelData
 
                             icon: modelData.icon
@@ -354,8 +355,11 @@ StyledWindow {
                             isToggle: true
                             checked: win.tool === modelData.id
                             onClicked: win.tool = modelData.id
-                            ToolTip.visible: hovered
-                            ToolTip.text: modelData.label
+
+                            StyledToolTip {
+                                shown: toolButton.hovered
+                                text: toolButton.modelData.label
+                            }
                         }
                     }
 

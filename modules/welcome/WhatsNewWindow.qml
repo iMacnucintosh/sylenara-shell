@@ -348,7 +348,8 @@ FloatingWindow {
                     visible: !page.hasImage
                     text: page.item.icon || "auto_awesome"
                     color: Colours.palette.m3onPrimaryContainer
-                    fill: 1
+                    // Outlined: filled glyphs this large show their outline as a line inside the fill
+                    fill: 0
                     // Drawn at its size (a scaled small glyph came out blurred)
                     fontStyle: Tokens.font.icon.size(64).build()
                 }
