@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Sylphrena
 import Sylphrena.Config
+import Sylphrena.I18n
 
 Singleton {
     id: root
@@ -20,12 +21,30 @@ Singleton {
     readonly property string imagecache: `${cache}/imagecache`
     readonly property string notifimagecache: `${imagecache}/notifs`
     readonly property string wallsdir: envVar("WALLPAPERS_DIR") || absolutePath(GlobalConfig.paths.wallpaperDir)
-    // Spanish XDG videos folder + system Screenshots-style name (override with SYLPHRENA_RECORDINGS_DIR)
-    readonly property string recsdir: envVar("RECORDINGS_DIR") || `${home}/Vídeos/Videocapturas de pantalla`
+    // Captures and recordings: env override, else the folder chosen in Nexus (pinned on first use), else the
+    // XDG pictures/videos folder plus a name in the shell's language
+    readonly property string shotsdir: envVar("SCREENSHOTS_DIR") || configDir(GlobalConfig.paths.screenshotsDir) || `${pictures}/${Tr.tr("Screenshots")}`
+    readonly property string recsdir: envVar("RECORDINGS_DIR") || configDir(GlobalConfig.paths.recordingsDir) || `${videos}/${Tr.tr("Screen recordings")}`
+
+    function configDir(path: string): string {
+        return path ? absolutePath(path) : "";
+    }
+
+    // Write the folder in use to the config the first time one is used: the name was picked in one language
+    function pinShotsDir(): void {
+        if (!envVar("SCREENSHOTS_DIR") && !GlobalConfig.paths.screenshotsDir)
+            GlobalConfig.paths.screenshotsDir = shortenHome(shotsdir);
+    }
+
+    function pinRecsDir(): void {
+        if (!envVar("RECORDINGS_DIR") && !GlobalConfig.paths.recordingsDir)
+            GlobalConfig.paths.recordingsDir = shortenHome(recsdir);
+    }
     readonly property string libdir: envVar("LIB_DIR") || `${home}/.local/lib`
 
     function envVar(name: string): string {
-        return Quickshell.env(`SYLPHRENA_${name}`);
+        // Unset is null, and the string return type would turn it into "null" (screenshots went to ~/null)
+        return Quickshell.env(`SYLPHRENA_${name}`) ?? "";
     }
 
     function toLocalFile(path: url): string {

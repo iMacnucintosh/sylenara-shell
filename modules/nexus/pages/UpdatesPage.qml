@@ -379,6 +379,8 @@ PageBase {
                                     const s = raw === "SYLPHRENA" ? "Sylphrena" : raw === "EXTENSION" ? Tr.tr("Extension") : raw;
                                     const frm = pkgRow.modelData.from || "";
                                     const to = pkgRow.modelData.to || "";
+                                    if (pkgRow.modelData.isNew)
+                                        return `${s}  ·  ${Tr.tr("New · %1").arg(to)}`;
                                     return `${s}  ·  ${frm} → ${to}`;
                                 }
                                 color: Colours.palette.m3outline

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 00:32+0100\n"
+"POT-Creation-Date: 2026-11-15 03:09+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -105,6 +105,56 @@ msgstr "Clic en un escritorio para cambiar · Arrastra ventanas para mover · Es
 #: modules/activities/WorkspaceCard.qml
 msgid "Empty"
 msgstr "Vacío"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot copied"
+msgstr "Captura copiada"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copied to the clipboard"
+msgstr "Copiada al portapapeles"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot"
+msgstr "Captura de pantalla"
+
+#. TRANSLATORS: %1 = folder the screenshot was saved to
+#: modules/areapicker/ShotPreview.qml
+#, qt-format
+msgid "In %1"
+msgstr "En %1"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot saved"
+msgstr "Captura guardada"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Free line"
+msgstr "Línea libre"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Arrow"
+msgstr "Flecha"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Rectangle"
+msgstr "Rectángulo"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Eraser"
+msgstr "Goma de borrar"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Discard"
+msgstr "Descartar"
+
+#: modules/areapicker/ShotPreview.qml modules/launcher/DesktopEditDialog.qml
+msgid "Save"
+msgstr "Guardar"
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copy"
+msgstr "Copiar"
 
 #: modules/background/Wallpaper.qml
 msgid "Wallpaper missing?"
@@ -424,6 +474,11 @@ msgstr "%1 Actualizaciones (%2)"
 #, qt-format
 msgid "%1 Updates"
 msgstr "%1 Actualizaciones"
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+#, qt-format
+msgid "New · %1"
+msgstr "Nuevo · %1"
 
 #: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
 msgid "No updates available."
@@ -850,10 +905,6 @@ msgstr "Ejecutar en un terminal"
 #: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/KeybindsPage.qml
 msgid "Cancel"
 msgstr "Cancelar"
-
-#: modules/launcher/DesktopEditDialog.qml
-msgid "Save"
-msgstr "Guardar"
 
 #: modules/launcher/DesktopEditDialog.qml
 msgid "Choose icon"
@@ -1475,6 +1526,10 @@ msgstr "Versiones, hardware, software"
 #: modules/nexus/pages/AboutPage.qml
 msgid "Welcome guide"
 msgstr "Guía de bienvenida"
+
+#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "What's new"
+msgstr "Novedades"
 
 #: modules/nexus/pages/AboutPage.qml
 msgid "Hostname"
@@ -3154,6 +3209,14 @@ msgstr "Abrir la ventana de ajustes"
 msgid "Prevent sleep / idle suspend"
 msgstr "Impedir la suspensión por inactividad"
 
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+msgid "Dark mode"
+msgstr "Modo oscuro"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Everything dark, light apps included, over every activity's look"
+msgstr "Todo oscuro, también las apps claras, por encima del aspecto de cada actividad"
+
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximise screen use: no frame or gaps"
 msgstr "Aprovechar la pantalla: sin marco ni huecos"
@@ -3185,6 +3248,27 @@ msgstr "Tamaño del historial"
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximum number of clipboard entries to keep"
 msgstr "Número máximo de entradas del portapapeles a conservar"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Folders"
+msgstr "Carpetas"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: utils/Paths.qml
+msgid "Screenshots"
+msgstr "Capturas de pantalla"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml utils/Paths.qml
+msgid "Screen recordings"
+msgstr "Videocapturas de pantalla"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screenshots"
+msgstr "Elige dónde guardar las capturas"
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screen recordings"
+msgstr "Elige dónde guardar las videocapturas"
 
 #: modules/nexus/pages/PanelsPage.qml
 msgctxt "panel status"
@@ -3649,6 +3733,11 @@ msgstr "Tema oscuro"
 
 #: modules/nexus/pages/ShellPage.qml
 #: modules/nexus/pages/wallandstyle/ColourSelect.qml
+msgid "Paused: dark mode is on in the quick toggles"
+msgstr "En pausa: el modo oscuro de los ajustes rápidos está activado"
+
+#: modules/nexus/pages/ShellPage.qml
+#: modules/nexus/pages/wallandstyle/ColourSelect.qml
 msgid "Shell and bar colours"
 msgstr "Colores del shell y la barra"
 
@@ -3967,11 +4056,11 @@ msgstr "Te damos la bienvenida a Sylphrena"
 msgid "Skip"
 msgstr "Omitir"
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Back"
 msgstr "Atrás"
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Next"
 msgstr "Siguiente"
 
@@ -4170,6 +4259,34 @@ msgstr "Sylphrena Hub"
 #: modules/welcome/WelcomeWindow.qml
 msgid "Open Nexus"
 msgstr "Abrir Nexus"
+
+#. TRANSLATORS: %1 = the version, e.g. 0.6.0
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "What's new in Sylphrena %1"
+msgstr "Novedades de Sylphrena %1"
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Close"
+msgstr "Cerrar"
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Done"
+msgstr "Listo"
+
+#. TRANSLATORS: %1 = the version Sylphrena was updated to
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "Sylphrena was updated to %1"
+msgstr "Sylphrena se ha actualizado a la %1"
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Every change"
+msgstr "Todos los cambios"
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "The list of changes is not available."
+msgstr "La lista de cambios no está disponible."
 
 #: modules/windowinfo/Buttons.qml
 msgid "Move to workspace"
@@ -4486,6 +4603,10 @@ msgstr "Explorador de archivos Material You, en sintonía con el tema de la shel
 #: services/Companions.qml
 msgid "Package manager: pacman, AUR and Flatpak in one list"
 msgstr "Gestor de paquetes: pacman, AUR y Flatpak en una sola lista"
+
+#: services/Companions.qml
+msgid "Video player: every audio and subtitle track, and it remembers where you left off"
+msgstr "Reproductor de vídeo: todas las pistas de audio y subtítulos, y recuerda dónde lo dejaste"
 
 #: services/Companions.qml
 msgid "Fast terminal: Sylphrena changes its colours live with your theme"
@@ -4821,6 +4942,10 @@ msgid "Toggle utilities panel"
 msgstr "Mostrar u ocultar el panel de utilidades"
 
 #: services/Keybinds.qml
+msgid "Turn the dark mode quick toggle on or off"
+msgstr "Activa o desactiva el modo oscuro de los ajustes rápidos"
+
+#: services/Keybinds.qml
 msgid "Show panels"
 msgstr "Mostrar paneles"
 
@@ -5049,10 +5174,6 @@ msgstr "Aplicaciones"
 #: services/Keybinds.qml
 msgid "Shell"
 msgstr "Shell"
-
-#: services/Keybinds.qml
-msgid "Screenshots"
-msgstr "Capturas de pantalla"
 
 #: services/Keybinds.qml
 #, qt-format

@@ -7,11 +7,12 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/cache}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/config}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/state}"
 export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-wayland}"
-export XKB_DEFAULT_LAYOUT="${XKB_DEFAULT_LAYOUT:-es}"
+# Set by the greeter compositor from the system (start-greeter-compositor.sh); "us" as Hyprland would
+export XKB_DEFAULT_LAYOUT="${XKB_DEFAULT_LAYOUT:-us}"
 # Do not pin QML_IMPORT_PATH — qs needs its own Quickshell modules.
 unset QT_QPA_PLATFORMTHEME || true
 export GDK_DEBUG="${GDK_DEBUG:-no-portals}"
-export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}}"
+export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
 
 mkdir -p "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" 2>/dev/null || true
 LOG="$XDG_STATE_HOME/qs.log"

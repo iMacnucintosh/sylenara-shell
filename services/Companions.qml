@@ -7,7 +7,7 @@ import Quickshell.Io
 import Sylphrena.I18n
 import qs.utils
 
-// The apps that come with Sylphrena (Seeker, Things, and kitty, which it themes live): are they
+// The apps that come with Sylphrena (Seeker, Things, Veo, and kitty, which it themes live): are they
 // installed, open them. The welcome assistant presents them; the base package is what installs them.
 Singleton {
     id: root
@@ -27,6 +27,13 @@ Singleton {
             icon: "deployed_code",
             description: Tr.tr("Package manager: pacman, AUR and Flatpak in one list"),
             bin: "things"
+        },
+        {
+            id: "veo",
+            name: "Veo",
+            icon: "movie",
+            description: Tr.tr("Video player: every audio and subtitle track, and it remembers where you left off"),
+            bin: "veo"
         },
         {
             id: "kitty",

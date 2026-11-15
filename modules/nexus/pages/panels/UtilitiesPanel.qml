@@ -3,7 +3,9 @@ pragma ComponentBehavior: Bound
 import QtQuick.Layouts
 import Sylphrena.Config
 import Sylphrena.I18n
+import qs.components.filedialog
 import qs.services
+import qs.utils
 import qs.modules.nexus.common
 
 PageBase {
@@ -128,6 +130,14 @@ PageBase {
         }
 
         ToggleRow {
+            text: Tr.tr("Dark mode")
+            subtext: Tr.tr("Everything dark, light apps included, over every activity's look")
+            disabled: !Config.utilities.cards.quickToggles
+            checked: root.isToggleOn("darkMode")
+            onToggled: root.setToggleOn("darkMode", checked)
+        }
+
+        ToggleRow {
             text: Tr.tr("Compact layout")
             subtext: Tr.tr("Maximise screen use: no frame or gaps")
             disabled: !Config.utilities.cards.quickToggles
@@ -181,6 +191,45 @@ PageBase {
             to: 200
             stepSize: 10
             onMoved: v => GlobalConfig.utilities.clipboard.maxItems = Math.round(v)
+        }
+
+        // Where captures and recordings go
+        SectionHeader {
+            text: Tr.tr("Folders")
+        }
+
+        RowButton {
+            first: true
+            icon: "screenshot_monitor"
+            text: Tr.tr("Screenshots")
+            subtext: Paths.shortenHome(Paths.shotsdir)
+            trailingIcon: "folder_open"
+            onClicked: shotsPicker.open()
+        }
+
+        RowButton {
+            last: true
+            icon: "videocam"
+            text: Tr.tr("Screen recordings")
+            subtext: Paths.shortenHome(Paths.recsdir)
+            trailingIcon: "folder_open"
+            onClicked: recsPicker.open()
+        }
+
+        FileDialog {
+            id: shotsPicker
+
+            mode: "folder"
+            title: Tr.tr("Choose where to save screenshots")
+            onAccepted: path => GlobalConfig.paths.screenshotsDir = Paths.shortenHome(path)
+        }
+
+        FileDialog {
+            id: recsPicker
+
+            mode: "folder"
+            title: Tr.tr("Choose where to save screen recordings")
+            onAccepted: path => GlobalConfig.paths.recordingsDir = Paths.shortenHome(path)
         }
     }
 }

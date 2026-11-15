@@ -11,8 +11,10 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    readonly property string dir: Quickshell.env("SYLPHRENA_GREETER_DIR") || Quickshell.env("SYLPHRENA_GREETER_DIR") || "/etc/greetd/sylphrena"
-    readonly property bool demo: Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1" || Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1"
+    readonly property string dir: Quickshell.env("SYLPHRENA_GREETER_DIR") || "/etc/greetd/sylphrena"
+    readonly property bool demo: Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1"
+    // What the session copies for the login screen (the only part of dir it may write; the rest is root's)
+    readonly property string data: `${dir}/user`
 
     property var scheme: ({})
     property var config: ({})
@@ -23,8 +25,8 @@ Singleton {
     readonly property string user: config.user ?? ""
     readonly property string displayName: config.displayName ?? user
     readonly property string location: config.location ?? ""
-    readonly property string wallpaper: `${dir}/wallpaper`
-    readonly property string face: `${dir}/face`
+    readonly property string wallpaper: `${data}/wallpaper`
+    readonly property string face: `${data}/face`
 
     function col(key: string, fallback: string): color {
         const v = c[key];
@@ -153,11 +155,11 @@ Singleton {
     FontLoader {
         id: sansLoader
 
-        source: `file://${root.dir}/fonts/GoogleSansFlex.ttf`
+        source: `file://${root.data}/fonts/GoogleSansFlex.ttf`
     }
 
     FileView {
-        path: `${root.dir}/scheme.json`
+        path: `${root.data}/scheme.json`
         watchChanges: true
         printErrors: false
         onFileChanged: reload()
@@ -171,7 +173,7 @@ Singleton {
     }
 
     FileView {
-        path: `${root.dir}/greeter.json`
+        path: `${root.data}/greeter.json`
         watchChanges: true
         printErrors: false
         onFileChanged: reload()

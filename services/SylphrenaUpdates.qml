@@ -19,7 +19,7 @@ Singleton {
     id: root
 
 
-    // [{ pkg, name, repo, installed, latest, notes, url }]
+    // [{ pkg, name, repo, installed, latest, notes, url, new }] (new: not installed yet, comes with the update)
     property var updates: []
     // [{ id, name, installed, latest }]
     property var extensions: []
@@ -36,6 +36,8 @@ Singleton {
                 to: u.latest,
                 source: "SYLPHRENA",
                 pkg: u.pkg,
+                // Not installed yet: an app of the family that comes with this update
+                isNew: !!u.new,
                 url: u.url,
                 desc: ""
             })), ...extensions.map(e => ({

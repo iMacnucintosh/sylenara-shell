@@ -234,6 +234,14 @@ StyledRect {
                     }
                 }
                 DelegateChoice {
+                    roleValue: "darkMode"
+                    delegate: Toggle {
+                        icon: "dark_mode"
+                        checked: Activities.forceDark
+                        onClicked: Activities.setForceDark(!Activities.forceDark)
+                    }
+                }
+                DelegateChoice {
                     roleValue: "gameMode"
                     delegate: Toggle {
                         icon: "fit_screen"

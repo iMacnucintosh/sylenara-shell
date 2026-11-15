@@ -50,7 +50,7 @@ Las transiciones también se eligen: por defecto, deslizar en vertical entre esc
 Una barra lateral con tus escritorios y los iconos de sus apps, la bandeja del sistema, el reloj y los indicadores. Los paneles salen de la propia barra:
 
 - **Dashboard** con el tiempo, multimedia, rendimiento del equipo y un carrusel de widgets (calendario y los que añadas con extensiones).
-- **Panel lateral** con notificaciones e interruptores rápidos (wifi, bluetooth, micrófono, grabar pantalla…).
+- **Panel lateral** con notificaciones e interruptores rápidos (wifi, bluetooth, micrófono, modo oscuro, grabar pantalla…).
 - **Lanzador** de aplicaciones con búsqueda, calculadora y fondos de pantalla.
 - **Mostrar escritorio**: pulsa el escritorio en el que ya estás y las ventanas se apartan; púlsalo otra vez y vuelven a su sitio.
 
@@ -78,6 +78,7 @@ Sylphrena se amplía con extensiones (hidratación, tareas, tu biblioteca de Ste
 
 - **[Things](https://github.com/iMacnucintosh/things)**: gestor de paquetes y de extensiones.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: explorador de archivos, con el mismo aspecto que la shell.
+- **[Veo](https://github.com/iMacnucintosh/veo)**: reproductor de vídeo, a pantalla completa con controles mínimos, pistas de audio y subtítulos, y recuerda dónde dejaste cada vídeo.
 - **kitty**: el terminal, que cambia de colores con tu actividad.
 
 Las apps GTK y Qt también siguen el esquema de colores, y puedes pedir que ciertas apps se vean siempre en claro.

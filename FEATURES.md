@@ -91,6 +91,16 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Nexus → A
 
 ---
 
+## Capturas de pantalla
+
+- Captura de una zona o de una ventana (al pasar por encima se marca con el redondeo de Hyprland y el color principal del esquema).
+- Tras capturar sale una **previsualización** propia con herramientas para marcar encima: **línea libre**, **flecha**, **rectángulo** y **goma** (borra un trazo entero al pasar por encima), seis colores y deshacer (`Ctrl+Z`). Las marcas se graban en la imagen al copiar o guardar.
+- **Copiar** (`Ctrl+C` o `Intro`), **Guardar** (`Ctrl+S`) o **Descartar** (`Esc`); cualquiera de las tres la cierra y avisa con un aviso emergente.
+- Se guardan como `Captura de pantalla_AAAAMMDD_HHMMSS.png` en la carpeta de **Nexus → Paneles → Utilidades → Carpetas** (`paths.screenshotsDir`). Vacía, es la carpeta de imágenes de XDG más «Capturas de pantalla» en el idioma de la shell, y se fija en la configuración la primera vez que se guarda algo: cambiar de idioma después no reparte las capturas en dos carpetas. Override: env `SYLPHRENA_SCREENSHOTS_DIR`.
+- La captura «al portapapeles» no enseña la previsualización.
+
+---
+
 ## Grabación de pantalla
 
 - Card de **Screen recorder** en el panel de utilities (fullscreen / región, con o sin audio).
@@ -98,7 +108,7 @@ require("sylphrena-activity-rules")  -- reglas de activities / pins (Nexus → A
 - Mientras grabas, utilities/sidebar **permanecen abiertos** al salir el puntero (evita teardowns mid-capture).
 - Indicador **REC** / **PAUSE** bajo el reloj en la barra mientras hay grabación activa.
 - El chip principal del recorder no re-dispara start mientras ya está grabando (evita toggle-stop accidental).
-- Archivos en **`~/Vídeos/Videocapturas de pantalla`** (override: env `SYLPHRENA_RECORDINGS_DIR`).
+- Archivos en la carpeta de **Nexus → Paneles → Utilidades → Carpetas** (`paths.recordingsDir`; vacía = carpeta de vídeos de XDG + «Videocapturas de pantalla» en el idioma de la shell, fijada al primer uso; override: env `SYLPHRENA_RECORDINGS_DIR`).
 - Desde la lista: reproducir, abrir carpeta (Seeker) o borrar.
 
 ---
@@ -158,11 +168,11 @@ configuración que ya tengas, y no vuelve a ejecutarse (`~/.local/state/sylphren
 
 ## Asistente de bienvenida
 
-Una ventana propia, **flotante y de tamaño fijo** (960×720, centrada: Hyprland flota las ventanas de tamaño fijo, sin reglas), con cinco pasos que sale **sola la primera vez** que arranca la shell (a los 4 s) y se puede volver a abrir con el **botón de varita** de la tarjeta de Sylphrena en **Nexus → Acerca de** (abajo a la derecha; tooltip «Guía de bienvenida»):
+Una ventana propia, **flotante y de tamaño fijo** (960×720, centrada: Hyprland flota las ventanas de tamaño fijo, sin reglas), con cinco pasos que sale **sola la primera vez** que arranca la shell (a los 4 s) y se puede volver a abrir con el **botón de varita** de la tarjeta de Sylphrena en **Nexus → Acerca de** (abajo a la izquierda; tooltip «Guía de bienvenida»):
 
 1. **Qué es Sylphrena:** el orbe, una frase, quién la hace (**iMacnucintosh**, con enlace a GitHub) y el crédito al proyecto original (**caelestia-shell**, de soramane).
 2. **Qué te ofrece:** tarjetas con Actividades, Nexus, el panel, Material You, Extensiones y bloqueo/inicio de sesión.
-3. **Aplicaciones hechas para Sylphrena:** presenta **Seeker** (explorador de archivos), **Things** (gestor de paquetes) y **kitty** (la terminal, que la shell recolorea en vivo). Es **informativo**: no instala nada (las instala el paquete base); si una está instalada ofrece abrirla, y si no, indica «No instalada». Debajo, una nota aclara que **kitty viene preinstalada pero se puede usar cualquier otra terminal**, con un botón «Elegir terminal» que abre Nexus → Aplicaciones.
+3. **Aplicaciones hechas para Sylphrena:** presenta **Seeker** (explorador de archivos), **Things** (gestor de paquetes), **Veo** (reproductor de vídeo) y **kitty** (la terminal, que la shell recolorea en vivo). Es **informativo**: no instala nada (las instala el paquete base); si una está instalada ofrece abrirla, y si no, indica «No instalada». Debajo, una nota aclara que **kitty viene preinstalada pero se puede usar cualquier otra terminal**, con un botón «Elegir terminal» que abre Nexus → Aplicaciones.
 4. **Tus atajos:** tabla de los atajos en uso ahora, por categorías y con las teclas dibujadas (los numerados se agrupan: «Ir al escritorio 1–10»). Sigue a Nexus: si cambias uno allí, cambia aquí. Botón **Editar en Nexus** (Nexus → Teclado y ratón, donde también se exportan e importan).
 5. **Todo listo:** abre Nexus o termina. Incluye una invitación a **crear tus propias extensiones** (una carpeta con un manifiesto y unos pocos ficheros QML) y a compartirlas en el Sylphrena Hub, con enlace a su repo. El paso 2 también lo menciona en la tarjeta de Extensiones.
 
@@ -170,6 +180,18 @@ Cerrarla, omitirla o terminarla cuenta como vista (`~/.local/state/sylphrena/wel
 
 En **Nexus → Extensiones**, la fila **Buscar más en Things** abre Things (botón desactivado, con aviso, si no está instalado).
 
+
+## Novedades tras actualizar
+
+Después de una actualización, a los 5 s de arrancar la shell sale una ventana **Novedades** (como la bienvenida: flotante, 960×720) con lo que traen las versiones nuevas respecto a la que tenías, **una sola vez**:
+
+1. **Portada:** el orbe, «Sylphrena se ha actualizado a la X» y las novedades en pastillas (clic → su página).
+2. **Una página por novedad:** captura con esquinas redondeadas (o un icono grande si no tiene), título y dos líneas.
+3. **Todos los cambios:** las secciones de esas versiones del `CHANGELOG.md`, con formato.
+
+Flechas `←`/`→` (o `RePág`/`AvPág`) o la rueda del ratón en cualquier punto de la ventana para pasar páginas (sobre la lista de cambios, la rueda la desplaza), `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (confeti, abajo a la derecha) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
+
+**Al sacar una versión:** su entrada en `whatsnew/whatsnew.json` (novedades destacadas, en inglés y español, con `icon` de Material Symbols y, si se quiere, `image` → `whatsnew/<versión>/<nombre>.webp`, ~1280 px de ancho, 50-150 KB) y la sección «Sin publicar» del CHANGELOG renombrada a `## X.Y.Z (fecha)`.
 ## Pantalla (modos, escala, VRR)
 
 Bloque **Pantalla** inline en **Nexus → Dispositivos conectados** (categoría Dispositivos; sin entrada propia en el sidebar), una tarjeta por monitor:
@@ -183,6 +205,16 @@ Persistencia por conector en `~/.config/hypr/sylphrena-monitors.lua`; al aplicar
 ```lua
 require("sylphrena-monitors")
 ```
+
+---
+
+## Utilities / modo oscuro
+
+- En **interruptores rápidos**: luna (**Modo oscuro**). Lo pone todo oscuro por encima del aspecto de cada actividad: esquema en modo oscuro y sin apps claras (GTK, Qt, portal, Chromium/Electron, kitty, Seeker, Things…).
+- Es un ajuste **temporal**: no toca las actividades. Al apagarlo cada una vuelve a su aspecto tal cual. Mientras está activo, Nexus marca «En pausa» el tema oscuro y las apps claras de cada actividad.
+- Un sabor que solo es claro (Catppuccin Latte, Rosé Pine Dawn) pasa al primer sabor oscuro del mismo esquema.
+- Persiste en `~/.local/state/sylphrena/dark-mode.json`. Atajo **sin asignar** (Nexus → Atajos → «Modo oscuro») e IPC: `qs -c sylphrena ipc call darkMode toggle | enable | disable | status`.
+- Se activa o quita de la fila en Nexus → Paneles → Utilidades → Interruptores rápidos.
 
 ---
 
@@ -209,7 +241,7 @@ require("sylphrena-monitors")
 
 Plasma ya no está instalado. Hyprland sigue con qt6ct, Papirus, Thunar y los portales gtk + hyprland.
 
-- **Login**: **greetd + greeter Quickshell Material You** con teclado español y autologin inicial a `/usr/bin/start-hyprland`. Tras cerrar sesión, el greeter corre sobre un Hyprland mínimo y entrega la sesión con fundido negro corto: tanto el greeter como la sesión arrancan sin TTY de control (el logo ASCII de Hyprland no llega a tty1), la salida va a `session-startup.log` / `hyprland-greeter.log`, y el compositor desechable se desmonta de inmediato (Hyprland 0.57 se quedaba ~5 s y acababa en segfault al salir). systemd no retiene `user@` 10 s ni espera 90 s a coredumps (`UserStopDelaySec=0`, `TimeoutStopSec=8`). Si greetd no confirma el arranque, recupera la UI en vez de dejar una pantalla negra. Se instala/actualiza con `scripts/install-system.sh` (un solo prompt de root; `greeter/install-greeter.sh` hace lo mismo). `plasma-login-manager` se desinstaló con Plasma.
+- **Login**: **greetd + greeter Quickshell Material You** con el teclado del sistema y autologin inicial a `/usr/bin/start-hyprland`. Tras cerrar sesión, el greeter corre sobre un Hyprland mínimo y entrega la sesión con fundido negro corto: tanto el greeter como la sesión arrancan sin TTY de control (el logo ASCII de Hyprland no llega a tty1), la salida va a `session-startup.log` / `hyprland-greeter.log`, y el compositor desechable se desmonta de inmediato (Hyprland 0.57 se quedaba ~5 s y acababa en segfault al salir). systemd no retiene `user@` 10 s ni espera 90 s a coredumps (`UserStopDelaySec=0`, `TimeoutStopSec=8`). Si greetd no confirma el arranque, recupera la UI en vez de dejar una pantalla negra. Se instala/actualiza con `scripts/install-system.sh` (un solo prompt de root; `greeter/install-greeter.sh` hace lo mismo); al actualizar Sylphrena se vuelve a copiar solo. Lo que ejecuta el login es de root: tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). `plasma-login-manager` se desinstaló con Plasma.
 - **Plataforma Qt**: cambio en 3 sitios de `QT_QPA_PLATFORMTHEME=kde` a `qt6ct`
   (pragma `Env` en `shell.qml`, env en `hyprland.lua`, `~/.config/environment.d/99-qt-platformtheme.conf`)
   — aplica a processes nuevos; la sesión completa se normaliza al relogin. Los apps Qt ya no dependen de

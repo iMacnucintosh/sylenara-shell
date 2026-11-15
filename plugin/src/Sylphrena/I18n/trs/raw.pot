@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 00:33+0100\n"
+"POT-Creation-Date: 2026-11-15 03:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,56 @@ msgstr ""
 
 #: modules/activities/WorkspaceCard.qml
 msgid "Empty"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot copied"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copied to the clipboard"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot"
+msgstr ""
+
+#. TRANSLATORS: %1 = folder the screenshot was saved to
+#: modules/areapicker/ShotPreview.qml
+#, qt-format
+msgid "In %1"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Screenshot saved"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Free line"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Arrow"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Rectangle"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Eraser"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Discard"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml modules/launcher/DesktopEditDialog.qml
+msgid "Save"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
+msgid "Copy"
 msgstr ""
 
 #: modules/background/Wallpaper.qml
@@ -424,6 +474,11 @@ msgstr ""
 #: modules/bar/popouts/UpdatesPopout.qml
 #, qt-format
 msgid "%1 Updates"
+msgstr ""
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+#, qt-format
+msgid "New · %1"
 msgstr ""
 
 #: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
@@ -850,10 +905,6 @@ msgstr ""
 
 #: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/KeybindsPage.qml
 msgid "Cancel"
-msgstr ""
-
-#: modules/launcher/DesktopEditDialog.qml
-msgid "Save"
 msgstr ""
 
 #: modules/launcher/DesktopEditDialog.qml
@@ -1473,6 +1524,10 @@ msgstr ""
 
 #: modules/nexus/pages/AboutPage.qml
 msgid "Welcome guide"
+msgstr ""
+
+#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "What's new"
 msgstr ""
 
 #: modules/nexus/pages/AboutPage.qml
@@ -3153,6 +3208,14 @@ msgstr ""
 msgid "Prevent sleep / idle suspend"
 msgstr ""
 
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+msgid "Dark mode"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Everything dark, light apps included, over every activity's look"
+msgstr ""
+
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximise screen use: no frame or gaps"
 msgstr ""
@@ -3183,6 +3246,27 @@ msgstr ""
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximum number of clipboard entries to keep"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Folders"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: utils/Paths.qml
+msgid "Screenshots"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml utils/Paths.qml
+msgid "Screen recordings"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screenshots"
+msgstr ""
+
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+msgid "Choose where to save screen recordings"
 msgstr ""
 
 #: modules/nexus/pages/PanelsPage.qml
@@ -3648,6 +3732,11 @@ msgstr ""
 
 #: modules/nexus/pages/ShellPage.qml
 #: modules/nexus/pages/wallandstyle/ColourSelect.qml
+msgid "Paused: dark mode is on in the quick toggles"
+msgstr ""
+
+#: modules/nexus/pages/ShellPage.qml
+#: modules/nexus/pages/wallandstyle/ColourSelect.qml
 msgid "Shell and bar colours"
 msgstr ""
 
@@ -3966,11 +4055,11 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Back"
 msgstr ""
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Next"
 msgstr ""
 
@@ -4168,6 +4257,34 @@ msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Open Nexus"
+msgstr ""
+
+#. TRANSLATORS: %1 = the version, e.g. 0.6.0
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "What's new in Sylphrena %1"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Close"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Done"
+msgstr ""
+
+#. TRANSLATORS: %1 = the version Sylphrena was updated to
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "Sylphrena was updated to %1"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Every change"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "The list of changes is not available."
 msgstr ""
 
 #: modules/windowinfo/Buttons.qml
@@ -4484,6 +4601,10 @@ msgstr ""
 
 #: services/Companions.qml
 msgid "Package manager: pacman, AUR and Flatpak in one list"
+msgstr ""
+
+#: services/Companions.qml
+msgid "Video player: every audio and subtitle track, and it remembers where you left off"
 msgstr ""
 
 #: services/Companions.qml
@@ -4820,6 +4941,10 @@ msgid "Toggle utilities panel"
 msgstr ""
 
 #: services/Keybinds.qml
+msgid "Turn the dark mode quick toggle on or off"
+msgstr ""
+
+#: services/Keybinds.qml
 msgid "Show panels"
 msgstr ""
 
@@ -5047,10 +5172,6 @@ msgstr ""
 
 #: services/Keybinds.qml
 msgid "Shell"
-msgstr ""
-
-#: services/Keybinds.qml
-msgid "Screenshots"
 msgstr ""
 
 #: services/Keybinds.qml

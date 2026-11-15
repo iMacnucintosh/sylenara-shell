@@ -6,7 +6,7 @@
 # (Root pieces of extensions are not here: each one installs its own from Nexus → Extensions,
 # manifest `system`.) Drop a new file there to add another privileged install; the next run
 # of this script picks it up. User-owned refresh (theme, wallpaper) stays
-# outside sudo: the greeter dir is chowned back to the invoking user.
+# outside sudo: the login screen's user/ folder belongs to the invoking user (the rest is root's).
 #
 #   scripts/install-system.sh
 #   greeter/install-greeter.sh    # same entry, kept for the old path
@@ -31,7 +31,7 @@ if [[ -z "$OWNER" && -n "${PKEXEC_UID:-}" ]]; then
   OWNER="$(id -nu "$PKEXEC_UID")"
 fi
 if [[ -z "$OWNER" || "$OWNER" == "root" ]]; then
-  echo "Run this from your user account so the greeter dir stays yours." >&2
+  echo "Run this from your user account: the login screen takes your theme, wallpaper and avatar." >&2
   exit 1
 fi
 OWNER_HOME="$(getent passwd "$OWNER" | cut -d: -f6)"

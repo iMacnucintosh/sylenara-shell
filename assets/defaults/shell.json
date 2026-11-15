@@ -152,7 +152,9 @@
             "explorer": [
                 "seeker"
             ],
-            "playback": [],
+            "playback": [
+                "veo"
+            ],
             "terminal": [
                 "kitty"
             ]
@@ -200,6 +202,10 @@
             {
                 "enabled": true,
                 "id": "keepAwake"
+            },
+            {
+                "enabled": true,
+                "id": "darkMode"
             },
             {
                 "enabled": true,

@@ -23,7 +23,9 @@ Scope {
     function syncState(enableDisable: bool): void {
         if (RuntimeState.gameMode) {
             root.applyGameMode();
-            if (GlobalConfig.utilities.toasts.gameModeChanged)
+            // Only when it is switched on: at startup (a shell reload) it is already on, and the notice
+            // landed on top of the reload's
+            if (enableDisable && GlobalConfig.utilities.toasts.gameModeChanged)
                 Toaster.toast(Tr.tr("Compact layout enabled"), Tr.tr("Left bar only; no frame, gaps or window rounding"), "fit_screen");
         } else if (enableDisable) {
             Hypr.extras.message("reload");
@@ -33,6 +35,14 @@ Scope {
     }
 
     Component.onCompleted: syncState(false)
+
+    // Once more when the shell has settled: the first request at startup can go out before Hyprland's
+    // socket answers, or be undone by the shell's own startup reloads (a reload left the gaps back)
+    Timer {
+        running: RuntimeState.gameMode
+        interval: 2500
+        onTriggered: root.applyGameMode()
+    }
 
     Connections {
         function onGameModeChanged(): void {

@@ -211,6 +211,8 @@ def _sync_qt6ct(colours: dict[str, str], mode: str, light_apps: bool = False) ->
 # --- Greeter (Quickshell): palette + wallpaper for /etc/greetd/sylphrena -------
 
 _GREETER_DIR = _env_dir("GREETER_DIR", Path("/etc/greetd/sylphrena"))
+# The only part of it the session may write (scripts/system/10-greeter.sh): the rest is root's
+_GREETER_DATA = _GREETER_DIR / "user"
 _STATE = _app_dir(_XDG_STATE)
 _SCHEME_JSON = _STATE / "scheme.json"
 _WALLPAPER_LINK = _STATE / "wallpaper/current"
@@ -245,37 +247,6 @@ def _greeter_copy(src: Path, dst: Path) -> None:
         pass
 
 
-def _sync_greeter_ui() -> None:
-    """Mirror the Quickshell greeter config into /etc/greetd/sylphrena/qs.
-
-    The greeter session runs as user `greeter` and should not depend on
-    reading files under the session user's home.
-    """
-    import shutil
-
-    src = Path(__file__).resolve().parent.parent / "greeter"
-    dst = _GREETER_DIR / "qs"
-    if not src.is_dir() or not _GREETER_DIR.is_dir():
-        return
-    try:
-        # Full replace so renames (e.g. Resources → ResourcePanel) do not leave
-        # stale QML that clashes with singletons.
-        if dst.exists():
-            shutil.rmtree(dst)
-        dst.mkdir(parents=True, exist_ok=True)
-        for name in ("shell.qml", "components", "modules", "services"):
-            s = src / name
-            d = dst / name
-            if not s.exists():
-                continue
-            if s.is_dir():
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
-    except OSError:
-        pass
-
-
 def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     """Push greeter assets: scheme.json, greeter.json, wallpaper, face, font.
 
@@ -285,8 +256,8 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     """
     import json
 
-    if not _GREETER_DIR.is_dir():
-        return  # greeter not installed / dir not chown'ed yet
+    if not _GREETER_DATA.is_dir():
+        return  # login screen not installed (or installed before user/ existed: install-system.sh moves it)
 
     # Palette: prefer the live colours dict, else the persisted scheme.json.
     scheme: dict = {}
@@ -305,7 +276,7 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
     if scheme.get("colours"):
         try:
             _atomic_write(
-                _GREETER_DIR / "scheme.json",
+                _GREETER_DATA / "scheme.json",
                 json.dumps(scheme, indent=2) + "\n",
             )
         except OSError:
@@ -319,20 +290,17 @@ def _sync_greeter(colours: dict[str, str] | None = None) -> None:
         "location": _weather_location(),
     }
     try:
-        _atomic_write(_GREETER_DIR / "greeter.json", json.dumps(greeter_cfg, indent=2) + "\n")
+        _atomic_write(_GREETER_DATA / "greeter.json", json.dumps(greeter_cfg, indent=2) + "\n")
     except OSError:
         pass
 
-    # Wallpaper: raw copy for the Quickshell greeter; also keep wallpaper.jpg in
-    # sync for the legacy regreet.toml background path.
-    _greeter_copy(_WALLPAPER_LINK, _GREETER_DIR / "wallpaper")
-    _greeter_copy(_WALLPAPER_LINK, _GREETER_DIR / "wallpaper.jpg")
+    # Wallpaper: a raw copy (the greeter blurs it). The login screen's QML is not copied from here: it is root's
+    # and comes with install-system.sh (also run by the installer's update when the shell changes)
+    _greeter_copy(_WALLPAPER_LINK, _GREETER_DATA / "wallpaper")
     # Avatar: greeter user cannot read ~/.face.
-    _greeter_copy(_FACE, _GREETER_DIR / "face")
+    _greeter_copy(_FACE, _GREETER_DATA / "face")
     # Google Sans Flex: copied once at install, refreshed if the asset changes.
-    fonts = _GREETER_DIR / "fonts"
-    _greeter_copy(_FONT_SRC, fonts / "GoogleSansFlex.ttf")
-    _sync_greeter_ui()
+    _greeter_copy(_FONT_SRC, _GREETER_DATA / "fonts" / "GoogleSansFlex.ttf")
 
 
 def _light_gtk_css(filename: str, text: str) -> str:
@@ -404,6 +372,10 @@ def _trigger_gtk_color_reload() -> None:
     """
     import time
 
+    # gtk.css is read back below: while staged it is not published yet
+    if _Stage.active is not None:
+        _Stage.active.after.insert(0, _trigger_gtk_color_reload)
+        return
     stamp = f"/* sylphrena-reload {time.time_ns()} */\n"
     for ver in ("gtk-3.0", "gtk-4.0"):
         base = Path.home() / f".config/{ver}"
@@ -422,9 +394,136 @@ def _trigger_gtk_color_reload() -> None:
             pass
 
 
+class _Stage:
+    """Hold back what the apps see until everything is ready, then publish it in one go.
+
+    Each app repaints when its own file (or a dconf key) changes, and the apply writes them one after another over
+    ~150 ms. While a stage is open, atomic renames (``os.replace``, which every theme file goes through) and
+    ``dconf write`` are recorded instead; ``commit`` renames all files, writes the dconf keys that end up different
+    (one value per key: no adw-gtk3-dark → adw-gtk3 flip) and then runs what had to wait for them (GTK colour reload,
+    the CLI postHook). The temp files are already on disk, so publishing takes a few milliseconds.
+    """
+
+    active: "_Stage | None" = None
+
+    def __init__(self) -> None:
+        self.renames: dict[str, str] = {}
+        self.dconf: dict[str, str] = {}
+        self.after: list = []
+        self._replace = os.replace
+        self._run = subprocess.run
+
+    def __enter__(self) -> "_Stage":
+        def replace(src, dst, *args, **kwargs):
+            if args or kwargs:
+                return self._replace(src, dst, *args, **kwargs)
+            dst = os.fspath(dst)
+            old = self.renames.pop(dst, None)
+            if old is not None and old != os.fspath(src):
+                try:
+                    os.unlink(old)
+                except OSError:
+                    pass
+            self.renames[dst] = os.fspath(src)
+
+        def run(cmd, *args, **kwargs):
+            if isinstance(cmd, (list, tuple)) and len(cmd) >= 3 and cmd[0] == "dconf":
+                if cmd[1] == "write" and len(cmd) == 4:
+                    self.dconf[cmd[2]] = cmd[3]
+                    return subprocess.CompletedProcess(cmd, 0, "", "")
+                if cmd[1] == "read" and cmd[2] in self.dconf:
+                    out = self.dconf[cmd[2]] + "\n"
+                    return subprocess.CompletedProcess(cmd, 0, out if kwargs.get("text") else out.encode(), "")
+            # The CLI postHook (a shell string: kitty reload, prefer-light) must see the published files
+            if kwargs.get("shell"):
+                self.after.append(lambda: self._run(cmd, *args, **kwargs))
+                return subprocess.CompletedProcess(cmd, 0, "", "")
+            return self._run(cmd, *args, **kwargs)
+
+        os.replace = replace
+        subprocess.run = run
+        _Stage.active = self
+        return self
+
+    def __exit__(self, *exc) -> None:
+        os.replace = self._replace
+        subprocess.run = self._run
+        _Stage.active = None
+        self.commit()
+
+    def commit(self) -> None:
+        for dst, src in self.renames.items():
+            try:
+                os.replace(src, dst)
+            except OSError:
+                pass
+        self.renames.clear()
+        changed = {}
+        for key, value in self.dconf.items():
+            cur = subprocess.run(["dconf", "read", key], check=False, capture_output=True, text=True,
+                                 stdin=subprocess.DEVNULL).stdout.strip()
+            if cur != value:  # a write is a change event for every running app
+                changed[key] = value
+        # One dconf process for every key, so the portal and the GTK theme change together
+        by_dir: dict[str, list[str]] = {}
+        for key, value in changed.items():
+            folder, name = key.rsplit("/", 1)
+            by_dir.setdefault(folder + "/", []).append(f"{name}={value}")
+        for folder, lines in by_dir.items():
+            subprocess.run(["dconf", "load", folder], input="[/]\n" + "\n".join(lines) + "\n", text=True,
+                           check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        for fn in self.after:
+            try:
+                fn()
+            except Exception:
+                pass
+        self.after.clear()
+
+
 def _patch_theme() -> None:
+    import atexit
+
+    import sylphrena.utils.scheme as scheme_mod
     import sylphrena.utils.theme as theme
     from sylphrena.utils.paths import c_state_dir
+
+    # The shell repaints the moment scheme.json changes; the apps when their own files do, written by
+    # apply_colours a few hundred ms later. Save scheme.json last so the shell and the apps switch together;
+    # atexit covers a save with no apply after it
+    orig_save = scheme_mod.Scheme.save
+    pending_saves: list = []
+
+    def deferred_save(self) -> None:
+        if self not in pending_saves:
+            pending_saves.append(self)
+
+    def flush_saves() -> None:
+        while pending_saves:
+            orig_save(pending_saves.pop(0))
+
+    scheme_mod.Scheme.save = deferred_save
+    atexit.register(flush_saves)
+
+    # Chrome's policy refresh blocks ~0.3 s in the middle of the apply: let it finish on its own
+    orig_apply_chromium = theme.apply_chromium
+
+    def apply_chromium_detached(colours: dict[str, str]) -> None:
+        real_run = subprocess.run
+
+        def run(cmd, *args, **kwargs):
+            if isinstance(cmd, (list, tuple)) and "--refresh-platform-policy" in cmd:
+                subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL, start_new_session=True)
+                return subprocess.CompletedProcess(cmd, 0)
+            return real_run(cmd, *args, **kwargs)
+
+        subprocess.run = run
+        try:
+            orig_apply_chromium(colours)
+        finally:
+            subprocess.run = real_run
+
+    theme.apply_chromium = apply_chromium_detached
 
     def apply_terms_quiet(sequences: str) -> None:
         state = c_state_dir / "sequences.txt"
@@ -518,21 +617,26 @@ def _patch_theme() -> None:
         except Exception:
             pass
 
-        orig_apply_colours(colours, mode)
-        # Always push GTK/Thunar + colors.css reload stamp (colorreload watches
-        # colors.css, not gtk.css — without this, open Thunar keeps stale styles).
-        try:
-            theme.apply_gtk(colours, mode)
-        except Exception:
-            pass
-        _sync_qt6ct(colours, mode, (_STATE / "force-apps-light").is_file())
-        _sync_seeker(colours, mode)
-        _sync_things(colours, mode)
-        _sync_greeter(colours)
-        # OpenCode TUI: theme file + cli.json mode follow the activity scheme.
-        _sync_opencode_theme(colours, mode)
+        # Everything the apps see is prepared first and published at once (_Stage), the shell's scheme.json just
+        # after it: the shell and the apps switch in the same few milliseconds
+        with _Stage():
+            orig_apply_colours(colours, mode)
+            # Always push GTK/Thunar + colors.css reload stamp (colorreload watches
+            # colors.css, not gtk.css — without this, open Thunar keeps stale styles).
+            try:
+                theme.apply_gtk(colours, mode)
+            except Exception:
+                pass
+            _sync_qt6ct(colours, mode, (_STATE / "force-apps-light").is_file())
+            _sync_seeker(colours, mode)
+            _sync_things(colours, mode)
+            _sync_veo(colours, mode)
+        flush_saves()
         # Templates land inside apply_colours; refresh Kitty after that.
         _reload_kitty()
+        # Not on screen now (login screen, OpenCode theme file): after the switch
+        _sync_greeter(colours)
+        _sync_opencode_theme(colours, mode)
 
     theme.apply_terms = apply_terms_quiet
     theme.apply_colours = apply_colours_quiet
@@ -581,10 +685,21 @@ def _write_qt_app_theme(app: str, colours: dict[str, str], mode: str) -> None:
         pass
     if tr_enabled is None:
         tr_enabled = False
+    # The shell's animation speed (Nexus): the apps multiply their durations by it (sync-app-anim.py keeps it current)
+    anim_scale = 1.0
+    try:
+        from sylphrena.utils.paths import user_config_path
+
+        if user_config_path.is_file():
+            cfg = _json.loads(user_config_path.read_text() or "{}")
+            anim_scale = float((((cfg.get("appearance") or {}).get("anim") or {}).get("durations") or {}).get("scale", 1.0))
+    except Exception:
+        pass
     payload = {
         "mode": mode if mode in ("dark", "light") else "dark",
         "colours": {k: (v[1:] if isinstance(v, str) and v.startswith("#") else v) for k, v in colours.items()},
         "transparency": {"enabled": tr_enabled, "base": tr_base, "layers": tr_layers, "wallLuminance": tr_wall},
+        "animScale": anim_scale,
     }
     _atomic_write(out, _json.dumps(payload, indent=2) + "\n")
 
@@ -597,6 +712,11 @@ def _sync_seeker(colours: dict[str, str], mode: str) -> None:
 def _sync_things(colours: dict[str, str], mode: str) -> None:
     """Things (Qt/QML package manager) watches ~/.config/things/theme.json."""
     _write_qt_app_theme("things", colours, mode)
+
+
+def _sync_veo(colours: dict[str, str], mode: str) -> None:
+    """Veo (Qt/QML video player) watches ~/.config/veo/theme.json."""
+    _write_qt_app_theme("veo", colours, mode)
 
 
 def _sync_opencode_theme(colours: dict[str, str], mode: str) -> None:

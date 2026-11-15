@@ -166,9 +166,11 @@ PageBase {
             last: true
             implicitHeight: hero.implicitHeight + Tokens.padding.extraLarge * 2
 
-            // The welcome assistant again
+            // The welcome guide (bottom left of the card) and the news of the latest version (bottom right), again
             IconButton {
-                anchors.right: parent.right
+                id: guideButton
+
+                anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 anchors.margins: Tokens.padding.large
                 z: 3
@@ -177,8 +179,29 @@ PageBase {
                 icon: "auto_fix_high"
                 onClicked: Welcome.show()
 
-                ToolTip.visible: hovered
-                ToolTip.text: Tr.tr("Welcome guide")
+                StyledToolTip {
+                    shown: guideButton.hovered
+                    text: Tr.tr("Welcome guide")
+                }
+            }
+
+            IconButton {
+                id: newsButton
+
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.margins: Tokens.padding.large
+                z: 3
+                type: IconButton.Tonal
+                isRound: true
+                icon: "celebration"
+                visible: (Welcome.news?.length ?? 0) > 0
+                onClicked: Welcome.showLatestNews()
+
+                StyledToolTip {
+                    shown: newsButton.hovered
+                    text: Tr.tr("What's new")
+                }
             }
 
             ColumnLayout {

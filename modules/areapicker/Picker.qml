@@ -18,7 +18,8 @@ MouseArea {
 
     property bool onClient
 
-    property real realBorderWidth: onClient ? (Hypr.options["general:border_size"] ?? 1) : 2
+    // At least 2 px: with Hyprland's border at 0 (compact layout) the window outline vanished
+    property real realBorderWidth: Math.max(2, onClient ? (Hypr.options["general:border_size"] ?? 0) : 2)
     property real realRounding: onClient ? (Hypr.options["decoration:rounding"] ?? 0) : 0
 
     property real ssx
@@ -88,7 +89,7 @@ MouseArea {
                 // Path via argv ($1), never interpolated into the shell string.
                 Quickshell.execDetached(["sh", "-c", `wl-copy --type image/png < \"$1\"`, "_", path]);
             } else {
-                Quickshell.execDetached(["swappy", "-f", path]);
+                root.loader.preview(path, root.screen);
             }
             closeAnim.start();
         });

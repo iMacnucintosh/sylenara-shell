@@ -18,10 +18,11 @@ if [ -z "${XKB_DEFAULT_LAYOUT:-}" ]; then
   layout="$(localectl status 2>/dev/null | sed -n 's/.*X11 Layout: *//p' | head -n1)"
   if [ -z "$layout" ] && [ -r /etc/vconsole.conf ]; then
     layout="$(sed -n 's/^KEYMAP=//p' /etc/vconsole.conf | tr -d '"' | cut -d- -f1)"
+    [ "$layout" = uk ] && layout=gb   # the console's British keymap is "gb" in XKB
   fi
   export XKB_DEFAULT_LAYOUT="${layout:-us}"
 fi
-export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}}"
+export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
 unset QT_QPA_PLATFORMTHEME || true
 
 mkdir -p "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" 2>/dev/null || true

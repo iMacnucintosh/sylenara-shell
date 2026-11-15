@@ -20,6 +20,8 @@ POST_HOOK = (
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--light-apps", action=argparse.BooleanOptionalAction, required=True)
+    # The activity apply regenerates the CSS itself, all files at once: filtering it here would get ahead of it
+    parser.add_argument("--skip-css", action="store_true")
     args = parser.parse_args()
 
     path = Path.home() / ".config/sylphrena/cli.json"
@@ -41,7 +43,7 @@ def main() -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(cfg, indent=4) + "\n")
 
-    if args.light_apps:
+    if args.light_apps and not args.skip_css:
         # Turning light apps ON: clean the dark GTK CSS that is already on disk right now instead of
         # waiting for the next scheme apply.
         import subprocess

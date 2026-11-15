@@ -27,7 +27,7 @@ class Plan(unittest.TestCase):
         self.assertLess(order.index("aur-helper"), order.index("aur-deps"))
         self.assertLess(order.index("aur-deps"), order.index("sylphrena-cli-git"))
         pkgs = [i for i in order if i.endswith("-git")]
-        self.assertEqual(pkgs, ["sylphrena-cli-git", "seeker-git", "things-git", "sylphrena-shell-git"])  # the shell last
+        self.assertEqual(pkgs, ["sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"])  # the shell last
         for i in items:
             if i.group == "Required":
                 self.assertTrue(i.required)
@@ -39,7 +39,7 @@ class Plan(unittest.TestCase):
         f.installed |= {"git", "base-devel", "hyprland", *inst.AUR_DEPS}
         items = inst.build_plan(f)
         todo = {i.id for i in items if i.todo and i.group == "Required"}
-        self.assertEqual(todo, {"sylphrena-cli-git", "seeker-git", "things-git", "sylphrena-shell-git"})
+        self.assertEqual(todo, {"sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"})
 
     def test_our_packages_come_from_the_aur_when_they_are_there_and_from_github_when_not(self):
         f = bare()
@@ -97,7 +97,7 @@ class Plan(unittest.TestCase):
         pkgbuild = (Path(__file__).resolve().parent.parent / "packaging" / "PKGBUILD").read_text()
         block = re.search(r"^depends=\((.*?)\)", pkgbuild, re.S | re.M).group(1)
         deps = re.findall(r"['\"]([^'\"]+)['\"]", block)
-        ours = {"sylphrena-cli-git", "seeker-git", "things-git"}
+        ours = {p for p, _ in inst.PACKAGES}
         missing = [d for d in deps if d not in ours and d not in inst.AUR_DEPS
                    and subprocess.run(["pacman", "-Si", d], capture_output=True).returncode != 0]
         self.assertEqual(missing, [])
@@ -185,10 +185,28 @@ class Plan(unittest.TestCase):
         f.hyprland_needed = False
         f.first_run_needed = False
         f.greeter_installed = True
+        f.installed |= {"sylphrena-shell-git"}
+        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.7.r0.gabc-1"
+        f.releases["sylphrena-shell"] = "v0.5.7"
         items = {i.id: i for i in inst.build_plan(f)}
         for i in ("hyprland-config", "first-run", "login-screen"):
             self.assertFalse(items[i].todo)
             self.assertFalse(items[i].on)
+
+    def test_the_login_screen_follows_the_shell(self):
+        # its QML and scripts are root's copies of the shell's: copied again when the shell changes
+        f = bare()
+        f.greeter_installed = True
+        f.installed |= {"sylphrena-shell-git"}
+        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.6.r0.gabc-1"
+        f.releases["sylphrena-shell"] = "v0.5.7"
+        login = {i.id: i for i in inst.build_plan(f)}["login-screen"]
+        self.assertTrue(login.todo and login.on)
+        self.assertEqual(login.title, "Update the login screen")
+        # copied from another build than the one installed (installed before it kept a version)
+        f.releases["sylphrena-shell"] = "v0.5.6"
+        f.greeter_version = ""
+        self.assertTrue({i.id: i for i in inst.build_plan(f)}["login-screen"].todo)
 
 
 class Run(unittest.TestCase):

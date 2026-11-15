@@ -50,7 +50,7 @@ Transitions can be chosen too: by default, a vertical slide between desktops and
 A side bar with your desktops and the icons of their apps, the system tray, the clock and the indicators. The panels come out of the bar itself:
 
 - **Dashboard** with the weather, media, how the computer is doing and a carousel of widgets (a calendar, plus whatever extensions add).
-- **Side panel** with notifications and quick toggles (wifi, bluetooth, microphone, screen recording…).
+- **Side panel** with notifications and quick toggles (wifi, bluetooth, microphone, dark mode, screen recording…).
 - **App launcher** with search, a calculator and wallpapers.
 - **Show desktop**: click the desktop you are already on and the windows slide away; click it again and they come back.
 
@@ -78,6 +78,7 @@ Sylphrena grows with extensions (hydration, tasks, your Steam library with achie
 
 - **[Things](https://github.com/iMacnucintosh/things)**: package and extension manager.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: file manager, with the same look as the shell.
+- **[Veo](https://github.com/iMacnucintosh/veo)**: video player, full screen with minimal controls, audio and subtitle tracks, and it remembers where you left each video.
 - **kitty**: the terminal, which changes its colours with your activity.
 
 GTK and Qt apps follow the colour scheme as well, and you can ask for some apps to always look light.

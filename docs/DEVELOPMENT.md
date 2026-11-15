@@ -11,7 +11,7 @@ Runtime (Arch):
 - `brightnessctl`, `libcava`, `networkmanager`, `lm_sensors`, `aubio`, `libpipewire`, `libqalculate`, `power-profiles-daemon`; `ddcutil` para el brillo de monitores externos
 - Fuentes: `ttf-material-symbols-variable`, `ttf-rubik-vf`, `ttf-cascadia-code-nerd`
 - Qt 6: `qt6-base`, `qt6-declarative`, `qt6-imageformats`, `qt6-multimedia`, [`qt6-m3shapes-git`](https://github.com/soramanew/m3shapes)
-- `swappy`, `fish`, `bash`
+- `fish`, `bash`
 - Portapapeles: `cliphist`, `wl-clipboard`, `wtype`
 - Hyprland y portales (`xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`), `qt6ct`, `papirus-icon-theme` y `adw-gtk-theme` (la shell escribe su configuración)
 
@@ -19,7 +19,7 @@ Compilación: `cmake`, `ninja`, `qt6-shadertools`.
 
 Opcionales: `yay` (actualizaciones del AUR), Flatpak, `gpu-screen-recorder` (grabar pantalla), `greetd` (pantalla de inicio de sesión), y lo que pida cada extensión.
 
-Hay PKGBUILD de los cuatro paquetes (`sylphrena-shell-git`, `sylphrena-cli-git`, `seeker-git`, `things-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
+Hay PKGBUILD de los cinco paquetes (`sylphrena-shell-git`, `sylphrena-cli-git`, `seeker-git`, `things-git`, `veo-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
 
 ## Instalar desde un clon
 
@@ -63,6 +63,7 @@ Para arrancar, `scripts/start-shell-with-tray-watcher.sh`: deja vivo el watcher 
 
 ```sh
 ./scripts/install-system.sh   # pide root una vez; greetd + greeter Material You + ajustes de logind
+                              # también para ver en el login un cambio de greeter/ (es de root, no se sincroniza solo)
 ```
 
 ## Arrancar y actualizar

@@ -553,7 +553,7 @@ PageBase {
 
                     ToggleRow {
                         text: Tr.tr("Dark theme")
-                        subtext: Tr.tr("Shell and bar colours")
+                        subtext: Activities.forceDark ? Tr.tr("Paused: dark mode is on in the quick toggles") : Tr.tr("Shell and bar colours")
                         checked: actRow.look.mode !== "light"
                         onToggled: Activities.setActivityMode(actRow.activityId, checked ? "dark" : "light")
                     }
@@ -561,7 +561,7 @@ PageBase {
                     ToggleRow {
                         last: !Activities.activityHasStyleOverride(actRow.activityId) || root.isPrincipal(actRow.modelData)
                         text: Tr.tr("Light apps")
-                        subtext: Tr.tr("Keep GTK/Qt apps light even if the shell is dark")
+                        subtext: Activities.forceDark ? Tr.tr("Paused: dark mode is on in the quick toggles") : Tr.tr("Keep GTK/Qt apps light even if the shell is dark")
                         checked: actRow.look.lightApps > 0
                         onToggled: Activities.setActivityLightApps(actRow.activityId, checked)
                     }
