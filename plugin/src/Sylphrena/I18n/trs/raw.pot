@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 01:55+0100\n"
+"POT-Creation-Date: 2026-11-15 02:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1520,6 +1520,10 @@ msgstr ""
 
 #: modules/nexus/PageRegistry.qml
 msgid "Versions, hardware, software"
+msgstr ""
+
+#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "What's new"
 msgstr ""
 
 #: modules/nexus/pages/AboutPage.qml
@@ -4051,11 +4055,11 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Back"
 msgstr ""
 
-#: modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
 msgid "Next"
 msgstr ""
 
@@ -4253,6 +4257,34 @@ msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Open Nexus"
+msgstr ""
+
+#. TRANSLATORS: %1 = the version, e.g. 0.6.0
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "What's new in Sylphrena %1"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Close"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Done"
+msgstr ""
+
+#. TRANSLATORS: %1 = the version Sylphrena was updated to
+#: modules/welcome/WhatsNewWindow.qml
+#, qt-format
+msgid "Sylphrena was updated to %1"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Every change"
+msgstr ""
+
+#: modules/welcome/WhatsNewWindow.qml
+msgid "The list of changes is not available."
 msgstr ""
 
 #: modules/windowinfo/Buttons.qml

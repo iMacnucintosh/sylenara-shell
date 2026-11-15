@@ -166,19 +166,34 @@ PageBase {
             last: true
             implicitHeight: hero.implicitHeight + Tokens.padding.extraLarge * 2
 
-            // The welcome assistant again
-            IconButton {
+            // The welcome assistant and the news of the latest version, again
+            Row {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.margins: Tokens.padding.large
                 z: 3
-                type: IconButton.Tonal
-                isRound: true
-                icon: "auto_fix_high"
-                onClicked: Welcome.show()
+                spacing: Tokens.spacing.small
 
-                ToolTip.visible: hovered
-                ToolTip.text: Tr.tr("Welcome guide")
+                IconButton {
+                    type: IconButton.Tonal
+                    isRound: true
+                    icon: "new_releases"
+                    visible: (Welcome.news?.length ?? 0) > 0
+                    onClicked: Welcome.showLatestNews()
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: Tr.tr("What's new")
+                }
+
+                IconButton {
+                    type: IconButton.Tonal
+                    isRound: true
+                    icon: "auto_fix_high"
+                    onClicked: Welcome.show()
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: Tr.tr("Welcome guide")
+                }
             }
 
             ColumnLayout {

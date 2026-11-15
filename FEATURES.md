@@ -180,6 +180,18 @@ Cerrarla, omitirla o terminarla cuenta como vista (`~/.local/state/sylphrena/wel
 
 En **Nexus → Extensiones**, la fila **Buscar más en Things** abre Things (botón desactivado, con aviso, si no está instalado).
 
+
+## Novedades tras actualizar
+
+Después de una actualización, a los 5 s de arrancar la shell sale una ventana **Novedades** (como la bienvenida: flotante, 960×720) con lo que traen las versiones nuevas respecto a la que tenías, **una sola vez**:
+
+1. **Portada:** el orbe, «Sylphrena se ha actualizado a la X» y las novedades en pastillas (clic → su página).
+2. **Una página por novedad:** captura con esquinas redondeadas (o un icono grande si no tiene), título y dos líneas.
+3. **Todos los cambios:** las secciones de esas versiones del `CHANGELOG.md`, con formato.
+
+Flechas `←`/`→` (o `RePág`/`AvPág`) para pasar páginas, `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (`new_releases`) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
+
+**Al sacar una versión:** su entrada en `whatsnew/whatsnew.json` (novedades destacadas, en inglés y español, con `icon` de Material Symbols y, si se quiere, `image` → `whatsnew/<versión>/<nombre>.webp`, ~1280 px de ancho, 50-150 KB) y la sección «Sin publicar» del CHANGELOG renombrada a `## X.Y.Z (fecha)`.
 ## Pantalla (modos, escala, VRR)
 
 Bloque **Pantalla** inline en **Nexus → Dispositivos conectados** (categoría Dispositivos; sin entrada propia en el sidebar), una tarjeta por monitor:
