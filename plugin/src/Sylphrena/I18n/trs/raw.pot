@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 02:11+0100\n"
+"POT-Creation-Date: 2026-11-15 03:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1522,12 +1522,12 @@ msgstr ""
 msgid "Versions, hardware, software"
 msgstr ""
 
-#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
-msgid "What's new"
-msgstr ""
-
 #: modules/nexus/pages/AboutPage.qml
 msgid "Welcome guide"
+msgstr ""
+
+#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "What's new"
 msgstr ""
 
 #: modules/nexus/pages/AboutPage.qml
@@ -4601,6 +4601,10 @@ msgstr ""
 
 #: services/Companions.qml
 msgid "Package manager: pacman, AUR and Flatpak in one list"
+msgstr ""
+
+#: services/Companions.qml
+msgid "Video player: every audio and subtitle track, and it remembers where you left off"
 msgstr ""
 
 #: services/Companions.qml

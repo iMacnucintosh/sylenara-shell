@@ -462,7 +462,7 @@ FloatingWindow {
                 spacing: Tokens.spacing.extraSmall / 2
 
                 Repeater {
-                    model: ["seeker", "things", "kitty"]
+                    model: ["seeker", "things", "veo", "kitty"]
 
                     ConnectedRect {
                         id: appCard

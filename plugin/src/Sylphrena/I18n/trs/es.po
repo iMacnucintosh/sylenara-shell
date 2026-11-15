@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 02:11+0100\n"
+"POT-Creation-Date: 2026-11-15 03:09+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1523,13 +1523,13 @@ msgstr "Información del sistema"
 msgid "Versions, hardware, software"
 msgstr "Versiones, hardware, software"
 
-#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
-msgid "What's new"
-msgstr "Novedades"
-
 #: modules/nexus/pages/AboutPage.qml
 msgid "Welcome guide"
 msgstr "Guía de bienvenida"
+
+#: modules/nexus/pages/AboutPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "What's new"
+msgstr "Novedades"
 
 #: modules/nexus/pages/AboutPage.qml
 msgid "Hostname"
@@ -4603,6 +4603,10 @@ msgstr "Explorador de archivos Material You, en sintonía con el tema de la shel
 #: services/Companions.qml
 msgid "Package manager: pacman, AUR and Flatpak in one list"
 msgstr "Gestor de paquetes: pacman, AUR y Flatpak en una sola lista"
+
+#: services/Companions.qml
+msgid "Video player: every audio and subtitle track, and it remembers where you left off"
+msgstr "Reproductor de vídeo: todas las pistas de audio y subtítulos, y recuerda dónde lo dejaste"
 
 #: services/Companions.qml
 msgid "Fast terminal: Sylphrena changes its colours live with your theme"
