@@ -2,13 +2,17 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
+## 0.6.1 (2026-11-15)
+
+- **Actualizar desde la 0.5 fallaba en «Shell de Sylphrena»:** el paquete de la shell exigía Veo, pero quien actualiza desde una versión anterior lo hace con el instalador viejo, que no lo conoce ni lo instala antes. Veo pasa a dependencia opcional del paquete: la shell se actualiza y, ya en la nueva, la lista ofrece «Nuevo · Veo», que se instala con la siguiente actualización y queda como reproductor predeterminado.
+
 ## 0.6.0 (2026-11-15)
 
 - **La shell y las apps cambian de tema a la vez:** antes la shell se adelantaba casi medio segundo a Seeker, Things, GTK, Qt y Zen; ahora todo se publica de golpe, en unos 30 ms, y el tema GTK ya no parpadea a oscuro y vuelta. Activar o quitar las apps claras regenera además en el acto el CSS de GTK y la paleta de Qt (antes esperaban al siguiente cambio de tema).
 - **Modo oscuro en los ajustes rápidos:** un interruptor que lo pone todo oscuro (esquema y apps claras) por encima del aspecto de cada actividad, sin tocarlo: al quitarlo cada una vuelve a como estaba. También con atajo (sin asignar por defecto) y `qs -c sylphrena ipc call darkMode toggle`.
 - **Pantalla de login más segura:** lo que ejecuta (sus scripts y el QML que recibe la contraseña) es de root; tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). Antes todo era de tu usuario, y en un equipo con varias cuentas una podía cambiarlo y leer la contraseña de otra. Al actualizar Sylphrena, la pantalla de login se pone al día sola.
 - **Novedades tras actualizar:** después de una actualización sale una ventana con lo nuevo de esa versión (capturas, título y dos líneas por novedad) y, al final, todos los cambios del CHANGELOG. Una vez; se vuelve a ver desde Nexus → Acerca de.
-- **Veo, el reproductor de vídeo de Sylphrena:** pantalla completa, controles mínimos, pistas de audio y subtítulos, continuar donde lo dejaste y el siguiente capítulo de la carpeta. Viene con la shell (el paquete depende de él), es el reproductor predeterminado (`setup-player.py`: no pisa uno que hayas elegido) y se recolorea con cada esquema. Al actualizar, la lista lo marca como «Nuevo» y se instala con lo demás.
+- **Veo, el reproductor de vídeo de Sylphrena:** pantalla completa, controles mínimos, pistas de audio y subtítulos, continuar donde lo dejaste y el siguiente capítulo de la carpeta. Viene con la shell, es el reproductor predeterminado (`setup-player.py`: no pisa uno que hayas elegido) y se recolorea con cada esquema. Al actualizar, la lista lo marca como «Nuevo» y se instala con lo demás.
 - **Previsualización de capturas propia:** sustituye a swappy (en inglés, y su «Guardar» fallaba al buscar `~/Desktop`). Traducida, con línea libre, flecha, rectángulo, goma, seis colores y deshacer, y Copiar, Guardar y Descartar; cada una cierra la ventana. `swappy` deja de ser dependencia.
 - **Carpetas de capturas y grabaciones elegibles** en Nexus → Paneles → Utilidades. Por defecto, imágenes/vídeos de XDG más un nombre en el idioma de la shell, fijado al primer uso (antes la de grabaciones estaba escrita en español en el código).
 - **Capturar ventana:** el recuadro que marca la ventana vuelve a tener las esquinas redondeadas de Hyprland y un borde del color del esquema (con Hyprland 0.57 la shell no leía sus opciones y, con el borde de ventana a 0, el recuadro no se veía).
