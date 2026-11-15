@@ -72,15 +72,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
     "enabled": true,
     "appearance": {
         "deformScale": 1,
-        "rounding": {
-            "scale": 1
-        },
-        "spacing": {
-            "scale": 1
-        },
-        "padding": {
-            "scale": 1
-        },
+        "rounding": { "scale": 1 },
+        "spacing": { "scale": 1 },
+        "padding": { "scale": 1 },
         "font": {
             "scale": 1,
             "clock": "Rubik",
@@ -219,9 +213,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             }
         },
         "anim": {
-            "durations": {
-                "scale": 1
-            }
+            "durations": { "scale": 1 }
         },
         "transparency": {
             "enabled": false,
@@ -233,9 +225,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "logo": "",
         "showOverFullscreen": false,
         "apps": {
-            "terminal": ["foot"],
+            "terminal": ["kitty"],
             "audio": ["pwvucontrol"],
-            "playback": ["mpv"],
+            "playback": ["veo"],
             "explorer": ["seeker"]
         },
         "idle": {
@@ -284,7 +276,15 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 }
             ],
             "criticalLevel": 3
-        }
+        },
+        "language": "",
+        "followMouse": 1,
+        "keyboardLayouts": [],
+        "keyboardSwitch": "",
+        "workspaceAnimation": "slidevert",
+        "workspaceAnimationSpeed": "normal",
+        "activityAnimation": "fade",
+        "activityAnimationSpeed": "normal"
     },
     "background": {
         "enabled": true,
@@ -311,7 +311,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "blur": false,
             "rounding": 1,
             "spacing": 1
-        }
+        },
+        "wallpaperTransition": 2
     },
     "bar": {
         "persistent": true,
@@ -333,7 +334,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "perMonitor": true,
             "showWindows": true,
             "maxWindowIcons": 5,
-            "activeTrail": false,
+            "activeTrail": true,
             "displayType": "shapes",
             "label": "  ",
             "occupiedLabel": "󰮯",
@@ -385,7 +386,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "clock": {
             "background": false,
             "showDate": false,
-            "showIcon": true
+            "showIcon": false,
+            "showSeconds": false
         },
         "statusIcons": [
             {
@@ -459,7 +461,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "enabled": true
             }
         ],
-        "excludedScreens": []
+        "excludedScreens": [],
+        "status": { "onlyShowUpdatesWithUpdates": true }
     },
     "border": {
         "thickness": 10,
@@ -485,7 +488,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "showMemory": true,
             "showStorage": true,
             "showNetwork": true
-        }
+        },
+        "showClockSeconds": false
     },
     "extensions": {
         "enabled": []
@@ -626,11 +630,12 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "maxHowdyTries": 3,
         "triggerHowdyOnWake": true,
         "hideNotifs": false,
-        "enableSessionControls": true
+        "enableSessionControls": false
     },
     "nexus": {
         "wallpapersPerRow": 4,
-        "networkRescanInterval": 15000
+        "networkRescanInterval": 15000,
+        "maxNetworksShown": 5
     },
     "notifs": {
         "expire": true,
@@ -663,7 +668,10 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "smartScheme": true,
         "defaultPlayer": "Spotify",
         "playerAliases": [
-            { "from": "com.github.th_ch.youtube_music", "to": "YT Music" }
+            {
+                "from": "com.github.th_ch.youtube_music",
+                "to": "YT Music"
+            }
         ],
         "lyricsBackend": "Auto"
     },
@@ -705,7 +713,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "numLockChanged": true,
             "kbLayoutChanged": true,
             "vpnChanged": true,
-            "nowPlaying": false
+            "nowPlaying": false,
+            "position": "top",
+            "updatesAvailable": true
         },
         "vpn": {
             "enabled": false,
@@ -738,7 +748,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                         "hosts": ["10.0.0.1=intranet.example.com"]
                     }
                 }
-            ]
+            ],
+            "selectedProvider": ""
         },
         "quickToggles": [
             {
@@ -769,7 +780,27 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "id": "vpn",
                 "enabled": false
             }
-        ]
+        ],
+        "cards": {
+            "keepAwake": false,
+            "recorder": true,
+            "quickToggles": true
+        },
+        "clipboard": {
+            "enabled": true,
+            "maxItems": 50
+        },
+        "updates": {
+            "checkArch": true,
+            "checkAur": true,
+            "checkFlatpak": true,
+            "aurWrapper": "yay",
+            "pollIntervalMinutes": 30,
+            "notifications": true,
+            "allowSingleModification": true,
+            "aurFlags": "--noconfirm",
+            "flatpakFlags": "--assumeyes"
+        }
     },
     "paths": {
         "wallpaperDir": "~/Pictures/Wallpapers",
@@ -778,6 +809,63 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "recordingsDir": "",
         "noNotifsPic": "root:/assets/dino.png",
         "lockNoNotifsPic": "root:/assets/dino.png"
+    },
+    "activities": {
+        "enabled": true,
+        "showWindowIcons": true,
+        "windowPreview": true,
+        "crossActivityWorkspaces": false,
+        "activities": [
+            {
+                "id": "principal",
+                "name": "Home",
+                "icon": "home",
+                "workspaceCount": 2,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            },
+            {
+                "id": "games",
+                "name": "Games",
+                "icon": "sports_esports",
+                "workspaceCount": 1,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            },
+            {
+                "id": "work",
+                "name": "Work",
+                "icon": "work",
+                "workspaceCount": 2,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            }
+        ],
+        "appRules": []
+    },
+    "addons": {
+        "timers": {
+            "enabled": true,
+            "presetMins0": 5,
+            "presetMins1": 10,
+            "presetMins2": 20,
+            "presetMins3": 30
+        }
     }
 }
 ```
