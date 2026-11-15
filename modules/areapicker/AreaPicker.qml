@@ -17,6 +17,12 @@ Scope {
 
         // The capture goes to the preview window, which outlives the picker
         function preview(path: string, screen: ShellScreen): void {
+            // A capture taken with another one still in the preview: that one is saved (it would be lost, and the
+            // window could not show the new one), and the new one gets a window of its own
+            if (previewLoader.active) {
+                (previewLoader.item as ShotPreview)?.save();
+                previewLoader.active = false;
+            }
             previewLoader.path = path;
             previewLoader.screen = screen;
             previewLoader.active = true;
