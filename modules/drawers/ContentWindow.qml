@@ -188,8 +188,9 @@ StyledWindow {
             id: blobGroup
 
             color: root.surfaceColour
-            // Soft SDF edges leave a wallpaper fringe beside the bar in game mode.
-            smoothing: root.gameMode ? 0 : root.contentItem.Config.border.smoothing
+            // The same smoothing in the compact layout: the bar's popouts keep their curved joins (the panels on
+            // the screen edges reach past it, so nothing curves there)
+            smoothing: root.contentItem.Config.border.smoothing
         }
 
         BlobInvertedRect {

@@ -36,6 +36,14 @@ Scope {
 
     Component.onCompleted: syncState(false)
 
+    // Once more when the shell has settled: the first request at startup can go out before Hyprland's
+    // socket answers, or be undone by the shell's own startup reloads (a reload left the gaps back)
+    Timer {
+        running: RuntimeState.gameMode
+        interval: 2500
+        onTriggered: root.applyGameMode()
+    }
+
     Connections {
         function onGameModeChanged(): void {
             root.syncState(true);
