@@ -319,8 +319,8 @@ FloatingWindow {
                     text: page.item.icon || "auto_awesome"
                     color: Colours.palette.m3onPrimaryContainer
                     fill: 1
-                    fontStyle: Tokens.font.icon.extraLarge
-                    scale: 2.2
+                    // Drawn at its size (a scaled small glyph came out blurred)
+                    fontStyle: Tokens.font.icon.size(64).build()
                 }
             }
 

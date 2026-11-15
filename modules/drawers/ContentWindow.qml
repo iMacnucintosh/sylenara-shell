@@ -48,6 +48,8 @@ StyledWindow {
     readonly property real borderRounding: contentItem.Config.border.rounding * (1 - fsTransitionProg)
     readonly property real shadowOpacity: 0.7 * (1 - fsTransitionProg)
     readonly property real borderLayoutThickness: collapseBorder ? 0 : contentItem.Config.border.thickness
+    // Rounding of a panel's corners on the screen edge: 0 in the compact layout (no frame there), animated
+    readonly property real edgeRounding: gameMode ? 1 - fsTransitionProg : 1
     // With the sidebar open the toast sits beside it (both positions), so it only stacks on
     // the notification popups while the sidebar is closed; beside the quick toggles too, never on them.
     readonly property bool toastsJoinNotifs: panels.toasts.height > 0 && !panels.toasts.atBottom && panels.notifications.height > 0 && !panels.sidebar.visible
@@ -207,6 +209,9 @@ StyledWindow {
 
             panel: panels.dashboard
             deformAmount: 0.1
+            // Compact layout: no frame to merge into, so the side on the screen edge is straight
+            topLeftRadius: radius * root.edgeRounding
+            topRightRadius: radius * root.edgeRounding
         }
 
         PanelBg {
@@ -214,6 +219,8 @@ StyledWindow {
 
             panel: panels.launcher
             deformAmount: 0.1
+            bottomLeftRadius: radius * root.edgeRounding
+            bottomRightRadius: radius * root.edgeRounding
         }
 
         PanelBg {
