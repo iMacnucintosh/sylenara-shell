@@ -7,16 +7,22 @@
                 {
                     "icon": "movie",
                     "image": "0.6.0/veo.webp",
-                    "title": { "en": "Veo, your video player", "es": "Veo, tu reproductor de vídeo" },
+                    "title": {
+                        "en": "Veo, your video player",
+                        "es": "Veo, tu reproductor de vídeo"
+                    },
                     "text": {
-                        "en": "Full screen, controls that step aside, every audio and subtitle track of your films, and it remembers where you left each one. At the end of an episode, the next one is ready.",
-                        "es": "Pantalla completa, controles que se apartan, todas las pistas de audio y subtítulos de tus películas, y recuerda dónde dejaste cada una. Al acabar un capítulo, el siguiente está listo."
+                        "en": "Full screen, controls that step aside, every audio and subtitle track of your films, and it remembers where you left each one. It is now your video player, and at the end of an episode the next one is ready.",
+                        "es": "Pantalla completa, controles que se apartan, todas las pistas de audio y subtítulos de tus películas, y recuerda dónde dejaste cada una. Ya es tu reproductor de vídeo, y al acabar un capítulo el siguiente está listo."
                     }
                 },
                 {
                     "icon": "preview",
                     "image": "0.6.0/quicklook.webp",
-                    "title": { "en": "Quick Look in Seeker", "es": "Vista rápida en Seeker" },
+                    "title": {
+                        "en": "Quick Look in Seeker",
+                        "es": "Vista rápida en Seeker"
+                    },
                     "text": {
                         "en": "Select a file and press Space: pictures, videos, music, PDFs a page at a time and text, without opening anything. The arrows move on to the next file.",
                         "es": "Selecciona un archivo y pulsa Espacio: imágenes, vídeos, música, PDF página a página y texto, sin abrir nada. Con las flechas pasas al siguiente."
@@ -25,7 +31,10 @@
                 {
                     "icon": "draw",
                     "image": "0.6.0/screenshot.webp",
-                    "title": { "en": "Mark up your screenshots", "es": "Marca tus capturas" },
+                    "title": {
+                        "en": "Mark up your screenshots",
+                        "es": "Marca tus capturas"
+                    },
                     "text": {
                         "en": "A capture now opens a preview where you can draw lines, arrows and boxes in a few colours, then copy it or save it. Choose where captures and recordings go in Nexus.",
                         "es": "Una captura abre ahora una previsualización donde dibujar líneas, flechas y recuadros en varios colores, y luego copiarla o guardarla. Elige dónde van capturas y grabaciones en Nexus."
@@ -33,18 +42,46 @@
                 },
                 {
                     "icon": "dark_mode",
-                    "title": { "en": "Dark mode in one tap", "es": "Modo oscuro en un toque" },
+                    "title": {
+                        "en": "Dark mode in one tap",
+                        "es": "Modo oscuro en un toque"
+                    },
                     "text": {
                         "en": "A quick toggle turns everything dark, light apps included, over the look of every activity; turn it off and each one comes back as it was. Apps now switch theme together with the shell.",
                         "es": "Un ajuste rápido lo pone todo oscuro, también las apps claras, por encima del aspecto de cada actividad; al quitarlo, cada una vuelve a como estaba. Las apps cambian ahora de tema a la vez que la shell."
                     }
                 },
                 {
+                    "icon": "lock",
+                    "title": {
+                        "en": "A safer login screen",
+                        "es": "Pantalla de inicio más segura"
+                    },
+                    "text": {
+                        "en": "What the login screen runs now belongs to the system, not to your user: on a computer shared by several people, one account can no longer tamper with it. It updates itself with Sylphrena.",
+                        "es": "Lo que ejecuta la pantalla de inicio pertenece ahora al sistema y no a tu usuario: en un equipo con varias cuentas, una ya no puede manipularla. Se pone al día sola con Sylphrena."
+                    }
+                },
+                {
                     "icon": "sync",
-                    "title": { "en": "Folders that keep themselves up to date", "es": "Carpetas que se actualizan solas" },
+                    "title": {
+                        "en": "Folders that keep themselves up to date",
+                        "es": "Carpetas que se actualizan solas"
+                    },
                     "text": {
                         "en": "Seeker shows what other apps add, remove or change in the open folder as it happens, thumbnails included, without losing your selection.",
                         "es": "Seeker enseña al momento lo que otras apps añaden, borran o cambian en la carpeta abierta, miniaturas incluidas, sin perder tu selección."
+                    }
+                },
+                {
+                    "icon": "apps",
+                    "title": {
+                        "en": "A new look for the apps of the family",
+                        "es": "Nuevo aspecto para las apps de la familia"
+                    },
+                    "text": {
+                        "en": "Seeker, Things and Veo have new icons in one style, Veo's controls follow Material You and the shell's animation speed, and the panels of the compact layout now reach the edges of the screen.",
+                        "es": "Seeker, Things y Veo estrenan iconos con un mismo estilo, los controles de Veo siguen Material You y la velocidad de animación de la shell, y los paneles del modo compacto llegan ya hasta el borde de la pantalla."
                     }
                 }
             ]

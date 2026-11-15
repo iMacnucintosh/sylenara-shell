@@ -2,7 +2,7 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
-## Sin publicar
+## 0.6.0 (2026-11-15)
 
 - **La shell y las apps cambian de tema a la vez:** antes la shell se adelantaba casi medio segundo a Seeker, Things, GTK, Qt y Zen; ahora todo se publica de golpe, en unos 30 ms, y el tema GTK ya no parpadea a oscuro y vuelta. Activar o quitar las apps claras regenera además en el acto el CSS de GTK y la paleta de Qt (antes esperaban al siguiente cambio de tema).
 - **Modo oscuro en los ajustes rápidos:** un interruptor que lo pone todo oscuro (esquema y apps claras) por encima del aspecto de cada actividad, sin tocarlo: al quitarlo cada una vuelve a como estaba. También con atajo (sin asignar por defecto) y `qs -c sylphrena ipc call darkMode toggle`.
@@ -12,6 +12,12 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Previsualización de capturas propia:** sustituye a swappy (en inglés, y su «Guardar» fallaba al buscar `~/Desktop`). Traducida, con línea libre, flecha, rectángulo, goma, seis colores y deshacer, y Copiar, Guardar y Descartar; cada una cierra la ventana. `swappy` deja de ser dependencia.
 - **Carpetas de capturas y grabaciones elegibles** en Nexus → Paneles → Utilidades. Por defecto, imágenes/vídeos de XDG más un nombre en el idioma de la shell, fijado al primer uso (antes la de grabaciones estaba escrita en español en el código).
 - **Capturar ventana:** el recuadro que marca la ventana vuelve a tener las esquinas redondeadas de Hyprland y un borde del color del esquema (con Hyprland 0.57 la shell no leía sus opciones y, con el borde de ventana a 0, el recuadro no se veía).
+- **Modo compacto:** los paneles que tocan un borde de la pantalla (arriba, abajo, derecha) llegan hasta él con las esquinas rectas en ese lado, sin la línea de 1 px que asomaba; las uniones de la barra con sus menús conservan su curva; tras recargar la shell vuelve a quitar huecos y redondeo a las ventanas (antes se quedaban), y su aviso ya no se pisa con el de la recarga.
+- **Tooltips Material You** (superficie inversa, texto pequeño, fundido) en Acerca de y en la previsualización de capturas; en Acerca de, la guía queda a la izquierda y las Novedades a la derecha.
+- **Veo sigue la velocidad de animación de la shell:** la shell la escribe en el `theme.json` de Seeker, Things y Veo (`animScale`) y la mantiene al día; Veo ya la usa.
+- **Seeker 0.2.0:** vista rápida con Espacio (imágenes, vídeo, audio, PDF página a página y texto; con las flechas pasas al siguiente), la carpeta abierta se actualiza sola sin perder la selección, «Abrir con» encuentra las apps que nombran un tipo por un alias antiguo, e icono nuevo.
+- **Things 0.1.6:** icono nuevo, en la línea de Seeker y Veo.
+- **Una variable `SYLPHRENA_*` sin definir ya no se lee como «null»** (las capturas acababan en `~/null`).
 - **`Super+E` abre Seeker también con el paquete** (buscaba solo en `~/.local/bin`).
 - **Login:** el error de autenticación se traduce, el registro ya no apunta la longitud de la contraseña, y el teclado de reserva es `us`.
 
