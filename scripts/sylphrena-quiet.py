@@ -223,7 +223,6 @@ _FONT_SRC = Path(__file__).resolve().parent.parent / "assets/google-sans-flex/Go
 def _greeter_copy(src: Path, dst: Path) -> None:
     """Best-effort copy; greeter dir may not exist or be root-owned yet."""
     import hashlib
-    import shutil
 
     if not src.is_file() and not src.is_symlink():
         return
