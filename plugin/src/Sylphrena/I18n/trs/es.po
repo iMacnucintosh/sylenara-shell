@@ -2310,7 +2310,6 @@ msgid "Commands"
 msgstr "Comandos"
 
 #: modules/nexus/pages/network/AddVpnPage.qml
-
 msgid "This provider type comes from an extension that is disabled. Enable it in Settings → Extensions to edit the connection."
 msgstr "Este tipo de proveedor es de una extensión desactivada. Actívala en Ajustes → Extensiones para editar la conexión."
 
@@ -4227,17 +4226,14 @@ msgid "Your shortcuts"
 msgstr "Tus atajos"
 
 #: modules/welcome/WelcomeWindow.qml
-
 msgid "These are the ones in use now. Change any of them in Settings and they update here."
 msgstr "Estos son los que están en uso ahora. Cambia cualquiera en Ajustes y se actualizan aquí."
 
 #: modules/welcome/WelcomeWindow.qml
-
 msgid "In Settings you can also export and import them."
 msgstr "En Ajustes también puedes exportarlos e importarlos."
 
 #: modules/welcome/WelcomeWindow.qml
-
 msgid "Edit in Settings"
 msgstr "Editar en Ajustes"
 
@@ -4246,7 +4242,6 @@ msgid "You are all set"
 msgstr "Todo listo"
 
 #: modules/welcome/WelcomeWindow.qml
-
 msgid "Open Settings whenever you want to change something. This guide is in Settings → About."
 msgstr "Abre Ajustes cuando quieras cambiar algo. Esta guía está en Ajustes → Acerca de."
 
@@ -4263,7 +4258,6 @@ msgid "Sylphrena Hub"
 msgstr "Sylphrena Hub"
 
 #: modules/welcome/WelcomeWindow.qml
-
 msgid "Open Settings"
 msgstr "Abrir Ajustes"
 
@@ -5460,7 +5454,6 @@ msgid "VPN connection failed"
 msgstr "Error al conectar la VPN"
 
 #: services/VPN.qml
-
 msgid "Enable the extension of this provider in Settings → Extensions"
 msgstr "Activa la extensión de este proveedor en Ajustes → Extensiones"
 
@@ -6027,16 +6020,3 @@ msgstr "Ajustes"
 #: plugin/src/Sylphrena/Config/launcherconfig.hpp
 msgid "Configure the shell"
 msgstr "Configura el shell"
-
-#, qt-format
-#~ msgid "Nexus — %1"
-#~ msgstr "Nexus — %1"
-
-#~ msgid "A quick look. Everything is in Nexus, the settings window."
-#~ msgstr "Un vistazo rápido. Todo está en Nexus, la ventana de ajustes."
-
-#~ msgid "Open Nexus"
-#~ msgstr "Abrir Nexus"
-
-#~ msgid "Settings (Nexus)"
-#~ msgstr "Ajustes (Nexus)"
