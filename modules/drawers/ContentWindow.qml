@@ -209,9 +209,7 @@ StyledWindow {
 
             panel: panels.dashboard
             deformAmount: 0.1
-            // Compact layout: no frame to merge into, so the side on the screen edge is straight
-            topLeftRadius: radius * root.edgeRounding
-            topRightRadius: radius * root.edgeRounding
+            edgeTop: true
         }
 
         PanelBg {
@@ -219,8 +217,7 @@ StyledWindow {
 
             panel: panels.launcher
             deformAmount: 0.1
-            bottomLeftRadius: radius * root.edgeRounding
-            bottomRightRadius: radius * root.edgeRounding
+            edgeBottom: true
         }
 
         PanelBg {
@@ -228,8 +225,9 @@ StyledWindow {
 
             panel: panels.sessionWrapper
             deformAmount: 0.2
+            edgeRight: true
             x: panels.sessionWrapper.x + panels.session.x + bar.implicitWidth
-            implicitWidth: panels.session.width
+            implicitWidth: panels.session.width + bleed
         }
 
         PanelBg {
@@ -237,7 +235,9 @@ StyledWindow {
 
             panel: panels.sidebar
             deformAmount: 0.03
-            implicitHeight: panel.height * (1 / rawDeformMatrix.m22) + 2
+            edgeTop: true
+            edgeRight: true
+            implicitHeight: panel.height * (1 / rawDeformMatrix.m22) + 2 + edgeBleedV
             exclude: panels.sidebar.offsetScale <= 0.08 ? [utilsBg] : []
             bottomLeftRadius: Math.max(0, Math.min(1, panels.sidebar.offsetScale / 0.3)) * radius
         }
@@ -247,22 +247,26 @@ StyledWindow {
 
             panel: panels.osdWrapper
             deformAmount: 0.25
+            edgeRight: true
             x: panels.osdWrapper.x + panels.osd.x + bar.implicitWidth
-            implicitWidth: panels.osd.width
+            implicitWidth: panels.osd.width + bleed
         }
 
         PanelBg {
             id: notifsBg
 
             panel: panels.notifications
+            edgeTop: true
+            edgeRight: true
             exclude: root.toastsJoinNotifs ? [toastBg] : []
-            topLeftRadius: root.toastsJoinNotifs ? 0 : radius
+            topLeftRadius: root.toastsJoinNotifs ? 0 : radius * root.edgeRounding
         }
 
         PanelBg {
             id: toastBg
 
             panel: panels.toasts
+            edgeRight: true
             // Soft-join with the neighbouring lobe (notifications on top, utilities at bottom).
             exclude: {
                 const list = [];
@@ -276,13 +280,14 @@ StyledWindow {
             // Overlap the lobe below so the hard (excluded) join leaves no AA seam, with room
             // for both lobes' motion deform to drift apart while the toast resizes.
             implicitHeight: panel.height + (root.toastsJoinNotifs ? 12 : 0)
-            topLeftRadius: radius
         }
 
         PanelBg {
             id: utilsBg
 
             panel: panels.utilities
+            edgeBottom: true
+            edgeRight: true
             deformAmount: panels.sidebar.visible ? 0.1 : 0.15
             exclude: {
                 const list = [];
@@ -405,12 +410,23 @@ StyledWindow {
     component PanelBg: BlobRect {
         required property Item panel
         property real deformAmount: 0.15
+        // Screen edges the panel sits on. In the compact layout there is no frame there: the panel reaches a
+        // little past the edge (otherwise a 1 px line of what is behind shows) and its corners on it are straight
+        property bool edgeTop
+        property bool edgeBottom
+        property bool edgeRight
+        readonly property real bleed: root.gameMode ? 3 : 0
+        readonly property real edgeBleedV: (edgeTop ? bleed : 0) + (edgeBottom ? bleed : 0)
 
         group: blobGroup
         x: panel.x + bar.implicitWidth
-        y: panel.y + root.borderThickness
-        implicitWidth: panel.width
-        implicitHeight: panel.height
+        y: panel.y + root.borderThickness - (edgeTop ? bleed : 0)
+        implicitWidth: panel.width + (edgeRight ? bleed : 0)
+        implicitHeight: panel.height + edgeBleedV
+        topLeftRadius: edgeTop ? radius * root.edgeRounding : radius
+        topRightRadius: (edgeTop || edgeRight) ? radius * root.edgeRounding : radius
+        bottomLeftRadius: edgeBottom ? radius * root.edgeRounding : radius
+        bottomRightRadius: (edgeBottom || edgeRight) ? radius * root.edgeRounding : radius
         // Hidden panels park just past the screen edge, inside the border; a sized blob
         // there still sinks the border's inner wall (sub-pixel step along its width).
         width: panel.visible ? implicitWidth : 0
