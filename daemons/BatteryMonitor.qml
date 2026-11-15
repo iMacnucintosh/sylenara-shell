@@ -13,7 +13,8 @@ Scope {
     property real lastPercentage: 100
 
     function ensureDesktopPerformance(): void {
-        if (UPower.displayDevice.isLaptopBattery)
+        // A desktop without the performance profile (no CPU driver for it) would only log an error
+        if (UPower.displayDevice.isLaptopBattery || !PowerProfiles.hasPerformanceProfile)
             return;
         if (PowerProfiles.profile !== PowerProfile.Performance)
             PowerProfiles.profile = PowerProfile.Performance;
