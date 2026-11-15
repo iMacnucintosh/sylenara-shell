@@ -168,7 +168,7 @@ configuración que ya tengas, y no vuelve a ejecutarse (`~/.local/state/sylphren
 
 ## Asistente de bienvenida
 
-Una ventana propia, **flotante y de tamaño fijo** (960×720, centrada: Hyprland flota las ventanas de tamaño fijo, sin reglas), con cinco pasos que sale **sola la primera vez** que arranca la shell (a los 4 s) y se puede volver a abrir con el **botón de varita** de la tarjeta de Sylphrena en **Nexus → Acerca de** (abajo a la derecha; tooltip «Guía de bienvenida»):
+Una ventana propia, **flotante y de tamaño fijo** (960×720, centrada: Hyprland flota las ventanas de tamaño fijo, sin reglas), con cinco pasos que sale **sola la primera vez** que arranca la shell (a los 4 s) y se puede volver a abrir con el **botón de varita** de la tarjeta de Sylphrena en **Nexus → Acerca de** (abajo a la izquierda; tooltip «Guía de bienvenida»):
 
 1. **Qué es Sylphrena:** el orbe, una frase, quién la hace (**iMacnucintosh**, con enlace a GitHub) y el crédito al proyecto original (**caelestia-shell**, de soramane).
 2. **Qué te ofrece:** tarjetas con Actividades, Nexus, el panel, Material You, Extensiones y bloqueo/inicio de sesión.
@@ -189,7 +189,7 @@ Después de una actualización, a los 5 s de arrancar la shell sale una ventana 
 2. **Una página por novedad:** captura con esquinas redondeadas (o un icono grande si no tiene), título y dos líneas.
 3. **Todos los cambios:** las secciones de esas versiones del `CHANGELOG.md`, con formato.
 
-Flechas `←`/`→` (o `RePág`/`AvPág`) o la rueda del ratón en cualquier punto de la ventana para pasar páginas (sobre la lista de cambios, la rueda la desplaza), `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (`new_releases`) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
+Flechas `←`/`→` (o `RePág`/`AvPág`) o la rueda del ratón en cualquier punto de la ventana para pasar páginas (sobre la lista de cambios, la rueda la desplaza), `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (confeti, abajo a la derecha) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
 
 **Al sacar una versión:** su entrada en `whatsnew/whatsnew.json` (novedades destacadas, en inglés y español, con `icon` de Material Symbols y, si se quiere, `image` → `whatsnew/<versión>/<nombre>.webp`, ~1280 px de ancho, 50-150 KB) y la sección «Sin publicar» del CHANGELOG renombrada a `## X.Y.Z (fecha)`.
 ## Pantalla (modos, escala, VRR)

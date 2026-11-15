@@ -166,41 +166,41 @@ PageBase {
             last: true
             implicitHeight: hero.implicitHeight + Tokens.padding.extraLarge * 2
 
-            // The welcome guide and the news of the latest version, again
-            Row {
+            // The welcome guide (bottom left of the card) and the news of the latest version (bottom right), again
+            IconButton {
+                id: guideButton
+
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.margins: Tokens.padding.large
+                z: 3
+                type: IconButton.Tonal
+                isRound: true
+                icon: "auto_fix_high"
+                onClicked: Welcome.show()
+
+                StyledToolTip {
+                    shown: guideButton.hovered
+                    text: Tr.tr("Welcome guide")
+                }
+            }
+
+            IconButton {
+                id: newsButton
+
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.margins: Tokens.padding.large
                 z: 3
-                spacing: Tokens.spacing.small
+                type: IconButton.Tonal
+                isRound: true
+                icon: "celebration"
+                visible: (Welcome.news?.length ?? 0) > 0
+                onClicked: Welcome.showLatestNews()
 
-                IconButton {
-                    id: guideButton
-
-                    type: IconButton.Tonal
-                    isRound: true
-                    icon: "auto_fix_high"
-                    onClicked: Welcome.show()
-
-                    StyledToolTip {
-                        shown: guideButton.hovered
-                        text: Tr.tr("Welcome guide")
-                    }
-                }
-
-                IconButton {
-                    id: newsButton
-
-                    type: IconButton.Tonal
-                    isRound: true
-                    icon: "celebration"
-                    visible: (Welcome.news?.length ?? 0) > 0
-                    onClicked: Welcome.showLatestNews()
-
-                    StyledToolTip {
-                        shown: newsButton.hovered
-                        text: Tr.tr("What's new")
-                    }
+                StyledToolTip {
+                    shown: newsButton.hovered
+                    text: Tr.tr("What's new")
                 }
             }
 
