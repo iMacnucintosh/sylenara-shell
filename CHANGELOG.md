@@ -2,7 +2,7 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
-## Sin publicar
+## 0.6.1 (2026-11-15)
 
 - **Actualizar desde la 0.5 fallaba en «Shell de Sylphrena»:** el paquete de la shell exigía Veo, pero quien actualiza desde una versión anterior lo hace con el instalador viejo, que no lo conoce ni lo instala antes. Veo pasa a dependencia opcional del paquete: la shell se actualiza y, ya en la nueva, la lista ofrece «Nuevo · Veo», que se instala con la siguiente actualización y queda como reproductor predeterminado.
 
