@@ -685,10 +685,21 @@ def _write_qt_app_theme(app: str, colours: dict[str, str], mode: str) -> None:
         pass
     if tr_enabled is None:
         tr_enabled = False
+    # The shell's animation speed (Nexus): the apps multiply their durations by it (sync-app-anim.py keeps it current)
+    anim_scale = 1.0
+    try:
+        from sylphrena.utils.paths import user_config_path
+
+        if user_config_path.is_file():
+            cfg = _json.loads(user_config_path.read_text() or "{}")
+            anim_scale = float((((cfg.get("appearance") or {}).get("anim") or {}).get("durations") or {}).get("scale", 1.0))
+    except Exception:
+        pass
     payload = {
         "mode": mode if mode in ("dark", "light") else "dark",
         "colours": {k: (v[1:] if isinstance(v, str) and v.startswith("#") else v) for k, v in colours.items()},
         "transparency": {"enabled": tr_enabled, "base": tr_base, "layers": tr_layers, "wallLuminance": tr_wall},
+        "animScale": anim_scale,
     }
     _atomic_write(out, _json.dumps(payload, indent=2) + "\n")
 

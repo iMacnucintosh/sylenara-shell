@@ -155,6 +155,19 @@ Singleton {
         ]);
     }
 
+    // The animation speed of Nexus, for the apps of the family (Seeker, Things, Veo read it from their theme.json)
+    function syncAppAnimation(): void {
+        Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/sync-app-anim.py"), "--scale", String(GlobalConfig.appearance.anim.durations.scale)]);
+    }
+
+    Connections {
+        target: GlobalConfig.appearance.anim.durations
+
+        function onScaleChanged(): void {
+            root.syncAppAnimation();
+        }
+    }
+
     function syncSeekerTransparency(): void {
         // Live-update Seeker surfaces when Transparency is toggled (no full scheme apply).
         Quickshell.execDetached([
@@ -204,7 +217,10 @@ Singleton {
         }
     }
 
-    Component.onCompleted: root.requestReloadHyprRules()
+    Component.onCompleted: {
+        root.requestReloadHyprRules();
+        root.syncAppAnimation();
+    }
 
     Connections {
         function onConfigReloaded(): void {
