@@ -19,7 +19,7 @@ Compilación: `cmake`, `ninja`, `qt6-shadertools`.
 
 Opcionales: `yay` (actualizaciones del AUR), Flatpak, `gpu-screen-recorder` (grabar pantalla), `greetd` (pantalla de inicio de sesión), y lo que pida cada extensión.
 
-Hay PKGBUILD de los cuatro paquetes (`sylphrena-shell-git`, `sylphrena-cli-git`, `seeker-git`, `things-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
+Hay PKGBUILD de los cinco paquetes (`sylphrena-shell-git`, `sylphrena-cli-git`, `seeker-git`, `things-git`, `veo-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
 
 ## Instalar desde un clon
 

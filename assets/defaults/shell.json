@@ -152,7 +152,9 @@
             "explorer": [
                 "seeker"
             ],
-            "playback": [],
+            "playback": [
+                "veo"
+            ],
             "terminal": [
                 "kitty"
             ]

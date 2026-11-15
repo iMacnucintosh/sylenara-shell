@@ -27,7 +27,7 @@ class Plan(unittest.TestCase):
         self.assertLess(order.index("aur-helper"), order.index("aur-deps"))
         self.assertLess(order.index("aur-deps"), order.index("sylphrena-cli-git"))
         pkgs = [i for i in order if i.endswith("-git")]
-        self.assertEqual(pkgs, ["sylphrena-cli-git", "seeker-git", "things-git", "sylphrena-shell-git"])  # the shell last
+        self.assertEqual(pkgs, ["sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"])  # the shell last
         for i in items:
             if i.group == "Required":
                 self.assertTrue(i.required)
@@ -39,7 +39,7 @@ class Plan(unittest.TestCase):
         f.installed |= {"git", "base-devel", "hyprland", *inst.AUR_DEPS}
         items = inst.build_plan(f)
         todo = {i.id for i in items if i.todo and i.group == "Required"}
-        self.assertEqual(todo, {"sylphrena-cli-git", "seeker-git", "things-git", "sylphrena-shell-git"})
+        self.assertEqual(todo, {"sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"})
 
     def test_our_packages_come_from_the_aur_when_they_are_there_and_from_github_when_not(self):
         f = bare()
@@ -97,7 +97,7 @@ class Plan(unittest.TestCase):
         pkgbuild = (Path(__file__).resolve().parent.parent / "packaging" / "PKGBUILD").read_text()
         block = re.search(r"^depends=\((.*?)\)", pkgbuild, re.S | re.M).group(1)
         deps = re.findall(r"['\"]([^'\"]+)['\"]", block)
-        ours = {"sylphrena-cli-git", "seeker-git", "things-git"}
+        ours = {p for p, _ in inst.PACKAGES}
         missing = [d for d in deps if d not in ours and d not in inst.AUR_DEPS
                    and subprocess.run(["pacman", "-Si", d], capture_output=True).returncode != 0]
         self.assertEqual(missing, [])

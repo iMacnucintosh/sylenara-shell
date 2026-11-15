@@ -19,7 +19,7 @@ class GeneralApps : public settings::ObjectNode {
 
     CONFIG_PROPERTY(QStringList, terminal, { u"kitty"_s })
     CONFIG_PROPERTY(QStringList, audio, { u"pwvucontrol"_s })
-    CONFIG_PROPERTY(QStringList, playback, { u"vlc"_s })
+    CONFIG_PROPERTY(QStringList, playback, { u"veo"_s })
     CONFIG_PROPERTY(QStringList, explorer, { u"thunar"_s })
 };
 

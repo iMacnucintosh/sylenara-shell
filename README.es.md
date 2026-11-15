@@ -78,6 +78,7 @@ Sylphrena se amplía con extensiones (hidratación, tareas, tu biblioteca de Ste
 
 - **[Things](https://github.com/iMacnucintosh/things)**: gestor de paquetes y de extensiones.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: explorador de archivos, con el mismo aspecto que la shell.
+- **[Veo](https://github.com/iMacnucintosh/veo)**: reproductor de vídeo, a pantalla completa con controles mínimos, pistas de audio y subtítulos, y recuerda dónde dejaste cada vídeo.
 - **kitty**: el terminal, que cambia de colores con tu actividad.
 
 Las apps GTK y Qt también siguen el esquema de colores, y puedes pedir que ciertas apps se vean siempre en claro.

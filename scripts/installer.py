@@ -43,7 +43,7 @@ INSTALLED_SHELL = Path("/etc/xdg/quickshell/sylphrena")
 GREETER_DIR = Path("/etc/greetd/sylphrena")
 GITHUB = "https://github.com/iMacnucintosh"
 # Our packages, in the order they have to be installed (the shell depends on the other three)
-PACKAGES = [("sylphrena-cli-git", "sylphrena-cli"), ("seeker-git", "seeker"), ("things-git", "things"),
+PACKAGES = [("sylphrena-cli-git", "sylphrena-cli"), ("seeker-git", "seeker"), ("things-git", "things"), ("veo-git", "veo"),
             ("sylphrena-shell-git", "sylphrena-shell")]
 # Commands of the usual web browsers: with one of them there, Zen is offered but not selected
 BROWSERS = ["zen-browser", "firefox", "chromium", "google-chrome-stable", "brave", "librewolf", "vivaldi-stable", "epiphany"]
@@ -110,7 +110,7 @@ ES = {
     "Remove the stable Quickshell": "Quitar el Quickshell estable", "it conflicts with the git version the shell needs": "choca con la versión git que necesita la shell",
     "sylphrena-cli": "sylphrena-cli", "the sylph command (shell, themes, wallpapers, screenshots)": "el comando sylph (shell, temas, fondos, capturas)",
     "Seeker": "Seeker", "the file manager of Sylphrena": "el explorador de archivos de Sylphrena",
-    "Things": "Things", "the package manager and extension manager": "el gestor de paquetes y de extensiones",
+    "Things": "Things", "Veo": "Veo", "the package manager and extension manager": "el gestor de paquetes y de extensiones",
     "Sylphrena shell": "Shell de Sylphrena", "the shell itself, with its icons, GTK theme, fonts and tools": "la shell, con sus iconos, tema GTK, fuentes y herramientas",
     "Zen browser": "Navegador Zen",
     "a Firefox-based web browser that suits Sylphrena": "un navegador web basado en Firefox que encaja con Sylphrena",
@@ -122,6 +122,8 @@ ES = {
     "First-run settings": "Ajustes del primer arranque", "the recommended settings, one activity with its wallpaper, and kitty connected to the colours": "los ajustes recomendados, una actividad con su fondo y kitty conectado a los colores",
     "Sylphrena login screen": "Pantalla de inicio de sesión de Sylphrena", "greetd with the Material You greeter; it replaces %s": "greetd con el greeter Material You; sustituye a %s",
     "greetd with the Material You greeter": "greetd con el greeter Material You",
+    "the video player of Sylphrena": "el reproductor de vídeo de Sylphrena",
+    "Veo opens your videos": "Veo abre tus vídeos", "the video player of Sylphrena becomes the default one; a player you chose yourself is kept": "el reproductor de vídeo de Sylphrena pasa a ser el predeterminado; si elegiste otro, se respeta",
     "Update the login screen": "Actualizar la pantalla de inicio de sesión", "brings it to the new version of the shell": "la pone al día con la versión nueva de la shell",
     "yes": "sí", "no": "no",
     "A Material You shell for Hyprland": "Una shell Material You para Hyprland",
@@ -170,6 +172,7 @@ class Facts:
     display_manager: str | None = None
     hyprland_needed: bool = True                            # setup-hyprland.py --check says it would change something
     first_run_needed: bool = True                           # same for the first-run settings and kitty
+    player_status: str = "skipped"                          # setup-player.py --check: Veo as the video player
     greeter_installed: bool = False
     greeter_version: str = ""                               # the shell the login screen was copied from (its version file)
     versions: dict[str, str] = field(default_factory=dict)  # our packages that are installed → their version
@@ -258,6 +261,7 @@ def scan(from_main: bool = False) -> Facts:
         f.display_manager = os.path.basename(os.readlink(unit)).removesuffix(".service")
     f.hyprland_needed = check_status("setup-hyprland.py") in ("needed", "failed")
     f.first_run_needed = any(check_status(n) == "needed" for n in ("setup-defaults.py", "setup-kitty.py"))
+    f.player_status = check_status("setup-player.py")
     f.greeter_installed = GREETER_DIR.is_dir() and f.display_manager == "greetd"
     try:
         f.greeter_version = (GREETER_DIR / "version").read_text().strip()
@@ -327,6 +331,7 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         required=True, steps=[Step("aur", need_aur)] if need_aur else [])
     labels = {"sylphrena-cli-git": ("sylphrena-cli", "the sylph command (shell, themes, wallpapers, screenshots)"),
               "seeker-git": ("Seeker", "the file manager of Sylphrena"), "things-git": ("Things", "the package manager and extension manager"),
+              "veo-git": ("Veo", "the video player of Sylphrena"),
               "sylphrena-shell-git": ("Sylphrena shell", "the shell itself, with its icons, GTK theme, fonts and tools")}
     for pkg, repo in PACKAGES:
         title, why = labels[pkg]
@@ -352,6 +357,11 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         "the recommended settings, one activity with its wallpaper, and kitty connected to the colours", False,
         todo=f.first_run_needed, steps=[Step("user", [sys.executable, str(shell_dir / "scripts" / "setup-defaults.py")]),
                Step("user", [sys.executable, str(shell_dir / "scripts" / "setup-kitty.py")])])
+    # Veo opens videos: done once, also when Veo arrives with an update (it is not installed yet while planning)
+    add("default-player", "Setup", "Veo opens your videos",
+        "the video player of Sylphrena becomes the default one; a player you chose yourself is kept", False,
+        todo=f.player_status == "needed" or (f.player_status == "skipped" and not f.have("veo-git")),
+        steps=[Step("user", [sys.executable, str(shell_dir / "scripts" / "setup-player.py")])])
     if login_screen:
         dm = f.display_manager if f.display_manager not in (None, "greetd") else None
         steps = [Step("pacman", [p for p in ("greetd", "rsync") if not f.have(p)])] if not (f.have("greetd") and f.have("rsync")) else []

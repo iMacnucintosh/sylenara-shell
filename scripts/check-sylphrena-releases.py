@@ -4,8 +4,9 @@
     {"updates": [{"pkg", "name", "repo", "installed", "latest", "notes", "url"}],
      "extensions": [{"id", "name", "installed", "latest"}], "checked": <unix time>}
 
-Only the packages that are installed and behind their latest release are listed; a machine that runs the shell from a
-clone (no packages) gets an empty list. The tag comes from the web page of the release (not limited like the API, which
+Listed: the packages that are installed and behind their latest release, and (on a machine that installed Sylphrena
+from packages) the ones of the family it does not have yet, with "new": true, so the update installs them; a machine
+that runs the shell from a clone (no packages) gets an empty list. The tag comes from the web page of the release (not limited like the API, which
 allows 60 requests an hour without an account); the API is only asked for the notes of a tag not seen before.
 """
 from __future__ import annotations
@@ -21,7 +22,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from installer import PACKAGES, behind, installed_version, latest_release as latest_tag, version_tuple  # noqa: E402
 
-NAMES = {"sylphrena-shell-git": "Sylphrena", "sylphrena-cli-git": "sylphrena-cli", "seeker-git": "Seeker", "things-git": "Things"}
+NAMES = {"sylphrena-shell-git": "Sylphrena", "sylphrena-cli-git": "sylphrena-cli", "seeker-git": "Seeker", "things-git": "Things",
+         "veo-git": "Veo"}
 HUB_INDEX = "https://raw.githubusercontent.com/iMacnucintosh/sylphrena-hub/main/index.json"
 EXTENSIONS = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "sylphrena" / "extensions"
 CACHE = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "sylphrena" / "releases.json"
@@ -98,9 +100,15 @@ def main() -> int:
     updates = []
     # Tests only: {"sylphrena-shell-git": "0.3.0.r0.g0-1"} pretends those versions are installed
     pretend = json.loads(os.environ.get("SYLPHRENA_TEST_INSTALLED") or "{}")
+    # Installed from packages (not a clone): a package of the family it does not have yet comes with the next update
+    packaged = bool(pretend.get("sylphrena-shell-git") if pretend else installed_version("sylphrena-shell-git"))
     for pkg, repo in PACKAGES:
         have = pretend.get(pkg) if pretend else installed_version(pkg)
         if not have:
+            rel = latest(repo, cache) if packaged else None
+            if rel:
+                updates.append({"pkg": pkg, "name": NAMES.get(pkg, pkg), "repo": repo, "installed": "",
+                                "latest": rel["tag"].lstrip("v"), "notes": rel["notes"], "url": rel["url"], "new": True})
             continue
         rel = latest(repo, cache)
         if rel and behind(have, rel["tag"]):

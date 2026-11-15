@@ -24,7 +24,7 @@ depends=(
   # Screen recording (sylph record, the quick toggles) and the brightness of external monitors (DDC/CI)
   'gpu-screen-recorder' 'ddcutil'
   # The CLI and the apps that come with it
-  'sylphrena-cli-git' 'things-git' 'seeker-git' 'kitty'
+  'sylphrena-cli-git' 'things-git' 'seeker-git' 'veo-git' 'kitty'
 )
 makedepends=('git' 'cmake' 'ninja' 'qt6-shadertools' 'gettext')
 optdepends=('fish: the calculator of the launcher opens qalc in it'
