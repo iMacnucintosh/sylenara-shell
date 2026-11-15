@@ -8,6 +8,7 @@ import Sylphrena.I18n
 import qs.components
 import qs.services
 import qs.modules.lock
+import qs.utils
 
 // Sylphrena — same wind-spirit companion as the greeter, wired to PAM.
 StyledRect {
