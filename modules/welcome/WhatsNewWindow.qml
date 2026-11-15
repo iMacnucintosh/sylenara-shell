@@ -93,96 +93,126 @@ FloatingWindow {
         onActivated: win.dismiss()
     }
 
-    ColumnLayout {
+    // The whole window takes the mouse wheel: it goes through the pages (over the list of changes it scrolls the list)
+    Item {
         anchors.fill: parent
-        anchors.margins: Tokens.padding.extraLarge
-        spacing: Tokens.spacing.large
 
-        Loader {
-            id: pages
+        // One page per notch; a touchpad's stream of small steps adds up to one page, with a pause after it
+        WheelHandler {
+            property real pending: 0
 
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            sourceComponent: win.step === 0 ? coverPage : (win.step <= win.highlights.length ? highlightPage : changesPage)
-
-            onLoaded: fade.restart()
-
-            NumberAnimation {
-                id: fade
-
-                target: pages.item
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: Tokens.anim.durations.normal
+            target: null
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            onWheel: event => {
+                if (wheelPause.running)
+                    return;
+                const delta = event.angleDelta.y !== 0 ? event.angleDelta.y : -event.angleDelta.x;
+                pending += delta;
+                if (Math.abs(pending) < 120)
+                    return;
+                win.step = pending < 0 ? Math.min(win.stepCount - 1, win.step + 1) : Math.max(0, win.step - 1);
+                pending = 0;
+                wheelPause.restart();
             }
         }
 
-        // ---- Footer ---------------------------------------------------------------------
-        Item {
-            Layout.fillWidth: true
-            implicitHeight: buttons.implicitHeight
+        Timer {
+            id: wheelPause
 
-            Row {
-                anchors.centerIn: parent
-                spacing: Tokens.spacing.small
+            interval: 280
+        }
 
-                Repeater {
-                    model: win.stepCount
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: Tokens.padding.extraLarge
+            spacing: Tokens.spacing.large
 
-                    Rectangle {
-                        required property int index
+            Loader {
+                id: pages
 
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: index === win.step ? Tokens.padding.large : Tokens.padding.small
-                        height: Tokens.padding.small
-                        radius: height / 2
-                        color: index === win.step ? Colours.palette.m3primary : Colours.palette.m3outlineVariant
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                sourceComponent: win.step === 0 ? coverPage : (win.step <= win.highlights.length ? highlightPage : changesPage)
 
-                        Behavior on width {
-                            Anim {}
-                        }
-                    }
+                onLoaded: fade.restart()
+
+                NumberAnimation {
+                    id: fade
+
+                    target: pages.item
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: Tokens.anim.durations.normal
                 }
             }
 
-            RowLayout {
-                id: buttons
+            // ---- Footer ---------------------------------------------------------------------
+            Item {
+                Layout.fillWidth: true
+                implicitHeight: buttons.implicitHeight
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-                spacing: Tokens.spacing.medium
+                Row {
+                    anchors.centerIn: parent
+                    spacing: Tokens.spacing.small
 
-                TextButton {
-                    visible: win.step < win.stepCount - 1
-                    text: Tr.tr("Close")
-                    type: TextButton.Text
-                    isRound: true
-                    horizontalPadding: Tokens.padding.large
-                    verticalPadding: Tokens.padding.small
-                    onClicked: win.dismiss()
+                    Repeater {
+                        model: win.stepCount
+
+                        Rectangle {
+                            required property int index
+
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: index === win.step ? Tokens.padding.large : Tokens.padding.small
+                            height: Tokens.padding.small
+                            radius: height / 2
+                            color: index === win.step ? Colours.palette.m3primary : Colours.palette.m3outlineVariant
+
+                            Behavior on width {
+                                Anim {}
+                            }
+                        }
+                    }
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                }
+                RowLayout {
+                    id: buttons
 
-                TextButton {
-                    visible: win.step > 0
-                    text: Tr.tr("Back")
-                    type: TextButton.Tonal
-                    isRound: true
-                    horizontalPadding: Tokens.padding.extraLarge
-                    verticalPadding: Tokens.padding.medium
-                    onClicked: win.step--
-                }
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    spacing: Tokens.spacing.medium
 
-                TextButton {
-                    text: win.step < win.stepCount - 1 ? Tr.tr("Next") : Tr.tr("Done")
-                    isRound: true
-                    horizontalPadding: Tokens.padding.extraLarge
-                    verticalPadding: Tokens.padding.medium
-                    onClicked: win.step < win.stepCount - 1 ? win.step++ : win.dismiss()
+                    TextButton {
+                        visible: win.step < win.stepCount - 1
+                        text: Tr.tr("Close")
+                        type: TextButton.Text
+                        isRound: true
+                        horizontalPadding: Tokens.padding.large
+                        verticalPadding: Tokens.padding.small
+                        onClicked: win.dismiss()
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    TextButton {
+                        visible: win.step > 0
+                        text: Tr.tr("Back")
+                        type: TextButton.Tonal
+                        isRound: true
+                        horizontalPadding: Tokens.padding.extraLarge
+                        verticalPadding: Tokens.padding.medium
+                        onClicked: win.step--
+                    }
+
+                    TextButton {
+                        text: win.step < win.stepCount - 1 ? Tr.tr("Next") : Tr.tr("Done")
+                        isRound: true
+                        horizontalPadding: Tokens.padding.extraLarge
+                        verticalPadding: Tokens.padding.medium
+                        onClicked: win.step < win.stepCount - 1 ? win.step++ : win.dismiss()
+                    }
                 }
             }
         }

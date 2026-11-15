@@ -189,7 +189,7 @@ Después de una actualización, a los 5 s de arrancar la shell sale una ventana 
 2. **Una página por novedad:** captura con esquinas redondeadas (o un icono grande si no tiene), título y dos líneas.
 3. **Todos los cambios:** las secciones de esas versiones del `CHANGELOG.md`, con formato.
 
-Flechas `←`/`→` (o `RePág`/`AvPág`) para pasar páginas, `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (`new_releases`) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
+Flechas `←`/`→` (o `RePág`/`AvPág`) o la rueda del ratón en cualquier punto de la ventana para pasar páginas (sobre la lista de cambios, la rueda la desplaza), `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (`new_releases`) de la tarjeta de Sylphrena en **Nexus → Acerca de**, o `qs -c sylphrena ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
 
 **Al sacar una versión:** su entrada en `whatsnew/whatsnew.json` (novedades destacadas, en inglés y español, con `icon` de Material Symbols y, si se quiere, `image` → `whatsnew/<versión>/<nombre>.webp`, ~1280 px de ancho, 50-150 KB) y la sección «Sin publicar» del CHANGELOG renombrada a `## X.Y.Z (fecha)`.
 ## Pantalla (modos, escala, VRR)
