@@ -630,6 +630,7 @@ def _patch_theme() -> None:
             _sync_qt6ct(colours, mode, (_STATE / "force-apps-light").is_file())
             _sync_seeker(colours, mode)
             _sync_things(colours, mode)
+            _sync_veo(colours, mode)
         flush_saves()
         # Templates land inside apply_colours; refresh Kitty after that.
         _reload_kitty()
@@ -700,6 +701,11 @@ def _sync_seeker(colours: dict[str, str], mode: str) -> None:
 def _sync_things(colours: dict[str, str], mode: str) -> None:
     """Things (Qt/QML package manager) watches ~/.config/things/theme.json."""
     _write_qt_app_theme("things", colours, mode)
+
+
+def _sync_veo(colours: dict[str, str], mode: str) -> None:
+    """Veo (Qt/QML video player) watches ~/.config/veo/theme.json."""
+    _write_qt_app_theme("veo", colours, mode)
 
 
 def _sync_opencode_theme(colours: dict[str, str], mode: str) -> None:
