@@ -55,6 +55,8 @@ build() {
 package() {
   cd lunele-shell
   DESTDIR="$pkgdir" cmake --install build
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 NOTICE "$pkgdir/usr/share/licenses/$pkgname/NOTICE"
   # The wallpaper is not GPL: its licence and author travel with the package
   install -Dm644 assets/wallpapers/README.md "$pkgdir/usr/share/licenses/$pkgname/wallpaper-licence.md"
   # ddcutil talks to monitors through i2c-dev: load it at boot

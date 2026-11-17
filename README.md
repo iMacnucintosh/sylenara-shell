@@ -132,4 +132,4 @@ Something does not work, or something is missing? [Open an issue](https://github
 
 Lunele started as a fork of [caelestia-shell](https://github.com/caelestia-dots/shell), by soramane, and today is a project of its own by [iMacnucintosh](https://github.com/iMacnucintosh). Thanks also to [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), which it is built on, and to [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) and [Ax-Shell](https://github.com/Axenide/Ax-Shell) for the inspiration.
 
-Licensed under GPL-3.0.
+Licensed under GPL-3.0. Copyright (C) 2026 Manuel López Mallorquín. Credits and third-party components in [NOTICE](NOTICE).

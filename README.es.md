@@ -130,4 +130,4 @@ Todos se cambian en Ajustes → Teclado y ratón.
 
 Lunele empezó como un fork de [caelestia-shell](https://github.com/caelestia-dots/shell), de soramane, y hoy es un proyecto propio de [iMacnucintosh](https://github.com/iMacnucintosh). Gracias también a [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), sobre el que está construida, y a [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) y [Ax-Shell](https://github.com/Axenide/Ax-Shell) por la inspiración.
 
-Licencia GPL-3.0.
+Licencia GPL-3.0. Copyright (C) 2026 Manuel López Mallorquín. Créditos y componentes de terceros en [NOTICE](NOTICE).
