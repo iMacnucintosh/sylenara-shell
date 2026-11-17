@@ -188,6 +188,8 @@ Item {
                 anchors.fill: parent
                 cursorShape: pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                 acceptedButtons: Qt.LeftButton
+                // The page of Settings scrolls by dragging: once a display is pressed, the drag is the display's
+                preventStealing: true
 
                 onPressed: mouse => {
                     area.start = area.mapToItem(root, mouse.x, mouse.y);

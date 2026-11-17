@@ -8,6 +8,15 @@ Item {
     width: 720
     height: 320
 
+    // As in Settings: the page scrolls by dragging, and the canvas sits inside it
+    Flickable {
+        id: page
+
+        anchors.fill: parent
+        contentWidth: width
+        contentHeight: 1200
+        clip: true
+
     DisplayCanvas {
         id: canvas
 
@@ -15,6 +24,7 @@ Item {
         layout: [{ name: "DP-1", x: 0, y: 0, w: 2560, h: 1440 }, { name: "HDMI-A-1", x: 2560, y: 180, w: 1920, h: 1080 }]
         labels: ({ "DP-1": { number: "1", title: "MSI", detail: "2560×1440" }, "HDMI-A-1": { number: "2", title: "Dell", detail: "1920×1080" } })
         selected: "DP-1"
+    }
     }
 
     SignalSpy {
@@ -94,6 +104,20 @@ Item {
             fuzzyCompare(dropped.signalArguments[0][2], 180 + 60 / k, 40);
             compare(picked.count, 0);
             compare(canvas.dragName, "");
+        }
+
+        function test_dragging_a_display_does_not_scroll_the_page() {
+            page.contentY = 0;
+            const c = centre("HDMI-A-1");
+            mousePress(canvas, c.x, c.y, Qt.LeftButton);
+            // A long, mostly vertical drag: what a page that scrolls by dragging would take for itself
+            mouseMove(canvas, c.x - 10, c.y + 40, 10, Qt.LeftButton);
+            mouseMove(canvas, c.x - 20, c.y + 140, 10, Qt.LeftButton);
+            mouseMove(canvas, c.x - 30, c.y + 220, 10, Qt.LeftButton);
+            compare(canvas.dragName, "HDMI-A-1");
+            mouseRelease(canvas, c.x - 30, c.y + 220, Qt.LeftButton);
+            compare(dropped.count, 1);
+            compare(page.contentY, 0);
         }
 
         function test_the_view_does_not_change_under_the_pointer_while_dragging() {
