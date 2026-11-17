@@ -72,13 +72,69 @@ Singleton {
 
     readonly property int activeWsId: Hyprland.focusedWorkspace?.id ?? 1
 
+    // ---- Linked desktops: one Hyprland workspace per monitor ---------------------------------------------------------
+    // A desktop (the 1 of Games) is a set of workspaces, one per monitor. The first monitor keeps the ids 1..N; the
+    // second one has 1001..1000+N, the third 2001.. and so on. Changing desktop changes every monitor (linkDesktops).
+    readonly property int slotStep: 1000
+    // Monitors in a stable order (the id Hyprland gave them): their position is their slot
+    readonly property var monitorNames: Hyprland.monitors.values.slice().sort((a, b) => a.id - b.id).map(m => m.name)
+
+    // The desktop a workspace belongs to (special workspaces are negative and stay as they are)
+    function desktopOf(ws: int): int {
+        return ws > 0 ? ws % root.slotStep : ws;
+    }
+
+    function slotOf(monitorName: string): int {
+        return Math.max(0, root.monitorNames.indexOf(monitorName));
+    }
+
+    // The workspace a desktop has on a monitor
+    function wsFor(desktop: int, monitorName: string): int {
+        return desktop > 0 ? root.slotOf(monitorName) * root.slotStep + desktop : desktop;
+    }
+
+    readonly property int activeDesktop: root.desktopOf(root.activeWsId)
+
     readonly property var currentActivity: {
-        const ws = root.activeWsId;
+        const ws = root.activeDesktop;
         return root.mappedActivities.find(a => ws >= a.startWs && ws <= a.endWs) ?? root.mappedActivities[0] ?? null;
     }
 
     function activityForWs(ws: int): var {
-        return root.mappedActivities.find(a => ws >= a.startWs && ws <= a.endWs) ?? null;
+        const d = root.desktopOf(ws);
+        return root.mappedActivities.find(a => d >= a.startWs && d <= a.endWs) ?? null;
+    }
+
+    // Every monitor shows the desktop of the one with focus. A monitor is moved by focusing its workspace; the focus
+    // goes back to where it was at the end
+    function linkDesktops(): void {
+        const mons = Hyprland.monitors.values;
+        const fm = Hyprland.focusedMonitor;
+        if (!root.enabled || mons.length < 2 || !fm)
+            return;
+        const fws = fm.activeWorkspace?.id ?? 0;
+        if (fws <= 0)
+            return;
+        const d = root.desktopOf(fws);
+        const moves = [];
+        for (const m of mons) {
+            const cur = m.activeWorkspace?.id ?? 0;
+            if (m === fm || cur <= 0 || root.desktopOf(cur) === d)
+                continue;
+            moves.push(root.wsFor(d, m.name));
+        }
+        if (moves.length === 0)
+            return;
+        for (const ws of moves)
+            Hyprland.dispatch(`hl.dsp.focus({ workspace = ${ws} })`);
+        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${fws} })`);
+    }
+
+    Timer {
+        id: linkTimer
+
+        interval: 60
+        onTriggered: root.linkDesktops()
     }
 
     readonly property int currentActivityIndex: root.currentActivity?.index ?? 0
@@ -452,6 +508,9 @@ Singleton {
         if (!force && root.isWindowPinned(toplevel))
             return;
         const cur = toplevel.workspace?.id ?? -1;
+        // A window on the second monitor stays on it when it changes desktop
+        if (ws > 0 && ws < root.slotStep && cur >= root.slotStep)
+            ws = Math.floor(cur / root.slotStep) * root.slotStep + ws;
         // Already home: never steal focus (opening Steam used to yank back to Cursor)
         if (cur === ws)
             return;
@@ -524,8 +583,11 @@ Singleton {
             Hypr.focusWorkspaceInOtherActivity(ws);
             return;
         }
+        // The workspace of that desktop on the monitor with focus (the others follow: linkDesktops)
+        const mon = Hyprland.focusedMonitor?.name ?? "";
+        const real = ws > 0 && ws < root.slotStep ? root.wsFor(ws, mon) : ws;
         // Hyprland-lua expects dsp expressions; classic syntax still works for non-lua
-        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${ws} })`);
+        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${real} })`);
     }
 
     function focusActivity(activityId: string): void {
@@ -544,7 +606,7 @@ Singleton {
         const tops = Hyprland.toplevels.values;
         for (let i = 0; i < tops.length; i++) {
             const t = tops[i];
-            const ws = t.workspace?.id ?? -1;
+            const ws = root.desktopOf(t.workspace?.id ?? -1);
             if (ws < act.startWs || ws > act.endWs)
                 continue;
             if (Hypr.isToplevelIgnored(t, ignored))
@@ -563,7 +625,7 @@ Singleton {
         if (!root.enabled || !root.currentActivity)
             return;
         const act = root.currentActivity;
-        const local = root.activeWsId - act.startWs;
+        const local = root.activeDesktop - act.startWs;
         const next = local + delta;
         if (next >= 0 && next < act.workspaceCount) {
             root.focusWorkspace(act.workspaceIds[next]);
@@ -599,10 +661,10 @@ Singleton {
 
     // The windows on desktops from `ws` on (special workspaces have negative ids and stay), farthest desktop first
     function windowsFrom(ws: int): var {
-        return Hyprland.toplevels.values.filter(t => t.address && (t.workspace?.id ?? -1) >= ws).map(t => ({
+        return Hyprland.toplevels.values.filter(t => t.address && root.desktopOf(t.workspace?.id ?? -1) >= ws && (t.workspace?.id ?? -1) > 0).map(t => ({
                     address: t.address,
                     ws: t.workspace.id
-                })).sort((a, b) => b.ws - a.ws);
+                })).sort((a, b) => root.desktopOf(b.ws) - root.desktopOf(a.ws));
     }
 
     // Moves the windows `delta` desktops. Going up, the farthest first so none lands on a desktop still occupied;
@@ -630,7 +692,7 @@ Singleton {
         if (!act || !entry || act.workspaceCount >= root.maxDesktops)
             return;
         const at = act.endWs + 1;
-        const active = root.activeWsId;
+        const active = root.activeDesktop;
         const wins = root.windowsFrom(at);
         root.addedWs = at;
         addedTimer.restart();
@@ -650,9 +712,9 @@ Singleton {
         if (!act || !entry || act.workspaceCount <= 1)
             return false;
         const pos = act.workspaceIds.indexOf(ws);
-        if (pos < 0 || root.wsHasRule(ws) || Hyprland.toplevels.values.some(t => (t.workspace?.id ?? -1) === ws))
+        if (pos < 0 || root.wsHasRule(ws) || Hyprland.toplevels.values.some(t => root.desktopOf(t.workspace?.id ?? -1) === ws))
             return false;
-        const active = root.activeWsId;
+        const active = root.activeDesktop;
         const wins = root.windowsFrom(ws + 1);
         // An app pinned to a later desktop of this activity keeps its desktop, one position lower
         const rules = GlobalConfig.activities.appRules.values;
@@ -800,8 +862,14 @@ Singleton {
         let out = "-- Auto-generated by Sylenara Activities. Do not edit.\n\n";
 
         const total = Math.max(1, root.totalWorkspaces);
-        for (let i = 1; i <= total; i++)
-            out += `hl.workspace_rule({ workspace = "${i}", persistent = true })\n`;
+        // One workspace per desktop and monitor, each tied to its monitor
+        const names = root.monitorNames.length > 0 ? root.monitorNames : [""];
+        for (let m = 0; m < names.length; m++) {
+            for (let i = 1; i <= total; i++) {
+                const mon = names[m] ? `, monitor = \"${Strings.luaString(names[m])}\"` : "";
+                out += `hl.workspace_rule({ workspace = "${m * root.slotStep + i}"${mon}, persistent = true })\n`;
+            }
+        }
 
         out += "\n";
 
@@ -905,6 +973,12 @@ Singleton {
             } else if (n === "movewindow") {
                 enforceTimer.restart();
                 enforceRetryTimer.restart();
+            } else if (n === "workspace" || n === "focusedmon") {
+                linkTimer.restart();
+            } else if (n === "monitoradded" || n === "monitorremoved") {
+                // A monitor more or less: its workspaces and rules change
+                root.syncSoon();
+                linkTimer.restart();
             }
         }
     }

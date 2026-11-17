@@ -24,7 +24,8 @@ ClipRect {
 
     readonly property HyprlandMonitor monitor: Hypr.monitorFor(screen)
     readonly property bool onSpecial: monitor?.lastIpcObject.specialWorkspace?.name !== ""
-    readonly property int activeWsId: monitor.activeWorkspace?.id ?? 1
+    // The desktop this monitor shows (its workspace, whichever monitor it is on)
+    readonly property int activeWsId: Activities.desktopOf(monitor.activeWorkspace?.id ?? 1)
     readonly property var wsIds: root.activity?.workspaceIds ?? []
     readonly property bool isCurrentActivity: {
         const a = root.activity;
@@ -200,8 +201,8 @@ ClipRect {
                     const ws = (wsList.itemAt(event.x, event.y) as Workspace)?.ws;
                     if (!ws)
                         return;
-                    if (Hypr.activeWsId !== ws)
-                        Hypr.focusWorkspace(ws);
+                    if (Activities.activeDesktop !== ws)
+                        Activities.focusWorkspace(ws);
                     else
                         Hypr.toggleShowDesktop();
                 }

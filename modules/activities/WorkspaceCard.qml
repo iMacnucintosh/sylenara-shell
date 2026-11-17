@@ -22,7 +22,7 @@ Item {
     property bool dropHover: Activities.overviewDropTargetWs === wsId
 
     readonly property HyprlandMonitor monitor: Hypr.monitorFor(screen)
-    readonly property bool isActive: Hypr.activeWsId === wsId
+    readonly property bool isActive: Activities.activeDesktop === wsId
     readonly property var windows: Hypr.toplevelsForWs(wsId)
     readonly property real aspect: {
         const mon = root.monitor;
