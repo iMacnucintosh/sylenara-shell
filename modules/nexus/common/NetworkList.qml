@@ -50,7 +50,9 @@ ItemList {
         property bool currentSelected
         // NetworkManager needs a password: the row unfolds with a field for it
         property bool asking
-        property real formHeight: asking && formLoader.item ? formLoader.item.implicitHeight + Tokens.padding.large : 0
+        // The form, plus the air above it (its label floats over the top border) and below it. It starts under the
+        // row's own bottom margin plus this air, which is already counted in implicitHeight: only the air is added
+        property real formHeight: asking && formLoader.item ? formLoader.item.implicitHeight + Tokens.spacing.small + Tokens.padding.large : 0
         property real textOpacity: disabled && !asking ? 0.5 : 1
 
         disabled: currentSelected || asking || Nmcli.connectingSsid() === modelData.ssid
@@ -190,6 +192,7 @@ ItemList {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: networkLayout.bottom
+            anchors.topMargin: networkLayout.anchors.margins + Tokens.spacing.small
             anchors.leftMargin: Tokens.padding.extraLarge
             anchors.rightMargin: Tokens.padding.extraLarge
             // Kept while it folds back, so it does not vanish before the row has shrunk
