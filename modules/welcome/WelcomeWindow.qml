@@ -312,14 +312,6 @@ FloatingWindow {
                     text: Tr.tr("Made by %1").arg("iMacnucintosh")
                     font: Tokens.font.title.small
                 }
-
-                StyledText {
-                    Layout.alignment: Qt.AlignHCenter
-                    // TRANSLATORS: %1 = the name of the original project, %2 = its author
-                    text: Tr.tr("A fork of %1 by %2").arg("caelestia-shell").arg("soramane")
-                    color: Colours.palette.m3outline
-                    font: Tokens.font.label.medium
-                }
             }
 
             IconTextButton {

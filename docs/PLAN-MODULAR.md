@@ -17,7 +17,7 @@ crea el tag `v0.2.0` (el build lee la versión de los tags `v0.*`; no crees el t
 
 ## 1. Objetivo
 
-Lunele es un fork de Caelestia (shell Quickshell/QML para Hyprland). Hoy es un único repo donde
+Lunele es una shell Quickshell/QML para Hyprland. Hoy es un único repo donde
 conviven la shell base y funciones personales u opcionales. Queremos:
 
 1. Una **base** estable e instalable en cualquier equipo (a futuro, paquete AUR), sin nada personal.
@@ -143,7 +143,7 @@ importa** ningún fichero de `extensions/` por nombre.
 extensiones actuales**; no inventes otros. `apiVersion` existe para poder cambiar el contrato más
 adelante sin romper extensiones instaladas.
 
-Antes de fijar nombres, lee la rama `upstream/feat/plugins` (`plugin/src/Caelestia/Plugins/`,
+Antes de fijar nombres, lee la rama `upstream/feat/plugins` (`plugin/src/<proyecto-original>/Plugins/`,
 `modules/nexus/pages/PluginsPage.qml`): upstream tiene un sistema de plugins a medias. No lo
 adoptes (está parado y sin fusionar), pero **reutiliza sus nombres de campos y de puntos de
 enganche donde encajen**, para abaratar una convergencia futura. Resume al usuario lo que

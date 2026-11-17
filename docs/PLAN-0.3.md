@@ -68,7 +68,7 @@ Orden decidido por el usuario: antes de centrarse en Things, dejar bien cerrado 
 Decisiones:
 - **Ventana propia**, flotante y de tamaño fijo (960×720), de 4 pasos; sale sola la primera vez y se reabre con un botón de varita en la tarjeta de Lunele de Nexus → Acerca de. El orbe vuela del centro al lado del título.
 - **Visual:** el orbe y tarjetas Material You; **capturas reales a futuro**. Invita a crear extensiones propias (enlace al hub).
-- **Autoría:** alias de GitHub (`iMacnucintosh`) con enlace + crédito a `caelestia-shell` (soramane). Sin nombre real ni correo.
+- **Autoría:** alias de GitHub (`iMacnucintosh`) con enlace. Sin nombre real ni correo.
 - **El asistente es solo informativo con las apps** (Seeker, Things, kitty): **las instala el paquete base** (fase 3), no el asistente. (Se descartó instalar desde el asistente con `makepkg`: añadía contraseña, compilación y fallos posibles.)
 - **Sin extensiones de serie:** Nexus → Extensiones lleva la fila «Buscar más en Things» (abre Things; desactivada con aviso si no está instalado).
 

@@ -124,8 +124,6 @@ EOF
     /etc/systemd/logind.conf.d/lunele-greeter.conf
   install -m 644 "$LUNELE_ROOT/greeter/systemd/user-service.conf" \
     /etc/systemd/system/user@.service.d/lunele-timeout.conf
-  rm -f /etc/systemd/logind.conf.d/caelestia-greeter.conf \
-    /etc/systemd/system/user@.service.d/caelestia-timeout.conf
   systemctl daemon-reload
   systemctl reload systemd-logind.service
 

@@ -91,10 +91,8 @@ class Plan(unittest.TestCase):
         self.assertIn("systemctl enable -f greetd.service", script)
         self.assertIn('systemctl disable "$current.service"', script)
         self.assertNotIn("systemctl restart", script)
-        # the logind drop-ins are installed and only the legacy names are removed
+        # the logind drop-ins are installed
         self.assertIn("/etc/systemd/logind.conf.d/lunele-greeter.conf", script)
-        rm = [l for l in script.splitlines() if "rm -f" in l or l.strip().startswith("/etc/systemd") and "caelestia" in l]
-        self.assertTrue(rm and all("lunele-" not in l for l in rm if "rm -f" in l))
         import subprocess
         self.assertEqual(subprocess.run(["bash", "-n", str(Path(__file__).resolve().parent.parent / "scripts/system/10-greeter.sh")]).returncode, 0)
 

@@ -1,0 +1,23 @@
+Lunele
+Copyright (C) 2026 Manuel López Mallorquín
+
+Lunele is free software, licensed under the GNU General Public License,
+version 3 (see LICENSE).
+
+This project began as a fork of caelestia-shell
+(https://github.com/caelestia-dots/shell), by soramane and the Caelestia
+contributors, also licensed under the GPL-3.0. A large part of the code is
+derived from it.
+
+The original copyright notices are kept here and the full contribution
+history, with every author, is kept in the git history of this repository.
+Modifications and additions are Copyright (C) 2026 Manuel López Mallorquín.
+
+Third-party components
+----------------------
+- utils/scripts/fuzzysort.js  fuzzysort, MIT License (notice in the file)
+- utils/scripts/fzf.js        fzf, BSD 3-Clause License (notice in the file)
+- assets/google-sans-flex/    Google Sans Flex, SIL Open Font License 1.1
+                              (see the LICENSE file in that folder)
+- assets/wallpapers/          see assets/wallpapers/README.md for the
+                              license of each image

@@ -2,8 +2,6 @@
 # Push current Lunele palette into all open Kitty windows.
 state="${XDG_STATE_HOME:-$HOME/.local/state}"
 theme="$state/lunele/theme/kitty.conf"
-# Legacy caelestia path kept until every CLI/runtime path is renamed.
-[[ -r "$theme" ]] || theme="$state/caelestia/theme/kitty.conf"
 [[ -r "$theme" ]] || exit 0
 runtime="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 shopt -s nullglob

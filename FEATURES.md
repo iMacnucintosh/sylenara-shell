@@ -3,7 +3,7 @@
 Detalle de cómo usar las piezas del fork. Listado corto y cara pública: **[README.md](./README.md)**.  
 Opciones `shell.json`: **[CONFIG.md](./CONFIG.md)**. Changelog: **[CHANGELOG.md](./CHANGELOG.md)**.
 
-Repositorio: [iMacnucintosh/lunele-shell](https://github.com/iMacnucintosh/lunele-shell). Crédito a la base caelestia en el README.
+Repositorio: [iMacnucintosh/lunele-shell](https://github.com/iMacnucintosh/lunele-shell). Créditos en el README y en `NOTICE`.
 
 ---
 
@@ -171,7 +171,7 @@ configuración que ya tengas, y no vuelve a ejecutarse (`~/.local/state/lunele/d
 
 Una ventana propia, **flotante y de tamaño fijo** (960×720, centrada: Hyprland flota las ventanas de tamaño fijo, sin reglas), con cinco pasos que sale **sola la primera vez** que arranca la shell (a los 4 s) y se puede volver a abrir con el **botón de varita** de la tarjeta de Lunele en **Ajustes → Acerca de** (abajo a la izquierda; tooltip «Guía de bienvenida»):
 
-1. **Qué es Lunele:** el orbe, una frase, quién la hace (**iMacnucintosh**, con enlace a GitHub) y el crédito al proyecto original (**caelestia-shell**, de soramane).
+1. **Qué es Lunele:** el orbe, una frase, quién la hace (**iMacnucintosh**, con enlace a GitHub) (el crédito al proyecto original vive en el README y en `NOTICE`).
 2. **Qué te ofrece:** tarjetas con Actividades, Ajustes, el panel, Material You, Extensiones y bloqueo/inicio de sesión.
 3. **Aplicaciones hechas para Lunele:** presenta **Seeker** (explorador de archivos), **Things** (gestor de paquetes), **Veo** (reproductor de vídeo) y **kitty** (la terminal, que la shell recolorea en vivo). Es **informativo**: no instala nada (las instala el paquete base); si una está instalada ofrece abrirla, y si no, indica «No instalada». Debajo, una nota aclara que **kitty viene preinstalada pero se puede usar cualquier otra terminal**, con un botón «Elegir terminal» que abre Ajustes → Aplicaciones.
 4. **Tus atajos:** tabla de los atajos en uso ahora, por categorías y con las teclas dibujadas (los numerados se agrupan: «Ir al escritorio 1–10»). Sigue a Ajustes: si cambias uno allí, cambia aquí. Botón **Editar en Ajustes** (Ajustes → Teclado y ratón, donde también se exportan e importan).
@@ -364,7 +364,7 @@ Popout flotante junto al cursor (estilo Lunele), respaldado por **cliphist** + `
 | Fijar ventana (solo flotantes) | Super + Shift + P |
 | Volumen +/−, silencio, silenciar micro | teclas XF86 (antes fijas en `hyprland.lua`; ahora remapeables) |
 
-El resto de atajos de base son los de Caelestia (cerrar Super + C, terminal Super + Q, launcher Super + Espacio, escritorios Super + 1…0, mover a escritorio Super + Shift + 1…0…). La lista completa y los que tengas cambiados salen en el paso «Tus atajos» del asistente de bienvenida, con un botón para editarlos en Ajustes.
+El resto de atajos de base son los de serie (cerrar Super + C, terminal Super + Q, launcher Super + Espacio, escritorios Super + 1…0, mover a escritorio Super + Shift + 1…0…). La lista completa y los que tengas cambiados salen en el paso «Tus atajos» del asistente de bienvenida, con un botón para editarlos en Ajustes.
 
 Cámbialos en **Ajustes → Teclado y ratón**.
 
