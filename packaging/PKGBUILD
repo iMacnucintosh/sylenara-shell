@@ -9,6 +9,8 @@ arch=('x86_64')
 url="https://github.com/iMacnucintosh/sylenara-shell"
 # The shell is GPL-3.0; the wallpaper in assets/wallpapers has its own licence (see its README)
 license=('GPL-3.0-only' 'LicenseRef-Unsplash')
+# No debug package: nobody installs the symbols of this one
+options=('!debug')
 depends=(
   # What it is made on (the git Quickshell: the stable tag lacks what the shell uses)
   'quickshell-git' 'hyprland' 'qt6-base' 'qt6-declarative' 'qt6-5compat' 'qt6-multimedia' 'qt6-svg'

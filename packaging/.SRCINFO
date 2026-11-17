@@ -61,6 +61,7 @@ pkgbase = sylenara-shell-git
 	optdepends = greetd: the login screen (scripts/install-system.sh)
 	provides = sylenara-shell
 	conflicts = sylenara-shell
+	options = !debug
 	source = git+https://github.com/iMacnucintosh/sylenara-shell.git
 	sha256sums = SKIP
 
