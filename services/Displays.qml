@@ -393,6 +393,17 @@ Singleton {
         root.draft = null;
     }
 
+    // The displays that are on start at 0,0 (when one is turned off or copies another, the rest closes up)
+    function tidy(): void {
+        const list = root.layoutOf(root.monitors);
+        if (list.length === 0)
+            return;
+        const placed = {};
+        for (const d of Layout.normalize(list))
+            placed[d.name] = d;
+        root.monitors = root.monitors.map(m => placed[m.name] ? Object.assign({}, m, { x: placed[m.name].x, y: placed[m.name].y }) : m);
+    }
+
     // A change of `name` in its size or shape moves what is next to it: it is placed again where it stands, so it
     // does not end up on top of another one or apart from the rest
     function replace(name: string): void {
@@ -464,6 +475,7 @@ Singleton {
         root.patchMonitor(name, patch);
         // What copied it stops doing so
         root.monitors = root.monitors.map(m => m.mirror === name && !enabled ? Object.assign({}, m, { mirror: "" }) : m);
+        root.tidy();
         root.draft = null;
         root.applyAll();
         root.persist();
@@ -478,6 +490,7 @@ Singleton {
         root.patchMonitor(name, {
             mirror: target
         });
+        root.tidy();
         root.draft = null;
         root.applyAll();
         root.persist();

@@ -10,7 +10,7 @@ import qs.components.controls
 import qs.services
 import qs.modules.nexus
 import qs.modules.nexus.common
-import "../../../utils/scripts/displaylayout.js" as Layout
+import "../../../utils/scripts/displaylayout.js" as Arrange
 
 // Monitor settings block — lives inline on Connected devices (not a Stack subpage).
 ColumnLayout {
@@ -27,7 +27,7 @@ ColumnLayout {
     property string selected
     readonly property bool multi: Displays.monitors.length > 1
     // Numbers as they are on the desk, left to right
-    readonly property var numbers: Layout.numbering(Displays.layoutOf(Displays.monitors))
+    readonly property var numbers: Arrange.numbering(Displays.layoutOf(Displays.monitors))
     readonly property var labels: {
         const out = {};
         for (let i = 0; i < Displays.monitors.length; i++) {
@@ -475,6 +475,7 @@ ColumnLayout {
             StyledText {
                 Layout.fillWidth: true
                 Layout.leftMargin: Tokens.padding.small
+                visible: !mon.disabled
                 text: Displays.vrrHint(monCol.vrrPolicy)
                 color: Colours.palette.m3outline
                 font: Tokens.font.label.small
@@ -484,7 +485,7 @@ ColumnLayout {
             StyledText {
                 Layout.fillWidth: true
                 Layout.leftMargin: Tokens.padding.small
-                visible: monCol.vrrPolicy !== 0
+                visible: !mon.disabled && monCol.vrrPolicy !== 0
                 text: mon.vrrActive ? Tr.tr("Currently active on this output") : Tr.tr("Currently inactive on this output")
                 color: Colours.palette.m3outline
                 font: Tokens.font.label.small
@@ -495,7 +496,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Tokens.spacing.small
                 Layout.leftMargin: Tokens.padding.small
-                visible: monCol.connectorLimited
+                visible: !mon.disabled && monCol.connectorLimited
                 text: Tr.tr("This connection tops out at %1 Hz. The panel may support a higher rate over DisplayPort.").arg(Math.round(monCol.maxHz))
                 color: Colours.palette.m3outline
                 font: Tokens.font.label.small

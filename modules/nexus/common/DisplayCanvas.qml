@@ -29,7 +29,7 @@ Item {
     property real tileRadius: 12
     property real padding: 16
     property real minimumHeight: 150
-    property real maximumHeight: 260
+    property real maximumHeight: 330
 
     // Picked: pressed without being moved. Dropped: left at (x, y), the corner of the display in logical pixels.
     signal picked(string name)
@@ -153,7 +153,7 @@ Item {
                     text: tile.info.number ?? ""
                     color: root.textColor
                     font: root.numberFont
-                    visible: tile.height > 40
+                    visible: tile.height > 34
                 }
 
                 Text {
@@ -163,7 +163,7 @@ Item {
                     text: tile.info.title ?? tile.modelData.name
                     color: root.textColor
                     font: root.titleFont
-                    visible: tile.height > 26 && tile.width > 50
+                    visible: tile.height > 62 && tile.width > 50
                 }
 
                 Text {
@@ -173,7 +173,7 @@ Item {
                     text: tile.info.detail ?? ""
                     color: root.detailColor
                     font: root.detailFont
-                    visible: tile.height > 56 && tile.width > 80
+                    visible: tile.height > 84 && tile.width > 80
                 }
             }
 
