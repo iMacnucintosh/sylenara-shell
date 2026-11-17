@@ -2,7 +2,7 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
-## Sin publicar
+## 0.7.1 (2026-11-17)
 
 - **Varios monitores: escritorios enlazados.** Cada escritorio tiene un workspace por monitor y cambiar de escritorio o de actividad mueve todas las pantallas a la vez; las barras marcan el escritorio activo en todas y enseñan los mismos iconos, agrupados por monitor con una línea fina entre grupos. La **vista de actividades** dibuja una miniatura por monitor, en la disposición de Ajustes, y permite arrastrar apps entre monitores y escritorios; solo sale en el monitor con el foco y las tarjetas son más grandes. Atajos nuevos: `Super+Alt+flechas` manda la ventana a la pantalla vecina, y `Super+1…0` / `Super+Shift+1…0` respetan el monitor.
 - **Pantalla principal con estrella** (Ajustes → Pantalla): es donde salen las notificaciones, los avisos, el volumen y el brillo.
