@@ -3,7 +3,7 @@
 Punto de referencia para cualquier agente/IDE/modelo que entre sin contexto. Si cambias algo respecto
 a este fichero, **actualízalo en el mismo commit**.
 
-Documentación por rol: [README.md](./README.md) (inglés) y [README.es.md](./README.es.md) (español) = cara pública (features + install real), **mantener los dos a la par**;
+Documentación por rol: [README.md](./README.md) (inglés) y [README.es.md](./README.es.md) (español) = cara pública (features + install real), **mantener los dos a la par**. **Patrón de README de toda la familia** (shell, Seeker, Things, Veo, `sylphrena-cli`, `sylphrena-hub`, `sylphrena-packages`): `README.md` en inglés + `README.es.md` en español, cabecera centrada con el título, el selector `English · Español` y una frase («parte de Sylphrena»), captura si la app es visual (`docs/screenshot.webp`, y `docs/screenshot.es.webp` si hay dos idiomas; **sin datos personales ni rutas tuyas**: carpetas de ejemplo en `/tmp`, las apps se pueden renderizar sin ventana con `QT_QPA_PLATFORM=offscreen`, Things con `dev/run-demos.sh`), y las secciones en este orden: funciones, instalación (el instalador de Sylphrena o `pacman -S <paquete>` desde el repositorio `[sylphrena]`), compilar desde el código, integración con Sylphrena (tema, idioma), idiomas, licencia. Si cambia una, cambia la otra;
 [FEATURES.md](./FEATURES.md) = guía de uso del fork; [CONFIG.md](./CONFIG.md) = referencia `shell.json`;
 [CHANGELOG.md](./CHANGELOG.md) = cambios recientes; [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) = instalación manual, compilar y contribuir (lo técnico que salió del README).
 
