@@ -4,6 +4,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## Sin publicar
 
+- **Varias pantallas: un esquema para colocarlas.** En Ajustes → Dispositivos conectados → Pantalla, con dos o más monitores, las pantallas se dibujan en proporción y se **arrastran** para ordenarlas como están en tu mesa (se pegan al borde de otra, sin solaparse ni dejar huecos, y la disposición no cambia hasta pulsar **Aplicar**). Se numeran de izquierda a derecha y **Identificar** enseña el número en grande sobre cada monitor. Pulsas una para ver sus ajustes, y nuevos: **Activada** (apagar una pantalla, nunca la última), **Rotación** y **Duplicar otra pantalla**. Los cambios que podrían dejar una pantalla inservible piden confirmación y se deshacen solos a los 15 s. Posición, rotación, duplicado y apagado se guardan en `sylenara-monitors.lua`.
 - **Pasar el ratón por una miniatura de YouTube ya no avisa de «Reproduciendo»:** en una página de vídeo (las recomendaciones), el navegador publica el título y el artista de la vista previa bajo la dirección de la página, y el arreglo anterior solo conocía las vistas previas de las páginas de listado. Ahora, en YouTube, la misma dirección con otro título es una vista previa; un vídeo distinto cambia la dirección y sigue avisando.
 - **Los paquetes ya no generan su compañero `-debug`**, que se instalaba sin servir de nada. Los `.SRCINFO` están al día.
 
