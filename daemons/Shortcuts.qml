@@ -1,4 +1,5 @@
 import QtQuick
+import QtQml
 import Quickshell
 import Quickshell.Io
 import Sylenara
@@ -14,6 +15,43 @@ Scope {
     readonly property bool hasFullscreen: Hypr.focusedWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen > 1) ?? false
 
     // qmllint disable unresolved-type
+    // Desktops: the workspace of the monitor with focus, and the window keeps its monitor
+    Instantiator {
+        model: 10
+
+        CustomShortcut {
+            required property int index
+
+            name: `desktopGo${index + 1}`
+            description: `Go to desktop ${index + 1}`
+            onPressed: Activities.focusWorkspace(index + 1)
+        }
+    }
+
+    Instantiator {
+        model: 10
+
+        CustomShortcut {
+            required property int index
+
+            name: `desktopMove${index + 1}`
+            description: `Move the active window to desktop ${index + 1}`
+            onPressed: Activities.moveActiveWindowToDesktop(index + 1)
+        }
+    }
+
+    Instantiator {
+        model: ["Left", "Right", "Up", "Down"]
+
+        CustomShortcut {
+            required property string modelData
+
+            name: `moveToMonitor${modelData}`
+            description: `Move the active window to the display on the ${modelData.toLowerCase()}`
+            onPressed: Activities.moveActiveWindowToMonitor(modelData.toLowerCase())
+        }
+    }
+
     CustomShortcut {
         // qmllint enable unresolved-type
         name: "nexus"
