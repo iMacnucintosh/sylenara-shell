@@ -205,6 +205,12 @@ Bloque **Pantalla** inline en **Ajustes → Dispositivos conectados** (categorí
 - Pulsa una pantalla (en el esquema o en los selectores de debajo) para ver **sus** ajustes. Las que están apagadas o duplicando a otra solo salen en los selectores.
 - Los cambios que podrían dejar una pantalla inservible (resolución, frecuencia, escala, rotación, apagar, duplicar, cambiar la disposición) piden confirmación: **«¿Mantener estos ajustes? Se deshará en 15 s»** con **Mantener** y **Deshacer**; si nadie contesta, se deshacen solos.
 
+- La **estrella** de cada pantalla marca la **principal** (`general.primaryDisplay`; vacía = la primera que lista Hyprland). En la principal salen las **notificaciones, los avisos emergentes y el volumen y brillo**; cambiarla no mueve ninguna ventana. Si la principal se desenchufa, otra (la primera por nombre) la sustituye mientras tanto y la elección se conserva.
+
+### Escritorios enlazados (varios monitores)
+
+Un escritorio (el 1 de Juegos) tiene **un workspace por monitor**: los monitores, ordenados por nombre, usan los ids 1…N, 1001…, 2001…. Cambiar de escritorio o de actividad en un monitor cambia todos a la vez, y cada barra marca el escritorio activo y enseña los **mismos iconos** en todos los monitores: primero las apps de la principal, una línea fina y las del siguiente monitor, y así con todos. `Super+1…0` cambia en el monitor con el foco; `Super+Shift+1…0` manda la ventana a ese escritorio **sin sacarla de su monitor**; `Super+Alt+←/→/↑/↓` la manda a la pantalla vecina en esa dirección. La **vista de actividades** (`Super+Tab`, solo en el monitor con el foco) dibuja cada escritorio con una miniatura por monitor, en la posición y el tamaño de Ajustes → Pantalla, y se arrastran las apps de una a otra.
+
 Con una sola pantalla no hay esquema: solo sus ajustes. Una tarjeta por monitor:
 
 - **Activada**: apaga la pantalla (nunca la última que queda encendida); al volver a encenderla recupera su modo preferido y Hyprland la coloca.

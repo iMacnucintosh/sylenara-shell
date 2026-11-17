@@ -284,7 +284,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "workspaceAnimation": "slidevert",
         "workspaceAnimationSpeed": "normal",
         "activityAnimation": "fade",
-        "activityAnimationSpeed": "normal"
+        "activityAnimationSpeed": "normal",
+        "primaryDisplay": ""
     },
     "background": {
         "enabled": true,

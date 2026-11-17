@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 17:56+0100\n"
+"POT-Creation-Date: 2026-11-17 19:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2168,7 +2168,7 @@ msgid "Identify"
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
-msgid "Drag the displays to arrange them as they are on your desk. Pick one to change its settings."
+msgid "Drag the displays to arrange them as they are on your desk. Pick one to change its settings. The star marks the main display: it shows the notifications, volume and brightness."
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
@@ -5125,6 +5125,38 @@ msgstr ""
 #: services/Keybinds.qml
 #, qt-format
 msgid "Move the active window to workspace %1"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Move window to the display left"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Send the active window to the display on the left, on the same desktop, and follow it"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Move window to the display right"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Send the active window to the display on the right, on the same desktop, and follow it"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Move window to the display up"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Send the active window to the display above, on the same desktop, and follow it"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Move window to the display down"
+msgstr ""
+
+#: services/Keybinds.qml
+msgid "Send the active window to the display below, on the same desktop, and follow it"
 msgstr ""
 
 #: services/Keybinds.qml
