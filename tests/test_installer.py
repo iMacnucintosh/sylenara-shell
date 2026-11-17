@@ -337,7 +337,7 @@ class Look(unittest.TestCase):
         self.assertIn("╔═╗", text)
         self.assertIn("A Material You shell for Hyprland", text)
         self.assertIn("v9.9.9", text)
-        self.assertEqual(len([l for l in text.splitlines() if "╔" in l or "╚" in l or "╠" in l]), 3)
+        self.assertEqual(len([l for l in text.splitlines() if any(c in l for c in "╔╚╠║╦╩")]), 3)
 
     def test_a_failing_command_shows_its_last_lines_and_stops_a_required_item(self):
         r = inst.Runner(dry=False, helper="yay", log=None)
