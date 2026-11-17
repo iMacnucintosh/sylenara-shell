@@ -20,17 +20,52 @@ ColumnLayout {
     property var passwordNetwork: null
     property bool showPasswordDialog: false
 
+    // Where the name starts (past the leading icon): the hairlines begin there
+    readonly property real networkTextInset: Tokens.font.icon.small.pointSize + Tokens.spacing.small + Tokens.spacing.extraSmall
+
     spacing: Tokens.spacing.small
     width: Tokens.sizes.bar.networkWidth
 
     // Wireless section
-    StyledText {
+    RowLayout {
         visible: root.view === "wireless"
         Layout.preferredHeight: visible ? implicitHeight : 0
         Layout.topMargin: visible ? Tokens.padding.medium : 0
+        Layout.fillWidth: true
         Layout.rightMargin: Tokens.padding.extraSmall
-        text: Tr.tr("Wireless")
-        font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+        spacing: Tokens.spacing.small
+
+        StyledText {
+            Layout.fillWidth: true
+            text: Tr.tr("Wireless")
+            font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+        }
+
+        IconButton {
+            id: rescanButton
+
+            icon: "autorenew"
+            type: IconButton.Text
+            isRound: true
+            stateLayer.disabled: Nmcli.scanning || !Nmcli.wifiEnabled
+            onClicked: Nmcli.rescanWifi()
+
+            // The icon gives way to a spinner while it scans
+            label.opacity: Nmcli.scanning ? 0 : 1
+
+            CircularIndicator {
+                anchors.centerIn: parent
+                strokeWidth: Tokens.padding.extraSmall / 2
+                bgColour: "transparent"
+                implicitSize: parent.implicitHeight - Tokens.padding.large
+                running: Nmcli.scanning
+            }
+
+            StyledToolTip {
+                shown: rescanButton.hovered
+                text: Tr.tr("Rescan networks")
+            }
+        }
     }
 
     Toggle {
@@ -52,6 +87,8 @@ ColumnLayout {
     }
 
     Repeater {
+        id: networkRepeater
+
         visible: root.view === "wireless"
         model: ScriptModel {
             values: [...Nmcli.networks].sort((a, b) => {
@@ -61,163 +98,125 @@ ColumnLayout {
             }).slice(0, 8)
         }
 
-        RowLayout {
-            id: networkItem
+        ColumnLayout {
+            id: networkWrap
 
+            required property int index
             required property Nmcli.AccessPoint modelData
-            readonly property bool isConnecting: root.connectingToSsid === modelData.ssid
-            readonly property bool loading: networkItem.isConnecting
 
             visible: root.view === "wireless"
             Layout.preferredHeight: visible ? implicitHeight : 0
             Layout.fillWidth: true
-            Layout.rightMargin: Tokens.padding.extraSmall
-            spacing: Tokens.spacing.small
+            spacing: Tokens.spacing.extraSmall
 
-            opacity: 0
-            scale: 0.7
+            RowLayout {
+                id: networkItem
 
-            Component.onCompleted: {
-                opacity = 1;
-                scale = 1;
-            }
+                readonly property Nmcli.AccessPoint modelData: networkWrap.modelData
+                readonly property bool isConnecting: root.connectingToSsid === modelData.ssid
+                readonly property bool loading: networkItem.isConnecting
 
-            Behavior on opacity {
-                Anim {
-                    type: Anim.DefaultEffects
-                }
-            }
-
-            Behavior on scale {
-                Anim {}
-            }
-
-            MaterialIcon {
-                text: Icons.getNetworkIcon(networkItem.modelData.strength)
-                color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
-            }
-
-            MaterialIcon {
-                visible: networkItem.modelData.isSecure
-                text: "lock"
-                fontStyle: Tokens.font.icon.small
-            }
-
-            StyledText {
-                Layout.leftMargin: Tokens.spacing.extraSmall
-                Layout.rightMargin: Tokens.spacing.extraSmall
                 Layout.fillWidth: true
-                text: networkItem.modelData.ssid
-                elide: Text.ElideRight
-                font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
-                color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurface
-            }
+                Layout.rightMargin: Tokens.padding.extraSmall
+                spacing: Tokens.spacing.small
 
-            StyledRect {
-                implicitWidth: implicitHeight
-                implicitHeight: wirelessConnectIcon.implicitHeight + Tokens.padding.extraSmall
+                opacity: 0
+                scale: 0.7
 
-                radius: Tokens.rounding.full
-                color: Qt.alpha(Colours.palette.m3primary, networkItem.modelData.active ? 1 : 0)
-
-                CircularIndicator {
-                    anchors.fill: parent
-                    running: networkItem.loading
+                Component.onCompleted: {
+                    opacity = 1;
+                    scale = 1;
                 }
 
-                StateLayer {
-                    color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
-                    disabled: networkItem.loading || !Nmcli.wifiEnabled
-
-                    onClicked: {
-                        if (networkItem.modelData.active) {
-                            Nmcli.disconnectFromNetwork();
-                        } else {
-                            root.connectingToSsid = networkItem.modelData.ssid;
-                            NetworkConnection.handleConnect(networkItem.modelData, null, network => {
-                                // Password is required - show password dialog
-                                root.passwordNetwork = network;
-                                root.showPasswordDialog = true;
-                                root.popouts.currentName = "wirelesspassword";
-                            });
-
-                            // Clear connecting state if connection succeeds immediately (saved profile)
-                            // This is handled by the onActiveChanged connection below
-                        }
+                Behavior on opacity {
+                    Anim {
+                        type: Anim.DefaultEffects
                     }
+                }
+
+                Behavior on scale {
+                    Anim {}
                 }
 
                 MaterialIcon {
-                    id: wirelessConnectIcon
+                    text: Icons.getNetworkIcon(networkItem.modelData.strength)
+                    color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                }
 
-                    anchors.centerIn: parent
-                    animate: true
-                    text: networkItem.modelData.active ? "link_off" : "link"
-                    color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                MaterialIcon {
+                    visible: networkItem.modelData.isSecure
+                    text: "lock"
+                    fontStyle: Tokens.font.icon.small
+                }
 
-                    opacity: networkItem.loading ? 0 : 1
+                StyledText {
+                    Layout.leftMargin: Tokens.spacing.extraSmall
+                    Layout.rightMargin: Tokens.spacing.extraSmall
+                    Layout.fillWidth: true
+                    text: networkItem.modelData.ssid
+                    elide: Text.ElideRight
+                    font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
+                    color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                }
 
-                    Behavior on opacity {
-                        Anim {
-                            type: Anim.DefaultEffects
+                StyledRect {
+                    implicitWidth: implicitHeight
+                    implicitHeight: wirelessConnectIcon.implicitHeight + Tokens.padding.extraSmall
+
+                    radius: Tokens.rounding.full
+                    color: Qt.alpha(Colours.palette.m3primary, networkItem.modelData.active ? 1 : 0)
+
+                    CircularIndicator {
+                        anchors.fill: parent
+                        running: networkItem.loading
+                    }
+
+                    StateLayer {
+                        color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                        disabled: networkItem.loading || !Nmcli.wifiEnabled
+
+                        onClicked: {
+                            if (networkItem.modelData.active) {
+                                Nmcli.disconnectFromNetwork();
+                            } else {
+                                root.connectingToSsid = networkItem.modelData.ssid;
+                                NetworkConnection.handleConnect(networkItem.modelData, null, network => {
+                                    // Password is required - show password dialog
+                                    root.passwordNetwork = network;
+                                    root.showPasswordDialog = true;
+                                    root.popouts.currentName = "wirelesspassword";
+                                });
+
+                                // Clear connecting state if connection succeeds immediately (saved profile)
+                                // This is handled by the onActiveChanged connection below
+                            }
+                        }
+                    }
+
+                    MaterialIcon {
+                        id: wirelessConnectIcon
+
+                        anchors.centerIn: parent
+                        animate: true
+                        text: networkItem.modelData.active ? "link_off" : "link"
+                        color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+
+                        opacity: networkItem.loading ? 0 : 1
+
+                        Behavior on opacity {
+                            Anim {
+                                type: Anim.DefaultEffects
+                            }
                         }
                     }
                 }
             }
-        }
-    }
 
-    StyledRect {
-        visible: root.view === "wireless"
-        Layout.preferredHeight: visible ? implicitHeight : 0
-        Layout.topMargin: visible ? Tokens.spacing.small : 0
-        Layout.fillWidth: true
-        implicitHeight: rescanBtn.implicitHeight + Tokens.padding.small
-
-        radius: Tokens.rounding.full
-        color: Colours.palette.m3primaryContainer
-
-        StateLayer {
-            color: Colours.palette.m3onPrimaryContainer
-            disabled: Nmcli.scanning || !Nmcli.wifiEnabled
-            onClicked: Nmcli.rescanWifi()
-        }
-
-        RowLayout {
-            id: rescanBtn
-
-            anchors.centerIn: parent
-            spacing: Tokens.spacing.small
-            opacity: Nmcli.scanning ? 0 : 1
-
-            MaterialIcon {
-                id: scanIcon
-
-                Layout.topMargin: Math.round(fontInfo.pointSize * 0.0575)
-                animate: true
-                text: "wifi_find"
-                color: Colours.palette.m3onPrimaryContainer
+            // Hairline under the name (inset past the leading icon), not after the last row, as in the Bluetooth list
+            Hairline {
+                visible: networkWrap.index < networkRepeater.count - 1
+                Layout.leftMargin: root.networkTextInset
             }
-
-            StyledText {
-                Layout.topMargin: -Math.round(scanIcon.fontInfo.pointSize * 0.0575)
-                text: Tr.tr("Rescan networks")
-                color: Colours.palette.m3onPrimaryContainer
-            }
-
-            Behavior on opacity {
-                Anim {
-                    type: Anim.DefaultEffects
-                }
-            }
-        }
-
-        CircularIndicator {
-            anchors.centerIn: parent
-            strokeWidth: Tokens.padding.extraSmall / 2
-            bgColour: "transparent"
-            implicitSize: parent.implicitHeight - Tokens.padding.large
-            running: Nmcli.scanning
         }
     }
 
@@ -356,11 +355,6 @@ ColumnLayout {
             }
         }
 
-        function onScanningChanged(): void {
-            if (!Nmcli.scanning)
-                scanIcon.rotation = 0;
-        }
-
         target: Nmcli
     }
 
@@ -393,5 +387,13 @@ ColumnLayout {
         StyledSwitch {
             id: toggle
         }
+    }
+
+    component Hairline: StyledRect {
+        Layout.fillWidth: true
+        Layout.rightMargin: Tokens.padding.extraSmall
+        implicitHeight: 1
+        color: Colours.palette.m3outlineVariant
+        opacity: 0.4
     }
 }
