@@ -8,6 +8,7 @@ import Quickshell.Wayland
 import Sylphrena.Config
 import Sylphrena.I18n
 import qs.components
+import qs.components.controls
 import qs.services
 
 Item {
@@ -28,6 +29,9 @@ Item {
             return screen.width / Math.max(1, screen.height);
         return mon.width / mon.height;
     }
+
+    // An empty desktop can be removed, unless it is the last one of its activity
+    readonly property bool canRemove: windows.length === 0 && (Activities.activityForWs(wsId)?.workspaceCount ?? 1) > 1
 
     implicitWidth: cardWidth
     implicitHeight: cardWidth / Math.max(0.5, aspect)
@@ -362,6 +366,54 @@ Item {
                     }
                 }
             }
+        }
+    }
+
+    HoverHandler {
+        id: cardHover
+    }
+
+    // Remove badge: on the top right corner, a little outside of the card, like a notification badge. Only on hover,
+    // and only when the desktop has no windows
+    IconButton {
+        id: removeBadge
+
+        readonly property bool shown: root.canRemove && (cardHover.hovered || hovered)
+
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: -Math.round(implicitHeight / 3)
+        anchors.rightMargin: -Math.round(implicitWidth / 3)
+        z: 20
+        icon: "close"
+        type: IconButton.Filled
+        isRound: true
+        font: Tokens.font.icon.small
+        padding: Tokens.padding.extraSmall
+        inactiveColour: Colours.palette.m3error
+        inactiveOnColour: Colours.palette.m3onError
+        opacity: shown ? 1 : 0
+        scale: shown ? 1 : 0.6
+        visible: opacity > 0
+        onClicked: {
+            const act = Activities.activityForWs(root.wsId);
+            if (act)
+                Activities.removeDesktop(act.id, root.wsId);
+        }
+
+        Behavior on opacity {
+            Anim {
+                type: Anim.DefaultEffects
+            }
+        }
+
+        Behavior on scale {
+            Anim {}
+        }
+
+        StyledToolTip {
+            shown: removeBadge.hovered
+            text: Tr.tr("Remove desktop")
         }
     }
 

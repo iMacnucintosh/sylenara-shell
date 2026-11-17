@@ -449,7 +449,7 @@ PageBase {
                             StyledSpinBox {
                                 Layout.alignment: Qt.AlignVCenter
                                 from: 1
-                                to: 10
+                                to: Activities.maxDesktops
                                 stepSize: 1
                                 value: actRow.modelData.workspaceCount
                                 cLayer: 2

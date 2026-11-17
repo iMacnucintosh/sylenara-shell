@@ -6,6 +6,7 @@ import Quickshell
 import Sylphrena.Config
 import Sylphrena.I18n
 import qs.components
+import qs.components.controls
 import qs.services
 
 ColumnLayout {
@@ -28,6 +29,8 @@ ColumnLayout {
 
             anchors.fill: parent
             spacing: Tokens.spacing.small
+            // Above the header's click area, so the button gets its own clicks
+            z: 1
 
             MaterialIcon {
                 text: root.activity?.icon || "dashboard"
@@ -41,6 +44,25 @@ ColumnLayout {
                 color: root.isCurrent ? Colours.palette.m3primary : Colours.palette.m3onSurface
                 font: Tokens.font.title.medium
                 elide: Text.ElideRight
+            }
+
+            // One more desktop at the end of this activity
+            IconButton {
+                id: addDesktop
+
+                readonly property bool atMax: (root.activity?.workspaceCount ?? 1) >= Activities.maxDesktops
+
+                icon: "add"
+                type: IconButton.Text
+                isRound: true
+                opacity: atMax ? 0.38 : 1
+                stateLayer.disabled: atMax
+                onClicked: Activities.addDesktop(root.activity.id)
+
+                StyledToolTip {
+                    shown: addDesktop.hovered
+                    text: Tr.tr("Add desktop")
+                }
             }
         }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 10:45+0100\n"
+"POT-Creation-Date: 2026-11-17 10:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,6 +95,10 @@ msgstr ""
 msgid "Tasks"
 msgstr ""
 
+#: modules/activities/ActivityColumn.qml
+msgid "Add desktop"
+msgstr ""
+
 #: modules/activities/OverviewContent.qml services/Keybinds.qml
 msgid "Activities overview"
 msgstr ""
@@ -105,6 +109,10 @@ msgstr ""
 
 #: modules/activities/WorkspaceCard.qml
 msgid "Empty"
+msgstr ""
+
+#: modules/activities/WorkspaceCard.qml
+msgid "Remove desktop"
 msgstr ""
 
 #: modules/areapicker/ShotPreview.qml

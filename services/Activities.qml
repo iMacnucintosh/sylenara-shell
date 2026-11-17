@@ -590,6 +590,71 @@ Singleton {
             Hyprland.dispatch(`hl.dsp.focus({ workspace = "e${delta > 0 ? "+" : "-"}${Math.abs(delta)}" })`);
     }
 
+    // ---- Desktops of an activity, from the overview ----------------------------------------------------
+    // Hyprland numbers the desktops of every activity one after another, so adding or removing one renumbers all
+    // the ones after it. Their windows are moved along: otherwise they would end up on another activity's desktop.
+    readonly property int maxDesktops: 10
+
+    // The windows on desktops from `ws` on (special workspaces have negative ids and stay), farthest desktop first
+    function windowsFrom(ws: int): var {
+        return Hyprland.toplevels.values.filter(t => t.address && (t.workspace?.id ?? -1) >= ws).map(t => ({
+                    address: t.address,
+                    ws: t.workspace.id
+                })).sort((a, b) => b.ws - a.ws);
+    }
+
+    // Moves the windows `delta` desktops. Going up, the farthest first so none lands on a desktop still occupied;
+    // going down, the nearest first
+    function moveShifted(wins: var, delta: int): void {
+        const ordered = delta > 0 ? wins : wins.slice().reverse();
+        for (const w of ordered)
+            Hyprland.dispatch(`hl.dsp.window.move({ window = "address:0x${w.address}", workspace = "${w.ws + delta}", follow = false })`);
+    }
+
+    // One more desktop at the end of the activity
+    function addDesktop(activityId: string): void {
+        const act = root.activityById(activityId);
+        const entry = root.activityEntry(activityId);
+        if (!act || !entry || act.workspaceCount >= root.maxDesktops)
+            return;
+        const at = act.endWs + 1;
+        const active = root.activeWsId;
+        const wins = root.windowsFrom(at);
+        entry.workspaceCount = act.workspaceCount + 1;
+        root.moveShifted(wins, 1);
+        root.syncSoon();
+        // Stay on the same desktop, which now has another number
+        if (active >= at)
+            root.focusWorkspace(active + 1);
+    }
+
+    // Removes an empty desktop of the activity (never the last one). False when it is not possible
+    function removeDesktop(activityId: string, ws: int): bool {
+        const act = root.activityById(activityId);
+        const entry = root.activityEntry(activityId);
+        if (!act || !entry || act.workspaceCount <= 1)
+            return false;
+        const pos = act.workspaceIds.indexOf(ws);
+        if (pos < 0 || Hyprland.toplevels.values.some(t => (t.workspace?.id ?? -1) === ws))
+            return false;
+        const active = root.activeWsId;
+        const wins = root.windowsFrom(ws + 1);
+        // An app pinned to a later desktop of this activity keeps its desktop, one position lower
+        const rules = GlobalConfig.activities.appRules.values;
+        for (let i = 0; i < rules.length; i++) {
+            if (rules[i].activityId === activityId && (rules[i].workspaceIndex || 0) > pos)
+                rules[i].workspaceIndex = rules[i].workspaceIndex - 1;
+        }
+        entry.workspaceCount = act.workspaceCount - 1;
+        root.moveShifted(wins, -1);
+        root.syncSoon();
+        if (active === ws)
+            root.focusWorkspace(pos > 0 ? ws - 1 : ws);
+        else if (active > ws)
+            root.focusWorkspace(active - 1);
+        return true;
+    }
+
     function toggleOverview(): void {
         if (!root.enabled)
             return;

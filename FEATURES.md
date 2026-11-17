@@ -26,6 +26,7 @@ Sistema opcional (activado por defecto en este fork) que agrupa desktops de Hypr
 - Arrastra ventanas entre desktops (también entre activities); al soltar se enfoca el destino y se aplica su look.
 - Apps **ancladas (pinned)** no se arrastran y muestran un icono de pin.
 - Si una ventana tiene audio (PipeWire), un chip pequeño de volumen abajo a la izquierda permite silenciarla / reactivarla sin salir del overview.
+- **Añadir y quitar desktops sin ir a Ajustes:** el botón **+** a la derecha del título de cada actividad añade un desktop al final de ella (hasta 10). Al pasar el ratón por un desktop **sin ventanas** aparece en su esquina superior derecha, algo hacia fuera, un badge rojo con una **×** para eliminarlo (nunca el último de la actividad). Los desktops de todas las actividades se numeran de seguido en Hyprland, así que al añadir o quitar uno se renumeran los siguientes: sus ventanas se mueven con ellos para seguir en su actividad, y las apps ancladas a un desktop posterior de la misma actividad lo siguen.
 - Cierra con Escape o clic fuera.
 
 ### Cambiar de actividad
