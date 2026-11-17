@@ -2,6 +2,11 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
+## Sin publicar
+
+- **Pasar el ratón por una miniatura de YouTube ya no avisa de «Reproduciendo»:** en una página de vídeo (las recomendaciones), el navegador publica el título y el artista de la vista previa bajo la dirección de la página, y el arreglo anterior solo conocía las vistas previas de las páginas de listado. Ahora, en YouTube, la misma dirección con otro título es una vista previa; un vídeo distinto cambia la dirección y sigue avisando.
+- **Los paquetes ya no generan su compañero `-debug`**, que se instalaba sin servir de nada. Los `.SRCINFO` están al día.
+
 ## 0.7.0 (2026-11-17)
 
 - **Nuevo nombre: Sylenara.** La shell, la CLI (`syl`), el hub de extensiones, el repositorio de paquetes (`[sylenara]`) y el instalador pasan a llamarse Sylenara, igual que las carpetas (`~/.config/sylenara`, `~/.local/state/sylenara`) y el módulo de configuración (`Sylenara.*`). Es un cambio completo, sin compatibilidad con el nombre anterior: quien tenga una instalación previa debe desinstalarla y volver a instalar. Seeker, Things y Veo conservan su nombre. Toda la familia queda bajo **GPL-3.0**, con el crédito al proyecto original en `NOTICE`.
