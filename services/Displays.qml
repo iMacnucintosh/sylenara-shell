@@ -281,9 +281,15 @@ Singleton {
     }
 
     // Every monitor again (after a change that moves several, or an undo)
+    // One single eval with every rule: separate processes race, and Hyprland checks the overlaps after each rule, so a
+    // layout that is fine as a whole warned about the half-moved one in between.
     function applyAll(): void {
+        const rules = [];
         for (let i = 0; i < root.monitors.length; i++)
-            root.applyLive(root.monitors[i]);
+            if (root.monitors[i]?.name)
+                rules.push(Lua.inline(root.ruleOf(root.monitors[i])));
+        if (rules.length > 0)
+            Quickshell.execDetached(["hyprctl", "eval", rules.join("; ")]);
     }
 
     function generateLua(): string {
