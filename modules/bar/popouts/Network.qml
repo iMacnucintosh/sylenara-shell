@@ -45,6 +45,7 @@ ColumnLayout {
             id: rescanButton
 
             icon: "autorenew"
+            tooltip: Tr.tr("Rescan networks")
             type: IconButton.Text
             isRound: true
             stateLayer.disabled: Nmcli.scanning || !Nmcli.wifiEnabled
@@ -59,11 +60,6 @@ ColumnLayout {
                 bgColour: "transparent"
                 implicitSize: parent.implicitHeight - Tokens.padding.large
                 running: Nmcli.scanning
-            }
-
-            StyledToolTip {
-                shown: rescanButton.hovered
-                text: Tr.tr("Rescan networks")
             }
         }
     }

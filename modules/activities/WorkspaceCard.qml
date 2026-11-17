@@ -399,6 +399,7 @@ Item {
         anchors.rightMargin: -Math.round(implicitWidth / 3)
         z: 20
         icon: "remove"
+        tooltip: Tr.tr("Remove desktop")
         type: IconButton.Filled
         isRound: true
         font: Tokens.font.icon.small
@@ -425,11 +426,6 @@ Item {
 
         Behavior on scale {
             Anim {}
-        }
-
-        StyledToolTip {
-            shown: removeBadge.hovered
-            text: Tr.tr("Remove desktop")
         }
     }
 

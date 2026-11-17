@@ -24,6 +24,11 @@ StyledRect {
     property font font: Tokens.font.body.small
     property int type: ButtonBase.Filled
 
+    // Short label shown on hover (the Material You tooltip of the whole shell). An icon-only button should always
+    // have one: `tooltip: Tr.tr("Delete")`. Where it goes: "top", "bottom", "left" or "right"
+    property string tooltip
+    property string tooltipSide: "top"
+
     property real padding
     property real horizontalPadding: padding
     property real verticalPadding: padding
@@ -76,6 +81,18 @@ StyledRect {
             if (root.isToggle)
                 root.internalChecked = !root.internalChecked;
             root.clicked();
+        }
+    }
+
+    // Built only for the buttons that have one
+    Loader {
+        anchors.fill: parent
+        active: root.tooltip.length > 0
+
+        sourceComponent: StyledToolTip {
+            shown: root.hovered && !root.disabled
+            text: root.tooltip
+            side: root.tooltipSide
         }
     }
 

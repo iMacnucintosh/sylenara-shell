@@ -57,6 +57,7 @@ ColumnLayout {
                 readonly property bool atMax: (root.activity?.workspaceCount ?? 1) >= Activities.maxDesktops
 
                 icon: "add"
+                tooltip: Tr.tr("Add desktop")
                 type: IconButton.Tonal
                 isRound: true
                 // Same size as the remove badge of a desktop
@@ -65,11 +66,6 @@ ColumnLayout {
                 opacity: atMax ? 0.38 : 1
                 stateLayer.disabled: atMax
                 onClicked: Activities.addDesktop(root.activity.id)
-
-                StyledToolTip {
-                    shown: addDesktop.hovered
-                    text: Tr.tr("Add desktop")
-                }
             }
         }
 

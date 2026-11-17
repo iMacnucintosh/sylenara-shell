@@ -177,12 +177,8 @@ PageBase {
                 type: IconButton.Tonal
                 isRound: true
                 icon: "auto_fix_high"
+                tooltip: Tr.tr("Welcome guide")
                 onClicked: Welcome.show()
-
-                StyledToolTip {
-                    shown: guideButton.hovered
-                    text: Tr.tr("Welcome guide")
-                }
             }
 
             IconButton {
@@ -195,13 +191,9 @@ PageBase {
                 type: IconButton.Tonal
                 isRound: true
                 icon: "celebration"
+                tooltip: Tr.tr("What's new")
                 visible: (Welcome.news?.length ?? 0) > 0
                 onClicked: Welcome.showLatestNews()
-
-                StyledToolTip {
-                    shown: newsButton.hovered
-                    text: Tr.tr("What's new")
-                }
             }
 
             ColumnLayout {
