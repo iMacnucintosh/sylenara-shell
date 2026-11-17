@@ -5,7 +5,8 @@ import qs.components
 import qs.services
 
 // Material You plain tooltip, the one every tooltip of the shell uses: a short label on the inverse surface, small
-// text, gently rounded, that fades in after a moment of hover (at once if another one was showing: see TooltipGroup).
+// text, gently rounded, that fades in after the pointer has rested a while (at once if another one was showing: see
+// TooltipGroup).
 // Buttons have it built in (`tooltip: Tr.tr("…")`); for anything else, put it inside the control:
 //     StyledToolTip { shown: parent.hovered; text: Tr.tr("…") }
 ToolTip {
@@ -15,6 +16,8 @@ ToolTip {
     // Where it goes around its control: "top", "bottom", "left" or "right" (the bar, on the left edge, uses "right")
     property string side: "top"
     property real maxWidth: 240
+    // How long the pointer rests on the control before the first tooltip shows
+    property int initialDelay: 2000
 
     // A popup is not an item: it does not inherit the screen of the control it belongs to, and reading Tokens on
     // itself before that screen is known warns (once per property, at every creation). What it needs of Tokens is
@@ -25,7 +28,7 @@ ToolTip {
     readonly property real anchorHeight: parent?.height ?? 0
 
     visible: shown && text.length > 0
-    delay: TooltipGroup.warm ? 0 : 500
+    delay: TooltipGroup.warm ? 0 : initialDelay
     timeout: -1
     // Long labels wrap instead of growing without end
     width: Math.min(implicitWidth, maxWidth)
