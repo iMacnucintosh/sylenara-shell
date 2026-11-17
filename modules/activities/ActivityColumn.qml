@@ -59,6 +59,9 @@ ColumnLayout {
                 icon: "add"
                 type: IconButton.Tonal
                 isRound: true
+                // Same size as the remove badge of a desktop
+                font: Tokens.font.icon.small
+                padding: Tokens.padding.extraSmall
                 opacity: atMax ? 0.38 : 1
                 stateLayer.disabled: atMax
                 onClicked: Activities.addDesktop(root.activity.id)
