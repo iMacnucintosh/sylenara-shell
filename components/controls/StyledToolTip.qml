@@ -17,7 +17,7 @@ ToolTip {
     property string side: "top"
     property real maxWidth: 240
     // How long the pointer rests on the control before the first tooltip shows
-    property int initialDelay: 2000
+    property int initialDelay: 1300
 
     // A popup is not an item: it does not inherit the screen of the control it belongs to, and reading Tokens on
     // itself before that screen is known warns (once per property, at every creation). What it needs of Tokens is
