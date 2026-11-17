@@ -1,8 +1,8 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Sylphrena
-import Sylphrena.Config
+import Sylenara
+import Sylenara.Config
 import qs.components
 
 Item {

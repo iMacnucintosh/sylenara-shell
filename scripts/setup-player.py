@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Make Veo, the video player of Sylphrena, the one that opens videos. Idempotent and done once; run by the installer
+"""Make Veo, the video player of Sylenara, the one that opens videos. Idempotent and done once; run by the installer
 (also in --update, so it reaches machines that get Veo with an update) and usable by hand.
 
   setup-player.py            do it (once: after a first run it only reports, unless --force)
@@ -9,7 +9,7 @@
 What it does, and nothing else:
   1. in ~/.config/mimeapps.list, [Default Applications]: Veo for each video type it declares, unless the user chose
      another app that is still installed (that choice is kept and reported);
-  2. in ~/.config/sylphrena/shell.json, general.apps.playback = ["veo"] when it is empty or names a player that is not
+  2. in ~/.config/sylenara/shell.json, general.apps.playback = ["veo"] when it is empty or names a player that is not
      installed (the shell opens recordings with it).
 Prints one JSON line: {"status", "changed": [...], "notes": [...]}; status is one of
   skipped (Veo is not installed) | done | already (nothing to do) | needed (--check: something to do) | seen (done before)
@@ -26,8 +26,8 @@ CONFIG = Path(os.environ.get("XDG_CONFIG_HOME") or HOME / ".config")
 DATA_DIRS = [Path(os.environ.get("XDG_DATA_HOME") or HOME / ".local/share"),
              *(Path(d) for d in (os.environ.get("XDG_DATA_DIRS") or "/usr/local/share:/usr/share").split(":") if d)]
 MIMEAPPS = CONFIG / "mimeapps.list"
-SHELL_JSON = CONFIG / "sylphrena" / "shell.json"
-STATE = Path(os.environ.get("XDG_STATE_HOME") or HOME / ".local" / "state") / "sylphrena" / "player-setup.json"
+SHELL_JSON = CONFIG / "sylenara" / "shell.json"
+STATE = Path(os.environ.get("XDG_STATE_HOME") or HOME / ".local" / "state") / "sylenara" / "player-setup.json"
 DESKTOP = "veo.desktop"
 
 
@@ -108,7 +108,7 @@ def plan() -> tuple[dict[str, str], bool, list[str]]:
 
 def write_atomic(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_name(path.name + ".sylphrena-tmp")
+    tmp = path.with_name(path.name + ".sylenara-tmp")
     tmp.write_text(text)
     os.replace(tmp, path)
 

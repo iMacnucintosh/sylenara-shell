@@ -1,13 +1,15 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
+import qs.components.controls
 import qs.services
 
 Item {
@@ -28,6 +30,10 @@ Item {
             return screen.width / Math.max(1, screen.height);
         return mon.width / mon.height;
     }
+
+    // An empty desktop can be removed, unless an app is pinned to it (open or not) or it is the last one of its
+    // activity
+    readonly property bool canRemove: windows.length === 0 && !Activities.wsHasRule(wsId) && (Activities.activityForWs(wsId)?.workspaceCount ?? 1) > 1
 
     implicitWidth: cardWidth
     implicitHeight: cardWidth / Math.max(0.5, aspect)
@@ -65,7 +71,7 @@ Item {
                 radius: Math.max(0, Tokens.rounding.large - anchors.margins)
                 color: root.dropHover ? Colours.palette.m3tertiaryContainer
                        : (root.isActive ? Colours.layer(Colours.palette.m3secondaryContainer, 1)
-                       : Colours.tPalette.m3surfaceContainerHigh)
+                       : Colours.tPalette.m3surfaceContainerHighest)
 
                 Behavior on color {
                     CAnim {}
@@ -215,8 +221,19 @@ Item {
                                     anchors.margins: 2
                                     visible: winItem.pinned
                                     text: "push_pin"
+                                    fill: 1
                                     color: Colours.palette.m3primary
                                     fontStyle: Tokens.font.icon.small
+
+                                    // A little shadow, so it stands out over any window preview
+                                    layer.enabled: visible
+                                    layer.effect: MultiEffect {
+                                        shadowEnabled: true
+                                        shadowColor: Colours.palette.m3shadow
+                                        shadowOpacity: 0.75
+                                        shadowBlur: 0.5
+                                        shadowVerticalOffset: 1
+                                    }
                                 }
                             }
 
@@ -365,6 +382,77 @@ Item {
         }
     }
 
-    Component.onCompleted: Activities.registerOverviewCard(root)
+    HoverHandler {
+        id: cardHover
+    }
+
+    // Remove badge (a minus): on the top right corner, a little outside of the card, like a notification badge. Only on hover,
+    // and only when the desktop has no windows
+    IconButton {
+        id: removeBadge
+
+        readonly property bool shown: root.canRemove && (cardHover.hovered || hovered)
+
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: -Math.round(implicitHeight / 3)
+        anchors.rightMargin: -Math.round(implicitWidth / 3)
+        z: 20
+        icon: "remove"
+        tooltip: Tr.tr("Remove desktop")
+        type: IconButton.Filled
+        isRound: true
+        font: Tokens.font.icon.small
+        padding: Tokens.padding.extraSmall
+        // Discreet: a neutral surface with a hairline, not an alarm colour
+        inactiveColour: Colours.palette.m3surfaceContainerHighest
+        inactiveOnColour: Colours.palette.m3onSurfaceVariant
+        border.width: 1
+        border.color: Qt.alpha(Colours.palette.m3outline, 0.5)
+        opacity: shown ? 1 : 0
+        scale: shown ? 1 : 0.6
+        visible: opacity > 0
+        onClicked: {
+            const act = Activities.activityForWs(root.wsId);
+            if (act)
+                Activities.removeDesktop(act.id, root.wsId);
+        }
+
+        Behavior on opacity {
+            Anim {
+                type: Anim.DefaultEffects
+            }
+        }
+
+        Behavior on scale {
+            Anim {}
+        }
+    }
+
+    // A desktop just added from the overview grows in
+    ParallelAnimation {
+        id: enterAnim
+
+        Anim {
+            target: root
+            property: "opacity"
+            from: 0
+            to: 1
+            type: Anim.DefaultEffects
+        }
+
+        Anim {
+            target: root
+            property: "scale"
+            from: 0.82
+            to: 1
+        }
+    }
+
+    Component.onCompleted: {
+        Activities.registerOverviewCard(root);
+        if (Activities.addedWs === root.wsId)
+            enterAnim.start();
+    }
     Component.onDestruction: Activities.unregisterOverviewCard(root)
 }

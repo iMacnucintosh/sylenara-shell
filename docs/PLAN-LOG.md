@@ -12,14 +12,14 @@ conocidos `Config.border…` y `powerprofiles`). Copia de datos de usuario verif
 Hecho. Rama `feature/phase-1-personal`, fusionada en `dev/0.2`.
 
 - **`shell.qml` sin ruta de usuario.** `pragma Env` no expande `$HOME` (comprobado: el valor llega
-  literal), así que no puede ser genérico. Decisión: lo exporta el lanzador. `sylph shell`
-  (repo `sylphrena-cli`, commit `588ce79`, **solo local**) añade `QT_ADDITIONAL_PACKAGES_PREFIX_PATH`
-  si existe `~/.local/lib/qt6/qml/Sylphrena`. Verificado tras reiniciar: la shell carga los
+  literal), así que no puede ser genérico. Decisión: lo exporta el lanzador. `syl shell`
+  (repo `sylenara-cli`, commit `588ce79`, **solo local**) añade `QT_ADDITIONAL_PACKAGES_PREFIX_PATH`
+  si existe `~/.local/lib/qt6/qml/Sylenara`. Verificado tras reiniciar: la shell carga los
   plugins de `~/.local/lib/qt6/qml` y el log sale limpio.
-  - ⚠️ Ese commit está en la rama `feature/rebrand-sylphrena` del CLI, junto a otro anterior (THP)
+  - ⚠️ Ese commit está en la rama `feature/rebrand-sylenara` del CLI, junto a otro anterior (THP)
     y a tus cambios sin commitear (`record.py`, `notify.py`, `i18n.py`), que no he tocado. Hasta
     que no lo subas, la shell de **otro** equipo que use el CLI original no cargaría un plugin local.
-- **`start-shell-with-tray-watcher.sh`**: `sylph` se resuelve con `command -v` y cae a `$HOME/.local/bin/sylph`.
+- **`start-shell-with-tray-watcher.sh`**: `sylenara` se resuelve con `command -v` y cae a `$HOME/.local/bin/syl`.
 - **Madison VPN → VPN FortiClient.** Servicio `FortiVpn`, config `addons.fortiVpn` (clase C++
   `AddonsFortiVpn`), textos y traducciones. La config antigua se migra sola
   (`scripts/migrate-config.py` + `services/ConfigMigration.qml`; probado con tu `shell.json` real:
@@ -27,7 +27,7 @@ Hecho. Rama `feature/phase-1-personal`, fusionada en `dev/0.2`.
 - **Scripts de la VPN NO traídos al repo.** Los revisé: contienen IPs de DNS e intranet, el host de
   la intranet de la empresa, tu usuario y `/home/manu`, y dependen de un ayudante con privilegios
   en `/usr/local/sbin`. El plan decía traerlos solo tras revisarlos contigo; como no estabas, los
-  dejé fuera. La shell los busca ahora en `~/.local/share/sylphrena/vpn-forticlient/`; creé en tu
+  dejé fuera. La shell los busca ahora en `~/.local/share/sylenara/vpn-forticlient/`; creé en tu
   home un **enlace simbólico** a `~/.local/share/madison-vpn` (tus ficheros no se han movido).
   El contrato de los scripts está documentado en `FEATURES.md`.
 - `git grep -i "madison\|/home/manu"` solo devuelve la tabla de migración, el historial del
@@ -54,7 +54,7 @@ Hecho. Rama `feature/phase-3-extensions`, fusionada en `dev/0.2`.
   Lista de activadas en config `extensions.enabled` (nuevo nodo C++ `ExtensionsConfig`; nada
   activado por defecto).
 - **Config por extensión** (`components/ExtensionConfig.qml`, `ext.config.get/set`):
-  `~/.config/sylphrena/extensions/<id>.json`. Probado: se guarda y sobrevive a un reinicio.
+  `~/.config/sylenara/extensions/<id>.json`. Probado: se guarda y sobrevive a un reinicio.
 - **Punto de enganche `widgets`**: `DashWidgets` ahora mezcla widgets propios de la base
   (calendario; Hidratación hasta la fase 4) y los declarados por extensiones (por manifiesto, aunque
   estén desactivadas, para poder listarlas en Nexus). El carrusel coloca los de extensiones con
@@ -73,7 +73,7 @@ Hecho. Rama `feature/phase-3-extensions`, fusionada en `dev/0.2`.
 - **Incidente**: tras añadir el nodo C++ olvidé añadir `extensionsconfig.hpp` al `CMakeLists.txt`
   del módulo: el plugin compilaba pero la shell no arrancaba (`undefined symbol`). Estuvo caída
   ~3 min hasta corregirlo. Anotado en AGENTS.md.
-- No probado: instalar una extensión desde `~/.local/share/sylphrena/extensions/` con la shell
+- No probado: instalar una extensión desde `~/.local/share/sylenara/extensions/` con la shell
   ya en marcha (hoy solo se descubre al arrancar; basta con reiniciar).
 
 ## Fase 4 — Hidratación (2026-11-10)
@@ -87,7 +87,7 @@ Hecho. Rama `feature/phase-4-hydration`, fusionada en `dev/0.2`.
   Hidratación: carga ese componente con `ExtensionSlot`, muestra `service.summary` y el
   `offNote` del manifiesto cuando está apagada. La fila de ajustes se extrajo a
   `modules/nexus/common/SpinSettingRow.qml` (reutilizable por extensiones).
-- **Config**: los valores de `addons.hydration.*` pasan a `~/.config/sylphrena/extensions/hydration.json`
+- **Config**: los valores de `addons.hydration.*` pasan a `~/.config/sylenara/extensions/hydration.json`
   y `addons.hydration.enabled` a `extensions.enabled` (`scripts/migrate-config.py`, probado con el
   `shell.json` real: meta 2600 conservada). El orden por defecto del carrusel ya no nombra extensiones.
 - **Shader**: distribuido compilado (`qsb --glsl "300es,330" -b -O`), cargado con `Qt.resolvedUrl`.
@@ -112,7 +112,7 @@ Hecho. Rama `feature/phase-4-razer`, fusionada en `dev/0.2`.
   fila del ratón («Basilisk V4 Pro · 33 %») sale del manifiesto y del servicio.
 - Config migrada (`addons.razerMouse.*` → `extensions.enabled` + `extensions/razer-mouse.json`).
   Anillo verificado en el dashboard (33 %).
-- Lección: `ExtensionCard` no importaba `Sylphrena.Config` (`Tokens` sin definir → altura 0 y filas
+- Lección: `ExtensionCard` no importaba `Sylenara.Config` (`Tokens` sin definir → altura 0 y filas
   solapadas). Los `ReferenceError` de QML solo salen en el log: mirarlo siempre.
 
 ## Fase 4 — VPN FortiClient (2026-11-10)
@@ -177,8 +177,8 @@ Hecho. Rama `feature/phase-5-cleanup`, fusionada en `dev/0.2`.
 
 ### Pendiente — decisiones del usuario (NO hechas a propósito)
 1. **Probar** lo marcado «NO verificado» arriba, sobre todo la VPN (OTP y ajustes) y los ajustes de Juegos.
-2. **Borrar la copia de seguridad** `~/Backups/sylphrena-pre-0.2-2026-11-10/` solo cuando la 0.2.0
+2. **Borrar la copia de seguridad** `~/Backups/sylenara-pre-0.2-2026-11-10/` solo cuando la 0.2.0
    esté fusionada, con tag, y la hayas usado con normalidad (el plan lo exige: pregúntate/confirma).
 3. **PR `dev/0.2` → `main` y tag `v0.2.0`**: no se han creado; el plan los reserva para ti.
 4. **Cambiar la contraseña de sudo** (quedó escrita en la conversación; no se usó ni se guardó).
-5. El commit `588ce79` de `sylphrena-cli` (lanzador que exporta el plugin local) está solo en local.
+5. El commit `588ce79` de `sylenara-cli` (lanzador que exporta el plugin local) está solo en local.

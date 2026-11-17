@@ -5,14 +5,14 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
-// Self-contained copy of the Sylphrena tokens: the greeter user cannot read
-// ~/.local (Sylphrena.Config plugin) nor the session config. scheme.json and
-// greeter.json are written by scripts/sylphrena-quiet.py.
+// Self-contained copy of the Sylenara tokens: the greeter user cannot read
+// ~/.local (Sylenara.Config plugin) nor the session config. scheme.json and
+// greeter.json are written by scripts/sylenara-quiet.py.
 Singleton {
     id: root
 
-    readonly property string dir: Quickshell.env("SYLPHRENA_GREETER_DIR") || "/etc/greetd/sylphrena"
-    readonly property bool demo: Quickshell.env("SYLPHRENA_GREETER_DEMO") === "1"
+    readonly property string dir: Quickshell.env("SYLENARA_GREETER_DIR") || "/etc/greetd/sylenara"
+    readonly property bool demo: Quickshell.env("SYLENARA_GREETER_DEMO") === "1"
     // What the session copies for the login screen (the only part of dir it may write; the rest is root's)
     readonly property string data: `${dir}/user`
 

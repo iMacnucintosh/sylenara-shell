@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -347,6 +347,7 @@ PageBase {
                         type: IconButton.Tonal
                         isRound: true
                         icon: "edit"
+                        tooltip: Tr.tr("Edit")
                         onClicked: {
                             root.nState.editingVpnIndex = provider.index;
                             root.nState.openSubPage(4); // Add/edit provider sub-page

@@ -1,7 +1,7 @@
 pragma Singleton
 
 import Quickshell
-import Sylphrena.I18n
+import Sylenara.I18n
 
 Singleton {
     property var _regexCache: ({})

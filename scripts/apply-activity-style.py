@@ -16,9 +16,9 @@ from pathlib import Path
 def _patch_theme_quiet():
     import importlib.util
 
-    # Reuse sylphrena-quiet patches (GTK live theme, Papirus via qt6ct, Kitty).
-    quiet_path = Path(__file__).with_name("sylphrena-quiet.py")
-    spec = importlib.util.spec_from_file_location("sylphrena_quiet", quiet_path)
+    # Reuse sylenara-quiet patches (GTK live theme, Papirus via qt6ct, Kitty).
+    quiet_path = Path(__file__).with_name("sylenara-quiet.py")
+    spec = importlib.util.spec_from_file_location("sylenara_quiet", quiet_path)
     quiet = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(quiet)
@@ -43,14 +43,14 @@ def _set_light_apps(quiet, on: bool) -> None:
 
 
 def _set_wallpaper_files(wall: Path) -> None:
-    from sylphrena.utils.paths import (
+    from sylenara.utils.paths import (
         compute_hash,
         wallpaper_link_path,
         wallpaper_path_path,
         wallpaper_thumbnail_path,
         wallpapers_cache_dir,
     )
-    from sylphrena.utils.wallpaper import (
+    from sylenara.utils.wallpaper import (
         extract_first_frame,
         get_thumb,
         is_animated,
@@ -85,14 +85,14 @@ def _apply_scheme(
     *,
     force: bool,
 ) -> None:
-    from sylphrena.utils.scheme import (
+    from sylenara.utils.scheme import (
         get_scheme,
         get_scheme_flavours,
         get_scheme_modes,
         get_scheme_names,
         scheme_variants,
     )
-    from sylphrena.utils.theme import apply_colours
+    from sylenara.utils.theme import apply_colours
 
     scheme = get_scheme()
     dirty = force

@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components.controls
 import qs.modules.bar as Bar
 import qs.modules.launcher.services

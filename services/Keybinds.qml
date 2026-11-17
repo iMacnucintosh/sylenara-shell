@@ -4,8 +4,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.utils
 
 Singleton {
@@ -293,7 +293,7 @@ Singleton {
             label: () => Tr.tr("Next workspace"),
             description: () => Tr.tr("Switch to the next desktop (respects activity boundaries unless cross-activity is enabled)"),
             defaultBind: "SUPER + mouse_down",
-            global: "sylphrena:workspaceNext",
+            global: "sylenara:workspaceNext",
             category: "workspaces"
         },
         {
@@ -301,7 +301,7 @@ Singleton {
             label: () => Tr.tr("Previous workspace"),
             description: () => Tr.tr("Switch to the previous desktop (respects activity boundaries unless cross-activity is enabled)"),
             defaultBind: "SUPER + mouse_up",
-            global: "sylphrena:workspacePrev",
+            global: "sylenara:workspacePrev",
             category: "workspaces"
         },
         {
@@ -309,7 +309,7 @@ Singleton {
             label: () => Tr.tr("Next activity"),
             description: () => Tr.tr("Jump to the first desktop of the next activity"),
             defaultBind: "SUPER + CTRL + Right",
-            global: "sylphrena:activityNext",
+            global: "sylenara:activityNext",
             category: "activities"
         },
         {
@@ -317,7 +317,7 @@ Singleton {
             label: () => Tr.tr("Previous activity"),
             description: () => Tr.tr("Jump to the first desktop of the previous activity"),
             defaultBind: "SUPER + CTRL + Left",
-            global: "sylphrena:activityPrev",
+            global: "sylenara:activityPrev",
             category: "activities"
         },
         {
@@ -325,7 +325,7 @@ Singleton {
             label: () => Tr.tr("Activities overview"),
             description: () => Tr.tr("Show a preview of all activities and desktops"),
             defaultBind: "SUPER + Tab",
-            global: "sylphrena:activityOverview",
+            global: "sylenara:activityOverview",
             category: "activities"
         },
         // --- Window manager: apps ---
@@ -362,21 +362,21 @@ Singleton {
             dispatch: "hl.dsp.exec_cmd(\"command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit\")",
             category: "apps"
         },
-        // --- Sylphrena shell ---
+        // --- Sylenara shell ---
         {
             id: "launcher",
             label: () => Tr.tr("Launcher"),
             description: () => Tr.tr("Toggle the app launcher"),
             defaultBind: "SUPER + Space",
-            global: "sylphrena:launcher",
+            global: "sylenara:launcher",
             category: "shell"
         },
         {
             id: "nexus",
-            label: () => Tr.tr("Settings (Nexus)"),
-            description: () => Tr.tr("Open Sylphrena settings"),
+            label: () => Tr.tr("Settings"),
+            description: () => Tr.tr("Open Sylenara settings"),
             defaultBind: "SUPER + COMMA",
-            global: "sylphrena:nexus",
+            global: "sylenara:nexus",
             category: "shell"
         },
         {
@@ -384,7 +384,7 @@ Singleton {
             label: () => Tr.tr("Dashboard"),
             description: () => Tr.tr("Toggle the dashboard"),
             defaultBind: "SUPER + D",
-            global: "sylphrena:dashboard",
+            global: "sylenara:dashboard",
             category: "shell"
         },
         {
@@ -392,7 +392,7 @@ Singleton {
             label: () => Tr.tr("Session menu"),
             description: () => Tr.tr("Power / session menu"),
             defaultBind: "CTRL + ALT + Delete",
-            global: "sylphrena:session",
+            global: "sylenara:session",
             category: "shell"
         },
         {
@@ -400,7 +400,7 @@ Singleton {
             label: () => Tr.tr("Side panel"),
             description: () => Tr.tr("Toggle the side panel"),
             defaultBind: "SUPER + N",
-            global: "sylphrena:sidebar",
+            global: "sylenara:sidebar",
             category: "shell"
         },
         {
@@ -408,7 +408,7 @@ Singleton {
             label: () => Tr.tr("Utilities"),
             description: () => Tr.tr("Toggle utilities panel"),
             defaultBind: "SUPER + U",
-            global: "sylphrena:utilities",
+            global: "sylenara:utilities",
             category: "shell"
         },
         {
@@ -416,7 +416,7 @@ Singleton {
             label: () => Tr.tr("Dark mode"),
             description: () => Tr.tr("Turn the dark mode quick toggle on or off"),
             defaultBind: "",
-            global: "sylphrena:toggleDarkMode",
+            global: "sylenara:toggleDarkMode",
             category: "shell"
         },
         {
@@ -424,7 +424,7 @@ Singleton {
             label: () => Tr.tr("Show panels"),
             description: () => Tr.tr("Toggle launcher, dashboard and OSD"),
             defaultBind: "SUPER + K",
-            global: "sylphrena:showall",
+            global: "sylenara:showall",
             category: "shell"
         },
         {
@@ -432,7 +432,7 @@ Singleton {
             label: () => Tr.tr("Lock screen"),
             description: () => Tr.tr("Lock the session"),
             defaultBind: "SUPER + L",
-            global: "sylphrena:lock",
+            global: "sylenara:lock",
             category: "shell",
             flags: {
                 locked: true
@@ -443,7 +443,7 @@ Singleton {
             label: () => Tr.tr("Clear notifications"),
             description: () => Tr.tr("Dismiss all notifications"),
             defaultBind: "CTRL + ALT + C",
-            global: "sylphrena:clearNotifs",
+            global: "sylenara:clearNotifs",
             category: "notifications",
             flags: {
                 locked: true
@@ -454,7 +454,7 @@ Singleton {
             label: () => Tr.tr("Do not disturb"),
             description: () => Tr.tr("Toggle do not disturb"),
             defaultBind: "SUPER + SHIFT + N",
-            global: "sylphrena:toggleDnd",
+            global: "sylenara:toggleDnd",
             category: "notifications"
         },
         {
@@ -462,7 +462,7 @@ Singleton {
             label: () => Tr.tr("Play / pause"),
             description: () => Tr.tr("Toggle media playback"),
             defaultBind: "CTRL + SUPER + Space",
-            global: "sylphrena:mediaToggle",
+            global: "sylenara:mediaToggle",
             category: "media"
         },
         {
@@ -470,7 +470,7 @@ Singleton {
             label: () => Tr.tr("Next track"),
             description: () => Tr.tr("Skip to next track"),
             defaultBind: "CTRL + SUPER + Equal",
-            global: "sylphrena:mediaNext",
+            global: "sylenara:mediaNext",
             category: "media"
         },
         {
@@ -478,7 +478,7 @@ Singleton {
             label: () => Tr.tr("Previous track"),
             description: () => Tr.tr("Go to previous track"),
             defaultBind: "CTRL + SUPER + Minus",
-            global: "sylphrena:mediaPrev",
+            global: "sylenara:mediaPrev",
             category: "media"
         },
         {
@@ -486,7 +486,7 @@ Singleton {
             label: () => Tr.tr("Stop media"),
             description: () => Tr.tr("Stop media playback"),
             defaultBind: "CTRL + SUPER + Backspace",
-            global: "sylphrena:mediaStop",
+            global: "sylenara:mediaStop",
             category: "media"
         },
         {
@@ -494,7 +494,7 @@ Singleton {
             label: () => Tr.tr("Brightness up"),
             description: () => Tr.tr("Increase screen brightness"),
             defaultBind: "XF86MonBrightnessUp",
-            global: "sylphrena:brightnessUp",
+            global: "sylenara:brightnessUp",
             category: "system",
             flags: {
                 locked: true,
@@ -506,7 +506,7 @@ Singleton {
             label: () => Tr.tr("Brightness down"),
             description: () => Tr.tr("Decrease screen brightness"),
             defaultBind: "XF86MonBrightnessDown",
-            global: "sylphrena:brightnessDown",
+            global: "sylenara:brightnessDown",
             category: "system",
             flags: {
                 locked: true,
@@ -518,7 +518,7 @@ Singleton {
             label: () => Tr.tr("Screenshot region"),
             description: () => Tr.tr("Capture a screen region"),
             defaultBind: "ALT + Sys_Req",
-            global: "sylphrena:screenshot",
+            global: "sylenara:screenshot",
             category: "capture"
         },
         {
@@ -526,7 +526,7 @@ Singleton {
             label: () => Tr.tr("Screenshot region (freeze)"),
             description: () => Tr.tr("Capture a region with a frozen screen"),
             defaultBind: "SHIFT + Print",
-            global: "sylphrena:screenshotFreeze",
+            global: "sylenara:screenshotFreeze",
             category: "capture"
         },
         {
@@ -534,7 +534,7 @@ Singleton {
             label: () => Tr.tr("Screenshot to clipboard"),
             description: () => Tr.tr("Capture a region to the clipboard"),
             defaultBind: "SUPER + Print",
-            global: "sylphrena:screenshotClip",
+            global: "sylenara:screenshotClip",
             category: "capture"
         },
         {
@@ -542,7 +542,7 @@ Singleton {
             label: () => Tr.tr("Screenshot freeze + clipboard"),
             description: () => Tr.tr("Frozen region capture to the clipboard"),
             defaultBind: "Print",
-            global: "sylphrena:screenshotFreezeClip",
+            global: "sylenara:screenshotFreezeClip",
             category: "capture"
         },
         {
@@ -550,7 +550,7 @@ Singleton {
             label: () => Tr.tr("Clipboard history"),
             description: () => Tr.tr("Open clipboard history and paste into the focused window"),
             defaultBind: "SUPER + SHIFT + V",
-            global: "sylphrena:clipboard",
+            global: "sylenara:clipboard",
             category: "shell"
         },
         {
@@ -606,7 +606,7 @@ Singleton {
             label: () => Tr.tr("Activity %1").arg(1),
             description: () => Tr.tr("Jump to the first desktop of activity %1").arg(1),
             defaultBind: "SUPER + CTRL + 1",
-            global: "sylphrena:activityGo1",
+            global: "sylenara:activityGo1",
             category: "activities"
         },
         {
@@ -614,7 +614,7 @@ Singleton {
             label: () => Tr.tr("Activity %1").arg(2),
             description: () => Tr.tr("Jump to the first desktop of activity %1").arg(2),
             defaultBind: "SUPER + CTRL + 2",
-            global: "sylphrena:activityGo2",
+            global: "sylenara:activityGo2",
             category: "activities"
         },
         {
@@ -622,7 +622,7 @@ Singleton {
             label: () => Tr.tr("Activity %1").arg(3),
             description: () => Tr.tr("Jump to the first desktop of activity %1").arg(3),
             defaultBind: "SUPER + CTRL + 3",
-            global: "sylphrena:activityGo3",
+            global: "sylenara:activityGo3",
             category: "activities"
         },
         {
@@ -630,7 +630,7 @@ Singleton {
             label: () => Tr.tr("Activity %1").arg(4),
             description: () => Tr.tr("Jump to the first desktop of activity %1").arg(4),
             defaultBind: "SUPER + CTRL + 4",
-            global: "sylphrena:activityGo4",
+            global: "sylenara:activityGo4",
             category: "activities"
         },
         {
@@ -638,7 +638,7 @@ Singleton {
             label: () => Tr.tr("Move window to next activity"),
             description: () => Tr.tr("Send the active window to the next activity and follow it"),
             defaultBind: "SUPER + CTRL + SHIFT + Right",
-            global: "sylphrena:moveToActivityNext",
+            global: "sylenara:moveToActivityNext",
             category: "activities"
         },
         {
@@ -646,7 +646,7 @@ Singleton {
             label: () => Tr.tr("Move window to previous activity"),
             description: () => Tr.tr("Send the active window to the previous activity and follow it"),
             defaultBind: "SUPER + CTRL + SHIFT + Left",
-            global: "sylphrena:moveToActivityPrev",
+            global: "sylenara:moveToActivityPrev",
             category: "activities"
         },
         {
@@ -789,9 +789,9 @@ Singleton {
     }
 
     // ── Export / import of the current shortcuts ────────────────────────────────────────────────
-    // The file is {"format": "sylphrena-keybinds", "version": 1, "binds": {<action id>: <bind>}}: the same
+    // The file is {"format": "sylenara-keybinds", "version": 1, "binds": {<action id>: <bind>}}: the same
     // overrides keybinds.json keeps (what differs from the defaults; "" = unbound).
-    readonly property string exportName: "sylphrena-keybinds.json"
+    readonly property string exportName: "sylenara-keybinds.json"
     // Result of the last export / import, for the page: {ok, text}
     property var ioResult: null
 
@@ -800,7 +800,7 @@ Singleton {
         const path = `${dir.replace(/\/+$/, "")}/${root.exportName}`;
         exportFile.path = path;
         exportFile.setText(JSON.stringify({
-                format: "sylphrena-keybinds",
+                format: "sylenara-keybinds",
                 version: 1,
                 binds: root.overrides
             }, null, 4) + "\n");
@@ -826,7 +826,7 @@ Singleton {
         }
         if (!data || typeof data !== "object" || typeof data.binds !== "object" || data.binds === null || Array.isArray(data.binds))
             return null;
-        if (data.format !== undefined && data.format !== "sylphrena-keybinds")
+        if (data.format !== undefined && data.format !== "sylenara-keybinds")
             return null;
         const binds = {};
         let ignored = 0;
@@ -904,11 +904,11 @@ Singleton {
         return "hl.dsp.no_op()";
     }
 
-    readonly property string grabSubmap: "sylphrena-keybind-grab"
+    readonly property string grabSubmap: "sylenara-keybind-grab"
 
     function generateLua(): string {
-        let out = "-- Auto-generated by Sylphrena Keybinds. Do not edit.\n";
-        out += "-- Source: ~/.config/sylphrena/keybinds.json\n\n";
+        let out = "-- Auto-generated by Sylenara Keybinds. Do not edit.\n";
+        out += "-- Source: ~/.config/sylenara/keybinds.json\n\n";
 
         // Grab submap: while recording, compositor shortcuts are suppressed so
         // keys reach the settings UI (Plasma-style). Needs ≥1 bind to register.
@@ -1123,7 +1123,7 @@ Singleton {
             if (!r) {
                 root.ioResult = {
                     ok: false,
-                    text: Tr.tr("That is not a Sylphrena shortcuts file")
+                    text: Tr.tr("That is not a Sylenara shortcuts file")
                 };
                 return;
             }
@@ -1146,6 +1146,6 @@ Singleton {
         id: luaFile
 
         printErrors: false
-        path: `${Quickshell.env("HOME")}/.config/hypr/sylphrena-binds.lua`
+        path: `${Quickshell.env("HOME")}/.config/hypr/sylenara-binds.lua`
     }
 }

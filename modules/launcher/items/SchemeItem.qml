@@ -1,5 +1,5 @@
 import QtQuick
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 import qs.modules.launcher.services

@@ -4,9 +4,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.UPower
-import Sylphrena.Config
-import Sylphrena.Services
-import Sylphrena.State
+import Sylenara.Config
+import Sylenara.Services
+import Sylenara.State
 import qs.services
 import qs.modules.lock
 

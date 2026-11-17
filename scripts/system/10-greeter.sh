@@ -5,13 +5,13 @@
 step_main() {
   local greeter_dir data_dir session_user qs_dst
 
-  # What this step needs; the Sylphrena installer (./install.sh) installs them first
+  # What this step needs; the Sylenara installer (./install.sh) installs them first
   local tool
   for tool in rsync python3; do
     command -v "$tool" >/dev/null || { echo "Missing $tool: install it and run this again." >&2; return 1; }
   done
   [[ -x /usr/bin/greetd ]] || { echo "Missing greetd: install it (pacman -S greetd) and run this again." >&2; return 1; }
-  greeter_dir="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
+  greeter_dir="${SYLENARA_GREETER_DIR:-/etc/greetd/sylenara}"
   data_dir="$greeter_dir/user"
   qs_dst="$greeter_dir/qs"
 
@@ -42,15 +42,15 @@ step_main() {
     --exclude 'start-greeter-compositor.sh' \
     --exclude 'systemd' \
     --exclude 'config.toml.snippet' \
-    "$SYLPHRENA_ROOT/greeter/" "$qs_dst/"
+    "$SYLENARA_ROOT/greeter/" "$qs_dst/"
 
   install_wrappers() {
-    cp -f "$SYLPHRENA_ROOT/greeter/hyprland-greeter.lua" "$greeter_dir/hyprland-greeter.lua"
-    cp -f "$SYLPHRENA_ROOT/greeter/launch-qs.sh" "$greeter_dir/launch-qs.sh"
-    cp -f "$SYLPHRENA_ROOT/greeter/exit-compositor.sh" "$greeter_dir/exit-compositor.sh"
-    cp -f "$SYLPHRENA_ROOT/greeter/start-user-session.sh" "$greeter_dir/start-user-session.sh"
-    cp -f "$SYLPHRENA_ROOT/greeter/quiet-exec.sh" "$greeter_dir/quiet-exec.sh"
-    cp -f "$SYLPHRENA_ROOT/greeter/start-greeter-compositor.sh" "$greeter_dir/start-greeter-compositor.sh"
+    cp -f "$SYLENARA_ROOT/greeter/hyprland-greeter.lua" "$greeter_dir/hyprland-greeter.lua"
+    cp -f "$SYLENARA_ROOT/greeter/launch-qs.sh" "$greeter_dir/launch-qs.sh"
+    cp -f "$SYLENARA_ROOT/greeter/exit-compositor.sh" "$greeter_dir/exit-compositor.sh"
+    cp -f "$SYLENARA_ROOT/greeter/start-user-session.sh" "$greeter_dir/start-user-session.sh"
+    cp -f "$SYLENARA_ROOT/greeter/quiet-exec.sh" "$greeter_dir/quiet-exec.sh"
+    cp -f "$SYLENARA_ROOT/greeter/start-greeter-compositor.sh" "$greeter_dir/start-greeter-compositor.sh"
     chmod 755 "$greeter_dir/launch-qs.sh" "$greeter_dir/exit-compositor.sh" \
       "$greeter_dir/start-user-session.sh" "$greeter_dir/quiet-exec.sh" \
       "$greeter_dir/start-greeter-compositor.sh"
@@ -59,34 +59,34 @@ step_main() {
   install_wrappers
   chown -R root:root "$greeter_dir"
   chmod 755 "$greeter_dir" "$qs_dst"
-  chown -R "$SYLPHRENA_OWNER:$SYLPHRENA_OWNER" "$data_dir"
+  chown -R "$SYLENARA_OWNER:$SYLENARA_OWNER" "$data_dir"
   chmod 755 "$data_dir"
   # Which shell the login screen was copied from (the installer's update refreshes it when the shell changes)
   local version
-  version="$(pacman -Q sylphrena-shell-git 2>/dev/null | awk '{print $2}')"
-  [[ -n "$version" ]] || version="$(git -C "$SYLPHRENA_ROOT" describe --tags --always 2>/dev/null || echo unknown)"
+  version="$(pacman -Q sylenara-shell-git 2>/dev/null | awk '{print $2}')"
+  [[ -n "$version" ]] || version="$(git -C "$SYLENARA_ROOT" describe --tags --always 2>/dev/null || echo unknown)"
   printf '%s\n' "$version" >"$greeter_dir/version"
 
   # Scheme, wallpaper and face come from the session user. Path.home()
   # would be /root if this ran as root.
-  runuser -u "$SYLPHRENA_OWNER" -- env \
-    SYLPHRENA_GREETER_DIR="$greeter_dir" \
-    SYLPHRENA_ROOT="$SYLPHRENA_ROOT" \
-    HOME="$SYLPHRENA_OWNER_HOME" \
+  runuser -u "$SYLENARA_OWNER" -- env \
+    SYLENARA_GREETER_DIR="$greeter_dir" \
+    SYLENARA_ROOT="$SYLENARA_ROOT" \
+    HOME="$SYLENARA_OWNER_HOME" \
     python3 - <<'PY'
 import os
 from pathlib import Path
 
-quiet = Path(os.environ["SYLPHRENA_ROOT"]) / "scripts" / "sylphrena-quiet.py"
+quiet = Path(os.environ["SYLENARA_ROOT"]) / "scripts" / "sylenara-quiet.py"
 src = quiet.read_text()
 cut = src.find("\nif __name__")
-ns: dict = {"__name__": "sylphrena_quiet", "__file__": str(quiet)}
+ns: dict = {"__name__": "sylenara_quiet", "__file__": str(quiet)}
 exec(compile(src if cut < 0 else src[:cut], str(quiet), "exec"), ns)
 ns["_sync_greeter"]()
 print(f"Synced greeter assets into {ns['_GREETER_DIR']}")
 PY
 
-  install -m 644 "$SYLPHRENA_ROOT/greeter/hyprland-greeter.lua" /etc/greetd/hyprland-greeter.lua
+  install -m 644 "$SYLENARA_ROOT/greeter/hyprland-greeter.lua" /etc/greetd/hyprland-greeter.lua
 
   session_user="$(awk '
     /^\[/ { sec = $0 }
@@ -96,7 +96,7 @@ PY
       exit
     }
   ' /etc/greetd/config.toml 2>/dev/null || true)"
-  session_user="${session_user:-$SYLPHRENA_OWNER}"
+  session_user="${session_user:-$SYLENARA_OWNER}"
 
   cat > /etc/greetd/config.toml <<EOF
 [terminal]
@@ -120,12 +120,10 @@ EOF
   # Shorter hand-off from the greeter to the session (no 10 s black screen after typing the password; a stuck
   # leftover app cannot hold the next session for 90 s). The names it had before the rename are cleaned up.
   mkdir -p /etc/systemd/logind.conf.d /etc/systemd/system/user@.service.d
-  install -m 644 "$SYLPHRENA_ROOT/greeter/systemd/logind.conf" \
-    /etc/systemd/logind.conf.d/sylphrena-greeter.conf
-  install -m 644 "$SYLPHRENA_ROOT/greeter/systemd/user-service.conf" \
-    /etc/systemd/system/user@.service.d/sylphrena-timeout.conf
-  rm -f /etc/systemd/logind.conf.d/caelestia-greeter.conf \
-    /etc/systemd/system/user@.service.d/caelestia-timeout.conf
+  install -m 644 "$SYLENARA_ROOT/greeter/systemd/logind.conf" \
+    /etc/systemd/logind.conf.d/sylenara-greeter.conf
+  install -m 644 "$SYLENARA_ROOT/greeter/systemd/user-service.conf" \
+    /etc/systemd/system/user@.service.d/sylenara-timeout.conf
   systemctl daemon-reload
   systemctl reload systemd-logind.service
 
@@ -142,5 +140,5 @@ EOF
 
   echo "Greeter dir: $greeter_dir (the session writes only $data_dir)"
   echo "greetd initial_session user: $session_user"
-  echo "Logs: /var/lib/regreet/state/qs.log and /tmp/sylphrena-greeter-qs.log"
+  echo "Logs: /var/lib/regreet/state/qs.log and /tmp/sylenara-greeter-qs.log"
 }

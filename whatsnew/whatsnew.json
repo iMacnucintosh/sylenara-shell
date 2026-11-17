@@ -36,8 +36,8 @@
                         "es": "Marca tus capturas"
                     },
                     "text": {
-                        "en": "A capture now opens a preview where you can draw lines, arrows and boxes in a few colours, then copy it or save it. Choose where captures and recordings go in Nexus.",
-                        "es": "Una captura abre ahora una previsualización donde dibujar líneas, flechas y recuadros en varios colores, y luego copiarla o guardarla. Elige dónde van capturas y grabaciones en Nexus."
+                        "en": "A capture now opens a preview where you can draw lines, arrows and boxes in a few colours, then copy it or save it. Choose where captures and recordings go in Settings.",
+                        "es": "Una captura abre ahora una previsualización donde dibujar líneas, flechas y recuadros en varios colores, y luego copiarla o guardarla. Elige dónde van capturas y grabaciones en Ajustes."
                     }
                 },
                 {
@@ -58,8 +58,8 @@
                         "es": "Pantalla de inicio más segura"
                     },
                     "text": {
-                        "en": "What the login screen runs now belongs to the system, not to your user: on a computer shared by several people, one account can no longer tamper with it. It updates itself with Sylphrena.",
-                        "es": "Lo que ejecuta la pantalla de inicio pertenece ahora al sistema y no a tu usuario: en un equipo con varias cuentas, una ya no puede manipularla. Se pone al día sola con Sylphrena."
+                        "en": "What the login screen runs now belongs to the system, not to your user: on a computer shared by several people, one account can no longer tamper with it. It updates itself with Sylenara.",
+                        "es": "Lo que ejecuta la pantalla de inicio pertenece ahora al sistema y no a tu usuario: en un equipo con varias cuentas, una ya no puede manipularla. Se pone al día sola con Sylenara."
                     }
                 },
                 {
@@ -82,6 +82,55 @@
                     "text": {
                         "en": "Seeker, Things and Veo have new icons in one style, Veo's controls follow Material You and the shell's animation speed, and the panels of the compact layout now reach the edges of the screen.",
                         "es": "Seeker, Things y Veo estrenan iconos con un mismo estilo, los controles de Veo siguen Material You y la velocidad de animación de la shell, y los paneles del modo compacto llegan ya hasta el borde de la pantalla."
+                    }
+                }
+            ]
+        },
+        {
+            "version": "0.7.0",
+            "highlights": [
+                {
+                    "icon": "auto_awesome",
+                    "title": {
+                        "en": "Sylenara",
+                        "es": "Sylenara"
+                    },
+                    "text": {
+                        "en": "The desktop has a new name, Sylenara (si-le-NA-ra), and the command is now syl. Everything else is where you left it: your look, your activities and your apps.",
+                        "es": "El escritorio tiene un nombre nuevo, Sylenara (si-le-NA-ra), y el comando es ahora syl. Todo lo demás está donde lo dejaste: tu aspecto, tus actividades y tus apps."
+                    }
+                },
+                {
+                    "icon": "add_circle",
+                    "title": {
+                        "en": "Desktops from the overview",
+                        "es": "Escritorios desde la vista general"
+                    },
+                    "text": {
+                        "en": "Add a desktop to an activity with the plus button and remove an empty one with the minus. The windows of the next desktops move along, so none changes activity.",
+                        "es": "Añade un escritorio a una actividad con el botón más y quita uno vacío con el menos. Las ventanas de los siguientes se mueven con ellos, así que ninguna cambia de actividad."
+                    }
+                },
+                {
+                    "icon": "info",
+                    "title": {
+                        "en": "One tooltip for everything",
+                        "es": "Un solo tooltip para todo"
+                    },
+                    "text": {
+                        "en": "The icon-only buttons now say what they do after a moment, with the same Material You tooltip everywhere, and the quick toggles have theirs too.",
+                        "es": "Los botones de solo icono dicen ahora qué hacen al cabo de un momento, con el mismo tooltip Material You en todas partes, y los accesos rápidos también tienen el suyo."
+                    }
+                },
+                {
+                    "icon": "wifi_password",
+                    "title": {
+                        "en": "Wi-Fi passwords in the list",
+                        "es": "Contraseñas de wifi en la lista"
+                    },
+                    "text": {
+                        "en": "A protected network unfolds its own row to ask for the password, in Settings and in the bar, instead of sending you to another page.",
+                        "es": "Una red protegida despliega su propia fila para pedir la contraseña, en Ajustes y en la barra, en vez de llevarte a otra página."
                     }
                 }
             ]

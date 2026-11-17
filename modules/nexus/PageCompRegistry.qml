@@ -2,8 +2,8 @@ pragma Singleton
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.services
 import qs.modules.nexus.common

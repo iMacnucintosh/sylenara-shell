@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell.Io
 import qs.utils
 
-// Per-extension settings, stored in ~/.config/sylphrena/extensions/<id>.json (see
+// Per-extension settings, stored in ~/.config/sylenara/extensions/<id>.json (see
 // services/Extensions.qml, which creates one per loaded extension and passes it as `ext.config`).
 // Values are plain JSON. Use get(key, fallback) / set(key, value); `values` changes on every set
 // so bindings that call get() update.

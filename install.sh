@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sylphrena installer entry point: makes sure git, base-devel and python are there, then runs scripts/installer.py.
+# Sylenara installer entry point: makes sure git, base-devel and python are there, then runs scripts/installer.py.
 #   ./install.sh [--yes] [--dry-run] [--list] [--only ID,ID] [--skip ID,ID] [--no-login-screen]
 set -euo pipefail
 
@@ -22,6 +22,12 @@ pacman -Qq base-devel >/dev/null 2>&1 || missing+=(base-devel)
 if [[ ${#missing[@]} -gt 0 && " $* " != *" --dry-run "* && " $* " != *" --list "* ]]; then
   echo "Installing the base tools first: ${missing[*]}"
   sudo pacman -S --needed --noconfirm "${missing[@]}"
+fi
+
+if ! command -v python3 >/dev/null; then
+  # Only a preview (--dry-run, --list) gets here without python: a real run has just installed it
+  echo "Python is needed even to preview what would be installed. Run ./install.sh without --dry-run (it installs python first), or: sudo pacman -S python" >&2
+  exit 1
 fi
 
 exec python3 "$ROOT/scripts/installer.py" "$@"

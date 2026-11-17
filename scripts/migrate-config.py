@@ -18,7 +18,7 @@ ENABLES = {
     "addons.steam.enabled": ("extensions.enabled", "games"),
 }
 
-# Old shell.json setting -> (extension id, key in ~/.config/sylphrena/extensions/<id>.json).
+# Old shell.json setting -> (extension id, key in ~/.config/sylenara/extensions/<id>.json).
 # The value is written to the extension's own config unless that key is already there.
 TO_EXTENSION_CONFIG = {
     "addons.hydration.dailyGoalMl": ("hydration", "dailyGoalMl"),
@@ -74,7 +74,7 @@ def put(d: dict, path: str, value) -> bool:
 
 def main() -> int:
     base = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config")
-    path = base / "sylphrena" / "shell.json"
+    path = base / "sylenara" / "shell.json"
     try:
         data = json.loads(path.read_text())
     except (OSError, ValueError):
@@ -86,7 +86,7 @@ def main() -> int:
         if not found:
             continue
         changed = True
-        ext_path = base / "sylphrena" / "extensions" / f"{ext_id}.json"
+        ext_path = base / "sylenara" / "extensions" / f"{ext_id}.json"
         try:
             ext_cfg = json.loads(ext_path.read_text())
             if not isinstance(ext_cfg, dict):

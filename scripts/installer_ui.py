@@ -1,4 +1,4 @@
-"""Terminal look of the Sylphrena installer: banner, checklist, spinner. Plain text when there is no colour terminal
+"""Terminal look of the Sylenara installer: banner, checklist, spinner. Plain text when there is no colour terminal
 (a pipe, NO_COLOR, TERM=dumb), so logs and CI stay readable."""
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ GREEN, RED, AMBER = (160, 220, 170), (255, 150, 150), (240, 200, 130)
 FONT = {
     "S": ("╔═╗", "╚═╗", "╚═╝"), "Y": ("╦ ╦", "╚╦╝", " ╩ "), "L": ("╦  ", "║  ", "╩═╝"), "P": ("╔═╗", "╠═╝", "╩  "),
     "H": ("╦ ╦", "╠═╣", "╩ ╩"), "R": ("╦═╗", "╠╦╝", "╩╚═"), "E": ("╔═╗", "║╣ ", "╚═╝"), "N": ("╔╗╔", "║║║", "╝╚╝"),
-    "A": ("╔═╗", "╠═╣", "╩ ╩"),
+    "A": ("╔═╗", "╠═╣", "╩ ╩"), "U": ("╦ ╦", "║ ║", "╚═╝"),
 }
 
 
@@ -48,7 +48,7 @@ def mix(a: tuple[int, int, int], b: tuple[int, int, int], t: float) -> tuple[int
 
 
 def banner(tagline: str, version: str = "") -> None:
-    word = "SYLPHRENA"
+    word = "SYLENARA"
     rows = ["", "", ""]
     for idx, ch in enumerate(word):
         color = mix(LAVENDER, ROSE, idx / (len(word) - 1))
@@ -122,7 +122,7 @@ FOOTER_LINES = 3    # blank, count, keys
 
 
 def title_words(text: str) -> str:
-    """The first letter of every word in capitals; the rest is left as it is (DDC/CI, sylph…)."""
+    """The first letter of every word in capitals; the rest is left as it is (DDC/CI, sylenara…)."""
     return " ".join(w[:1].upper() + w[1:] for w in text.split(" "))
 
 
@@ -238,6 +238,7 @@ def checklist(groups: list[tuple[str, list]], describe, lock_text, hint: str, st
 
 class Spinner:
     FRAMES = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+    HEARTBEAT = 300                 # seconds between the lines printed without a terminal
 
     def __init__(self, title: str):
         self.title = title
@@ -252,7 +253,15 @@ class Spinner:
             self._thread.start()
         else:
             print(f"  ... {self.title}", flush=True)
+            # Without a terminal (the shell's updates), a line now and then: who reads the output knows it is still
+            # working, and the shell does not take a long build for a hung one (it gives up after 45 min of silence)
+            self._thread = threading.Thread(target=self._heartbeat, daemon=True)
+            self._thread.start()
         return self
+
+    def _heartbeat(self) -> None:
+        while not self._stop.wait(self.HEARTBEAT):
+            print(f"  ... {self.title} ({int(time.time() - self.started) // 60} min)", flush=True)
 
     def _spin(self) -> None:
         i = 0
@@ -270,8 +279,9 @@ class Spinner:
         self._stop.set()
         if self._thread:
             self._thread.join()
-            sys.stdout.write("\r\033[K")
-            sys.stdout.flush()
+            if sys.stdout.isatty():
+                sys.stdout.write("\r\033[K")
+                sys.stdout.flush()
 
     def seconds(self) -> int:
         return int(time.time() - self.started)

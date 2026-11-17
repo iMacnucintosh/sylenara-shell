@@ -4,9 +4,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.utils
 
 Singleton {
@@ -44,8 +44,8 @@ Singleton {
     // Ephemeral; cleared after writing to the update script stdin
     property string _authPw: ""
 
-    // Everything that can be updated: the system's packages, then Sylphrena's own and its extensions
-    readonly property var entries: [...packages, ...SylphrenaUpdates.entries]
+    // Everything that can be updated: the system's packages, then Sylenara's own and its extensions
+    readonly property var entries: [...packages, ...SylenaraUpdates.entries]
     readonly property int count: entries.length
     readonly property bool hasUpdates: count > 0
     readonly property bool anyUpdates: hasUpdates
@@ -73,8 +73,8 @@ Singleton {
     function refresh(): void {
         if (checkProc.running || root.installing)
             return;
-        // Sylphrena and its extensions, on the same refresh as the packages
-        SylphrenaUpdates.check();
+        // Sylenara and its extensions, on the same refresh as the packages
+        SylenaraUpdates.check();
         root.busy = true;
         root.error = "";
         root.statusMessage = Tr.tr("Checking for updates…");
@@ -131,7 +131,7 @@ Singleton {
 
     function _terminalScript(shellCmd: string): string {
         // Our own texts, in single quotes (nothing expands inside them)
-        const banner = Tr.tr("##### Sylphrena updates #####").replace(/'/g, "'\\''");
+        const banner = Tr.tr("##### Sylenara updates #####").replace(/'/g, "'\\''");
         const close = Tr.tr("Press any key to close…").replace(/'/g, "'\\''");
         return `printf '%s\\n' '${banner}'; ${shellCmd}; echo; read -n 1 -p '${close}'`;
     }
@@ -154,12 +154,14 @@ Singleton {
         }
         if (!root.checkAur && !root.checkArch && !root.checkFlatpak)
             args.push("--arch");
-        // Sylphrena and its extensions, after the system
-        if (SylphrenaUpdates.updates.length)
-            args.push("--sylphrena");
-        for (const e of SylphrenaUpdates.extensions)
+        // Sylenara and its extensions, after the system. Its packages may also be among the system's (from its
+        // package repository): the installer then finishes what comes after them (the login screen, its setup)
+        const family = root.packages.filter(p => SylenaraUpdates.familyPackages.includes(p.name));
+        if (SylenaraUpdates.updates.length || family.length)
+            args.push("--sylenara");
+        for (const e of SylenaraUpdates.extensions)
             args.push("--extension", e.id);
-        root._shellUpdating = !!SylphrenaUpdates.shell;
+        root._shellUpdating = !!SylenaraUpdates.shell || family.some(p => p.name === "sylenara-shell-git");
         return args;
     }
 
@@ -288,10 +290,10 @@ Singleton {
         }
         root.statusIcon = root.glyph;
         root.refresh();
-        SylphrenaUpdates.check();
+        SylenaraUpdates.check();
         // The shell itself was replaced: start the new one (what runs now is the old one)
         if (code === 0 && root._shellUpdating)
-            Quickshell.execDetached(["sh", "-c", "sleep 3; PATH=\"$HOME/.local/bin:$PATH\" exec sylph shell -r -d"]);
+            Quickshell.execDetached(["sh", "-c", "sleep 3; PATH=\"$HOME/.local/bin:$PATH\" exec syl shell -r -d"]);
         root._shellUpdating = false;
     }
 
@@ -299,7 +301,7 @@ Singleton {
         if (!pkg)
             return;
         const message = Tr.tr("Updating %1…").arg(pkg.name);
-        if (pkg.source === "SYLPHRENA") {
+        if (pkg.source === "SYLENARA") {
             root.runInTerminal(`python3 "$1" --update`, message, [Quickshell.shellPath("scripts/installer.py")]);
             return;
         }
@@ -336,7 +338,7 @@ Singleton {
     function showPackageInfo(pkg: var): void {
         if (!pkg)
             return;
-        if (pkg.source === "SYLPHRENA" || pkg.source === "EXTENSION") {
+        if (pkg.source === "SYLENARA" || pkg.source === "EXTENSION") {
             root.openPackageUrl(pkg);
             return;
         }
@@ -431,7 +433,7 @@ Singleton {
     IpcHandler {
         target: "updates"
 
-        // [{ name, from, to, source, pkg?, id? }]: source ARCH | AUR | FLATPAK… | SYLPHRENA (pkg = its package) |
+        // [{ name, from, to, source, pkg?, id? }]: source ARCH | AUR | FLATPAK… | SYLENARA (pkg = its package) |
         // EXTENSION (id = the extension); `checking` while a check runs
         function list(): string {
             return JSON.stringify({

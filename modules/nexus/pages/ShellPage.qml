@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.widgets
@@ -382,6 +382,7 @@ PageBase {
 
                         IconButton {
                             icon: "delete"
+                            tooltip: Tr.tr("Delete activity")
                             type: IconButton.Text
                             isRound: true
                             visible: !root.isPrincipal(actRow.modelData)
@@ -417,6 +418,7 @@ PageBase {
                             IconButton {
                                 Layout.alignment: Qt.AlignVCenter
                                 icon: actRow.modelData.icon || "home"
+                                tooltip: Tr.tr("Choose icon")
                                 type: IconButton.Tonal
                                 isRound: true
                                 onClicked: iconPicker.open = true
@@ -449,7 +451,7 @@ PageBase {
                             StyledSpinBox {
                                 Layout.alignment: Qt.AlignVCenter
                                 from: 1
-                                to: 10
+                                to: Activities.maxDesktops
                                 stepSize: 1
                                 value: actRow.modelData.workspaceCount
                                 cLayer: 2
@@ -655,6 +657,7 @@ PageBase {
 
                                             IconButton {
                                                 icon: "close"
+                                                tooltip: Tr.tr("Remove")
                                                 type: IconButton.Text
                                                 isRound: true
                                                 inactiveOnColour: Colours.palette.m3error

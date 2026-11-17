@@ -2,17 +2,17 @@
 
 Referencia técnica de opciones. Cara pública: [README.md](./README.md). Guía de uso del fork: [FEATURES.md](./FEATURES.md).
 
-El ejemplo JSON y la mayor parte del texto de esta página siguen en inglés (referencia heredada). Crea `~/.config/sylphrena/shell.json` solo con las claves que quieras cambiar.
+El ejemplo JSON y la mayor parte del texto de esta página siguen en inglés (referencia heredada). Crea `~/.config/sylenara/shell.json` solo con las claves que quieras cambiar.
 
 ## Opciones
 
-All configuration options belong in `~/.config/sylphrena/shell.json`. This file is _not_ created by
+All configuration options belong in `~/.config/sylenara/shell.json`. This file is _not_ created by
 default; you must create it manually. Options that you omit from the config file will use their default
 values.
 
 ### Per-monitor configuration
 
-You can configure per-monitor options in `~/.config/sylphrena/monitors/<monitor_name>/shell.json`.
+You can configure per-monitor options in `~/.config/sylenara/monitors/<monitor_name>/shell.json`.
 List the names of your available monitors by running:
 
 ```sh
@@ -24,7 +24,7 @@ per-monitor configs will inherit their values from the global config.
 
 For example, to automatically hide the bar on the monitor named `DP-1`:
 
-**`~/.config/sylphrena/monitors/DP-1/shell.json`**
+**`~/.config/sylenara/monitors/DP-1/shell.json`**
 
 ```json
 {
@@ -51,7 +51,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 > - `notifs`: `actionOnClick`, `defaultExpireTimeout`, `expire`, `fullscreen`, `fullscreenExpireTimeout`
 > - `paths`: `lyricsDir`, `wallpaperDir`, `screenshotsDir`, `recordingsDir` (vacías = carpeta de imágenes/vídeos + nombre en el idioma de la shell; se fijan al primer uso)
 > - `services`: `audioIncrement`, `brightnessIncrement`, `clockFormat`, `dataUnits`, `defaultPlayer`, `gpuType`, `lyricsBackend`, `maxVolume`, `playerAliases`, `sensorUnits`, `smartScheme`, `visualiserBars`, `weatherLocation`, `weatherUnits`
-> - `utilities`: `toasts.*`, `vpn.*` (un proveedor con `type` = `ext:<extensión>` es una conexión de un tipo aportado por una extensión: su `options` es de la extensión y nunca lleva secretos; p. ej. FortiClient guarda la contraseña en `~/.config/sylphrena/vpn/<id>.conf`)
+> - `utilities`: `toasts.*`, `vpn.*` (un proveedor con `type` = `ext:<extensión>` es una conexión de un tipo aportado por una extensión: su `options` es de la extensión y nunca lleva secretos; p. ej. FortiClient guarda la contraseña en `~/.config/sylenara/vpn/<id>.conf`)
 >
 > </details>
 
@@ -72,15 +72,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
     "enabled": true,
     "appearance": {
         "deformScale": 1,
-        "rounding": {
-            "scale": 1
-        },
-        "spacing": {
-            "scale": 1
-        },
-        "padding": {
-            "scale": 1
-        },
+        "rounding": { "scale": 1 },
+        "spacing": { "scale": 1 },
+        "padding": { "scale": 1 },
         "font": {
             "scale": 1,
             "clock": "Rubik",
@@ -219,9 +213,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             }
         },
         "anim": {
-            "durations": {
-                "scale": 1
-            }
+            "durations": { "scale": 1 }
         },
         "transparency": {
             "enabled": false,
@@ -233,9 +225,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "logo": "",
         "showOverFullscreen": false,
         "apps": {
-            "terminal": ["foot"],
+            "terminal": ["kitty"],
             "audio": ["pwvucontrol"],
-            "playback": ["mpv"],
+            "playback": ["veo"],
             "explorer": ["seeker"]
         },
         "idle": {
@@ -284,7 +276,15 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 }
             ],
             "criticalLevel": 3
-        }
+        },
+        "language": "",
+        "followMouse": 1,
+        "keyboardLayouts": [],
+        "keyboardSwitch": "",
+        "workspaceAnimation": "slidevert",
+        "workspaceAnimationSpeed": "normal",
+        "activityAnimation": "fade",
+        "activityAnimationSpeed": "normal"
     },
     "background": {
         "enabled": true,
@@ -311,7 +311,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "blur": false,
             "rounding": 1,
             "spacing": 1
-        }
+        },
+        "wallpaperTransition": 2
     },
     "bar": {
         "persistent": true,
@@ -333,7 +334,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "perMonitor": true,
             "showWindows": true,
             "maxWindowIcons": 5,
-            "activeTrail": false,
+            "activeTrail": true,
             "displayType": "shapes",
             "label": "  ",
             "occupiedLabel": "󰮯",
@@ -385,7 +386,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "clock": {
             "background": false,
             "showDate": false,
-            "showIcon": true
+            "showIcon": false,
+            "showSeconds": false
         },
         "statusIcons": [
             {
@@ -459,7 +461,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "enabled": true
             }
         ],
-        "excludedScreens": []
+        "excludedScreens": [],
+        "status": { "onlyShowUpdatesWithUpdates": true }
     },
     "border": {
         "thickness": 10,
@@ -485,7 +488,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "showMemory": true,
             "showStorage": true,
             "showNetwork": true
-        }
+        },
+        "showClockSeconds": false
     },
     "extensions": {
         "enabled": []
@@ -546,7 +550,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "name": "Random",
                 "icon": "casino",
                 "description": "Switch to a random wallpaper",
-                "command": ["sylphrena", "wallpaper", "-r"],
+                "command": ["syl", "wallpaper", "-r"],
                 "enabled": true,
                 "dangerous": false
             },
@@ -610,7 +614,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "name": "Settings",
                 "icon": "settings",
                 "description": "Configure the shell",
-                "command": ["sylphrena", "shell", "nexus", "open"],
+                "command": ["syl", "shell", "nexus", "open"],
                 "enabled": true,
                 "dangerous": false
             }
@@ -626,11 +630,12 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "maxHowdyTries": 3,
         "triggerHowdyOnWake": true,
         "hideNotifs": false,
-        "enableSessionControls": true
+        "enableSessionControls": false
     },
     "nexus": {
         "wallpapersPerRow": 4,
-        "networkRescanInterval": 15000
+        "networkRescanInterval": 15000,
+        "maxNetworksShown": 5
     },
     "notifs": {
         "expire": true,
@@ -663,7 +668,10 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "smartScheme": true,
         "defaultPlayer": "Spotify",
         "playerAliases": [
-            { "from": "com.github.th_ch.youtube_music", "to": "YT Music" }
+            {
+                "from": "com.github.th_ch.youtube_music",
+                "to": "YT Music"
+            }
         ],
         "lyricsBackend": "Auto"
     },
@@ -705,7 +713,9 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "numLockChanged": true,
             "kbLayoutChanged": true,
             "vpnChanged": true,
-            "nowPlaying": false
+            "nowPlaying": false,
+            "position": "top",
+            "updatesAvailable": true
         },
         "vpn": {
             "enabled": false,
@@ -738,7 +748,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                         "hosts": ["10.0.0.1=intranet.example.com"]
                     }
                 }
-            ]
+            ],
+            "selectedProvider": ""
         },
         "quickToggles": [
             {
@@ -769,7 +780,27 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "id": "vpn",
                 "enabled": false
             }
-        ]
+        ],
+        "cards": {
+            "keepAwake": false,
+            "recorder": true,
+            "quickToggles": true
+        },
+        "clipboard": {
+            "enabled": true,
+            "maxItems": 50
+        },
+        "updates": {
+            "checkArch": true,
+            "checkAur": true,
+            "checkFlatpak": true,
+            "aurWrapper": "yay",
+            "pollIntervalMinutes": 30,
+            "notifications": true,
+            "allowSingleModification": true,
+            "aurFlags": "--noconfirm",
+            "flatpakFlags": "--assumeyes"
+        }
     },
     "paths": {
         "wallpaperDir": "~/Pictures/Wallpapers",
@@ -778,6 +809,63 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "recordingsDir": "",
         "noNotifsPic": "root:/assets/dino.png",
         "lockNoNotifsPic": "root:/assets/dino.png"
+    },
+    "activities": {
+        "enabled": true,
+        "showWindowIcons": true,
+        "windowPreview": true,
+        "crossActivityWorkspaces": false,
+        "activities": [
+            {
+                "id": "principal",
+                "name": "Home",
+                "icon": "home",
+                "workspaceCount": 2,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            },
+            {
+                "id": "games",
+                "name": "Games",
+                "icon": "sports_esports",
+                "workspaceCount": 1,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            },
+            {
+                "id": "work",
+                "name": "Work",
+                "icon": "work",
+                "workspaceCount": 2,
+                "wallpaper": "",
+                "scheme": "",
+                "flavour": "",
+                "variant": "",
+                "mode": "",
+                "transparency": -1,
+                "lightApps": -1
+            }
+        ],
+        "appRules": []
+    },
+    "addons": {
+        "timers": {
+            "enabled": true,
+            "presetMins0": 5,
+            "presetMins1": 10,
+            "presetMins2": 20,
+            "presetMins3": 30
+        }
     }
 }
 ```
@@ -791,12 +879,12 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 > tokens used internally within the shell, and can cause visual issues if modified incorrectly.
 > The available options may change or be removed without notice across versions.
 
-A separate `~/.config/sylphrena/shell-tokens.json` file allows editing the internal tokens without
+A separate `~/.config/sylenara/shell-tokens.json` file allows editing the internal tokens without
 touching the source code of the shell. These tokens affect the dimensions and appearance of visual elements,
 including individual rounding, spacing, padding, font size, animation durations and curves, and the sizes of
 certain components. The appearance scale values in `shell.json` are multiplied against these base
 token values to produce the final computed values.
 
 Per-monitor token overrides are also available at
-`~/.config/sylphrena/monitors/<monitor_name>/shell-tokens.json`.
+`~/.config/sylenara/monitors/<monitor_name>/shell-tokens.json`.
 

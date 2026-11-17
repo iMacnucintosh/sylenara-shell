@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Services.SystemTray
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 

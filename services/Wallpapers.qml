@@ -3,8 +3,8 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.Config
-import Sylphrena.Models
+import Sylenara.Config
+import Sylenara.Models
 import qs.services
 import qs.utils
 
@@ -29,7 +29,7 @@ Searcher {
         return category;
     }
 
-    readonly property string quietCli: Quickshell.shellPath("scripts/sylphrena-quiet.py")
+    readonly property string quietCli: Quickshell.shellPath("scripts/sylenara-quiet.py")
 
     // Use quiet wrapper so apply_terms does not broadcast OSC to every PTY
     // (that spam surfaces as a system notification in some clients).
@@ -123,7 +123,7 @@ Searcher {
     Process {
         id: getPreviewColoursProc
 
-        command: ["sylph", "wallpaper", "-p", root.previewPath, ...root.smartArg]
+        command: ["syl", "wallpaper", "-p", root.previewPath, ...root.smartArg]
         stdout: StdioCollector {
             onStreamFinished: {
                 Colours.load(text, true);

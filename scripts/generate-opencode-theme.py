@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Generate ~/.config/opencode/themes/sylphrena.json from the current scheme.
+"""Generate ~/.config/opencode/themes/sylenara.json from the current scheme.
 
-Called from scripts/sylphrena-quiet.py after each scheme change (colour JSON on
+Called from scripts/sylenara-quiet.py after each scheme change (colour JSON on
 stdin + mode as argv[1]). The theme follows OpenCode V2's hue-based format
 ($schema https://opencode.ai/theme.json): one shared token tree (`base`) plus a
 complete hue palette per mode, plus per-mode token overrides that surface the
@@ -22,7 +22,7 @@ from pathlib import Path
 from materialyoucolor.hct import Hct
 from materialyoucolor.utils.color_utils import argb_from_rgb
 
-THEME_PATH = Path.home() / ".config/opencode/themes/sylphrena.json"
+THEME_PATH = Path.home() / ".config/opencode/themes/sylenara.json"
 LADDER = (100, 200, 300, 400, 500, 600, 700, 800, 900)
 TONES_DARK = (96, 93, 87, 79, 69, 57, 46, 33, 21)
 TONES_LIGHT = (12, 21, 33, 46, 57, 69, 79, 87, 94)

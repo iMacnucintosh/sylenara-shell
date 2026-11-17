@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Models
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Models
 import qs.components
 import qs.components.containers
 import qs.components.controls
@@ -45,6 +45,7 @@ ColumnLayout {
 
             IconButton {
                 icon: root.props.recordingListExpanded ? "unfold_less" : "unfold_more"
+                tooltip: root.props.recordingListExpanded ? Tr.tr("Hide recordings") : Tr.tr("Show recordings")
                 type: IconButton.Text
                 label.animate: true
                 onClicked: root.props.recordingListExpanded = !root.props.recordingListExpanded
@@ -104,6 +105,7 @@ ColumnLayout {
 
             IconButton {
                 icon: "play_arrow"
+                tooltip: Tr.tr("Play")
                 type: IconButton.Text
                 onClicked: {
                     root.screenState.utilities = false;
@@ -119,6 +121,7 @@ ColumnLayout {
 
             IconButton {
                 icon: "folder"
+                tooltip: Tr.tr("Show in folder")
                 type: IconButton.Text
                 onClicked: {
                     root.screenState.utilities = false;
@@ -132,6 +135,7 @@ ColumnLayout {
 
             IconButton {
                 icon: "delete_forever"
+                tooltip: Tr.tr("Delete recording")
                 type: IconButton.Text
                 label.color: Colours.palette.m3error
                 stateLayer.color: Colours.palette.m3error

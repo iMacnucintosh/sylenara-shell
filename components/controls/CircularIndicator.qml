@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Templates
-import Sylphrena.Components
-import Sylphrena.Config
+import Sylenara.Components
+import Sylenara.Config
 import qs.components
 import qs.services
 

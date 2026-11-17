@@ -4,8 +4,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import M3Shapes
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.effects
@@ -106,6 +106,7 @@ CustomMouseArea {
             IconButton {
                 isRound: true
                 icon: "chevron_left"
+                tooltip: Tr.tr("Previous month")
                 type: IconButton.Text
                 font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                 padding: Tokens.padding.small
@@ -153,6 +154,7 @@ CustomMouseArea {
             IconButton {
                 isRound: true
                 icon: "chevron_right"
+                tooltip: Tr.tr("Next month")
                 type: IconButton.Text
                 font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                 padding: Tokens.padding.small

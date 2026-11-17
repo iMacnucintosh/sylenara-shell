@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.images
@@ -83,6 +83,7 @@ ClipRect {
             IconButton {
                 type: IconButton.Tonal
                 icon: "skip_previous"
+                tooltip: Tr.tr("Previous")
                 isRound: true
                 shapeMorph: true
                 disabled: !Players.active?.canGoPrevious
@@ -91,6 +92,7 @@ ClipRect {
 
             IconButton {
                 icon: Players.active?.isPlaying ? "pause" : "play_arrow"
+                tooltip: Players.active?.isPlaying ? Tr.tr("Pause") : Tr.tr("Play")
                 isRound: true
                 shapeMorph: true
                 checked: Players.active?.isPlaying ?? false
@@ -102,6 +104,7 @@ ClipRect {
             IconButton {
                 type: IconButton.Tonal
                 icon: "skip_next"
+                tooltip: Tr.tr("Next")
                 isRound: true
                 shapeMorph: true
                 disabled: !Players.active?.canGoNext

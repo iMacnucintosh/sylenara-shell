@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.UPower
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.components
 import qs.services
 import qs.utils

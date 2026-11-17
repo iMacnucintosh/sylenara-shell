@@ -1,5 +1,5 @@
 import QtQuick
-import Sylphrena.Config
+import Sylenara.Config
 
 AnchorAnimation {
     enum Type {

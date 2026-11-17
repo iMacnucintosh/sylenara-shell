@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.modules.nexus
 
@@ -100,7 +100,7 @@ StackView {
     LoggingCategory {
         id: logCat
 
-        name: "sylphrena.nexus"
+        name: "sylenara.nexus"
         defaultLogLevel: LoggingCategory.Info
     }
 

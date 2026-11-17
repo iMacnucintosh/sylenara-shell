@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -49,6 +49,7 @@ ColumnLayout {
 
         IconButton {
             icon: Updates.busy ? "stop" : "autorenew"
+            tooltip: Updates.busy ? Tr.tr("Stop") : Tr.tr("Check for updates")
             type: IconButton.Text
             isRound: true
             onClicked: Updates.busy ? Updates.stop() : Updates.refresh()
@@ -100,7 +101,7 @@ ColumnLayout {
                     MaterialIcon {
                         visible: {
                             const s = (row.modelData.source || "").toUpperCase();
-                            return s !== "AUR" && s !== "SYLPHRENA";
+                            return s !== "AUR" && s !== "SYLENARA";
                         }
                         text: {
                             const s = (row.modelData.source || "").toUpperCase();
@@ -114,9 +115,9 @@ ColumnLayout {
                         fontStyle: Tokens.font.icon.small
                     }
 
-                    // Sylphrena's own packages: its orb
-                    SylphOrb {
-                        visible: row.modelData.source === "SYLPHRENA"
+                    // Sylenara's own packages: its orb
+                    SylenaraOrb {
+                        visible: row.modelData.source === "SYLENARA"
                         orbSize: Math.round(Tokens.font.icon.small.pointSize * 1.1)
                         Layout.preferredWidth: Tokens.font.icon.small.pointSize * 1.6
                         Layout.preferredHeight: Tokens.font.icon.small.pointSize * 1.6
@@ -143,9 +144,9 @@ ColumnLayout {
                             const to = row.modelData.to || "";
                             if (frm && to)
                                 return `${frm} → ${to}`;
-                            // TRANSLATORS: an app of Sylphrena installed by this update; %1 = its version
+                            // TRANSLATORS: an app of Sylenara installed by this update; %1 = its version
                             if (row.modelData.isNew)
-                                return Tr.tr("New · %1").arg(to);
+                                return (to ? Tr.tr("New · %1").arg(to) : Tr.trCtx("New", "update list"));
                             return to || frm;
                         }
                         color: Colours.palette.m3onSurfaceVariant
@@ -214,6 +215,7 @@ ColumnLayout {
 
         IconButton {
             icon: "open_in_new"
+            tooltip: Tr.tr("Open in Settings")
             type: IconButton.Tonal
             isRound: true
             onClicked: {

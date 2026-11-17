@@ -4,8 +4,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.Config
-import Sylphrena.Images
+import Sylenara.Config
+import Sylenara.Images
 import qs.services
 import qs.utils
 
@@ -86,7 +86,7 @@ Singleton {
             root.scheduleAppThemeApply();
     }
 
-    readonly property string quietCli: Quickshell.shellPath("scripts/sylphrena-quiet.py")
+    readonly property string quietCli: Quickshell.shellPath("scripts/sylenara-quiet.py")
 
     function runSchemeSet(cliArgs: list<string>): void {
         Quickshell.execDetached(["python3", root.quietCli, ...cliArgs]);
@@ -188,22 +188,22 @@ Singleton {
         const msgs = [];
         if (Hypr.usingLua) {
             const drawersBlur = transparency.enabled;
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-drawers" }, blur = ${drawersBlur} })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-drawers" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-drawers" }, blur = ${drawersBlur} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-drawers" }, ignore_alpha = ${ignoreAlpha} })`);
             // Same surface treatment as drawers (m3surface + hypr blur)
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-clipboard" }, blur = ${drawersBlur} })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-clipboard" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-clipboard" }, blur = ${drawersBlur} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-clipboard" }, ignore_alpha = ${ignoreAlpha} })`);
             // Overview always uses the translucent + Hyprland blur look
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-activities-overview" }, blur = true })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-activities-overview" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-activities-overview" }, blur = true })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylenara-activities-overview" }, ignore_alpha = ${ignoreAlpha} })`);
         } else {
             const drawersBlur = transparency.enabled ? 1 : 0;
-            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylphrena-drawers`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-drawers`);
-            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylphrena-clipboard`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-clipboard`);
-            msgs.push(`keyword layerrule blur 1, match:namespace sylphrena-activities-overview`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-activities-overview`);
+            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylenara-drawers`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylenara-drawers`);
+            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylenara-clipboard`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylenara-clipboard`);
+            msgs.push(`keyword layerrule blur 1, match:namespace sylenara-activities-overview`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylenara-activities-overview`);
         }
         Hypr.extras.batchMessage(msgs);
     }

@@ -3,9 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
+import qs.components.controls
 import qs.services
 
 ColumnLayout {
@@ -21,13 +22,19 @@ ColumnLayout {
 
     Item {
         Layout.fillWidth: true
-        implicitHeight: headerRow.implicitHeight
+        implicitHeight: headerRow.implicitHeight + Tokens.padding.small * 2
 
         RowLayout {
             id: headerRow
 
             anchors.fill: parent
+            anchors.leftMargin: Tokens.padding.medium
+            anchors.rightMargin: Tokens.padding.small
+            anchors.topMargin: Tokens.padding.small
+            anchors.bottomMargin: Tokens.padding.small
             spacing: Tokens.spacing.small
+            // Above the header's click area, so the button gets its own clicks
+            z: 1
 
             MaterialIcon {
                 text: root.activity?.icon || "dashboard"
@@ -42,10 +49,29 @@ ColumnLayout {
                 font: Tokens.font.title.medium
                 elide: Text.ElideRight
             }
+
+            // One more desktop at the end of this activity
+            IconButton {
+                id: addDesktop
+
+                readonly property bool atMax: (root.activity?.workspaceCount ?? 1) >= Activities.maxDesktops
+
+                icon: "add"
+                tooltip: Tr.tr("Add desktop")
+                type: IconButton.Tonal
+                isRound: true
+                // Same size as the remove badge of a desktop
+                font: Tokens.font.icon.small
+                padding: Tokens.padding.extraSmall
+                opacity: atMax ? 0.38 : 1
+                stateLayer.disabled: atMax
+                onClicked: Activities.addDesktop(root.activity.id)
+            }
         }
 
         StateLayer {
             anchors.fill: parent
+            radius: Tokens.rounding.large
             onClicked: {
                 if (root.activity)
                     Activities.focusActivity(root.activity.id);

@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.effects
@@ -257,6 +257,7 @@ Item {
                                 Layout.topMargin: Tokens.padding.extraSmall
                                 isRound: true
                                 icon: "folder_open"
+                                tooltip: Tr.tr("Browse")
                                 type: IconButton.Tonal
                                 // Defer so this button isn't hidden before the click fully finishes
                                 onClicked: Qt.callLater(() => root.startIconBrowse())

@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -26,7 +26,7 @@ ConnectedRect {
 
     // Its system pieces (a helper, a package) are not there: it cannot be enabled until Things installs them
     readonly property bool needsSystem: Extensions.hasSystem(manifest) && !Extensions.systemReady(manifest.id)
-    // Why it is not running (e.g. it needs a newer Sylphrena), when that is the case
+    // Why it is not running (e.g. it needs a newer Sylenara), when that is the case
     readonly property string problem: Extensions.loaded.find(e => e.id === manifest.id)?.error || Extensions.incompatibility(manifest)
 
     Layout.fillWidth: true
@@ -82,6 +82,7 @@ ConnectedRect {
                 isRound: true
                 type: IconButton.Text
                 icon: root.settingsOpen ? "expand_less" : "expand_more"
+                tooltip: root.settingsOpen ? Tr.tr("Hide settings") : Tr.tr("Show settings")
                 padding: Tokens.padding.small
                 Layout.alignment: Qt.AlignVCenter
                 onClicked: root.settingsOpen = !root.settingsOpen
@@ -99,7 +100,7 @@ ConnectedRect {
             }
         }
 
-        // It cannot run here: needs a newer Sylphrena, or its system pieces are missing
+        // It cannot run here: needs a newer Sylenara, or its system pieces are missing
         RowLayout {
             Layout.fillWidth: true
             visible: root.problem.length > 0 || root.needsSystem

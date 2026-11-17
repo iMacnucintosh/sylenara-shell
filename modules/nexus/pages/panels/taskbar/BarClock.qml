@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -150,6 +150,7 @@ PageBase {
                         visible: Timers.enabled
                         isRound: true
                         icon: root.timersSettingsOpen ? "expand_less" : "expand_more"
+                        tooltip: root.timersSettingsOpen ? Tr.tr("Hide settings") : Tr.tr("Show settings")
                         type: IconButton.Text
                         font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                         padding: Tokens.padding.small

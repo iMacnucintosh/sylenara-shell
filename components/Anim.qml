@@ -1,5 +1,5 @@
 import QtQuick
-import Sylphrena.Config
+import Sylenara.Config
 
 NumberAnimation {
     enum Type {

@@ -4,9 +4,9 @@ import QtQml
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components.misc
 
 Singleton {

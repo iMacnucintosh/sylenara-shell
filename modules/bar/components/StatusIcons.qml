@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.UPower
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 import qs.utils

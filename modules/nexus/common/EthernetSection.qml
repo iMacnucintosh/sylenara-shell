@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -212,6 +212,7 @@ ColumnLayout {
                     isRound: true
                     checked: ethRow.isConnected
                     icon: ethRow.isConnected ? "link_off" : "link"
+                    tooltip: ethRow.isConnected ? Tr.tr("Disconnect") : Tr.tr("Connect")
                     onClicked: {
                         if (ethRow.isConnected)
                             Nmcli.disconnectEthernet(ethRow.modelData.connection);

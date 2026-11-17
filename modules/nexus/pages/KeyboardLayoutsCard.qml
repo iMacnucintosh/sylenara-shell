@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -76,7 +76,7 @@ ColumnLayout {
 
                     StyledText {
                         Layout.fillWidth: true
-                        text: root.own ? Tr.tr("The first one is used when the session starts; switch from the bar or with the shortcut below") : Tr.tr("The ones of the system. Changing anything here makes Sylphrena keep them")
+                        text: root.own ? Tr.tr("The first one is used when the session starts; switch from the bar or with the shortcut below") : Tr.tr("The ones of the system. Changing anything here makes Sylenara keep them")
                         color: Colours.palette.m3outline
                         font: Tokens.font.label.small
                         wrapMode: Text.WordWrap
@@ -142,6 +142,7 @@ ColumnLayout {
                         IconButton {
                             visible: layoutRow.index > 0
                             icon: "vertical_align_top"
+                            tooltip: Tr.tr("Set as main layout")
                             type: IconButton.Text
                             implicitWidth: implicitHeight
                             onClicked: {
@@ -156,6 +157,7 @@ ColumnLayout {
                             enabled: root.entries.length > 1
                             opacity: enabled ? 1 : 0.38
                             icon: "close"
+                            tooltip: Tr.tr("Remove")
                             type: IconButton.Text
                             implicitWidth: implicitHeight
                             onClicked: root.setEntries(root.entries.filter((_, i) => i !== layoutRow.index))

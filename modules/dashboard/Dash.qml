@@ -1,6 +1,6 @@
 import "dash"
 import QtQuick.Layouts
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.components.filedialog
 import qs.services

@@ -2,21 +2,22 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.services
 import qs.modules.lock
+import qs.utils
 
-// Sylphrena — same wind-spirit companion as the greeter, wired to PAM.
+// Sylenara — same wind-spirit companion as the greeter, wired to PAM.
 StyledRect {
     id: root
 
     required property var lock
 
     readonly property var pam: lock.pam
-    readonly property string companionName: "Sylphrena"
+    readonly property string companionName: "Sylenara"
     readonly property bool listening: pam.passwd.active || pam.fprint.active || pam.howdy.active
     readonly property bool welcomed: lock.unlocking
     readonly property bool troubled: pam.state === Pam.Failed || pam.state === Pam.Error || pam.state === Pam.MaxTries || !!pam.lockMessage
@@ -80,7 +81,7 @@ StyledRect {
             Layout.alignment: Qt.AlignHCenter
             spacing: Tokens.spacing.medium
 
-            SylphOrb {
+            SylenaraOrb {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: implicitWidth
                 Layout.preferredHeight: implicitHeight

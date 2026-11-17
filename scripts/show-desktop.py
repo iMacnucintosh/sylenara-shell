@@ -7,7 +7,7 @@ the right; they stay on the workspace, so the bar keeps their icons); run again 
 
 Both print a JSON list with the workspaces whose windows are currently hidden.
 
-State lives in $XDG_RUNTIME_DIR/sylphrena/show-desktop.json so it survives a shell restart.
+State lives in $XDG_RUNTIME_DIR/sylenara/show-desktop.json so it survives a shell restart.
 """
 import json
 import os
@@ -15,7 +15,7 @@ import subprocess
 import sys
 import time
 
-STATE = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "sylphrena", "show-desktop.json")
+STATE = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "sylenara", "show-desktop.json")
 
 
 def hypr(*args):

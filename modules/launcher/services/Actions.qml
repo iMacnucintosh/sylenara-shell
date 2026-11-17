@@ -3,9 +3,9 @@ pragma Singleton
 import ".."
 import QtQuick
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.services
 import qs.utils
 

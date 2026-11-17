@@ -2,9 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.components
 import qs.components.controls
 import qs.services
@@ -23,6 +24,7 @@ Column {
         id: logout
 
         icon: Config.session.icons.logout
+        tooltip: Tr.tr("Log out")
         command: Config.session.commands.logout
 
         KeyNavigation.down: shutdown
@@ -43,13 +45,14 @@ Column {
         id: shutdown
 
         icon: Config.session.icons.shutdown
+        tooltip: Tr.tr("Shut down")
         command: Config.session.commands.shutdown
 
         KeyNavigation.up: logout
         KeyNavigation.down: suspendBtn
     }
 
-    // The animated Sylphrena orb between the buttons; only while the menu is open (it never stops animating)
+    // The animated Sylenara orb between the buttons; only while the menu is open (it never stops animating)
     Item {
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
@@ -58,7 +61,7 @@ Column {
             anchors.centerIn: parent
             active: root.screenState.session
 
-            sourceComponent: SylphOrb {
+            sourceComponent: SylenaraOrb {
                 orbSize: Math.round(Tokens.sizes.session.button / 1.55)
             }
         }
@@ -68,6 +71,7 @@ Column {
         id: suspendBtn
 
         icon: Config.session.icons.suspend
+        tooltip: Tr.tr("Suspend")
         command: Config.session.commands.suspend
 
         KeyNavigation.up: shutdown
@@ -78,6 +82,7 @@ Column {
         id: reboot
 
         icon: Config.session.icons.reboot
+        tooltip: Tr.tr("Reboot")
         command: Config.session.commands.reboot
 
         KeyNavigation.up: suspendBtn
@@ -92,6 +97,9 @@ Column {
             if (!SessionManager.exec(command))
                 Quickshell.execDetached(command);
         }
+
+        // The menu is on the right edge of the screen: tooltips go to the left
+        tooltipSide: "left"
 
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button

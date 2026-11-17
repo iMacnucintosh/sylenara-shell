@@ -1,6 +1,8 @@
 import QtQuick
-import Sylphrena.Config
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
+import qs.components.controls
 import qs.components.effects
 import qs.services
 import qs.utils
@@ -12,7 +14,10 @@ Item {
     implicitHeight: Math.round(Tokens.font.body.large.pointSize * 1.2)
 
     MouseArea {
+        id: hit
+
         anchors.fill: parent
+        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
             const screenState = ShellState.forActive();
@@ -20,14 +25,20 @@ Item {
         }
     }
 
+    StyledToolTip {
+        shown: hit.containsMouse
+        text: Tr.tr("Launcher")
+        side: "right"
+    }
+
     Loader {
         asynchronous: true
         anchors.centerIn: parent
-        sourceComponent: SysInfo.isDefaultLogo ? sylphrenaLogo : distroIcon
+        sourceComponent: SysInfo.isDefaultLogo ? sylenaraLogo : distroIcon
     }
 
     Component {
-        id: sylphrenaLogo
+        id: sylenaraLogo
 
         Logo {
             implicitWidth: Math.round(Tokens.font.body.large.pointSize * 1.6)

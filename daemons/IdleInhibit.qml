@@ -2,13 +2,13 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import Sylphrena.State
+import Sylenara.State
 
 Scope {
     id: root
 
-    // Respect persisted RuntimeState.inhibitIdle (default true; survives sylph shell -r
-    // via /run/user/.../sylphrena/state.json). Do not force-enable on every start.
+    // Respect persisted RuntimeState.inhibitIdle (default true; survives syl shell -r
+    // via /run/user/.../sylenara/state.json). Do not force-enable on every start.
     Component.onCompleted: {
         if (RuntimeState.inhibitIdle)
             RuntimeState.inhibitingIdleSince = new Date().getTime();

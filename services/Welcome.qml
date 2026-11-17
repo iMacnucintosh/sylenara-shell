@@ -4,13 +4,13 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
+import Sylenara
 import qs.utils
 import qs.modules.welcome
 
-// The welcome assistant: a window that introduces Sylphrena and offers its companion apps. It opens
+// The welcome assistant: a window that introduces Sylenara and offers its companion apps. It opens
 // by itself the first time the shell runs (until it is finished or skipped) and can be opened again
-// from the wand button of the Sylphrena card in Nexus → About, or with `qs -c sylphrena ipc call welcome open`.
+// from the wand button of the Sylenara card in Nexus → About, or with `qs -c sylenara ipc call welcome open`.
 //
 // What's new: after an update, the highlights of the versions it brought (whatsnew/whatsnew.json, with their
 // screenshots) and their CHANGELOG sections, once. `newsSeen` in the state is the last version shown; without it,

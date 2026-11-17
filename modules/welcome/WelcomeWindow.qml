@@ -3,15 +3,15 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
 import qs.modules.nexus
 import qs.modules.nexus.common
 
-// The welcome assistant window (see services/Welcome.qml): what Sylphrena is, what it offers, and
+// The welcome assistant window (see services/Welcome.qml): what Sylenara is, what it offers, and
 // the apps of its family that are worth installing. Five steps; skipping or finishing both count as seen.
 FloatingWindow {
     id: win
@@ -59,7 +59,7 @@ FloatingWindow {
         win.destroy();
     }
 
-    title: Tr.tr("Welcome to Sylphrena")
+    title: Tr.tr("Welcome to Sylenara")
     color: Colours.tPalette.m3surface
     surfaceFormat.opaque: false
     // A small window of fixed size: Hyprland floats those (and centres them) instead of tiling them
@@ -189,7 +189,7 @@ FloatingWindow {
     }
 
     // The orb (above the pages)
-    SylphOrb {
+    SylenaraOrb {
         id: orb
 
         x: win.orbCx - width / 2
@@ -262,7 +262,7 @@ FloatingWindow {
         }
     }
 
-    // ── 1 · Who Sylphrena is ──────────────────────────────────────────────────────────────
+    // ── 1 · Who Sylenara is ──────────────────────────────────────────────────────────────
     Component {
         id: welcomePage
 
@@ -286,7 +286,7 @@ FloatingWindow {
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Sylphrena"
+                text: "Sylenara"
                 font: Tokens.font.headline.medium
             }
 
@@ -312,14 +312,6 @@ FloatingWindow {
                     text: Tr.tr("Made by %1").arg("iMacnucintosh")
                     font: Tokens.font.title.small
                 }
-
-                StyledText {
-                    Layout.alignment: Qt.AlignHCenter
-                    // TRANSLATORS: %1 = the name of the original project, %2 = its author
-                    text: Tr.tr("A fork of %1 by %2").arg("caelestia-shell").arg("soramane")
-                    color: Colours.palette.m3outline
-                    font: Tokens.font.label.medium
-                }
             }
 
             IconTextButton {
@@ -330,7 +322,7 @@ FloatingWindow {
                 verticalPadding: Tokens.padding.small
                 icon: "open_in_new"
                 text: "GitHub"
-                onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylphrena-shell"])
+                onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylenara-shell"])
             }
 
             Item {
@@ -347,8 +339,8 @@ FloatingWindow {
             spacing: Tokens.spacing.large
 
             PageHeader {
-                title: Tr.tr("What Sylphrena gives you")
-                subtitle: Tr.tr("A quick look. Everything is in Nexus, the settings window.")
+                title: Tr.tr("What Sylenara gives you")
+                subtitle: Tr.tr("A quick look. You can change all of it in Settings.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -367,8 +359,8 @@ FloatingWindow {
                             text: Tr.tr("A look for each part of your day: wallpaper, colours and the apps pinned to its desktops.")
                         },
                         {
-                            icon: "tune",
-                            title: "Nexus",
+                            icon: "settings",
+                            title: Tr.tr("Settings"),
                             text: Tr.tr("Every setting in one window, with search.")
                         },
                         {
@@ -442,7 +434,7 @@ FloatingWindow {
         }
     }
 
-    // ── 3 · Apps that come with Sylphrena (informative: the base package installs them) ────
+    // ── 3 · Apps that come with Sylenara (informative: the base package installs them) ────
     Component {
         id: companionsPage
 
@@ -452,8 +444,8 @@ FloatingWindow {
             Component.onCompleted: Companions.check()
 
             PageHeader {
-                title: Tr.tr("Apps made for Sylphrena")
-                subtitle: Tr.tr("They come with Sylphrena and follow its theme.")
+                title: Tr.tr("Apps made for Sylenara")
+                subtitle: Tr.tr("They come with Sylenara and follow its theme.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -536,7 +528,7 @@ FloatingWindow {
                 }
             }
 
-            // kitty comes with Sylphrena, but nobody is tied to it
+            // kitty comes with Sylenara, but nobody is tied to it
             RowLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Tokens.spacing.small
@@ -677,7 +669,7 @@ FloatingWindow {
 
             PageHeader {
                 title: Tr.tr("Your shortcuts")
-                subtitle: Tr.tr("These are the ones in use now. Change any of them in Nexus and they update here.")
+                subtitle: Tr.tr("These are the ones in use now. Change any of them in Settings and they update here.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -789,7 +781,7 @@ FloatingWindow {
 
                 StyledText {
                     Layout.fillWidth: true
-                    text: Tr.tr("In Nexus you can also export and import them.")
+                    text: Tr.tr("In Settings you can also export and import them.")
                     color: Colours.palette.m3onSurfaceVariant
                     font: Tokens.font.body.small
                     wrapMode: Text.WordWrap
@@ -800,7 +792,7 @@ FloatingWindow {
                     isRound: true
                     horizontalPadding: Tokens.padding.large
                     verticalPadding: Tokens.padding.small
-                    text: Tr.tr("Edit in Nexus")
+                    text: Tr.tr("Edit in Settings")
                     onClicked: WindowFactory.openPage("keybinds")
                 }
             }
@@ -816,7 +808,7 @@ FloatingWindow {
 
             PageHeader {
                 title: Tr.tr("You are all set")
-                subtitle: Tr.tr("Open Nexus whenever you want to change something. This guide is in Nexus → About.")
+                subtitle: Tr.tr("Open Settings whenever you want to change something. This guide is in Settings → About.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -862,7 +854,7 @@ FloatingWindow {
 
                             StyledText {
                                 Layout.fillWidth: true
-                                text: Tr.tr("An extension is a folder with a manifest and a few QML files. Build one for yourself, and share it in the Sylphrena Hub for others to install.")
+                                text: Tr.tr("An extension is a folder with a manifest and a few QML files. Build one for yourself, and share it in the Sylenara Hub for others to install.")
                                 color: Colours.palette.m3onSurfaceVariant
                                 font: Tokens.font.body.medium
                                 wrapMode: Text.WordWrap
@@ -883,8 +875,8 @@ FloatingWindow {
                             horizontalPadding: Tokens.padding.large
                             verticalPadding: Tokens.padding.small
                             icon: "open_in_new"
-                            text: Tr.tr("Sylphrena Hub")
-                            onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylphrena-hub"])
+                            text: Tr.tr("Sylenara Hub")
+                            onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylenara-hub"])
                         }
                     }
                 }
@@ -901,7 +893,7 @@ FloatingWindow {
                 horizontalPadding: Tokens.padding.large
                 verticalPadding: Tokens.padding.medium
                 icon: "tune"
-                text: Tr.tr("Open Nexus")
+                text: Tr.tr("Open Settings")
                 onClicked: WindowFactory.openPage("activities")
             }
 

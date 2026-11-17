@@ -6,10 +6,10 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
 import Quickshell.Services.SystemTray
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.State
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.State
 import qs.components.misc
 import qs.services
 import qs.utils

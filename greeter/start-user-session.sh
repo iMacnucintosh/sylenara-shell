@@ -12,7 +12,7 @@ if (( $# < 1 )); then
 fi
 
 state_home="${XDG_STATE_HOME:-${HOME:-/tmp}/.local/state}"
-state_dir="$state_home/sylphrena"
+state_dir="$state_home/sylenara"
 if ! mkdir -p "$state_dir" 2>/dev/null; then
   state_dir=/tmp
 fi
@@ -21,7 +21,7 @@ here="$(cd "$(dirname "$0")" && pwd)"
 base="${1##*/}"
 
 if [[ "$base" == "start-hyprland" || "$base" == "Hyprland" ]]; then
-  export SYLPHRENA_QUIET_LOG="$state_dir/session-startup.log"
+  export SYLENARA_QUIET_LOG="$state_dir/session-startup.log"
   qml_prefix="${HOME}/.local/lib/qt6/qml"
   systemctl --user set-environment \
     QT_QPA_PLATFORMTHEME=qt6ct \
@@ -34,7 +34,7 @@ if [[ "$base" == "start-hyprland" || "$base" == "Hyprland" ]]; then
 fi
 
 # Plasma / anything else: do not drop the controlling TTY (KWin needs the VT).
-# environment.d forces qt6ct and the Sylphrena QML path for the Hyprland
+# environment.d forces qt6ct and the Sylenara QML path for the Hyprland
 # session. systemd --user already imported them before this script runs, so
 # plasmashell would start without the KDE platform theme. Put them back only
 # on the Hyprland branch above.
@@ -46,7 +46,7 @@ log="$state_dir/session-startup.log"
   echo "QT_QPA_PLATFORMTHEME=${QT_QPA_PLATFORMTHEME-} QT_QPA_PLATFORM=${QT_QPA_PLATFORM-}"
 } >>"$log"
 
-sylph_env=(
+sylenara_env=(
   QT_QPA_PLATFORMTHEME
   QT_QPA_PLATFORM
   QML_IMPORT_PATH
@@ -56,8 +56,8 @@ sylph_env=(
   HYPRLAND_CMD
   SWAYSOCK
 )
-systemctl --user unset-environment "${sylph_env[@]}" >/dev/null 2>&1 || true
-unset "${sylph_env[@]}" || true
+systemctl --user unset-environment "${sylenara_env[@]}" >/dev/null 2>&1 || true
+unset "${sylenara_env[@]}" || true
 
 # Greeter Hyprland may still be dropping DRM master (exit, then SIGKILL).
 for _ in $(seq 1 30); do

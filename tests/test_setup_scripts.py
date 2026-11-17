@@ -15,9 +15,9 @@ class Defaults(unittest.TestCase):
         with tmpdir() as d:
             home = Path(d)
             self.assertEqual(status(run_script("setup-defaults.py", ["--check"], home)), "needed")
-            self.assertFalse((home / ".config/sylphrena/shell.json").exists())  # --check writes nothing
+            self.assertFalse((home / ".config/sylenara/shell.json").exists())  # --check writes nothing
             self.assertEqual(status(run_script("setup-defaults.py", [], home)), "done")
-            cfg = json.loads((home / ".config/sylphrena/shell.json").read_text())
+            cfg = json.loads((home / ".config/sylenara/shell.json").read_text())
             acts = cfg["activities"]["activities"]
             self.assertEqual([a["id"] for a in acts], ["principal"])
             self.assertEqual(acts[0]["workspaceCount"], 2)
@@ -33,7 +33,7 @@ class Defaults(unittest.TestCase):
     def test_never_replaces_an_existing_configuration(self):
         with tmpdir() as d:
             home = Path(d)
-            cfg = home / ".config/sylphrena/shell.json"
+            cfg = home / ".config/sylenara/shell.json"
             cfg.parent.mkdir(parents=True)
             cfg.write_text('{"bar": {"dragThreshold": 5}}')
             self.assertEqual(status(run_script("setup-defaults.py", [], home)), "kept")
@@ -43,7 +43,7 @@ class Defaults(unittest.TestCase):
     def test_an_empty_json_object_counts_as_no_configuration(self):
         with tmpdir() as d:
             home = Path(d)
-            cfg = home / ".config/sylphrena/shell.json"
+            cfg = home / ".config/sylenara/shell.json"
             cfg.parent.mkdir(parents=True)
             cfg.write_text("{}")
             self.assertEqual(status(run_script("setup-defaults.py", [], home)), "done")
@@ -51,7 +51,7 @@ class Defaults(unittest.TestCase):
     def test_a_file_that_is_not_json_is_left_alone(self):
         with tmpdir() as d:
             home = Path(d)
-            cfg = home / ".config/sylphrena/shell.json"
+            cfg = home / ".config/sylenara/shell.json"
             cfg.parent.mkdir(parents=True)
             cfg.write_text("{broken")
             self.assertEqual(status(run_script("setup-defaults.py", [], home)), "kept")
@@ -59,7 +59,7 @@ class Defaults(unittest.TestCase):
 
 
 class Kitty(unittest.TestCase):
-    BLOCK = "# >>> sylphrena"
+    BLOCK = "# >>> sylenara"
 
     def test_connects_kitty_idempotently_and_keeps_the_user_content(self):
         with tmpdir() as d:
@@ -73,7 +73,7 @@ class Kitty(unittest.TestCase):
             self.assertIn("font_size 12", text)
             self.assertIn(self.BLOCK, text)
             self.assertEqual(text.count("allow_remote_control yes"), 1)
-            self.assertEqual((conf.parent / "kitty.conf.sylphrena-backup").read_text(), "font_size 12\n")
+            self.assertEqual((conf.parent / "kitty.conf.sylenara-backup").read_text(), "font_size 12\n")
             self.assertEqual(status(run_script("setup-kitty.py", [], home)), "seen")
             run_script("setup-kitty.py", ["--force"], home)
             self.assertEqual(conf.read_text().count("allow_remote_control yes"), 1)
@@ -118,7 +118,7 @@ class Player(unittest.TestCase):
         with tmpdir() as d:
             home = Path(d)
             self.install_veo(home)
-            cfg = home / ".config/sylphrena/shell.json"
+            cfg = home / ".config/sylenara/shell.json"
             cfg.parent.mkdir(parents=True)
             cfg.write_text('{"general": {"apps": {"playback": []}}, "bar": {"x": 1}}')
             self.assertEqual(status(run_script("setup-player.py", ["--check"], home)), "needed")

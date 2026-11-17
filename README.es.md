@@ -1,15 +1,15 @@
-<h1 align="center">Sylphrena</h1>
+<h1 align="center">Sylenara</h1>
 
 <p align="center"><a href="./README.md">English</a> · <strong>Español</strong></p>
 
 <p align="center">
-Un escritorio <strong>Material You</strong> completo para <a href="https://hypr.land">Hyprland</a>: barra, paneles, actividades, ajustes, pantalla de inicio de sesión y apps propias, todo con el mismo aspecto y en español.
+<strong>Sylenara</strong> (<em>si-le-NA-ra</em>) es un escritorio <strong>Material You</strong> completo para <a href="https://hypr.land">Hyprland</a>, hecho con Quickshell: barra, paneles, actividades, ajustes, pantalla de inicio de sesión y apps propias, todo con el mismo aspecto y en español.
 </p>
 
 <div align="center">
 
-![Última versión](https://img.shields.io/github/v/tag/iMacnucintosh/sylphrena-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=versi%C3%B3n)
-![Último commit](https://img.shields.io/github/last-commit/iMacnucintosh/sylphrena-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=%C3%BAltimo%20cambio)
+![Última versión](https://img.shields.io/github/v/tag/iMacnucintosh/sylenara-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=versi%C3%B3n)
+![Último commit](https://img.shields.io/github/last-commit/iMacnucintosh/sylenara-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=%C3%BAltimo%20cambio)
 
 </div>
 
@@ -20,18 +20,18 @@ https://github.com/user-attachments/assets/1d005d8f-ab43-442d-a75a-917899f02845
 Necesitas **Arch Linux**. Desde una terminal, con tu usuario (no como root):
 
 ```sh
-git clone https://github.com/iMacnucintosh/sylphrena-shell
-cd sylphrena-shell
+git clone https://github.com/iMacnucintosh/sylenara-shell
+cd sylenara-shell
 ./install.sh
 ```
 
-El instalador mira qué tiene tu sistema, te enseña qué va a instalar y por qué, y **no toca nada hasta que confirmas**. Pide la contraseña una sola vez, e instala también Hyprland si aún no lo tienes. Al terminar, cierra sesión (o reinicia): entrarás por la pantalla de inicio de sesión de Sylphrena y, la primera vez, te recibirá un asistente de bienvenida con lo básico.
+El instalador mira qué tiene tu sistema, te enseña qué va a instalar y por qué, y **no toca nada hasta que confirmas**. Pide la contraseña una sola vez, e instala también Hyprland si aún no lo tienes. Al terminar, cierra sesión (o reinicia): entrarás por la pantalla de inicio de sesión de Sylenara y, la primera vez, te recibirá un asistente de bienvenida con lo básico.
 
 Puedes repetirlo cuando quieras: solo hace lo que falte. Para ver qué haría sin cambiar nada, `./install.sh --dry-run`.
 
-Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Nexus → Actualizaciones); desde una terminal, `sylph update`.
+Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Ajustes → Actualizaciones); desde una terminal, `syl update`.
 
-Compila algunos paquetes, así que tómatelo con calma; en un equipo con poca memoria (una máquina virtual de 2 GB, por ejemplo) compila de uno en uno y tarda más.
+Los paquetes de Sylenara llegan ya compilados y firmados desde su propio repositorio de pacman (`[sylenara]`, que el instalador añade con su clave), así que instalar lleva unos minutos y las actualizaciones llegan con las del sistema. Si el repositorio no responde, o con `./install.sh --from-source`, los compila desde el código.
 
 <!-- captura: docs/media/installer.webp — el instalador con la lista de pasos -->
 
@@ -56,25 +56,25 @@ Una barra lateral con tus escritorios y los iconos de sus apps, la bandeja del s
 
 <!-- captura: docs/media/dashboard.webp — el dashboard abierto -->
 
-### Nexus, los ajustes
+### Ajustes
 
-Todo se configura desde **Nexus** (`Super+,`), sin tocar ficheros: actividades y su aspecto, paneles, atajos de teclado (los graba pulsando la combinación), red y VPN, bluetooth, audio, pantallas (resolución, frecuencia, escala y VRR), idioma, notificaciones y actualizaciones.
+Todo se configura desde **Ajustes** (`Super+,`), sin tocar ficheros: actividades y su aspecto, paneles, atajos de teclado (los graba pulsando la combinación), red y VPN, bluetooth, audio, pantallas (resolución, frecuencia, escala y VRR), idioma, notificaciones y actualizaciones.
 
-<!-- captura: docs/media/nexus.webp — Nexus en la página de Actividades -->
+<!-- captura: docs/media/nexus.webp — Ajustes en la página de Actividades -->
 
 ### Actualizaciones del sistema
 
-Cuando hay paquetes nuevos (Arch, AUR o Flatpak), aparece un aviso en la barra. Desde ahí o desde Nexus actualizas con tu contraseña y ves el progreso en directo, sin abrir una terminal.
+Cuando hay paquetes nuevos (Arch, AUR o Flatpak), aparece un aviso en la barra. Desde ahí o desde Ajustes actualizas con tu contraseña y ves el progreso en directo, sin abrir una terminal.
 
 <!-- captura: docs/media/updates.webp — la página de actualizaciones con el progreso -->
 
 ### Extensiones y Things
 
-Sylphrena se amplía con extensiones (hidratación, tareas, tu biblioteca de Steam con logros y tiempo de juego, VPN FortiClient…). Se instalan con un clic desde **Things**, el gestor de paquetes que viene con Sylphrena, que además busca e instala programas de Arch, AUR y Flatpak.
+Sylenara se amplía con extensiones (hidratación, tareas, tu biblioteca de Steam con logros y tiempo de juego, VPN FortiClient…). Se instalan con un clic desde **Things**, el gestor de paquetes que viene con Sylenara, que además busca e instala programas de Arch, AUR y Flatpak.
 
-<!-- captura: docs/media/things.webp — Things en la sección Sylphrena -->
+<!-- captura: docs/media/things.webp — Things en la sección Sylenara -->
 
-### Apps que vienen con Sylphrena
+### Apps que vienen con Sylenara
 
 - **[Things](https://github.com/iMacnucintosh/things)**: gestor de paquetes y de extensiones.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: explorador de archivos, con el mismo aspecto que la shell.
@@ -107,13 +107,13 @@ Las apps GTK y Qt también siguen el esquema de colores, y puedes pedir que cier
 | `Super+Ctrl+←` / `→` | Actividad anterior / siguiente |
 | `Super+Tab` | Vista general de actividades |
 | `Super+D` | Dashboard |
-| `Super+,` | Nexus (ajustes) |
+| `Super+,` | Ajustes |
 | `Super+Shift+V` | Portapapeles |
 | `Super+L` | Bloquear |
 | `Impr Pant` | Captura de una zona, al portapapeles |
 | `Alt+Impr Pant` | Captura de una zona, para editarla |
 
-Todos se cambian en Nexus → Teclado y ratón.
+Todos se cambian en Ajustes → Teclado y ratón.
 
 ## Más información
 
@@ -124,10 +124,10 @@ Todos se cambian en Nexus → Teclado y ratón.
 | [CHANGELOG.md](./CHANGELOG.md) | Qué cambia en cada versión |
 | [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) | Instalación manual, compilar desde el código y contribuir |
 
-¿Algo no funciona o echas algo en falta? [Abre una issue](https://github.com/iMacnucintosh/sylphrena-shell/issues/new).
+¿Algo no funciona o echas algo en falta? [Abre una issue](https://github.com/iMacnucintosh/sylenara-shell/issues/new).
 
 ## Créditos
 
-Sylphrena empezó como un fork de [caelestia-shell](https://github.com/caelestia-dots/shell), de soramane, y hoy es un proyecto propio de [iMacnucintosh](https://github.com/iMacnucintosh). Gracias también a [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), sobre el que está construida, y a [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) y [Ax-Shell](https://github.com/Axenide/Ax-Shell) por la inspiración.
+Sylenara empezó como un fork de [caelestia-shell](https://github.com/caelestia-dots/shell), de soramane, y hoy es un proyecto propio de [iMacnucintosh](https://github.com/iMacnucintosh). Gracias también a [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), sobre el que está construida, y a [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) y [Ax-Shell](https://github.com/Axenide/Ax-Shell) por la inspiración.
 
-Licencia GPL-3.0.
+Licencia GPL-3.0. Copyright (C) 2026 Manuel López Mallorquín. Créditos y componentes de terceros en [NOTICE](NOTICE).

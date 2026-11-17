@@ -3,9 +3,9 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 
 Singleton {
     id: root
@@ -232,7 +232,7 @@ Singleton {
         }
         if (root.externalPending) {
             if (GlobalConfig.utilities.toasts.vpnChanged)
-                Toaster.toast(Tr.tr("VPN connection failed"), Tr.tr("Enable the extension of this provider in Nexus → Extensions"), "vpn_key_alert");
+                Toaster.toast(Tr.tr("VPN connection failed"), Tr.tr("Enable the extension of this provider in Settings → Extensions"), "vpn_key_alert");
             return;
         }
         if (status.state === "needs-auth" && status.authUrl) {
@@ -956,7 +956,7 @@ Singleton {
     LoggingCategory {
         id: lc
 
-        name: "sylphrena.qml.services.vpn"
+        name: "sylenara.qml.services.vpn"
         defaultLogLevel: LoggingCategory.Info
     }
 

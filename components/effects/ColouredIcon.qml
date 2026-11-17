@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell.Widgets
-import Sylphrena.Images
+import Sylenara.Images
 
 IconImage {
     id: root

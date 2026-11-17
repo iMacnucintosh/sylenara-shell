@@ -1,5 +1,5 @@
 import QtQuick
-import Sylphrena.Components
+import Sylenara.Components
 
 Item {
     id: root

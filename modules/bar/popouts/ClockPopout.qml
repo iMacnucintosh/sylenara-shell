@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.modules.dashboard.dash
@@ -162,6 +162,7 @@ ColumnLayout {
                 implicitHeight: customMins.implicitHeight
                 implicitWidth: customMins.implicitHeight
                 icon: "add"
+                tooltip: Tr.tr("Start timer")
                 type: IconButton.Tonal
                 onClicked: root.addCustomTimer()
             }
@@ -255,6 +256,7 @@ ColumnLayout {
                     IconButton {
                         isRound: true
                         icon: "close"
+                        tooltip: Tr.tr("Cancel timer")
                         type: IconButton.Text
                         onClicked: Timers.cancel(timerRow.modelData.id)
                     }

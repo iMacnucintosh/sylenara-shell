@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena
-import Sylphrena.Config
+import Sylenara
+import Sylenara.Config
 import qs.components
 import qs.services
 import qs.modules.drawers

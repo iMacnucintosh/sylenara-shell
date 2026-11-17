@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Manage Sylphrena extensions: from a terminal, and what Things calls (`sylph ext …` runs it).
+"""Manage Sylenara extensions: from a terminal, and what Things calls (`syl ext …` runs it).
 The shell owns the extension contract, so this is the one implementation of installing and removing
 (see AGENTS.md, «Contrato con Things»).
 
@@ -14,7 +14,7 @@ The shell owns the extension contract, so this is the one implementation of inst
                              compatibility with this shell, install, write the receipt, enable it
   ext.py update-hub <id>     install the version the hub's catalog has now (what the shell's updates run)
   ext.py <id>                the commands an extension offers
-  ext.py <id> <command> [args]   run one of them (sylph ext hydration show, sylph ext hydration add 250)
+  ext.py <id> <command> [args]   run one of them (syl ext hydration show, syl ext hydration add 250)
   ext.py remove <id> [--purge]  the extension forgets its data in the shell, its system pieces go, then its files.
                              --purge also deletes its settings and data (the paths its manifest `data` lists)
   ext.py enable <id> | disable <id>
@@ -24,7 +24,7 @@ Root: the system pieces run with `sudo`; with SUDO_ASKPASS set (Things sets it) 
 password is asked by the caller's own dialog and never reaches this script.
 
 The shell must be running for rescan / enable / disable and for the extension to forget its data
-(`qs -c sylphrena ipc …`); without it the files are still installed or removed and the shell picks
+(`qs -c sylenara ipc …`); without it the files are still installed or removed and the shell picks
 them up when it starts. Progress goes to stdout as «==> …» lines.
 """
 import datetime
@@ -42,13 +42,13 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SHELL = HERE.parent
-USER_DIR = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "sylphrena" / "extensions"
+USER_DIR = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "sylenara" / "extensions"
 BUILTIN = SHELL / "extensions"
 
 # Zips of the hub live in the releases of its repository. Anything else is refused (defence in depth:
-# the URL comes from a catalog). Tests may point SYLPHRENA_HUB_TEST_PREFIX at a local folder (file://…).
-HUB_RELEASES = "https://github.com/iMacnucintosh/sylphrena-hub/releases/download/"
-HUB_INDEX_API = "https://api.github.com/repos/iMacnucintosh/sylphrena-hub/contents/index.json?ref=main"
+# the URL comes from a catalog). Tests may point SYLENARA_HUB_TEST_PREFIX at a local folder (file://…).
+HUB_RELEASES = "https://github.com/iMacnucintosh/sylenara-hub/releases/download/"
+HUB_INDEX_API = "https://api.github.com/repos/iMacnucintosh/sylenara-hub/contents/index.json?ref=main"
 MAX_ZIP = 50 * 1024 * 1024
 ID_RE = re.compile(r"^[a-z0-9-]+$")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -63,9 +63,9 @@ def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess:
 
 
 def ipc(*args: str) -> str | None:
-    """Result of `qs -c sylphrena ipc call extensions …`, or None if the shell is not running."""
+    """Result of `qs -c sylenara ipc call extensions …`, or None if the shell is not running."""
     try:
-        r = run(["qs", "-c", "sylphrena", "ipc", "call", "extensions", *args], check=False)
+        r = run(["qs", "-c", "sylenara", "ipc", "call", "extensions", *args], check=False)
     except FileNotFoundError:
         return None
     out = r.stdout.strip()
@@ -102,7 +102,7 @@ def sudo_script(path: Path) -> bool:
     return subprocess.run([*sudo(), "bash", str(path)]).returncode == 0
 
 
-# ── Compatibility (mirrors Extensions.qml: apiVersion, requires.sylphrena) ──────────────────────────
+# ── Compatibility (mirrors Extensions.qml: apiVersion, requires.sylenara) ──────────────────────────
 
 def _parts(v: str) -> list[int] | None:
     m = re.match(r"^v?(\d+)(?:\.(\d+))?(?:\.(\d+))?", str(v))
@@ -143,10 +143,10 @@ def incompatibility(info: dict, shell: dict) -> str:
     if not shell["running"]:
         return ""
     if int(info.get("apiVersion") or 1) > int(shell["apiVersion"] or 1):
-        return f"needs a newer Sylphrena (extension API {info['apiVersion']})"
+        return f"needs a newer Sylenara (extension API {info['apiVersion']})"
     spec = info.get("requires") or ""
     if not satisfies(shell["shellVersion"], spec):
-        return f"needs Sylphrena {spec} (this is {shell['shellVersion']})"
+        return f"needs Sylenara {spec} (this is {shell['shellVersion']})"
     return ""
 
 
@@ -235,12 +235,12 @@ def cmd_install(zip_path: str) -> int:
 
 def download(url: str, dest: Path) -> str:
     """Fetch the zip to `dest`, capped, and return its sha256."""
-    test_prefix = os.environ.get("SYLPHRENA_HUB_TEST_PREFIX", "")
+    test_prefix = os.environ.get("SYLENARA_HUB_TEST_PREFIX", "")
     if not (url.startswith(HUB_RELEASES) or (test_prefix and url.startswith(test_prefix))):
-        raise ValueError("the download is not from the Sylphrena Hub releases")
+        raise ValueError("the download is not from the Sylenara Hub releases")
     h = hashlib.sha256()
     size = 0
-    req = urllib.request.Request(url, headers={"User-Agent": "sylphrena-ext"})
+    req = urllib.request.Request(url, headers={"User-Agent": "sylenara-ext"})
     with urllib.request.urlopen(req, timeout=60) as r, open(dest, "wb") as f:
         while True:
             chunk = r.read(65536)
@@ -264,7 +264,7 @@ def cmd_install_hub(args: list[str]) -> int:
     if not url or not SHA_RE.match(sha) or not version:
         print("error: --url, --sha256 (64 hex) and --version are required", file=sys.stderr)
         return 2
-    with tempfile.TemporaryDirectory(prefix="sylphrena-hub-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="sylenara-hub-") as tmp:
         zip_path = Path(tmp) / f"{ext_id}.zip"
         step(f"Downloading {ext_id} {version}")
         try:
@@ -310,11 +310,11 @@ SHELL_OWNED = {
 
 def data_paths(ext_id: str, manifest: dict) -> list[Path]:
     """Settings and data an extension leaves behind: its config file, plus what its manifest `data` lists
-    (strings "config:<path>" or "state:<path>", relative to ~/.config/sylphrena or ~/.local/state/sylphrena).
+    (strings "config:<path>" or "state:<path>", relative to ~/.config/sylenara or ~/.local/state/sylenara).
     Anything that would leave those two folders, or that the shell itself owns there, is ignored."""
     roots = {
-        "config": Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config") / "sylphrena",
-        "state": Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "sylphrena",
+        "config": Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config") / "sylenara",
+        "state": Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "sylenara",
     }
     out = [roots["config"] / "extensions" / f"{ext_id}.json"]
     for entry in manifest.get("data") or []:
@@ -346,8 +346,8 @@ def cmd_update_hub(ext_id: str) -> int:
     try:
         # The API, not raw.githubusercontent.com: right after a version is published, the raw file's cache may still
         # give the old catalog for minutes (and install the old version again). This runs rarely: the API's limit is fine.
-        url = os.environ.get("SYLPHRENA_HUB_INDEX") or HUB_INDEX_API
-        req = urllib.request.Request(url, headers={"Accept": "application/vnd.github.raw", "User-Agent": "sylphrena-ext"})
+        url = os.environ.get("SYLENARA_HUB_INDEX") or HUB_INDEX_API
+        req = urllib.request.Request(url, headers={"Accept": "application/vnd.github.raw", "User-Agent": "sylenara-ext"})
         with urllib.request.urlopen(req, timeout=15) as r:
             entry = next((i for i in json.load(r).get("items", []) if i.get("id") == ext_id), None)
     except (OSError, ValueError, urllib.error.URLError) as e:

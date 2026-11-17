@@ -4,10 +4,12 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
-import Sylphrena
-import Sylphrena.Components
-import Sylphrena.Config
+import Sylenara
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
+import qs.components.controls
 import qs.services
 
 ClipRect {
@@ -68,6 +70,13 @@ ClipRect {
                 implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.extraSmall
                 implicitHeight: implicitWidth
 
+                // The name of the activity (its icon alone does not say which it is); not over its own menu
+                StyledToolTip {
+                    shown: headerLayer.containsMouse && !root.popouts.hasCurrent
+                    text: root.activity?.name ? Tr.trMarked(root.activity.name) : ""
+                    side: "right"
+                }
+
                 MaterialIcon {
                     id: headerIcon
 
@@ -78,6 +87,8 @@ ClipRect {
                 }
 
                 StateLayer {
+                    id: headerLayer
+
                     anchors.fill: parent
                     radius: Tokens.rounding.full
                     acceptedButtons: Qt.LeftButton | Qt.RightButton

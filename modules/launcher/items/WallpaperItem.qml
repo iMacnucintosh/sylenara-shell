@@ -1,8 +1,8 @@
 import QtQuick
-import Sylphrena.Config
-import Sylphrena.Models
-import Sylphrena.Multimedia
-import Sylphrena.State
+import Sylenara.Config
+import Sylenara.Models
+import Sylenara.Multimedia
+import Sylenara.State
 import qs.components
 import qs.components.effects
 import qs.services

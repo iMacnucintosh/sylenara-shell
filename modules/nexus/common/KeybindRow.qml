@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -121,6 +121,7 @@ ConnectedRect {
         IconButton {
             visible: !root.isDefault || root.currentBind === ""
             icon: "restart_alt"
+            tooltip: Tr.tr("Reset to default")
             type: IconButton.Text
             isRound: true
             font: Tokens.font.icon.medium

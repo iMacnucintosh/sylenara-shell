@@ -4,8 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Bluetooth
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -151,6 +151,7 @@ PageBase {
 
                                 IconButton {
                                     icon: "settings"
+                                    tooltip: Tr.tr("Settings")
                                     type: IconButton.Text
                                     padding: Tokens.padding.small
                                     inactiveOnColour: device.connected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant

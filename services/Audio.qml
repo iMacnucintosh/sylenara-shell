@@ -4,10 +4,10 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 
 Singleton {
     id: root

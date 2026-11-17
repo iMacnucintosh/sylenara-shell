@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.components.controls
 import qs.modules.bar as Bar

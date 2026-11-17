@@ -6,9 +6,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.containers
@@ -351,15 +351,11 @@ StyledWindow {
                             required property var modelData
 
                             icon: modelData.icon
+                            tooltip: toolButton.modelData.label
                             type: IconButton.Tonal
                             isToggle: true
                             checked: win.tool === modelData.id
                             onClicked: win.tool = modelData.id
-
-                            StyledToolTip {
-                                shown: toolButton.hovered
-                                text: toolButton.modelData.label
-                            }
                         }
                     }
 
@@ -406,6 +402,7 @@ StyledWindow {
                     IconButton {
                         Layout.leftMargin: Tokens.spacing.small
                         icon: "undo"
+                        tooltip: Tr.tr("Undo")
                         type: IconButton.Text
                         disabled: !win.history.length
                         onClicked: win.undo()

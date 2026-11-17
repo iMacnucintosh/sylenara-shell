@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Shapes
 import Quickshell
 import M3Shapes
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.Services
 import qs.components
 import qs.components.widgets
 import qs.services

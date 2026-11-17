@@ -5,11 +5,11 @@ import QtQuick.Layouts
 import qs.components
 import qs.services
 
-// Sylphrena — wind-spirit companion with an original voice. M3 UI.
+// Sylenara — wind-spirit companion with an original voice. M3 UI.
 StyledRect {
     id: root
 
-    readonly property string companionName: "Sylphrena"
+    readonly property string companionName: "Sylenara"
     readonly property bool listening: Auth.busy
     readonly property bool welcomed: Auth.success
     readonly property bool troubled: !!Auth.message && !Auth.busy && !Auth.success
@@ -71,7 +71,7 @@ StyledRect {
             Layout.alignment: Qt.AlignHCenter
             spacing: Theme.spacing.medium
 
-            SylphOrb {
+            SylenaraOrb {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: implicitWidth
                 Layout.preferredHeight: implicitHeight

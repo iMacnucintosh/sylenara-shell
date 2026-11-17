@@ -1,7 +1,7 @@
 pragma Singleton
 
 import Quickshell
-import Sylphrena.Config
+import Sylenara.Config
 
 Singleton {
     id: root

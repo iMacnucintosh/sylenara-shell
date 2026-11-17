@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -109,6 +109,7 @@ PageBase {
                 Layout.minimumWidth: height
                 Layout.maximumWidth: height
                 icon: "open_in_new"
+                tooltip: Tr.tr("Open")
                 type: IconButton.Tonal
                 isRound: true
                 font: Tokens.font.icon.medium
@@ -167,6 +168,7 @@ PageBase {
 
             IconButton {
                 icon: "edit"
+                tooltip: Tr.tr("Edit")
                 type: IconButton.Text
                 font: Tokens.font.icon.small
                 inactiveOnColour: Colours.palette.m3onSurfaceVariant

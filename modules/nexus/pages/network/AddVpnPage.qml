@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -208,7 +208,7 @@ PageBase {
                 Layout.fillWidth: true
                 Layout.leftMargin: Tokens.padding.small
                 visible: !root.extEntry
-                text: Tr.tr("This provider type comes from an extension that is disabled. Enable it in Nexus → Extensions to edit the connection.")
+                text: Tr.tr("This provider type comes from an extension that is disabled. Enable it in Settings → Extensions to edit the connection.")
                 color: Colours.palette.m3error
                 font: Tokens.font.body.small
                 wrapMode: Text.WordWrap

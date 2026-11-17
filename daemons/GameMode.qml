@@ -1,10 +1,10 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.State
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.State
 import qs.services
 
 Scope {

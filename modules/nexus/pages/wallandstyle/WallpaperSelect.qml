@@ -3,10 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Models
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Models
 import qs.components
 import qs.components.controls
 import qs.components.filedialog

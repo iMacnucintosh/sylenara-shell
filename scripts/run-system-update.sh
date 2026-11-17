@@ -10,7 +10,7 @@ set -euo pipefail
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 HELPER="${SCRIPT_DIR}/sudo-askpass-helper.py"
 ASKPASS="${SCRIPT_DIR}/sudo-askpass-socket.py"
-SOCK="${XDG_RUNTIME_DIR:-/tmp}/sylphrena-sudo-$$.sock"
+SOCK="${XDG_RUNTIME_DIR:-/tmp}/sylenara-sudo-$$.sock"
 helper_pid=""
 
 IFS= read -r PASSWORD || true
@@ -49,12 +49,12 @@ if [[ ! -S "$SOCK" ]]; then
 fi
 
 export SUDO_ASKPASS="$ASKPASS"
-export SYLPHRENA_SUDO_ASKPASS_SOCK="$SOCK"
+export SYLENARA_SUDO_ASKPASS_SOCK="$SOCK"
 
 do_aur=0
 do_arch=0
 do_flatpak=0
-do_sylphrena=0
+do_sylenara=0
 extensions=()
 wrapper="yay"
 aur_flags=()
@@ -83,8 +83,8 @@ while [[ $# -gt 0 ]]; do
             flatpak_flags+=("$2")
             shift 2
             ;;
-        --sylphrena)
-            do_sylphrena=1
+        --sylenara)
+            do_sylenara=1
             shift
             ;;
         --extension)
@@ -98,7 +98,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # A source whose tool is not installed is skipped, not fatal (a fresh system has no Flatpak, maybe no AUR
-# helper): with set -e it stopped everything after it, Sylphrena's own update included.
+# helper): with set -e it stopped everything after it, Sylenara's own update included.
 if [[ "$do_aur" -eq 1 ]] && ! command -v "$wrapper" >/dev/null; then
     echo "→ ${wrapper} is not installed: updating the official packages with pacman instead"
     do_aur=0
@@ -124,10 +124,10 @@ if [[ "$do_flatpak" -eq 1 ]]; then
     flatpak update -y ${flatpak_flags[@]+"${flatpak_flags[@]}"}
 fi
 
-# Sylphrena's own packages (built from their release by the installer, with this same askpass), then the extensions
+# Sylenara's own packages (built from their release by the installer, with this same askpass), then the extensions
 # installed from the hub (exactly what Things runs). After the system, so they build against what was just updated.
-if [[ "$do_sylphrena" -eq 1 ]]; then
-    echo "→ Sylphrena: installer.py --update"
+if [[ "$do_sylenara" -eq 1 ]]; then
+    echo "→ Sylenara: installer.py --update"
     python3 "${SCRIPT_DIR}/installer.py" --update --yes </dev/null
 fi
 

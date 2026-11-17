@@ -1,0 +1,118 @@
+pragma Singleton
+pragma ComponentBehavior: Bound
+
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import Sylenara
+import Sylenara.I18n
+import qs.utils
+
+// What Sylenara itself can update, as two more sources of the updates list (next to pacman, the AUR and Flatpak):
+//  · SYLENARA: its packages (the shell, the CLI, Seeker, Things) behind their latest release, on a machine that
+//    installed them; updated by the installer in --update mode.
+//  · EXTENSION: the extensions installed from the hub whose catalog has a newer version; updated with
+//    `ext.py update-hub` (what Things does too).
+// scripts/check-sylenara-releases.py finds them; Updates merges `entries` into its list and its "Update" runs them
+// after the system packages, with the same password (scripts/run-system-update.sh --sylenara --extension <id>).
+Singleton {
+    id: root
+
+
+    // The packages of the family: with the package repository they update with the system's (pacman lists them),
+    // and the update then also runs the installer for what comes after them (the login screen, the default player)
+    readonly property list<string> familyPackages: ["sylenara-shell-git", "sylenara-cli-git", "seeker-git", "things-git", "veo-git"]
+
+    // [{ pkg, name, repo, installed, latest, notes, url, new }] (new: not installed yet, comes with the update;
+    // "sylenara-repo": the package repository, set up by the update)
+    property var updates: []
+    // [{ id, name, installed, latest }]
+    property var extensions: []
+
+    // The release of the shell itself, if it is one of them (its notes are the ones shown in Nexus)
+    readonly property var shell: updates.find(u => u.pkg === "sylenara-shell-git") ?? null
+    readonly property string version: shell ? shell.latest : (updates[0]?.latest ?? "")
+    readonly property bool hasUpdate: updates.length > 0
+
+    // In the shape of Updates.packages: { name, from, to, source, … }
+    readonly property var entries: [...updates.map(u => ({
+                name: u.pkg === "sylenara-repo" ? Tr.tr("Sylenara packages") : u.name,
+                from: u.installed,
+                to: u.latest,
+                source: "SYLENARA",
+                pkg: u.pkg,
+                // Not installed yet: an app of the family that comes with this update
+                isNew: !!u.new,
+                url: u.url,
+                desc: ""
+            })), ...extensions.map(e => ({
+                name: Tr.tr(e.name),
+                from: e.installed,
+                to: e.latest,
+                source: "EXTENSION",
+                id: e.id,
+                desc: ""
+            }))]
+
+    // What has been announced already (per version), kept across restarts: each new version is announced once
+    readonly property var _announced: {
+        try {
+            return JSON.parse(announcedFile.text()).announced ?? [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function check(): void {
+        if (!proc.running)
+            proc.running = true;
+    }
+
+    function announce(): void {
+        const keys = [...root.updates.map(u => `${u.pkg}@${u.latest}`), ...root.extensions.map(e => `ext:${e.id}@${e.latest}`)];
+        const fresh = root.entries.filter((_, i) => !root._announced.includes(keys[i]));
+        if (!fresh.length)
+            return;
+        announcedFile.setText(JSON.stringify({ announced: [...new Set([...root._announced, ...keys])] }));
+        const own = fresh.some(e => e.source === "SYLENARA");
+        const exts = fresh.some(e => e.source === "EXTENSION");
+        const title = own && exts ? Tr.tr("Updates available") : own ? Tr.tr("Sylenara updates") : Tr.tr("Extension updates");
+        Toaster.toast(title, fresh.map(e => e.name).join("  ·  "), "sylenara");
+    }
+
+    FileView {
+        id: announcedFile
+
+        path: `${Paths.state}/updates-announced.json`
+        printErrors: false
+        blockLoading: true
+    }
+
+    Timer {
+        // The same interval as the system's packages (Nexus → Updates → settings); Updates.refresh() checks too
+        interval: Updates.pollIntervalMinutes * 60 * 1000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.check()
+    }
+
+    Process {
+        id: proc
+
+        command: ["python3", Quickshell.shellPath("scripts/check-sylenara-releases.py")]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    return;
+                }
+                root.updates = data.updates ?? [];
+                root.extensions = data.extensions ?? [];
+                root.announce();
+            }
+        }
+    }
+}

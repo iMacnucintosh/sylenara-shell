@@ -1,9 +1,9 @@
 import QtQuick
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.Multimedia
-import Sylphrena.Shaders
-import Sylphrena.State
+import Sylenara
+import Sylenara.Config
+import Sylenara.Multimedia
+import Sylenara.Shaders
+import Sylenara.State
 import qs.services
 
 Item {

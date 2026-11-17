@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Templates
-import Sylphrena.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 

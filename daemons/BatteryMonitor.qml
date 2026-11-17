@@ -1,10 +1,10 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 
 Scope {
     id: root
@@ -13,7 +13,8 @@ Scope {
     property real lastPercentage: 100
 
     function ensureDesktopPerformance(): void {
-        if (UPower.displayDevice.isLaptopBattery)
+        // A desktop without the performance profile (no CPU driver for it) would only log an error
+        if (UPower.displayDevice.isLaptopBattery || !PowerProfiles.hasPerformanceProfile)
             return;
         if (PowerProfiles.profile !== PowerProfile.Performance)
             PowerProfiles.profile = PowerProfile.Performance;
