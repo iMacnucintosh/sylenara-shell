@@ -3,8 +3,8 @@ pragma Singleton
 import ".."
 import QtQuick
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.utils
 
 Searcher {

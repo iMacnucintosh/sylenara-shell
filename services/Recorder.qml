@@ -25,7 +25,7 @@ Singleton {
         root.arming = true;
         // Detached: must not be tied to the utilities panel Process lifetime
         Paths.pinRecsDir();
-        Quickshell.execDetached(["env", `SYLPHRENA_RECORDINGS_DIR=${Paths.recsdir}`, root.startScript, ...extraArgs]);
+        Quickshell.execDetached(["env", `LUNELE_RECORDINGS_DIR=${Paths.recsdir}`, root.startScript, ...extraArgs]);
         props.running = true;
         props.paused = false;
         props.elapsed = 0;
@@ -39,7 +39,7 @@ Singleton {
         if (!props.running && !root.arming)
             return;
         root.arming = false;
-        Quickshell.execDetached(["env", `SYLPHRENA_RECORDINGS_DIR=${Paths.recsdir}`, root.recordScript]);
+        Quickshell.execDetached(["env", `LUNELE_RECORDINGS_DIR=${Paths.recsdir}`, root.recordScript]);
         props.running = false;
         props.paused = false;
         checkTimer.restart();

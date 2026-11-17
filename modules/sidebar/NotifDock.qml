@@ -4,8 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.containers
 import qs.components.controls

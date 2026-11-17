@@ -41,9 +41,9 @@ def manifest(**over) -> str:
 
 def sandbox_env(home: Path) -> dict:
     """An environment whose HOME, config, state and data live in `home` (nothing of the real ones is seen)."""
-    env = {k: v for k, v in os.environ.items() if not k.startswith(("XDG_", "SYLPHRENA"))}
+    env = {k: v for k, v in os.environ.items() if not k.startswith(("XDG_", "LUNELE"))}
     env.update(HOME=str(home), XDG_CONFIG_HOME=str(home / ".config"), XDG_STATE_HOME=str(home / ".local/state"),
-               XDG_DATA_HOME=str(home / ".local/share"), SYLPHRENA_TEST_KEYBOARD="")   # no system layout unless a test sets one
+               XDG_DATA_HOME=str(home / ".local/share"), LUNELE_TEST_KEYBOARD="")   # no system layout unless a test sets one
     return env
 
 
@@ -53,4 +53,4 @@ def run_script(name: str, args: list[str], home: Path, env: dict | None = None) 
 
 
 def tmpdir() -> tempfile.TemporaryDirectory:
-    return tempfile.TemporaryDirectory(prefix="sylph-test-")
+    return tempfile.TemporaryDirectory(prefix="lunele-test-")

@@ -1,6 +1,6 @@
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.modules.nexus.common
 
 PageBase {

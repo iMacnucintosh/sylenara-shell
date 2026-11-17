@@ -4,7 +4,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.I18n
+import Lunele.I18n
 
 Singleton {
     id: root
@@ -1725,7 +1725,7 @@ Singleton {
     LoggingCategory {
         id: lc
 
-        name: "sylphrena.qml.services.nmcli"
+        name: "lunele.qml.services.nmcli"
         defaultLogLevel: LoggingCategory.Info
     }
 

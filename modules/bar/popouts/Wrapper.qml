@@ -4,7 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 import qs.modules.nexus

@@ -6,9 +6,9 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-import Sylphrena.Blobs
-import Sylphrena.Config
-import Sylphrena.State
+import Lunele.Blobs
+import Lunele.Config
+import Lunele.State
 import qs.components
 import qs.components.containers
 import qs.services

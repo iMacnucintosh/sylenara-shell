@@ -2,10 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Lunele
+import Lunele.Config
+import Lunele.I18n
+import Lunele.Services
 import qs.components
 import qs.components.controls
 import qs.services
@@ -52,7 +52,7 @@ Column {
         KeyNavigation.down: suspendBtn
     }
 
-    // The animated Sylphrena orb between the buttons; only while the menu is open (it never stops animating)
+    // The animated Lunele orb between the buttons; only while the menu is open (it never stops animating)
     Item {
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
@@ -61,7 +61,7 @@ Column {
             anchors.centerIn: parent
             active: root.screenState.session
 
-            sourceComponent: SylphOrb {
+            sourceComponent: LuneleOrb {
                 orbSize: Math.round(Tokens.sizes.session.button / 1.55)
             }
         }

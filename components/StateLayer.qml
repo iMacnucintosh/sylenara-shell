@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Shapes
-import Sylphrena
-import Sylphrena.Config
+import Lunele
+import Lunele.Config
 import qs.services
 
 MouseArea {

@@ -1,8 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.Config
+import Lunele
+import Lunele.Config
 import qs.components.misc
 import qs.services
 import qs.modules.nexus
@@ -246,7 +246,7 @@ Scope {
     LoggingCategory {
         id: lc
 
-        name: "sylphrena.qml.shortcuts"
+        name: "lunele.qml.shortcuts"
         defaultLogLevel: LoggingCategory.Info
     }
 }

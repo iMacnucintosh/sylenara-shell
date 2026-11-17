@@ -1,0 +1,27 @@
+#pragma once
+
+#include "settings/objectnode.hpp"
+#include "common.hpp"
+
+namespace lunele::shell::config {
+
+using Qt::StringLiterals::operator""_s;
+
+class AddonsTimers : public settings::ObjectNode {
+    CONFIG_NODE(AddonsTimers, settings::ObjectNode)
+
+    CONFIG_PROPERTY(bool, enabled, true)
+    // Quick presets for the clock popout (match hydration presetMl0..N naming).
+    CONFIG_PROPERTY(int, presetMins0, 5)
+    CONFIG_PROPERTY(int, presetMins1, 10)
+    CONFIG_PROPERTY(int, presetMins2, 20)
+    CONFIG_PROPERTY(int, presetMins3, 30)
+};
+
+class AddonsConfig : public settings::ObjectNode {
+    CONFIG_NODE(AddonsConfig, settings::ObjectNode)
+
+    CONFIG_GLOBAL_SUBOBJECT(AddonsTimers, timers)
+};
+
+} // namespace lunele::shell::config

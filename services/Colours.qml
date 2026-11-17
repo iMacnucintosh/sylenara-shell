@@ -4,8 +4,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.Config
-import Sylphrena.Images
+import Lunele.Config
+import Lunele.Images
 import qs.services
 import qs.utils
 
@@ -86,7 +86,7 @@ Singleton {
             root.scheduleAppThemeApply();
     }
 
-    readonly property string quietCli: Quickshell.shellPath("scripts/sylphrena-quiet.py")
+    readonly property string quietCli: Quickshell.shellPath("scripts/lunele-quiet.py")
 
     function runSchemeSet(cliArgs: list<string>): void {
         Quickshell.execDetached(["python3", root.quietCli, ...cliArgs]);
@@ -188,22 +188,22 @@ Singleton {
         const msgs = [];
         if (Hypr.usingLua) {
             const drawersBlur = transparency.enabled;
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-drawers" }, blur = ${drawersBlur} })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-drawers" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-drawers" }, blur = ${drawersBlur} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-drawers" }, ignore_alpha = ${ignoreAlpha} })`);
             // Same surface treatment as drawers (m3surface + hypr blur)
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-clipboard" }, blur = ${drawersBlur} })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-clipboard" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-clipboard" }, blur = ${drawersBlur} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-clipboard" }, ignore_alpha = ${ignoreAlpha} })`);
             // Overview always uses the translucent + Hyprland blur look
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-activities-overview" }, blur = true })`);
-            msgs.push(`eval hl.layer_rule({ match = { namespace = "sylphrena-activities-overview" }, ignore_alpha = ${ignoreAlpha} })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-activities-overview" }, blur = true })`);
+            msgs.push(`eval hl.layer_rule({ match = { namespace = "lunele-activities-overview" }, ignore_alpha = ${ignoreAlpha} })`);
         } else {
             const drawersBlur = transparency.enabled ? 1 : 0;
-            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylphrena-drawers`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-drawers`);
-            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace sylphrena-clipboard`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-clipboard`);
-            msgs.push(`keyword layerrule blur 1, match:namespace sylphrena-activities-overview`);
-            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace sylphrena-activities-overview`);
+            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace lunele-drawers`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace lunele-drawers`);
+            msgs.push(`keyword layerrule blur ${drawersBlur}, match:namespace lunele-clipboard`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace lunele-clipboard`);
+            msgs.push(`keyword layerrule blur 1, match:namespace lunele-activities-overview`);
+            msgs.push(`keyword layerrule ignore_alpha ${ignoreAlpha}, match:namespace lunele-activities-overview`);
         }
         Hypr.extras.batchMessage(msgs);
     }

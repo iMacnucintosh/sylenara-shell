@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync sylphrena cli.json theme hooks for shell-dark / apps-light mode."""
+"""Sync lunele cli.json theme hooks for shell-dark / apps-light mode."""
 
 from __future__ import annotations
 
@@ -11,9 +11,9 @@ from pathlib import Path
 # GTK/Thunar CSS still updates (enableGtk stays on) so the file manager follows
 # the activity scheme; color-scheme prefer-light covers Adwaita/Qt apps.
 POST_HOOK = (
-    'test -f "${XDG_STATE_HOME:-$HOME/.local/state}/sylphrena/force-apps-light" '
+    'test -f "${XDG_STATE_HOME:-$HOME/.local/state}/lunele/force-apps-light" '
     '&& dconf write /org/gnome/desktop/interface/color-scheme "\'prefer-light\'"'
-    ' ; "$HOME/.config/sylphrena/scripts/kitty-reload-colours.sh" || true'
+    ' ; "$HOME/.config/lunele/scripts/kitty-reload-colours.sh" || true'
 )
 
 
@@ -24,7 +24,7 @@ def main() -> None:
     parser.add_argument("--skip-css", action="store_true")
     args = parser.parse_args()
 
-    path = Path.home() / ".config/sylphrena/cli.json"
+    path = Path.home() / ".config/lunele/cli.json"
     cfg: dict = {}
     if path.exists():
         try:
@@ -35,7 +35,7 @@ def main() -> None:
     theme = cfg.setdefault("theme", {})
     theme["postHook"] = POST_HOOK
     # The CLI keeps running for GTK (dconf icon theme, Papirus colours); with light apps the CSS it
-    # writes is filtered down to the accent colours (sylphrena-quiet.py / gtk-light-css.py).
+    # writes is filtered down to the accent colours (lunele-quiet.py / gtk-light-css.py).
     theme["enableGtk"] = True
     # Skip Qt colour engine while apps should stay light.
     theme["enableQt"] = not args.light_apps

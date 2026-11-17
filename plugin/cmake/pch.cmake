@@ -1,5 +1,5 @@
-add_library(sylphrena-pch INTERFACE)
-target_precompile_headers(sylphrena-pch INTERFACE
+add_library(lunele-pch INTERFACE)
+target_precompile_headers(lunele-pch INTERFACE
     <qobject.h>
     <qqmlintegration.h>
     <qstring.h>

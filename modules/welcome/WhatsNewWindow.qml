@@ -4,8 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.controls
 import qs.components.containers
@@ -56,7 +56,7 @@ FloatingWindow {
     }
 
     // TRANSLATORS: %1 = the version, e.g. 0.6.0
-    title: Tr.tr("What's new in Sylphrena %1").arg(win.latest)
+    title: Tr.tr("What's new in Lunele %1").arg(win.latest)
     color: Colours.tPalette.m3surface
     surfaceFormat.opaque: false
     // A small window of fixed size: Hyprland floats those (and centres them) instead of tiling them
@@ -229,7 +229,7 @@ FloatingWindow {
                 Layout.fillHeight: true
             }
 
-            SylphOrb {
+            LuneleOrb {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: 130 * 1.55
                 Layout.preferredHeight: 130 * 1.55
@@ -244,8 +244,8 @@ FloatingWindow {
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
-                // TRANSLATORS: %1 = the version Sylphrena was updated to
-                text: Tr.tr("Sylphrena was updated to %1").arg(win.latest)
+                // TRANSLATORS: %1 = the version Lunele was updated to
+                text: Tr.tr("Lunele was updated to %1").arg(win.latest)
                 color: Colours.palette.m3onSurfaceVariant
                 font: Tokens.font.body.large
             }

@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -101,7 +101,7 @@ ColumnLayout {
                     MaterialIcon {
                         visible: {
                             const s = (row.modelData.source || "").toUpperCase();
-                            return s !== "AUR" && s !== "SYLPHRENA";
+                            return s !== "AUR" && s !== "LUNELE";
                         }
                         text: {
                             const s = (row.modelData.source || "").toUpperCase();
@@ -115,9 +115,9 @@ ColumnLayout {
                         fontStyle: Tokens.font.icon.small
                     }
 
-                    // Sylphrena's own packages: its orb
-                    SylphOrb {
-                        visible: row.modelData.source === "SYLPHRENA"
+                    // Lunele's own packages: its orb
+                    LuneleOrb {
+                        visible: row.modelData.source === "LUNELE"
                         orbSize: Math.round(Tokens.font.icon.small.pointSize * 1.1)
                         Layout.preferredWidth: Tokens.font.icon.small.pointSize * 1.6
                         Layout.preferredHeight: Tokens.font.icon.small.pointSize * 1.6
@@ -144,7 +144,7 @@ ColumnLayout {
                             const to = row.modelData.to || "";
                             if (frm && to)
                                 return `${frm} → ${to}`;
-                            // TRANSLATORS: an app of Sylphrena installed by this update; %1 = its version
+                            // TRANSLATORS: an app of Lunele installed by this update; %1 = its version
                             if (row.modelData.isNew)
                                 return (to ? Tr.tr("New · %1").arg(to) : Tr.trCtx("New", "update list"));
                             return to || frm;

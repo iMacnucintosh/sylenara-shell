@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import "items"
 import QtQuick
 import Quickshell
-import Sylphrena.Config
+import Lunele.Config
 import qs.components.controls
 import qs.services
 

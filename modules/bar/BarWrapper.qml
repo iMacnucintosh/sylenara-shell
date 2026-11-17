@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.utils
 import qs.modules.bar.popouts as BarPopouts

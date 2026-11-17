@@ -1,6 +1,6 @@
 import QtQuick
-import Sylphrena.Blobs
-import Sylphrena.Config
+import Lunele.Blobs
+import Lunele.Config
 import qs.components
 import qs.services
 

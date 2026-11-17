@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Components
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Lunele.Components
+import Lunele.Config
+import Lunele.I18n
+import Lunele.Services
 import qs.components
 import qs.services
 

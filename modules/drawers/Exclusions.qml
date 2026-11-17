@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.State
+import Lunele.Config
+import Lunele.State
 import qs.components.containers
 import qs.modules.bar as Bar
 

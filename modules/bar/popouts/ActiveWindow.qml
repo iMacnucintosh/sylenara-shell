@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Wayland
 import Quickshell.Widgets
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 import qs.utils

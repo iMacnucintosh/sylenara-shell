@@ -12,22 +12,22 @@ export XKB_DEFAULT_LAYOUT="${XKB_DEFAULT_LAYOUT:-us}"
 # Do not pin QML_IMPORT_PATH — qs needs its own Quickshell modules.
 unset QT_QPA_PLATFORMTHEME || true
 export GDK_DEBUG="${GDK_DEBUG:-no-portals}"
-export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
+export LUNELE_GREETER_DIR="${LUNELE_GREETER_DIR:-/etc/greetd/lunele}"
 
 mkdir -p "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" 2>/dev/null || true
 LOG="$XDG_STATE_HOME/qs.log"
 # Also mirror to /tmp so we can read it after login even if state perms glitch.
-LOG2="/tmp/sylphrena-greeter-qs.log"
+LOG2="/tmp/lunele-greeter-qs.log"
 
 {
   echo "==== $(date -Is) pid=$$ uid=$(id -u) HOME=$HOME ===="
   echo "WAYLAND_DISPLAY=${WAYLAND_DISPLAY-} XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR-}"
   echo "qs=$(command -v qs || true)"
-  ls -la "$SYLPHRENA_GREETER_DIR/qs/shell.qml" "$SYLPHRENA_GREETER_DIR/wallpaper" 2>&1 || true
+  ls -la "$LUNELE_GREETER_DIR/qs/shell.qml" "$LUNELE_GREETER_DIR/wallpaper" 2>&1 || true
 } >>"$LOG" 2>&1
 cp -f "$LOG" "$LOG2" 2>/dev/null || true
 
-/usr/bin/qs -p "$SYLPHRENA_GREETER_DIR/qs" >>"$LOG" 2>&1
+/usr/bin/qs -p "$LUNELE_GREETER_DIR/qs" >>"$LOG" 2>&1
 ec=$?
 
 # Clear the backing VT while Hyprland still owns DRM. If the compositor handoff

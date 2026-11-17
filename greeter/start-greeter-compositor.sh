@@ -22,11 +22,11 @@ if [ -z "${XKB_DEFAULT_LAYOUT:-}" ]; then
   fi
   export XKB_DEFAULT_LAYOUT="${layout:-us}"
 fi
-export SYLPHRENA_GREETER_DIR="${SYLPHRENA_GREETER_DIR:-/etc/greetd/sylphrena}"
+export LUNELE_GREETER_DIR="${LUNELE_GREETER_DIR:-/etc/greetd/lunele}"
 unset QT_QPA_PLATFORMTHEME || true
 
 mkdir -p "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" 2>/dev/null || true
-export SYLPHRENA_QUIET_LOG="$XDG_STATE_HOME/hyprland-greeter.log"
+export LUNELE_QUIET_LOG="$XDG_STATE_HOME/hyprland-greeter.log"
 
-exec "$SYLPHRENA_GREETER_DIR/quiet-exec.sh" \
+exec "$LUNELE_GREETER_DIR/quiet-exec.sh" \
   /usr/bin/start-hyprland -- -c /etc/greetd/hyprland-greeter.lua

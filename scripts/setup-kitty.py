@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Connect kitty to Sylphrena so it follows the scheme live. Idempotent; run by the shell at startup
+"""Connect kitty to Lunele so it follows the scheme live. Idempotent; run by the shell at startup
 (services/KittySetup.qml) and usable by hand.
 
   setup-kitty.py            do it (once: after a first run it only reports, unless --force)
@@ -7,10 +7,10 @@
   setup-kitty.py --force    do it again even if it was done before (e.g. after removing the block)
 
 What it does, and nothing else:
-  1. the colour template ~/.config/sylphrena/templates/kitty.conf, copied from assets/kitty/ if missing
+  1. the colour template ~/.config/lunele/templates/kitty.conf, copied from assets/kitty/ if missing
      (an existing one is never touched);
   2. in ~/.config/kitty/kitty.conf, a marked block with what is missing of: the include of the generated
-     theme, `allow_remote_control yes` and `listen_on`. A backup of the file is made first (kitty.conf.sylphrena-backup,
+     theme, `allow_remote_control yes` and `listen_on`. A backup of the file is made first (kitty.conf.lunele-backup,
      once). If the user already has any of them (or set allow_remote_control to something else) it is left as it is.
 Prints one JSON line: {"status", "changed": [...], "notes": [...]}; status is one of
   skipped (kitty is not installed) | done | already (nothing to do) | needed (--check: something is missing) | seen (done before)
@@ -25,15 +25,15 @@ from pathlib import Path
 HOME = Path(os.environ.get("HOME") or Path.home())
 SHELL = Path(__file__).resolve().parent.parent
 TEMPLATE_SRC = SHELL / "assets" / "kitty" / "kitty.conf"
-TEMPLATE_DST = HOME / ".config" / "sylphrena" / "templates" / "kitty.conf"
+TEMPLATE_DST = HOME / ".config" / "lunele" / "templates" / "kitty.conf"
 KITTY_CONF = HOME / ".config" / "kitty" / "kitty.conf"
-STATE = Path(os.environ.get("XDG_STATE_HOME") or HOME / ".local" / "state") / "sylphrena" / "kitty-setup.json"
+STATE = Path(os.environ.get("XDG_STATE_HOME") or HOME / ".local" / "state") / "lunele" / "kitty-setup.json"
 
-INCLUDE = "include ~/.local/state/sylphrena/theme/kitty.conf"
+INCLUDE = "include ~/.local/state/lunele/theme/kitty.conf"
 REMOTE = "allow_remote_control yes"
 LISTEN = "listen_on unix:${XDG_RUNTIME_DIR}/kitty-{kitty_pid}.sock"
-BEGIN = "# >>> sylphrena: kitty follows the shell's colours live (remove this block to disconnect it) >>>"
-END = "# <<< sylphrena <<<"
+BEGIN = "# >>> lunele: kitty follows the shell's colours live (remove this block to disconnect it) >>>"
+END = "# <<< lunele <<<"
 
 REMOTE_OK = {"yes", "y", "true", "socket", "socket-only"}
 REMOTE_OFF = {"no", "n", "false"}
@@ -47,7 +47,7 @@ def analyse(text: str) -> tuple[list[str], list[str]]:
     """(lines the block must add, notes about what is left alone)."""
     missing, notes = [], []
     lines = active_lines(text)
-    if not any(re.match(r"^include\s+.*sylphrena/theme/kitty\.conf\s*$", ln) for ln in lines):
+    if not any(re.match(r"^include\s+.*lunele/theme/kitty\.conf\s*$", ln) for ln in lines):
         missing.append(INCLUDE)
     remote = [re.split(r"\s+", ln, maxsplit=1)[1].strip().lower() for ln in lines if re.match(r"^allow_remote_control\s+\S+", ln)]
     if not remote:
@@ -68,7 +68,7 @@ def write_atomic(path: Path, text: str) -> None:
     target = path.resolve() if path.is_symlink() else path  # dotfile managers: write through the link
     target.parent.mkdir(parents=True, exist_ok=True)
     mode = target.stat().st_mode & 0o777 if target.exists() else 0o644
-    tmp = target.with_name(target.name + ".sylphrena-tmp")
+    tmp = target.with_name(target.name + ".lunele-tmp")
     tmp.write_text(text)
     os.chmod(tmp, mode)
     os.replace(tmp, target)
@@ -101,7 +101,7 @@ def main() -> int:
     if missing:
         changed.append("kitty.conf")
         if not check:
-            backup = KITTY_CONF.with_name("kitty.conf.sylphrena-backup")
+            backup = KITTY_CONF.with_name("kitty.conf.lunele-backup")
             if KITTY_CONF.exists() and not backup.exists():
                 shutil.copyfile(KITTY_CONF, backup)
                 notes.append(f"backup of your kitty.conf: {backup.name}")

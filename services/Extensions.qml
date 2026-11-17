@@ -4,9 +4,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.utils
 
@@ -269,7 +269,7 @@ Singleton {
         return _components[url];
     }
 
-    // ── Compatibility (manifest `apiVersion`, `requires.sylphrena`) ─────────────────────────────
+    // ── Compatibility (manifest `apiVersion`, `requires.lunele`) ─────────────────────────────
     // Version of the extension contract this shell implements, and of the shell itself (from the git
     // tag it was built from). An extension that needs more is listed but not loaded.
     readonly property int apiVersion: 1
@@ -317,10 +317,10 @@ Singleton {
     function incompatibility(manifest: var): string {
         const api = manifest.apiVersion ?? 1;
         if (api > root.apiVersion)
-            return Tr.tr("Needs a newer Sylphrena (extension API %1)").arg(api);
-        const spec = manifest.requires?.sylphrena ?? "";
+            return Tr.tr("Needs a newer Lunele (extension API %1)").arg(api);
+        const spec = manifest.requires?.lunele ?? "";
         if (!root.versionSatisfies(root.shellVersion, spec))
-            return Tr.tr("Needs Sylphrena %1").arg(spec);
+            return Tr.tr("Needs Lunele %1").arg(spec);
         return "";
     }
 
@@ -502,7 +502,7 @@ Singleton {
         }
 
         // Commands an extension declares (contributes.commands: [{ name, description }]) and runs in its
-        // service's command(name, args); `sylph ext <id> <command> [args]` comes here. args: "a:" + a JSON list of
+        // service's command(name, args); `lunele ext <id> <command> [args]` comes here. args: "a:" + a JSON list of
         // strings, and the command "c:" + its name: prefixed so qs' ipc call neither drops an empty or "[]" argument nor
         // takes a command named like one of its own words (show).
         function commands(id: string): string {

@@ -1,7 +1,7 @@
 import "../effects"
 import QtQuick
 import QtQuick.Templates
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 

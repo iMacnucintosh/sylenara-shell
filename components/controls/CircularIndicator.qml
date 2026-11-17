@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Templates
-import Sylphrena.Components
-import Sylphrena.Config
+import Lunele.Components
+import Lunele.Config
 import qs.components
 import qs.services
 

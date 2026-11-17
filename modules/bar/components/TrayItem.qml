@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell.Services.SystemTray
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.components.effects
 import qs.services

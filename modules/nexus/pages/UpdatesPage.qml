@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -97,11 +97,11 @@ PageBase {
             }
         }
 
-        // A new release of Sylphrena, with its notes
+        // A new release of Lunele, with its notes
         ConnectedRect {
             Layout.fillWidth: true
             Layout.topMargin: Tokens.spacing.small
-            visible: SylphrenaUpdates.hasUpdate && !!(SylphrenaUpdates.shell ?? SylphrenaUpdates.updates[0] ?? {}).notes
+            visible: LuneleUpdates.hasUpdate && !!(LuneleUpdates.shell ?? LuneleUpdates.updates[0] ?? {}).notes
             first: true
             last: true
             implicitHeight: sylCol.implicitHeight + Tokens.padding.medium * 2
@@ -121,7 +121,7 @@ PageBase {
                     Layout.fillWidth: true
                     spacing: Tokens.spacing.medium
 
-                    SylphOrb {
+                    LuneleOrb {
                         orbSize: Math.round(Tokens.font.icon.medium.pointSize * 1.4)
                     }
 
@@ -131,14 +131,14 @@ PageBase {
 
                         StyledText {
                             Layout.fillWidth: true
-                            text: Tr.tr("Sylphrena %1 is available").arg(SylphrenaUpdates.version)
+                            text: Tr.tr("Lunele %1 is available").arg(LuneleUpdates.version)
                             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
                             elide: Text.ElideRight
                         }
 
                         StyledText {
                             Layout.fillWidth: true
-                            text: SylphrenaUpdates.updates.map(u => `${u.name} ${u.installed} → ${u.latest}`).join(" · ")
+                            text: LuneleUpdates.updates.map(u => `${u.name} ${u.installed} → ${u.latest}`).join(" · ")
                             color: Colours.palette.m3outline
                             font: Tokens.font.label.small
                             wrapMode: Text.WordWrap
@@ -149,7 +149,7 @@ PageBase {
                 StyledText {
                     Layout.fillWidth: true
                     visible: text.length > 0
-                    text: (SylphrenaUpdates.shell ?? SylphrenaUpdates.updates[0] ?? {}).notes ?? ""
+                    text: (LuneleUpdates.shell ?? LuneleUpdates.updates[0] ?? {}).notes ?? ""
                     textFormat: Text.MarkdownText
                     color: Colours.palette.m3onSurfaceVariant
                     font: Tokens.font.body.small
@@ -335,7 +335,7 @@ PageBase {
                         MaterialIcon {
                             visible: {
                                 const s = (pkgRow.modelData.source || "").toUpperCase();
-                                return s !== "AUR" && s !== "SYLPHRENA";
+                                return s !== "AUR" && s !== "LUNELE";
                             }
                             text: {
                                 const s = (pkgRow.modelData.source || "").toUpperCase();
@@ -349,8 +349,8 @@ PageBase {
                             fontStyle: Tokens.font.icon.medium
                         }
 
-                        SylphOrb {
-                            visible: pkgRow.modelData.source === "SYLPHRENA"
+                        LuneleOrb {
+                            visible: pkgRow.modelData.source === "LUNELE"
                             orbSize: Math.round(Tokens.font.icon.medium.pointSize * 1.1)
                             Layout.preferredWidth: Tokens.font.icon.medium.pointSize * 1.6
                             Layout.preferredHeight: Tokens.font.icon.medium.pointSize * 1.6
@@ -378,7 +378,7 @@ PageBase {
                                 Layout.fillWidth: true
                                 text: {
                                     const raw = pkgRow.modelData.source || "";
-                                    const s = raw === "SYLPHRENA" ? "Sylphrena" : raw === "EXTENSION" ? Tr.tr("Extension") : raw;
+                                    const s = raw === "LUNELE" ? "Lunele" : raw === "EXTENSION" ? Tr.tr("Extension") : raw;
                                     const frm = pkgRow.modelData.from || "";
                                     const to = pkgRow.modelData.to || "";
                                     if (pkgRow.modelData.isNew)
@@ -434,8 +434,8 @@ PageBase {
                             }
 
                             IconTextButton {
-                                // Sylphrena and its extensions are removed elsewhere (Things), not from here
-                                visible: pkgRow.modelData.source !== "SYLPHRENA" && pkgRow.modelData.source !== "EXTENSION"
+                                // Lunele and its extensions are removed elsewhere (Things), not from here
+                                visible: pkgRow.modelData.source !== "LUNELE" && pkgRow.modelData.source !== "EXTENSION"
                                 icon: "delete"
                                 text: Tr.tr("Uninstall")
                                 type: IconTextButton.Text

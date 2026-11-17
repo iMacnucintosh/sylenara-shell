@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 

@@ -2,17 +2,17 @@
 
 Referencia técnica de opciones. Cara pública: [README.md](./README.md). Guía de uso del fork: [FEATURES.md](./FEATURES.md).
 
-El ejemplo JSON y la mayor parte del texto de esta página siguen en inglés (referencia heredada). Crea `~/.config/sylphrena/shell.json` solo con las claves que quieras cambiar.
+El ejemplo JSON y la mayor parte del texto de esta página siguen en inglés (referencia heredada). Crea `~/.config/lunele/shell.json` solo con las claves que quieras cambiar.
 
 ## Opciones
 
-All configuration options belong in `~/.config/sylphrena/shell.json`. This file is _not_ created by
+All configuration options belong in `~/.config/lunele/shell.json`. This file is _not_ created by
 default; you must create it manually. Options that you omit from the config file will use their default
 values.
 
 ### Per-monitor configuration
 
-You can configure per-monitor options in `~/.config/sylphrena/monitors/<monitor_name>/shell.json`.
+You can configure per-monitor options in `~/.config/lunele/monitors/<monitor_name>/shell.json`.
 List the names of your available monitors by running:
 
 ```sh
@@ -24,7 +24,7 @@ per-monitor configs will inherit their values from the global config.
 
 For example, to automatically hide the bar on the monitor named `DP-1`:
 
-**`~/.config/sylphrena/monitors/DP-1/shell.json`**
+**`~/.config/lunele/monitors/DP-1/shell.json`**
 
 ```json
 {
@@ -51,7 +51,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 > - `notifs`: `actionOnClick`, `defaultExpireTimeout`, `expire`, `fullscreen`, `fullscreenExpireTimeout`
 > - `paths`: `lyricsDir`, `wallpaperDir`, `screenshotsDir`, `recordingsDir` (vacías = carpeta de imágenes/vídeos + nombre en el idioma de la shell; se fijan al primer uso)
 > - `services`: `audioIncrement`, `brightnessIncrement`, `clockFormat`, `dataUnits`, `defaultPlayer`, `gpuType`, `lyricsBackend`, `maxVolume`, `playerAliases`, `sensorUnits`, `smartScheme`, `visualiserBars`, `weatherLocation`, `weatherUnits`
-> - `utilities`: `toasts.*`, `vpn.*` (un proveedor con `type` = `ext:<extensión>` es una conexión de un tipo aportado por una extensión: su `options` es de la extensión y nunca lleva secretos; p. ej. FortiClient guarda la contraseña en `~/.config/sylphrena/vpn/<id>.conf`)
+> - `utilities`: `toasts.*`, `vpn.*` (un proveedor con `type` = `ext:<extensión>` es una conexión de un tipo aportado por una extensión: su `options` es de la extensión y nunca lleva secretos; p. ej. FortiClient guarda la contraseña en `~/.config/lunele/vpn/<id>.conf`)
 >
 > </details>
 
@@ -550,7 +550,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "name": "Random",
                 "icon": "casino",
                 "description": "Switch to a random wallpaper",
-                "command": ["sylphrena", "wallpaper", "-r"],
+                "command": ["lunele", "wallpaper", "-r"],
                 "enabled": true,
                 "dangerous": false
             },
@@ -614,7 +614,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "name": "Settings",
                 "icon": "settings",
                 "description": "Configure the shell",
-                "command": ["sylphrena", "shell", "nexus", "open"],
+                "command": ["lunele", "shell", "nexus", "open"],
                 "enabled": true,
                 "dangerous": false
             }
@@ -879,12 +879,12 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 > tokens used internally within the shell, and can cause visual issues if modified incorrectly.
 > The available options may change or be removed without notice across versions.
 
-A separate `~/.config/sylphrena/shell-tokens.json` file allows editing the internal tokens without
+A separate `~/.config/lunele/shell-tokens.json` file allows editing the internal tokens without
 touching the source code of the shell. These tokens affect the dimensions and appearance of visual elements,
 including individual rounding, spacing, padding, font size, animation durations and curves, and the sizes of
 certain components. The appearance scale values in `shell.json` are multiplied against these base
 token values to produce the final computed values.
 
 Per-monitor token overrides are also available at
-`~/.config/sylphrena/monitors/<monitor_name>/shell-tokens.json`.
+`~/.config/lunele/monitors/<monitor_name>/shell-tokens.json`.
 

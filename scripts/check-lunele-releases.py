@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+"""Is there a newer release of Lunele? Prints JSON for the shell (services/LuneleUpdates.qml):
+
+    {"updates": [{"pkg", "name", "repo", "installed", "latest", "notes", "url"}],
+     "extensions": [{"id", "name", "installed", "latest"}], "checked": <unix time>}
+
+Listed: the packages that are installed and behind their latest release, and (on a machine that installed Lunele
+from packages) the ones of the family it does not have yet, with "new": true, so the update installs them; a machine
+that runs the shell from a clone (no packages) gets an empty list.
+
+With Lunele's package repository in pacman.conf, the installed packages update with the system's (pacman lists
+them): only the missing ones are listed here. A machine installed from packages without it gets one entry,
+"lunele-repo", while the repository answers: updating sets it up (installer.py --update). The tag comes from the web page of the release (not limited like the API, which
+allows 60 requests an hour without an account); the API is only asked for the notes of a tag not seen before.
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from installer import (PACKAGES, REPO_NAME, behind, installed_version, latest_release as latest_tag,  # noqa: E402
+                       repo_configured, repo_online, version_tuple)
+
+NAMES = {"lunele-shell-git": "Lunele", "lunele-cli-git": "lunele-cli", "seeker-git": "Seeker", "things-git": "Things",
+         "veo-git": "Veo"}
+HUB_INDEX = "https://raw.githubusercontent.com/iMacnucintosh/lunele-hub/main/index.json"
+EXTENSIONS = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "lunele" / "extensions"
+CACHE = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "lunele" / "releases.json"
+
+
+def load_cache() -> dict:
+    try:
+        return json.loads(CACHE.read_text())
+    except (OSError, ValueError):
+        return {}
+
+
+def save_cache(cache: dict) -> None:
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = CACHE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(cache))
+    os.replace(tmp, CACHE)
+
+
+def latest(repo: str, cache: dict) -> dict | None:
+    """{"tag", "notes", "url"} of the latest release. The notes come from the API, asked only when the tag is new."""
+    known = cache.get(repo) or {}
+    tag = latest_tag(repo)
+    if not tag:
+        return known or None
+    if tag != known.get("tag"):
+        known = {"tag": tag, "notes": "", "url": f"https://github.com/iMacnucintosh/{repo}/releases/tag/{tag}"}
+        req = urllib.request.Request(f"https://api.github.com/repos/iMacnucintosh/{repo}/releases/tags/{tag}",
+                                     headers={"Accept": "application/vnd.github+json", "User-Agent": "lunele-updates"})
+        try:
+            with urllib.request.urlopen(req, timeout=8) as r:
+                known["notes"] = json.load(r).get("body") or ""
+        except (OSError, ValueError, urllib.error.URLError):
+            pass                                # without notes this time; the tag is what matters
+        cache[repo] = known
+    return known
+
+
+def extension_updates(pretend: dict) -> list[dict]:
+    """Extensions installed from the hub (they have its receipt) whose version in the hub's catalog is newer.
+    Local copies (no receipt) are left alone, as in Things."""
+    installed = {}
+    if pretend:
+        installed = {k[4:]: {"version": v, "name": k[4:]} for k, v in pretend.items() if k.startswith("ext:")}
+    elif EXTENSIONS.is_dir():
+        for d in EXTENSIONS.iterdir():
+            try:
+                if json.loads((d / ".source.json").read_text()).get("source") != "hub":
+                    continue
+                m = json.loads((d / "manifest.json").read_text())
+            except (OSError, ValueError):
+                continue
+            installed[m.get("id", d.name)] = {"version": m.get("version", ""), "name": m.get("name", d.name)}
+    if not installed:
+        return []
+    try:
+        # ?t=: past GitHub's cache, which keeps an old catalog for minutes after a new version is published
+        req = urllib.request.Request(f"{HUB_INDEX}?t={int(time.time())}", headers={"User-Agent": "lunele-updates"})
+        with urllib.request.urlopen(req, timeout=8) as r:
+            catalog = {i["id"]: i for i in json.load(r).get("items", [])}
+    except (OSError, ValueError, KeyError, urllib.error.URLError):
+        return []
+    out = []
+    for ext_id, have in installed.items():
+        entry = catalog.get(ext_id)
+        new, old = version_tuple(entry.get("version")) if entry else None, version_tuple(have["version"])
+        if new and old and new > old:
+            out.append({"id": ext_id, "name": have["name"], "installed": have["version"], "latest": entry["version"]})
+    return out
+
+
+def main() -> int:
+    cache = load_cache()
+    updates = []
+    # Tests only: {"lunele-shell-git": "0.3.0.r0.g0-1"} pretends those versions are installed
+    pretend = json.loads(os.environ.get("LUNELE_TEST_INSTALLED") or "{}")
+    # Installed from packages (not a clone): a package of the family it does not have yet comes with the next update
+    packaged = bool(pretend.get("lunele-shell-git") if pretend else installed_version("lunele-shell-git"))
+    # Tests: LUNELE_TEST_REPO = configured | online | off
+    test_repo = os.environ.get("LUNELE_TEST_REPO")
+    in_conf = test_repo == "configured" if test_repo else repo_configured()
+    for pkg, repo in PACKAGES:
+        have = pretend.get(pkg) if pretend else installed_version(pkg)
+        if not have:
+            rel = latest(repo, cache) if packaged else None
+            if rel:
+                updates.append({"pkg": pkg, "name": NAMES.get(pkg, pkg), "repo": repo, "installed": "",
+                                "latest": rel["tag"].lstrip("v"), "notes": rel["notes"], "url": rel["url"], "new": True})
+            continue
+        if in_conf:
+            continue                            # comes with the system's updates
+        rel = latest(repo, cache)
+        if rel and behind(have, rel["tag"]):
+            updates.append({"pkg": pkg, "name": NAMES.get(pkg, pkg), "repo": repo,
+                            "installed": have.split(".r")[0].split("-")[0], "latest": rel["tag"].lstrip("v"),
+                            "notes": rel["notes"], "url": rel["url"]})
+    if packaged and not in_conf and (test_repo == "online" if test_repo else repo_online()):
+        updates.append({"pkg": f"{REPO_NAME}-repo", "name": "Lunele packages", "repo": "", "installed": "", "latest": "",
+                        "notes": "", "url": "https://github.com/iMacnucintosh/lunele-packages", "new": True})
+    save_cache(cache)
+    print(json.dumps({"updates": updates, "extensions": extension_updates(pretend), "checked": int(time.time())}))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -29,7 +29,7 @@ class Validation(unittest.TestCase):
 
     def test_valid_at_the_root_and_in_its_folder(self):
         for prefix in ("", "demo/"):
-            r = self.check({prefix + "manifest.json": manifest(description="Hi", requires={"sylphrena": ">=0.3.0"}),
+            r = self.check({prefix + "manifest.json": manifest(description="Hi", requires={"lunele": ">=0.3.0"}),
                             prefix + "Service.qml": "x"})
             self.assertTrue(r["ok"])
             self.assertEqual((r["id"], r["version"], r["requires"]), ("demo", "0.1.0", ">=0.3.0"))

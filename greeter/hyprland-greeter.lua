@@ -5,9 +5,9 @@
 --
 -- HOME/XDG deben venir ya del command de greetd (passwd del greeter es HOME=/).
 -- Rollback a regreet: sustituir el exec_cmd de abajo por
---   regreet --style /etc/greetd/sylphrena/regreet.css; hyprctl dispatch exit
+--   regreet --style /etc/greetd/lunele/regreet.css; hyprctl dispatch exit
 
-hl.env("SYLPHRENA_GREETER_DIR", "/etc/greetd/sylphrena")
+hl.env("LUNELE_GREETER_DIR", "/etc/greetd/lunele")
 hl.env("HOME", "/var/lib/regreet")
 hl.env("XDG_CACHE_HOME", "/var/lib/regreet/cache")
 hl.env("XDG_CONFIG_HOME", "/var/lib/regreet/config")
@@ -25,7 +25,7 @@ hl.env("XKB_DEFAULT_LAYOUT", layout)
 hl.env("XKB_DEFAULT_VARIANT", "")
 
 hl.on("hyprland.start", function()
-  hl.exec_cmd("/etc/greetd/sylphrena/launch-qs.sh; exec /etc/greetd/sylphrena/exit-compositor.sh")
+  hl.exec_cmd("/etc/greetd/lunele/launch-qs.sh; exec /etc/greetd/lunele/exit-compositor.sh")
 end)
 
 hl.config({

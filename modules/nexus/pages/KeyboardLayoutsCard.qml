@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -76,7 +76,7 @@ ColumnLayout {
 
                     StyledText {
                         Layout.fillWidth: true
-                        text: root.own ? Tr.tr("The first one is used when the session starts; switch from the bar or with the shortcut below") : Tr.tr("The ones of the system. Changing anything here makes Sylphrena keep them")
+                        text: root.own ? Tr.tr("The first one is used when the session starts; switch from the bar or with the shortcut below") : Tr.tr("The ones of the system. Changing anything here makes Lunele keep them")
                         color: Colours.palette.m3outline
                         font: Tokens.font.label.small
                         wrapMode: Text.WordWrap

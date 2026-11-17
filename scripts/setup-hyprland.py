@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Hook Sylphrena into the user's Hyprland configuration (once, safely).
+"""Hook Lunele into the user's Hyprland configuration (once, safely).
 
   setup-hyprland.py [--check] [--shell-dir DIR]
 
 Adds to ~/.config/hypr/hyprland.lua a block between markers that
   - starts the shell with the session (unless the file already starts it),
   - sets QT_QPA_PLATFORMTHEME=qt6ct (unless the file sets it),
-  - loads the files Sylphrena writes from its Settings (sylphrena-monitors, -input, -binds, -activity-rules, -animation), each
+  - loads the files Lunele writes from its Settings (lunele-monitors, -input, -binds, -activity-rules, -animation), each
     through pcall because they do not exist until the shell has run once.
 If there is no hyprland.lua yet it starts from Hyprland's own default (/usr/share/hypr/hyprland.lua). An existing
-file keeps everything it has: the block goes at the end, a copy is left in hyprland.lua.sylphrena-backup (once), and
+file keeps everything it has: the block goes at the end, a copy is left in hyprland.lua.lunele-backup (once), and
 if the result does not pass `Hyprland --verify-config` (or luac) the original is put back. Running it again changes
 nothing. Remove the block to disconnect. Prints {"status": "done"|"already"|"needed"|"failed", "changed": [...],
 "notes": [...]}. --check changes nothing.
@@ -23,11 +23,11 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-BEGIN = "-- >>> sylphrena (added by Sylphrena: remove this block to disconnect it) >>>"
-END = "-- <<< sylphrena <<<"
-FILES = ["sylphrena-monitors", "sylphrena-input", "sylphrena-binds", "sylphrena-activity-rules", "sylphrena-animation"]
+BEGIN = "-- >>> lunele (added by Lunele: remove this block to disconnect it) >>>"
+END = "-- <<< lunele <<<"
+FILES = ["lunele-monitors", "lunele-input", "lunele-binds", "lunele-activity-rules", "lunele-animation"]
 DEFAULT_CONFIG = Path("/usr/share/hypr/hyprland.lua")
-MINIMAL = "-- Hyprland configuration (created by Sylphrena). See https://wiki.hypr.land/Configuring/\n"
+MINIMAL = "-- Hyprland configuration (created by Lunele). See https://wiki.hypr.land/Configuring/\n"
 
 
 def config_path() -> Path:
@@ -40,13 +40,13 @@ def outside(text: str) -> str:
 
 
 def starts_shell(text: str) -> bool:
-    return bool(re.search(r"start-shell-with-tray-watcher|sylph\s+shell|qs\s+-c\s+sylphrena", text))
+    return bool(re.search(r"start-shell-with-tray-watcher|lunele\s+shell|qs\s+-c\s+lunele", text))
 
 
 def system_keyboard() -> tuple[str, str]:
     """The keyboard layout (and variant) of the system, as set when Arch was installed: localectl's X11 layout,
     or else the console keymap (es, de-latin1, uk… → es, de, gb). ("", "") if there is none."""
-    test = os.environ.get("SYLPHRENA_TEST_KEYBOARD")
+    test = os.environ.get("LUNELE_TEST_KEYBOARD")
     if test is not None:
         layout, _, variant = test.partition(":")
         return layout, variant
@@ -82,12 +82,12 @@ def keyboard_line(rest: str) -> str | None:
 
 def render(shell_dir: Path, rest: str) -> str:
     """The block, leaving out what the rest of the file already does."""
-    lines = [BEGIN, "-- Sylphrena writes the files below from its Settings; they do not exist until the shell has run once (pcall)."]
+    lines = [BEGIN, "-- Lunele writes the files below from its Settings; they do not exist until the shell has run once (pcall)."]
     if "QT_QPA_PLATFORMTHEME" not in rest:
         lines.append('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")')
     if not starts_shell(rest):
         watcher = shell_dir / "scripts" / "start-shell-with-tray-watcher.sh"
-        cmd = str(watcher) if watcher.is_file() else "sylph shell -d"
+        cmd = str(watcher) if watcher.is_file() else "lunele shell -d"
         lines += ['hl.on("hyprland.start", function()', f'  hl.exec_cmd("{cmd}")', "end)"]
     if not re.search(r"disable_hyprland_logo\s*=\s*true", rest):
         # Hyprland's own wallpaper (logo, mascot, a random line) flashes until the shell draws its own: plain black
@@ -162,10 +162,10 @@ def main() -> int:
         print(json.dumps({"status": "needed", "changed": [str(path)], "notes": notes}))
         return 0
     path.parent.mkdir(parents=True, exist_ok=True)
-    backup = path.with_name(path.name + ".sylphrena-backup")
+    backup = path.with_name(path.name + ".lunele-backup")
     if existed and not backup.exists():
         shutil.copy2(path, backup)
-    tmp = path.with_name(path.name + ".sylphrena-tmp")
+    tmp = path.with_name(path.name + ".lunele-tmp")
     tmp.write_text(new)
     problem = verify(tmp)
     if problem:

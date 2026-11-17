@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Push current Sylphrena palette into all open Kitty windows.
+# Push current Lunele palette into all open Kitty windows.
 state="${XDG_STATE_HOME:-$HOME/.local/state}"
-theme="$state/sylphrena/theme/kitty.conf"
+theme="$state/lunele/theme/kitty.conf"
 # Legacy caelestia path kept until every CLI/runtime path is renamed.
 [[ -r "$theme" ]] || theme="$state/caelestia/theme/kitty.conf"
 [[ -r "$theme" ]] || exit 0

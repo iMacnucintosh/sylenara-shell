@@ -1,7 +1,7 @@
 import "center"
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 

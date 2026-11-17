@@ -4,7 +4,7 @@ import ".."
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.Config
+import Lunele.Config
 import qs.services
 import qs.utils
 
@@ -33,7 +33,7 @@ Searcher {
         getSchemes.running = true;
     }
 
-    readonly property string quietCli: Quickshell.shellPath("scripts/sylphrena-quiet.py")
+    readonly property string quietCli: Quickshell.shellPath("scripts/lunele-quiet.py")
 
     function setScheme(name: string, flavour: string): void {
         // Optimistic UI update; Colours.FileView confirms when scheme.json lands
@@ -83,7 +83,7 @@ Searcher {
             root.syncFromColours();
         }
 
-        // `sylph scheme list` returns colours for the current mode
+        // `lunele scheme list` returns colours for the current mode
         function onLightChanged(): void {
             root.reloadList();
         }
@@ -101,7 +101,7 @@ Searcher {
         id: getSchemes
 
         running: true
-        command: ["sylph", "scheme", "list"]
+        command: ["lunele", "scheme", "list"]
         stdout: StdioCollector {
             onStreamFinished: {
                 const raw = text.trim();
@@ -136,7 +136,7 @@ Searcher {
         id: getCurrent
 
         running: true
-        command: ["sylph", "scheme", "get", "-nfv"]
+        command: ["lunele", "scheme", "get", "-nfv"]
         stdout: StdioCollector {
             onStreamFinished: {
                 // Ignore noise from apply_colours (e.g. chrome policy warnings on stdout)

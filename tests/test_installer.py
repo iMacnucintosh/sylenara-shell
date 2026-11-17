@@ -34,9 +34,9 @@ class Plan(unittest.TestCase):
         items = inst.build_plan(bare())
         order = ids(items)
         self.assertLess(order.index("aur-helper"), order.index("aur-deps"))
-        self.assertLess(order.index("aur-deps"), order.index("sylphrena-cli-git"))
+        self.assertLess(order.index("aur-deps"), order.index("lunele-cli-git"))
         pkgs = [i for i in order if i.endswith("-git")]
-        self.assertEqual(pkgs, ["sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"])  # the shell last
+        self.assertEqual(pkgs, ["lunele-cli-git", "seeker-git", "things-git", "veo-git", "lunele-shell-git"])  # the shell last
         for i in items:
             if i.group == "Required":
                 self.assertTrue(i.required)
@@ -48,7 +48,7 @@ class Plan(unittest.TestCase):
         f.installed |= {"git", "base-devel", "hyprland", *inst.AUR_DEPS}
         items = inst.build_plan(f)
         todo = {i.id for i in items if i.todo and i.group == "Required"}
-        self.assertEqual(todo, {"sylphrena-cli-git", "seeker-git", "things-git", "veo-git", "sylphrena-shell-git"})
+        self.assertEqual(todo, {"lunele-cli-git", "seeker-git", "things-git", "veo-git", "lunele-shell-git"})
 
     def test_our_packages_come_from_the_aur_when_they_are_there_and_from_github_when_not(self):
         f = bare()
@@ -68,7 +68,7 @@ class Plan(unittest.TestCase):
         self.assertNotIn("quickshell-conflict", ids(inst.build_plan(f)))
 
     def test_the_clock_font_the_recorder_and_ddcutil_come_with_the_shell(self):
-        # parts of Sylphrena, not options: dependencies of its package, not items of the list
+        # parts of Lunele, not options: dependencies of its package, not items of the list
         ids = {i.id for i in inst.build_plan(bare())}
         self.assertFalse(ids & {"rubik", "recorder", "ddcutil"})
         self.assertIn("ttf-rubik-vf", inst.AUR_DEPS)
@@ -92,9 +92,9 @@ class Plan(unittest.TestCase):
         self.assertIn('systemctl disable "$current.service"', script)
         self.assertNotIn("systemctl restart", script)
         # the logind drop-ins are installed and only the legacy names are removed
-        self.assertIn("/etc/systemd/logind.conf.d/sylphrena-greeter.conf", script)
+        self.assertIn("/etc/systemd/logind.conf.d/lunele-greeter.conf", script)
         rm = [l for l in script.splitlines() if "rm -f" in l or l.strip().startswith("/etc/systemd") and "caelestia" in l]
-        self.assertTrue(rm and all("sylphrena-" not in l for l in rm if "rm -f" in l))
+        self.assertTrue(rm and all("lunele-" not in l for l in rm if "rm -f" in l))
         import subprocess
         self.assertEqual(subprocess.run(["bash", "-n", str(Path(__file__).resolve().parent.parent / "scripts/system/10-greeter.sh")]).returncode, 0)
 
@@ -143,11 +143,11 @@ class Plan(unittest.TestCase):
 
     def test_packages_are_built_from_their_release_and_updated_when_behind(self):
         f = bare()
-        f.releases = {"sylphrena-shell": "v0.5.0", "seeker": "v0.1.2"}
+        f.releases = {"lunele-shell": "v0.5.0", "seeker": "v0.1.2"}
         f.installed |= {"seeker-git"}
         f.versions = {"seeker-git": "0.1.1.r3.gabc-1"}
         items = {i.id: i for i in inst.build_plan(f)}
-        self.assertEqual(items["sylphrena-shell-git"].steps[0].args[3], "v0.5.0")
+        self.assertEqual(items["lunele-shell-git"].steps[0].args[3], "v0.5.0")
         seeker = items["seeker-git"]
         self.assertTrue(seeker.todo)
         self.assertEqual(seeker.why_args, ("0.1.1", "0.1.2"))
@@ -163,7 +163,7 @@ class Plan(unittest.TestCase):
         self.assertIn("--branch", clone)
         self.assertEqual(clone[clone.index("--branch") + 1], "v0.1.2")
         make = next(k for c, k in calls if c[0] == "makepkg")
-        self.assertEqual(make["env"], {"SYLPHRENA_REF": "v0.1.2"})
+        self.assertEqual(make["env"], {"LUNELE_REF": "v0.1.2"})
 
     def test_without_a_terminal_every_sudo_uses_the_shells_askpass(self):
         import os
@@ -194,9 +194,9 @@ class Plan(unittest.TestCase):
         f.hyprland_needed = False
         f.first_run_needed = False
         f.greeter_installed = True
-        f.installed |= {"sylphrena-shell-git"}
-        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.7.r0.gabc-1"
-        f.releases["sylphrena-shell"] = "v0.5.7"
+        f.installed |= {"lunele-shell-git"}
+        f.versions["lunele-shell-git"] = f.greeter_version = "0.5.7.r0.gabc-1"
+        f.releases["lunele-shell"] = "v0.5.7"
         items = {i.id: i for i in inst.build_plan(f)}
         for i in ("hyprland-config", "first-run", "login-screen"):
             self.assertFalse(items[i].todo)
@@ -206,14 +206,14 @@ class Plan(unittest.TestCase):
         # its QML and scripts are root's copies of the shell's: copied again when the shell changes
         f = bare()
         f.greeter_installed = True
-        f.installed |= {"sylphrena-shell-git"}
-        f.versions["sylphrena-shell-git"] = f.greeter_version = "0.5.6.r0.gabc-1"
-        f.releases["sylphrena-shell"] = "v0.5.7"
+        f.installed |= {"lunele-shell-git"}
+        f.versions["lunele-shell-git"] = f.greeter_version = "0.5.6.r0.gabc-1"
+        f.releases["lunele-shell"] = "v0.5.7"
         login = {i.id: i for i in inst.build_plan(f)}["login-screen"]
         self.assertTrue(login.todo and login.on)
         self.assertEqual(login.title, "Update the login screen")
         # copied from another build than the one installed (installed before it kept a version)
-        f.releases["sylphrena-shell"] = "v0.5.6"
+        f.releases["lunele-shell"] = "v0.5.6"
         f.greeter_version = ""
         self.assertTrue({i.id: i for i in inst.build_plan(f)}["login-screen"].todo)
 
@@ -276,7 +276,7 @@ class Run(unittest.TestCase):
     def test_an_earlier_build_is_removed_even_with_read_only_parts(self):
         import os, tempfile
         with tempfile.TemporaryDirectory() as d:
-            old = Path(d) / "sylphrena-shell-git"
+            old = Path(d) / "lunele-shell-git"
             (old / "src" / "locked").mkdir(parents=True)
             (old / "src" / "locked" / "file").write_text("x")
             os.chmod(old / "src" / "locked" / "file", 0o444)
@@ -381,7 +381,7 @@ class Look(unittest.TestCase):
         ui = sys.modules["installer_ui"]
         self.assertEqual(ui.title_words("lets the brightness reach a monitor over DDC/CI"),
                          "Lets The Brightness Reach A Monitor Over DDC/CI")
-        self.assertEqual(ui.title_words("para que funcione sylph record"), "Para Que Funcione Sylph Record")
+        self.assertEqual(ui.title_words("para que funcione lunele record"), "Para Que Funcione Lunele Record")
 
 
 class Repository(unittest.TestCase):
@@ -427,7 +427,7 @@ class Repository(unittest.TestCase):
             for _ in range(2):
                 subprocess.run(cmd, check=True)
             text = conf.read_text()
-            self.assertEqual(text.count("[sylphrena]"), 1)
+            self.assertEqual(text.count("[lunele]"), 1)
             self.assertIn("SigLevel = Required", text)
             self.assertTrue(inst.repo_configured(conf))
             self.assertFalse(inst.repo_configured(Path(d) / "missing"))

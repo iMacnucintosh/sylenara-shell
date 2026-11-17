@@ -1,10 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
-import Sylphrena
-import Sylphrena.Blobs
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Services
+import Lunele
+import Lunele.Blobs
+import Lunele.Config
+import Lunele.I18n
+import Lunele.Services
 import qs.components
 import qs.services
 

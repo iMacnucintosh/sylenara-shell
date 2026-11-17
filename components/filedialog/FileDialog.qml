@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena
-import Sylphrena.I18n
+import Lunele
+import Lunele.I18n
 import qs.utils
 
 // System file picker via Seeker (--pick). Keeps the old FloatingWindow API.

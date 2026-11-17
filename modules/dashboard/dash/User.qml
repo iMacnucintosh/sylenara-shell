@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import M3Shapes
-import Sylphrena.Config
-import Sylphrena.I18n
-import Sylphrena.Multimedia
+import Lunele.Config
+import Lunele.I18n
+import Lunele.Multimedia
 import qs.components
 import qs.components.effects
 import qs.components.filedialog
@@ -146,7 +146,7 @@ Item {
 
         Loader {
             anchors.centerIn: parent
-            sourceComponent: SysInfo.isDefaultLogo ? sylphrenaLogo : osLogo
+            sourceComponent: SysInfo.isDefaultLogo ? luneleLogo : osLogo
         }
     }
 
@@ -163,7 +163,7 @@ Item {
     }
 
     Component {
-        id: sylphrenaLogo
+        id: luneleLogo
 
         Logo {
             implicitWidth: Tokens.sizes.dashboard.logoSize

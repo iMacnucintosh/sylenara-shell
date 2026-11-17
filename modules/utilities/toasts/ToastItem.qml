@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import M3Shapes
-import Sylphrena
-import Sylphrena.Config
-import Sylphrena.I18n
+import Lunele
+import Lunele.Config
+import Lunele.I18n
 import qs.components
 import qs.components.widgets
 import qs.services
@@ -87,8 +87,8 @@ StyledRect {
         StyledRect {
             id: glyph
 
-            // icon "sylphrena": the animated Sylphrena orb instead of a symbol (news of Sylphrena itself)
-            readonly property bool orb: root.modelData?.icon === "sylphrena"
+            // icon "lunele": the animated Lunele orb instead of a symbol (news of Lunele itself)
+            readonly property bool orb: root.modelData?.icon === "lunele"
 
             visible: !root.hasImage
             radius: Tokens.rounding.large
@@ -114,7 +114,7 @@ StyledRect {
                 anchors.centerIn: parent
                 active: glyph.orb
 
-                sourceComponent: SylphOrb {
+                sourceComponent: LuneleOrb {
                     orbSize: Math.round(glyph.implicitHeight / 1.55)
                 }
             }

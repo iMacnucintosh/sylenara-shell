@@ -1,6 +1,6 @@
 import "weather"
 import QtQuick
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 

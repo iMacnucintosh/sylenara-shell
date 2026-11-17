@@ -8,7 +8,7 @@ import sys
 
 
 def main() -> None:
-    path = os.environ.get("SYLPHRENA_SUDO_ASKPASS_SOCK", "")
+    path = os.environ.get("LUNELE_SUDO_ASKPASS_SOCK", "")
     if not path:
         sys.exit(1)
     data = b""

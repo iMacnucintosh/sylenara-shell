@@ -9,15 +9,15 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## 0.6.1 (2026-11-15)
 
-- **Actualizar desde la 0.5 fallaba en «Shell de Sylphrena»:** el paquete de la shell exigía Veo, pero quien actualiza desde una versión anterior lo hace con el instalador viejo, que no lo conoce ni lo instala antes. Veo pasa a dependencia opcional del paquete: la shell se actualiza y, ya en la nueva, la lista ofrece «Nuevo · Veo», que se instala con la siguiente actualización y queda como reproductor predeterminado.
+- **Actualizar desde la 0.5 fallaba en «Shell de Lunele»:** el paquete de la shell exigía Veo, pero quien actualiza desde una versión anterior lo hace con el instalador viejo, que no lo conoce ni lo instala antes. Veo pasa a dependencia opcional del paquete: la shell se actualiza y, ya en la nueva, la lista ofrece «Nuevo · Veo», que se instala con la siguiente actualización y queda como reproductor predeterminado.
 
 ## 0.6.0 (2026-11-15)
 
 - **La shell y las apps cambian de tema a la vez:** antes la shell se adelantaba casi medio segundo a Seeker, Things, GTK, Qt y Zen; ahora todo se publica de golpe, en unos 30 ms, y el tema GTK ya no parpadea a oscuro y vuelta. Activar o quitar las apps claras regenera además en el acto el CSS de GTK y la paleta de Qt (antes esperaban al siguiente cambio de tema).
-- **Modo oscuro en los ajustes rápidos:** un interruptor que lo pone todo oscuro (esquema y apps claras) por encima del aspecto de cada actividad, sin tocarlo: al quitarlo cada una vuelve a como estaba. También con atajo (sin asignar por defecto) y `qs -c sylphrena ipc call darkMode toggle`.
-- **Pantalla de login más segura:** lo que ejecuta (sus scripts y el QML que recibe la contraseña) es de root; tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/sylphrena/user/`). Antes todo era de tu usuario, y en un equipo con varias cuentas una podía cambiarlo y leer la contraseña de otra. Al actualizar Sylphrena, la pantalla de login se pone al día sola.
+- **Modo oscuro en los ajustes rápidos:** un interruptor que lo pone todo oscuro (esquema y apps claras) por encima del aspecto de cada actividad, sin tocarlo: al quitarlo cada una vuelve a como estaba. También con atajo (sin asignar por defecto) y `qs -c lunele ipc call darkMode toggle`.
+- **Pantalla de login más segura:** lo que ejecuta (sus scripts y el QML que recibe la contraseña) es de root; tu sesión solo le pasa el tema, el fondo y el avatar (`/etc/greetd/lunele/user/`). Antes todo era de tu usuario, y en un equipo con varias cuentas una podía cambiarlo y leer la contraseña de otra. Al actualizar Lunele, la pantalla de login se pone al día sola.
 - **Novedades tras actualizar:** después de una actualización sale una ventana con lo nuevo de esa versión (capturas, título y dos líneas por novedad) y, al final, todos los cambios del CHANGELOG. Una vez; se vuelve a ver desde Nexus → Acerca de.
-- **Veo, el reproductor de vídeo de Sylphrena:** pantalla completa, controles mínimos, pistas de audio y subtítulos, continuar donde lo dejaste y el siguiente capítulo de la carpeta. Viene con la shell, es el reproductor predeterminado (`setup-player.py`: no pisa uno que hayas elegido) y se recolorea con cada esquema. Al actualizar, la lista lo marca como «Nuevo» y se instala con lo demás.
+- **Veo, el reproductor de vídeo de Lunele:** pantalla completa, controles mínimos, pistas de audio y subtítulos, continuar donde lo dejaste y el siguiente capítulo de la carpeta. Viene con la shell, es el reproductor predeterminado (`setup-player.py`: no pisa uno que hayas elegido) y se recolorea con cada esquema. Al actualizar, la lista lo marca como «Nuevo» y se instala con lo demás.
 - **Previsualización de capturas propia:** sustituye a swappy (en inglés, y su «Guardar» fallaba al buscar `~/Desktop`). Traducida, con línea libre, flecha, rectángulo, goma, seis colores y deshacer, y Copiar, Guardar y Descartar; cada una cierra la ventana. `swappy` deja de ser dependencia.
 - **Carpetas de capturas y grabaciones elegibles** en Nexus → Paneles → Utilidades. Por defecto, imágenes/vídeos de XDG más un nombre en el idioma de la shell, fijado al primer uso (antes la de grabaciones estaba escrita en español en el código).
 - **Capturar ventana:** el recuadro que marca la ventana vuelve a tener las esquinas redondeadas de Hyprland y un borde del color del esquema (con Hyprland 0.57 la shell no leía sus opciones y, con el borde de ventana a 0, el recuadro no se veía).
@@ -26,13 +26,13 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Veo sigue la velocidad de animación de la shell:** la shell la escribe en el `theme.json` de Seeker, Things y Veo (`animScale`) y la mantiene al día; Veo ya la usa.
 - **Seeker 0.2.0:** vista rápida con Espacio (imágenes, vídeo, audio, PDF página a página y texto; con las flechas pasas al siguiente), la carpeta abierta se actualiza sola sin perder la selección, «Abrir con» encuentra las apps que nombran un tipo por un alias antiguo, e icono nuevo.
 - **Things 0.1.6:** icono nuevo, en la línea de Seeker y Veo.
-- **Una variable `SYLPHRENA_*` sin definir ya no se lee como «null»** (las capturas acababan en `~/null`).
+- **Una variable `LUNELE_*` sin definir ya no se lee como «null»** (las capturas acababan en `~/null`).
 - **`Super+E` abre Seeker también con el paquete** (buscaba solo en `~/.local/bin`).
 - **Login:** el error de autenticación se traduce, el registro ya no apunta la longitud de la contraseña, y el teclado de reserva es `us`.
 
 ## 0.5.7 (2026-11-13)
 
-- **Things marca las actualizaciones:** la shell comparte su lista de actualizaciones (`qs -c sylphrena ipc call updates list`) y abre Nexus en una página concreta (`ipc call nexus openPage updates`); Things 0.1.5 las usa para marcar los paquetes con versión nueva y llevar a Nexus → Actualizaciones.
+- **Things marca las actualizaciones:** la shell comparte su lista de actualizaciones (`qs -c lunele ipc call updates list`) y abre Nexus en una página concreta (`ipc call nexus openPage updates`); Things 0.1.5 las usa para marcar los paquetes con versión nueva y llevar a Nexus → Actualizaciones.
 
 ## 0.5.6 (2026-11-13)
 
@@ -40,7 +40,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Actualizar, quitar o ver un paquete desde la lista:** el nombre llega a la terminal como argumento y no pegado dentro de la orden.
 - **Desplegable de distribuciones de teclado de la barra:** usa las mismas distribuciones y nombres que Nexus → Idioma y región, sin su propio lector de XKB.
 - **Log limpio:** fuera cientos de avisos que dejaban el orbe, el menú de la bandeja y las notificaciones al cerrarse.
-- **`sylph install` / `sylph update`** (CLI 0.4.0) lanzan el instalador de Sylphrena; antes eran los de la base original y desplegaban sus dotfiles.
+- **`lunele install` / `lunele update`** (CLI 0.4.0) lanzan el instalador de Lunele; antes eran los de la base original y desplegaban sus dotfiles.
 - **Limpieza:** código, opciones y traducciones que ya no usaba nadie (entre ellas `utilities.toasts.kbLimit`, que se borra sola de las configuraciones existentes).
 
 ## 0.5.5 (2026-11-12)
@@ -49,8 +49,8 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## 0.5.4 (2026-11-12)
 
-- **Aviso de Sylphrena:** título «Actualizaciones de Sylphrena», como el de las extensiones.
-- **Comprobación de actualizaciones unificada:** Sylphrena y sus extensiones se comprueban con el mismo intervalo que los paquetes del sistema (el de Nexus → Actualizaciones, 30 minutos por defecto) y con el mismo botón de refrescar; ya no cada minuto.
+- **Aviso de Lunele:** título «Actualizaciones de Lunele», como el de las extensiones.
+- **Comprobación de actualizaciones unificada:** Lunele y sus extensiones se comprueban con el mismo intervalo que los paquetes del sistema (el de Nexus → Actualizaciones, 30 minutos por defecto) y con el mismo botón de refrescar; ya no cada minuto.
 
 ## 0.5.3 (2026-11-12)
 
@@ -58,34 +58,34 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Notificaciones que se abren desplegadas:** entran ya desplegadas; antes se desplegaban mientras entraban y el título se cruzaba con el nombre de la app y la hora.
 - **Aviso de extensiones actualizables:** título «Actualizaciones de extensiones», que cabe (el anterior se cortaba).
 - **Actualizar una extensión recién publicada:** `ext.py update-hub` lee el catálogo por la API de GitHub, porque la caché del fichero tardaba minutos en dar la versión nueva y volvía a instalar la vieja; la comprobación de cada minuto pide el catálogo sin caché.
-- **Actualizar sin Flatpak (o sin ayudante del AUR):** «Actualizar» se saltaba con error al no encontrar `flatpak` y ya no actualizaba Sylphrena ni las extensiones; ahora salta lo que no está instalado y lo dice en el registro.
+- **Actualizar sin Flatpak (o sin ayudante del AUR):** «Actualizar» se saltaba con error al no encontrar `flatpak` y ya no actualizaba Lunele ni las extensiones; ahora salta lo que no está instalado y lo dice en el registro.
 
 ## 0.5.2 (2026-11-12)
 
-- **Órdenes de extensiones con `sylph ext <id> <orden>`:** una extensión declara sus órdenes en el manifiesto (`contributes.commands`) y su servicio las responde; `sylph ext <id>` las lista. Hidratación trae `show`, `add <ml>` y `status`.
+- **Órdenes de extensiones con `lunele ext <id> <orden>`:** una extensión declara sus órdenes en el manifiesto (`contributes.commands`) y su servicio las responde; `lunele ext <id>` las lista. Hidratación trae `show`, `add <ml>` y `status`.
 - **Barra de progreso en las notificaciones:** las emergentes y las del panel lateral muestran una barra de progreso Material cuando la notificación la trae (el aviso estándar `value` de cualquier app, como una descarga, o `localProgress` en las de la shell y sus extensiones).
 - **Esquina inferior derecha sin panel lateral:** con el panel lateral desactivado abre los interruptores rápidos solos (antes hacían amago de salir y se escondían), y un aviso emergente se aparta a su izquierda acompañando su animación.
-- **Avisos de versiones nuevas:** se recuerdan entre reinicios (`~/.local/state/sylphrena/updates-announced.json`); cada versión se avisa una sola vez.
+- **Avisos de versiones nuevas:** se recuerdan entre reinicios (`~/.local/state/lunele/updates-announced.json`); cada versión se avisa una sola vez.
 - **Dashboard sin el gato:** fuera el gato animado de la tarjeta de multimedia de la base original (el GIF y sus opciones `paths.mediaGif` y `general.mediaGifSpeedAdjustment`, que se borran solas de las configuraciones existentes); de paso deja de correr el detector de ritmo que solo lo animaba.
 - **Opciones heredadas fuera:** las de la tira de escritorios antigua de la base que ya no hacían nada con las actividades («Mostrados», «Mostrar desocupados», «Ventanas en escritorios especiales» y la forma de los escritorios especiales), con su código; se borran solas de las configuraciones existentes. «Por monitor» pasa a «Atenuar los escritorios de otro monitor», que es lo que hace.
 - **Vista previa de ventanas:** al pasar el ratón por el icono de una app en la barra se ve una miniatura en vivo de su ventana (pulsar lleva a ella); activable en Nexus → Paneles → Barra de tareas → Escritorios.
 
 ## 0.5.1 (2026-11-12)
 
-- **Sylphrena y sus extensiones en la lista de actualizaciones:** dos categorías más junto a pacman, AUR y Flatpak (Sylphrena, con su orbe, y Extensión). «Actualizar» las pone al día en segundo plano después del sistema, con la misma contraseña y el registro en Nexus; si se actualiza la shell, se reinicia sola. Las extensiones se actualizan igual que en Things (`ext.py update-hub`).
+- **Lunele y sus extensiones en la lista de actualizaciones:** dos categorías más junto a pacman, AUR y Flatpak (Lunele, con su orbe, y Extensión). «Actualizar» las pone al día en segundo plano después del sistema, con la misma contraseña y el registro en Nexus; si se actualiza la shell, se reinicia sola. Las extensiones se actualizan igual que en Things (`ext.py update-hub`).
 
 ## 0.5.0 (2026-11-12)
 
-- **Avisos de versión nueva:** en un equipo instalado con los paquetes, la shell comprueba la última release de la shell, la CLI, Seeker y Things y avisa (con el orbe de Sylphrena) cuando hay una más nueva: el icono de actualizaciones de la barra, una franja en su popout y una tarjeta en Nexus → Actualizaciones con las notas de la release. «Actualizar» abre un terminal con el instalador en modo `--update`. De momento comprueba cada minuto (pruebas); se espaciará.
-- **El instalador instala releases:** cada paquete se compila desde la última release de su repo (`SYLPHRENA_REF=<tag>` en los PKGBUILD) y se actualiza si va por detrás; `--main` compila lo último de `main` y `--update` solo pone al día lo instalado. Seeker y Things pasan a numerarse por release (`0.1.2.r0.g…`).
+- **Avisos de versión nueva:** en un equipo instalado con los paquetes, la shell comprueba la última release de la shell, la CLI, Seeker y Things y avisa (con el orbe de Lunele) cuando hay una más nueva: el icono de actualizaciones de la barra, una franja en su popout y una tarjeta en Nexus → Actualizaciones con las notas de la release. «Actualizar» abre un terminal con el instalador en modo `--update`. De momento comprueba cada minuto (pruebas); se espaciará.
+- **El instalador instala releases:** cada paquete se compila desde la última release de su repo (`LUNELE_REF=<tag>` en los PKGBUILD) y se actualiza si va por detrás; `--main` compila lo último de `main` y `--update` solo pone al día lo instalado. Seeker y Things pasan a numerarse por release (`0.1.2.r0.g…`).
 - **Primer arranque en un Arch nuevo:** la shell arranca sola (faltaba `python-gobject`), las rutas apuntan a la shell instalada y no al clon, Hyprland usa la distribución de teclado del sistema y no enseña su propio fondo mientras arranca la shell; al terminar, el instalador pide reiniciar. Seeker y Things se abren desde el lanzador (los `.desktop` del paquete apuntaban a `~/.local/bin`).
 - **Instalador más robusto:** `libcava` desde el AUR, compilar sin `fish`, compilación limitada a la memoria y aviso si se queda sin ella, `makepkg` sin volver a pedir la contraseña, carpetas de compilaciones anteriores que no se podían borrar.
 
 - **Capturas por defecto:** `Impr Pant` congela la pantalla y copia la zona elegida al portapapeles; `Alt+Impr Pant` la abre para editarla.
-- **Menú de sesión:** el orbe animado de Sylphrena sustituye al personaje animado de la base original (se quitan el GIF y sus opciones `paths.sessionGif` y `general.sessionGifSpeed`, que se borran solas de las configuraciones existentes).
+- **Menú de sesión:** el orbe animado de Lunele sustituye al personaje animado de la base original (se quitan el GIF y sus opciones `paths.sessionGif` y `general.sessionGifSpeed`, que se borran solas de las configuraciones existentes).
 - **Instalador:** recomienda el navegador Zen (del AUR); viene marcado solo si no hay otro navegador instalado.
 - **Teclado en Nexus:** Idioma y región → Teclado permite elegir las distribuciones (y variantes), cuál es la principal y el atajo para cambiar entre ellas.
-- **Atajos:** los de Sylphrena sustituyen a los que `hyprland.lua` tuviera en las mismas teclas (en un sistema nuevo `Super+Q` abría dos terminales).
+- **Atajos:** los de Lunele sustituyen a los que `hyprland.lua` tuviera en las mismas teclas (en un sistema nuevo `Super+Q` abría dos terminales).
 - **Instalador:** ya no ofrece extensiones (al terminar indica que se instalan desde Things); limita la compilación a la memoria disponible y avisa si se queda sin ella; `makepkg` ya no vuelve a pedir la contraseña a mitad de instalación.
 - **Mostrar escritorio:** pulsar en la barra el escritorio activo desliza sus ventanas fuera de la pantalla (izquierda/derecha según su mitad) y otra pulsación las devuelve idénticas; el pill pasa a solo borde mientras están ocultas. Ya no abre el scratchpad ni atenúa la pantalla.
 - **Transiciones de escritorio y de actividad:** ajustes nuevos en Nexus → Activities, uno para moverte entre escritorios (por defecto deslizar en vertical) y otro para saltar de actividad (por defecto fundido); estilos fundido/deslizar/deslizar y fundir, también en vertical, y velocidad.
@@ -101,20 +101,20 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Things, Seeker y la pantalla de login hablan tu idioma:** su código está ahora en inglés y cada idioma es un catálogo JSON (`i18n/es.json`; la pantalla de login, `greeter/i18n/es.json`). Un idioma sin catálogo se ve en inglés. Antes estaban escritos en español, sin más idioma posible. Sus comprobadores: `scripts/check-i18n.py`.
 - **Nada personal en el repo:** la pantalla de login ya no trae un nombre ni unas coordenadas del tiempo (salen de la cuenta y del ajuste del tiempo de Nexus) y la pantalla de bloqueo saluda con el usuario del sistema.
 - **Things:** «Usar la del hub» para cambiar una copia local por la del hub (así se puede actualizar).
-- **Hub:** una versión ya publicada no puede cambiar de zip (la comprueba la CI contra `origin/main`); `tasks` 0.1.2 y `games` 0.1.4 piden Sylphrena 0.3.
+- **Hub:** una versión ya publicada no puede cambiar de zip (la comprueba la CI contra `origin/main`); `tasks` 0.1.2 y `games` 0.1.4 piden Lunele 0.3.
 - **Tests:** `unittest` para `ext.py`, `install-extension.py`, `setup-defaults.py`, `setup-kitty.py`, `build.py` y los scripts de Juegos. Un zip hecho por un script (sin tipo de fichero en los permisos) ya no se rechaza como «fichero especial».
 
 ## 0.3.0 (2026-11-11)
 
-- **Paquetes del AUR:** `sylphrena-shell-git`, `sylphrena-cli-git`, `seeker-git` y `things-git` (PKGBUILD y `.SRCINFO` en el `packaging/` de cada repo; guía en `packaging/README.md`). El paquete instala la configuración en `/etc/xdg/quickshell/sylphrena` con los permisos de ejecución, y el selector de ficheros encuentra Seeker también en el PATH.
+- **Paquetes del AUR:** `lunele-shell-git`, `lunele-cli-git`, `seeker-git` y `things-git` (PKGBUILD y `.SRCINFO` en el `packaging/` de cada repo; guía en `packaging/README.md`). El paquete instala la configuración en `/etc/xdg/quickshell/lunele` con los permisos de ejecución, y el selector de ficheros encuentra Seeker también en el PATH.
 - **Configuración inicial:** una instalación nueva arranca con los ajustes recomendados de Nexus, una sola actividad (Principal, dos escritorios) y su fondo, incluido en `assets/wallpapers/` (`setup-defaults.py`; nunca pisa una configuración existente).
-- **Instalar una extensión desde un zip** ya vuelve, pero en **Things** (sección Sylphrena → «Instalar desde zip»: selector de Seeker, vista previa con `ext.py inspect`, confirmación; queda como «local») y en terminal con `sylph ext install <zip>`. Things pide el catálogo al hub al abrir (la caché ya no lo deja desfasado una hora).
+- **Instalar una extensión desde un zip** ya vuelve, pero en **Things** (sección Lunele → «Instalar desde zip»: selector de Seeker, vista previa con `ext.py inspect`, confirmación; queda como «local») y en terminal con `lunele ext install <zip>`. Things pide el catálogo al hub al abrir (la caché ya no lo deja desfasado una hora).
 - **Atajos por defecto ampliados** (pantalla completa, mover ventana con el teclado, fijar, ir a la actividad N, mover la ventana a la actividad siguiente/anterior, volumen y micro remapeables) y un paso nuevo del asistente de bienvenida, «Tus atajos»: tabla de los que están en uso (se actualiza al cambiarlos en Nexus) y botón «Editar en Nexus».
-- **Atajos: exportar e importar** la configuración actual desde Nexus → Keyboard & mouse (fichero JSON `sylphrena-keybinds.json`; la importación valida y sustituye). El selector de ficheros (`FileDialog`) admite `mode: "folder"`.
+- **Atajos: exportar e importar** la configuración actual desde Nexus → Keyboard & mouse (fichero JSON `lunele-keybinds.json`; la importación valida y sustituye). El selector de ficheros (`FileDialog`) admite `mode: "folder"`.
 
-- **Asistente de bienvenida** (con una invitación a crear extensiones propias y un enlace al hub; ventana de 4 pasos, con el orbe animado: grande y centrado en el primero, vuela al lado del título en los siguientes, sale sola en el primer arranque y se reabre desde Nexus → Acerca de): qué es Sylphrena y quién la hace, qué ofrece y apps de la familia. El paso de apps (Seeker, Things, kitty) es informativo: las instalará el paquete base. Servicios nuevos `Companions` y `Welcome`. Nexus → Extensiones gana la fila «Buscar más en Things».
-- **Contrato con Things** (fase 0): `apiVersion` y `requires.sylphrena` en el manifiesto (una extensión incompatible se lista pero no se carga, con el motivo); recibo `.source.json` para distinguir las del hub de las locales; comandos IPC `extensions list | rescan | enable | disable | prepareRemoval`; `scripts/ext.py` (instalar/quitar desde terminal, base de `sylph ext`). Corregido: la versión que lleva compilada el plugin se quedaba en `0.1.0` por la caché de CMake. Detalle en `AGENTS.md` («Contrato con Things»).
-- **La shell se adelgaza (fase 2):** instalar, actualizar y quitar extensiones pasa a **Things** (sección «Sylphrena») y a `scripts/ext.py`. Nexus → Extensiones queda en «instaladas + interruptor + ajustes + Buscar más en Things»: se retiran «Instalar desde zip», la tarjeta de contraseña, la gestión de piezas de sistema y el botón de eliminar. Se conserva la comprobación (sin root) de las piezas de sistema, el aviso de por qué una extensión no corre y `prepareRemoval`. IPC nuevo `extensions reload`; `enable` devuelve `pending` si la extensión aún no está listada.
+- **Asistente de bienvenida** (con una invitación a crear extensiones propias y un enlace al hub; ventana de 4 pasos, con el orbe animado: grande y centrado en el primero, vuela al lado del título en los siguientes, sale sola en el primer arranque y se reabre desde Nexus → Acerca de): qué es Lunele y quién la hace, qué ofrece y apps de la familia. El paso de apps (Seeker, Things, kitty) es informativo: las instalará el paquete base. Servicios nuevos `Companions` y `Welcome`. Nexus → Extensiones gana la fila «Buscar más en Things».
+- **Contrato con Things** (fase 0): `apiVersion` y `requires.lunele` en el manifiesto (una extensión incompatible se lista pero no se carga, con el motivo); recibo `.source.json` para distinguir las del hub de las locales; comandos IPC `extensions list | rescan | enable | disable | prepareRemoval`; `scripts/ext.py` (instalar/quitar desde terminal, base de `lunele ext`). Corregido: la versión que lleva compilada el plugin se quedaba en `0.1.0` por la caché de CMake. Detalle en `AGENTS.md` («Contrato con Things»).
+- **La shell se adelgaza (fase 2):** instalar, actualizar y quitar extensiones pasa a **Things** (sección «Lunele») y a `scripts/ext.py`. Nexus → Extensiones queda en «instaladas + interruptor + ajustes + Buscar más en Things»: se retiran «Instalar desde zip», la tarjeta de contraseña, la gestión de piezas de sistema y el botón de eliminar. Se conserva la comprobación (sin root) de las piezas de sistema, el aviso de por qué una extensión no corre y `prepareRemoval`. IPC nuevo `extensions reload`; `enable` devuelve `pending` si la extensión aún no está listada.
 - **Se quita la extensión de batería del ratón Razer** (`razer-mouse`) y el enganche `resourceRing`: acoplaba la shell a `synapsex` y se reimplementará mejor más adelante. El dashboard recupera siempre el anillo de almacenamiento. Al arrancar, la migración de configuración quita `addons.razerMouse` y el id `razer-mouse` de `extensions.enabled`.
 
 - **Empaquetado (fase 3):** kitty se conecta solo a los colores de la shell (`setup-kitty.py`: bloque marcado en `kitty.conf` con copia, plantilla y script de recarga incluidos en el repo: `assets/kitty/`, `scripts/kitty-reload-colours.sh`); `PKGBUILD` de Things (rama `feature/pkgbuild` de su repo) y borrador de `packaging/PKGBUILD` de la shell con las dependencias duras (`qt6ct`, `cliphist`, `wl-clipboard`, `wtype`, fuentes, y Things, Seeker y kitty) y recomendadas (Papirus, `adw-gtk-theme`); `cmake --install` del módulo `shell` ahora instala también `scripts/`, `extensions/` y `greeter/`.
@@ -125,16 +125,16 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ### Extensiones
 
-- La shell se separa en **base** y **extensiones**. Una extensión es una carpeta (`extensions/<id>/`, o en `~/.local/share/sylphrena/extensions/`) con `manifest.json`, un servicio y sus componentes; se activan en Nexus (`extensions.enabled`, nada por defecto) y se cargan/descargan en caliente. Enganches: `service`, `widgets`, `settings`, `resourceRing`, `statusIcons`, `popouts`, `dashboardTabs`, `vpnProviderType`. Guía: `AGENTS.md` («Extensiones») y `docs/examples/extension-spike/`.
+- La shell se separa en **base** y **extensiones**. Una extensión es una carpeta (`extensions/<id>/`, o en `~/.local/share/lunele/extensions/`) con `manifest.json`, un servicio y sus componentes; se activan en Nexus (`extensions.enabled`, nada por defecto) y se cargan/descargan en caliente. Enganches: `service`, `widgets`, `settings`, `resourceRing`, `statusIcons`, `popouts`, `dashboardTabs`, `vpnProviderType`. Guía: `AGENTS.md` («Extensiones») y `docs/examples/extension-spike/`.
 - **Migradas**: Tareas, Hidratación (widgets), batería del ratón Razer, VPN FortiClient (antes «Madison VPN») y Juegos (Steam) (complementos). Su configuración se migra sola (`scripts/migrate-config.py`).
 - **Base**: Portapapeles (ajustes en Panels → Utilities) y Temporizadores dejan de ser complementos. Calendario como único widget de serie.
-- **VPN unificada y FortiClient genérico**: una extensión puede aportar un **tipo** de proveedor a la VPN de Nexus → Red (`vpnProviderType`). Añadir proveedor deja elegir «Comandos» (lo de siempre) o **FortiClient**, con su formulario: OTP opcional, certificados, TLS antiguo, host de comprobación, DNS/dominios y entradas de `/etc/hosts`. Varias conexiones posibles. Lo no secreto va en `shell.json` (`type` + `options`); la contraseña solo en `~/.config/sylphrena/vpn/<id>.conf` (600). El túnel usa un ayudante root genérico en el repo (`sylphrena-fortivpn`) que valida el fichero y ya no tiene nada de una red concreta.
+- **VPN unificada y FortiClient genérico**: una extensión puede aportar un **tipo** de proveedor a la VPN de Nexus → Red (`vpnProviderType`). Añadir proveedor deja elegir «Comandos» (lo de siempre) o **FortiClient**, con su formulario: OTP opcional, certificados, TLS antiguo, host de comprobación, DNS/dominios y entradas de `/etc/hosts`. Varias conexiones posibles. Lo no secreto va en `shell.json` (`type` + `options`); la contraseña solo en `~/.config/lunele/vpn/<id>.conf` (600). El túnel usa un ayudante root genérico en el repo (`lunele-fortivpn`) que valida el fichero y ya no tiene nada de una red concreta.
 - La página de Nexus **Complementos** pasa a llamarse **Extensiones** (id `extensions`, `ExtensionsPage.qml`). Arriba lleva la fila «Instalar desde zip» con un botón «Examinar» (y la tarjeta de contraseña debajo cuando hace falta) y debajo la sección «Instaladas». El Reloj ya no enlaza a ella para los Timers, que se activan en el propio Reloj.
 - La tarjeta de cada extensión muestra siempre su descripción (ya no el estado en vivo ni el aviso de «desactivado»); el estado lo enseña cada extensión donde quiera.
 - «Añadir proveedor» → FortiClient: la primera fila permite **importar conexiones desde un fichero** (el que exporta la extensión), y el formulario de una conexión nueva ya no se rellena solo con `~/.config/openfortivpn/config`. Borrar una conexión limpia también las copias de certificados que importó la extensión.
 - Eliminar una extensión borra también sus conexiones VPN (con sus ficheros); desactivarla las conserva y las marca como «extensión desactivada».
 - Instalar una extensión desde zip (nueva o actualización) la activa al terminar.
-- **Instalar extensiones desde zip** (Nexus → Extensiones): se valida el zip y se instala en `~/.local/share/sylphrena/extensions/`, sin reiniciar; reinstalar actualiza y las instaladas así se pueden eliminar. Las extensiones externas traen sus traducciones (`i18n/<lang>.json`), que `Tr` usa cuando la shell no tiene la cadena. **VPN FortiClient sale del repo** de la shell: se distribuye como zip aparte.
+- **Instalar extensiones desde zip** (Nexus → Extensiones): se valida el zip y se instala en `~/.local/share/lunele/extensions/`, sin reiniciar; reinstalar actualiza y las instaladas así se pueden eliminar. Las extensiones externas traen sus traducciones (`i18n/<lang>.json`), que `Tr` usa cuando la shell no tiene la cadena. **VPN FortiClient sale del repo** de la shell: se distribuye como zip aparte.
 - **Extensiones con piezas de sistema** (manifiesto `system`): lo que necesitan como root se instala **con el zip** (la contraseña se pide al instalarlo y va a `sudo` por stdin) y se quita al **eliminar** la extensión. Si queda a medias, su tarjeta ofrece «Completar». Instalar es independiente de activar. FortiClient instala así `openfortivpn`, su ayudante y la regla de sudoers; `install-system.sh` queda solo para la base (greeter).
 - Corregido: el paso del greeter de `install-system.sh` se paraba («Both … are real directories») porque tras el cambio de nombre comparaba su directorio consigo mismo. Las cadenas de los manifiestos de extensión vuelven a traducirse (`scripts/manifest-strings.py` en `trs.fish raw`). El popout de la barra solo conecta y desconecta.
 - Sin rutas ni datos personales en el repo (`shell.qml` ya no lleva `/home/<usuario>`).
@@ -219,7 +219,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 ### Seeker (explorador)
 
 - Nuevo explorador **Seeker** (etiqueta **Archivos**, repo `~/Desarrollo/seeker`, Qt6 QML): default en `apps.explorer`, Super+E y `FileManager1`.
-- `sylphrena-quiet.py` escribe `~/.config/seeker/theme.json` en cada apply de esquema (hot-reload M3 en Seeker).
+- `lunele-quiet.py` escribe `~/.config/seeker/theme.json` en cada apply de esquema (hot-reload M3 en Seeker).
 - Thunar deja de ser el default; sigue usable como alternativa.
 - Eliminado el explorador QML embebido (`FolderContents`/`HeaderBar`/…): wallpaper, avatar e icono de `.desktop` pasan por `FileDialog` → Seeker `--pick`.
 
@@ -228,14 +228,14 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - El diálogo **Editar aplicación** (launcher y Nexus → Apps → detalle, botón de lápiz) edita también nombre genérico, `Exec`, categorías, palabras clave, `StartupWMClass`, directorio de trabajo y terminal. Las claves vacías que no existían no se escriben en el override.
 - Detalle de app en Nexus: muestra `Exec`, directorio de trabajo, clase de arranque, icono, categorías, palabras clave, terminal y ruta del `.desktop`.
 
-### About / SylphOrb
+### About / LuneleOrb
 
 - Página **Acerca de**: el hero usa el orbe SoftBurst animado (mismo de lock/greeter) en lugar del `AnimatedLogo` SVG estático.
-- Nuevo `components/SylphOrb.qml` (+ gemela `greeter/components/SylphOrb.qml` con tokens Theme): lock y greeter dejan de duplicar el bloque del orbe.
+- Nuevo `components/LuneleOrb.qml` (+ gemela `greeter/components/LuneleOrb.qml` con tokens Theme): lock y greeter dejan de duplicar el bloque del orbe.
 
 ### Tray
 
-- StatusNotifierWatcher persistente (`scripts/status-notifier-watcher.py`) fuera de `qs`, arrancado antes de la shell vía `scripts/start-shell-with-tray-watcher.sh`. Los iconos Electron/Flatpak (Teams) dejan de desaparecer tras `sylph shell -r` ahora que Plasma ya no aporta `xembedsniproxy`.
+- StatusNotifierWatcher persistente (`scripts/status-notifier-watcher.py`) fuera de `qs`, arrancado antes de la shell vía `scripts/start-shell-with-tray-watcher.sh`. Los iconos Electron/Flatpak (Teams) dejan de desaparecer tras `lunele shell -r` ahora que Plasma ya no aporta `xembedsniproxy`.
 
 ### Polish (deep audit)
 
@@ -254,42 +254,42 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ### Juegos (Steam)
 
-- Caché en disco de logros / schema / % global (`~/.local/state/sylphrena/steam-achievements-cache.json`, TTL ~1 día; wipe al cambiar API key o Steam ID; invalidate del juego enfocado en cada reload).
+- Caché en disco de logros / schema / % global (`~/.local/state/lunele/steam-achievements-cache.json`, TTL ~1 día; wipe al cambiar API key o Steam ID; invalidate del juego enfocado en cada reload).
 - `services/Steam.qml` pasa a façade público estable; lógica partida en `services/steam/` (`SteamFormat`, `SteamApi`, `SteamLibrary`, `SteamAchievements`, `SteamLocal`, `SteamActivity`).
 - `steam-activity.py snapshot` acepta el JSON de playtime por **stdin** (evita `ARG_MAX`); argv sigue válido para debug.
 
 ### Atajos
 
 - Nuevo atajo remapeable en Nexus → Keyboard & mouse: **Última ventana** (`focusLast`) → `hl.dsp.focus({ last = true })`. Por defecto **Super + \`**. Alterna entre la ventana actual y la anterior en cualquier escritorio/actividad.
-- Nexus → Keyboard & mouse: opción **Foco del ratón** (al pasar / al clic) → `input:follow_mouse` vía `sylphrena-input.lua` (`general.followMouse`).
+- Nexus → Keyboard & mouse: opción **Foco del ratón** (al pasar / al clic) → `input:follow_mouse` vía `lunele-input.lua` (`general.followMouse`).
 
-### Rebrand → Sylphrena (instancia Quickshell `sylphrena`)
+### Rebrand → Lunele (instancia Quickshell `lunele`)
 
-- CLI fork `sylph` (`sylphrena-cli`); wrapper de tema `scripts/sylphrena-quiet.py`.
-- Runtime/state/cache en `~/.config|state|cache/sylphrena/`. El plugin escribe ya `/sylphrena`.
-- Env vars `SYLPHRENA_*`; Lua generados `sylphrena-{binds,activity-rules,monitors}.lua`.
-- Globals Hyprland `sylphrena:*` (`CustomShortcut` appid); namespaces de capa `sylphrena-*`.
-- OpenCode twins `sylphrena`/`sylphrena-alt`; qt6ct scheme `sylphrena.conf`; Kitty include bajo state `sylphrena`.
-- Instancia Quickshell: `~/.config/quickshell/sylphrena` (`sylphrena` → symlink) y arranque Hyprland con `/home/manu/.local/bin/sylph shell -d` (el PATH del compositor no incluye `~/.local/bin`).
-- Plugin C++: URI QML `import Sylphrena` (módulos `Sylphrena.*`) y segmento de path `/sylphrena`. Los namespaces C++ `sylphrena::` se quedan.
-- Greeter: `/etc/greetd/sylphrena`. `scripts/install-system.sh` pide root una vez y corre los pasos de `scripts/system/`; `greeter/install-greeter.sh` entra por ahí.
-- Plasma desde el greeter: se apaga el VRR antes de soltar el CRTC (KWin hacía `Modeset failed: Invalid argument` a 144 Hz) y la sesión no hereda `qt6ct` ni el path QML de Sylphrena. Hyprland los restaura al entrar.
+- CLI fork `lunele` (`lunele-cli`); wrapper de tema `scripts/lunele-quiet.py`.
+- Runtime/state/cache en `~/.config|state|cache/lunele/`. El plugin escribe ya `/lunele`.
+- Env vars `LUNELE_*`; Lua generados `lunele-{binds,activity-rules,monitors}.lua`.
+- Globals Hyprland `lunele:*` (`CustomShortcut` appid); namespaces de capa `lunele-*`.
+- OpenCode twins `lunele`/`lunele-alt`; qt6ct scheme `lunele.conf`; Kitty include bajo state `lunele`.
+- Instancia Quickshell: `~/.config/quickshell/lunele` (`lunele` → symlink) y arranque Hyprland con `/home/manu/.local/bin/lunele shell -d` (el PATH del compositor no incluye `~/.local/bin`).
+- Plugin C++: URI QML `import Lunele` (módulos `Lunele.*`) y segmento de path `/lunele`. Los namespaces C++ `lunele::` se quedan.
+- Greeter: `/etc/greetd/lunele`. `scripts/install-system.sh` pide root una vez y corre los pasos de `scripts/system/`; `greeter/install-greeter.sh` entra por ahí.
+- Plasma desde el greeter: se apaga el VRR antes de soltar el CRTC (KWin hacía `Modeset failed: Invalid argument` a 144 Hz) y la sesión no hereda `qt6ct` ni el path QML de Lunele. Hyprland los restaura al entrar.
 - Plasma desinstalado (`plasma-meta`, apps KDE explícitas y sus huérfanos: 238 paquetes, ~1381 MiB). Se conservan Bluetooth, Noto emoji, Hack, qt6ct y los portales gtk/hyprland. El tema ya no escribe `kdeglobals`.
 - VLC desinstalado, y con él `qt5-wayland`, `qt5-declarative`, `qt5-svg` y `qt5-x11extras`. `general.apps.playback` queda vacío.
 - OpenSCAD desinstalado. Con él se van `qt5-base`, `qt5-multimedia` y `qscintilla-qt5`: ya no queda Qt 5.
-- En esta máquina se desinstalaron los paquetes AUR del proyecto original. La shell se arranca con `sylph`. Quickshell, las fuentes, cliphist y la grabación se quedaron marcados como explícitos, porque el checkout los usa aunque pacman los contaba como dependencia de esos paquetes.
-- El flake de Nix y los workflows de GitHub salen del árbol. Pendiente: publicar el paquete AUR con el nombre Sylphrena.
+- En esta máquina se desinstalaron los paquetes AUR del proyecto original. La shell se arranca con `lunele`. Quickshell, las fuentes, cliphist y la grabación se quedaron marcados como explícitos, porque el checkout los usa aunque pacman los contaba como dependencia de esos paquetes.
+- El flake de Nix y los workflows de GitHub salen del árbol. Pendiente: publicar el paquete AUR con el nombre Lunele.
 - La versión propia empieza en `v0.1.0`. El build solo lee tags `v0.*`; `v1.*` y `v2.*` siguen siendo del proyecto original.
-- El repositorio de GitHub se llama [sylphrena-shell](https://github.com/iMacnucintosh/sylphrena-shell). Las URLs anteriores redirigen.
+- El repositorio de GitHub se llama [lunele-shell](https://github.com/iMacnucintosh/lunele-shell). Las URLs anteriores redirigen.
 
 ### Utilities / keep-awake
 
-- Keep-awake (café) ya **no se fuerza a ON** en cada arranque de la shell. Respeta `RuntimeState.inhibitIdle` persistido en `/run/user/$UID/sylphrena/state.json` (default ON). Tras logout/reboot de sesión el runtime se pierde y vuelve el default.
+- Keep-awake (café) ya **no se fuerza a ON** en cada arranque de la shell. Respeta `RuntimeState.inhibitIdle` persistido en `/run/user/$UID/lunele/state.json` (default ON). Tras logout/reboot de sesión el runtime se pierde y vuelve el default.
 
-### Compañera Sylphrena (greeter + lock)
+### Compañera Lunele (greeter + lock)
 
 - Las tres líneas del Primer Ideal y la de los spren pasan a ser **versos propios** con el mismo ritmo («El aliento antes que el silencio», «La grieta antes que el acero», «Los pasos antes que la meta», «Los espíritus del viento somos pacientes… a veces»): la compañera conserva su voz y su carácter sin reproducir la traducción publicada. Comentarios y documentación usan «espíritu del viento».
-- `greeter/modules/CompanionPanel.qml` y `modules/lock/CompanionPanel.qml` actualizados (msgids nuevos en `es.po`, plugin I18n recompilado e instalado en `~/.local`); la copia desplegada del greeter en `/etc/greetd/sylphrena/qs/` queda sincronizada.
+- `greeter/modules/CompanionPanel.qml` y `modules/lock/CompanionPanel.qml` actualizados (msgids nuevos en `es.po`, plugin I18n recompilado e instalado en `~/.local`); la copia desplegada del greeter en `/etc/greetd/lunele/qs/` queda sincronizada.
 
 ## 2026-10-30
 
@@ -306,12 +306,12 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ### Lockscreen
 
-- La columna derecha se parte **35/65**: **notificaciones arriba** (con scrollbar) y **Sylphrena abajo**, la misma compañera del greeter (máquina de escribir, orbe SoftBurst, estados PAM de escuchando / error / desbloqueo).
+- La columna derecha se parte **35/65**: **notificaciones arriba** (con scrollbar) y **Lunele abajo**, la misma compañera del greeter (máquina de escribir, orbe SoftBurst, estados PAM de escuchando / error / desbloqueo).
 
 ### Aislamiento de Plasma (fase 1)
 
 - **Login**: plasmalogin → greetd con autologin inicial a Hyprland y greeter Quickshell Material You tras logout. Teclado español fijo; handoff corto bajo cortina negra, VT limpio y recuperación ante timeout. Tanto el greeter como la sesión de usuario arrancan Hyprland sin TTY de control y con stdout a log (el logo ASCII + debug ya no quedan en el búfer de tty1); `UserStopDelaySec=0` y `TimeoutStopSec=8` en user@ evitan la pantalla negra de ~10 s al reentrar (systemd no espera al user@ anterior ni a coredumps enormes); el compositor desechable se termina por su watchdog para evitar el shutdown de Hyprland 0.57 que tardaba ~5 s y acababa en segfault; plasmalogin sigue instalado pero deshabilitado.
-- **Qt sin plasma-integration**: `QT_QPA_PLATFORMTHEME=kde → qt6ct` en `shell.qml`, `hyprland.lua` y `environment.d`. Los apps Qt pasan de Breeze a Fusion con la **paleta Material**: `sylphrena-quiet.py` genera en cada cambio de esquema `~/.config/qt6ct/colors/sylphrena.conf` (22 roles de QPalette desde los tokens Material) + `qt6ct.conf` (Papirus por modo, Fusion), con escritura atómica para el hot-reload de qt6ct.
+- **Qt sin plasma-integration**: `QT_QPA_PLATFORMTHEME=kde → qt6ct` en `shell.qml`, `hyprland.lua` y `environment.d`. Los apps Qt pasan de Breeze a Fusion con la **paleta Material**: `lunele-quiet.py` genera en cada cambio de esquema `~/.config/qt6ct/colors/lunele.conf` (22 roles de QPalette desde los tokens Material) + `qt6ct.conf` (Papirus por modo, Fusion), con escritura atómica para el hot-reload de qt6ct.
 - **Thunar sin Dolphin**: `plasma-dolphin`/`plasma-kactivitymanagerd` parados y enmascarados (user systemd); override D-Bus de `org.freedesktop.FileManager1` a Thunar (`~/.local/share/dbus-1/services/`). "Open containing folder" y similares ya no suben Dolphin.
 - **`colorreload-gtk-module` vendorizado** en `~/.local/share/gtk-3.0/modules/` (copia del .so de kde-gtk-config): la recarga en vivo de Thunar sobrevive a la desinstalación de Plasma.
 - **Cursor unificado**: `breeze_cursors → Adwaita` (`gsettings`, `settings.ini`, `XCURSOR_THEME`/`HYPRCURSOR_THEME` en `hyprland.lua`).
@@ -331,7 +331,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - **Updates**: la contraseña del sudo vive solo en RAM (`sudo -S -v` por paso en `run-system-update.sh`, sin fichero de askpass); el timeout de instalación solo corta si lleva 45 min sin imprimir nada (heartbeat por línea de log).
 - **Pantalla**: refresh automático en `monitoradded`/`monitorremoved` y `persist()` conserva las políticas VRR de outputs desenchufados.
 - **Juegos (Steam)**: muestreo de logros capado a 60 juegos (los más jugados) y refresco periódico solo con la pestaña Juegos visible.
-- **OpenCode**: tema `sylphrena` con gemelas `sylphrena`/`sylphrena-alt` para el hot-reload por flip de nombre; `generate-opencode-theme.py` calcula `pick_sources()` una sola vez.
+- **OpenCode**: tema `lunele` con gemelas `lunele`/`lunele-alt` para el hot-reload por flip de nombre; `generate-opencode-theme.py` calcula `pick_sources()` una sola vez.
 
 ### Nexus reorganizado
 
@@ -350,11 +350,11 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 - Nueva UI de pantallas (hoy subpágina de Connected devices): una tarjeta por monitor con **modo (Hz)**, **escala** y **VRR / Adaptive Sync**.
 - Política VRR estilo Plasma: **Nunca / Automático / Siempre** (Automático = solo a pantalla completa).
-- Persistencia por conector en `~/.config/hypr/sylphrena-monitors.lua` + `hyprctl reload` al aplicar; la política guardada ya no la pisa el booleano de `hyprctl` (fix del parpadeo con Adaptive Sync pegado en el CRTC). Requiere `require("sylphrena-monitors")` en `hyprland.lua`.
+- Persistencia por conector en `~/.config/hypr/lunele-monitors.lua` + `hyprctl reload` al aplicar; la política guardada ya no la pisa el booleano de `hyprctl` (fix del parpadeo con Adaptive Sync pegado en el CRTC). Requiere `require("lunele-monitors")` en `hyprland.lua`.
 
 ### Layout compacto (ex game mode)
 
-- Redefinido como layout que aprovecha la pantalla al máximo: sin marco de Sylphrena (solo barra izquierda, `reserved: 60 0 0 0`), gaps 0, `rounding`/`border_size` 0 y sin hueco entre barra y ventanas (smoothing 0 + solape 1px).
+- Redefinido como layout que aprovecha la pantalla al máximo: sin marco de Lunele (solo barra izquierda, `reserved: 60 0 0 0`), gaps 0, `rounding`/`border_size` 0 y sin hueco entre barra y ventanas (smoothing 0 + solape 1px).
 - Ya **no** toca animaciones, blur, sombras, wobble ni tearing. El id interno sigue siendo `gameMode` (IPC / quick toggle `fit_screen`).
 
 ## 2026-10-28
@@ -391,7 +391,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ### Clipboard
 
-- Historial flotante estilo Plasma/Sylphrena (`cliphist`): **Super+Shift+V** (remapeable).
+- Historial flotante estilo Plasma/Lunele (`cliphist`): **Super+Shift+V** (remapeable).
 - Pegado directo en la ventana enfocada (`wtype` Ctrl+V).
 - Favoritos persistentes, búsqueda, miniaturas de imagen.
 - Rutas/`file://` a imagen desde el explorador se muestran y pegan como imagen.
@@ -403,7 +403,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - VPN off: oculta icono, para poll, teardown disconnect+heal.
 - Timers off: limpia timers activos y oculta la sección en el popout del reloj.
 - Icono VPN en la pastilla de status (bajo Bluetooth) cuando el complemento está on.
-- Clic = conectar (diálogo OTP Sylphrena) / desconectar.
+- Clic = conectar (diálogo OTP Lunele) / desconectar.
 - Engranaje en el popout: editar config local de openfortivpn (sin secretos en el repo).
 - Scripts en `madison_vpn_widget` (`hyprland/`) instalados a `~/.local/share/madison-vpn/`.
 - Tras **suspender/reanudar**: health-check (ping a intranet); si el túnel está zombie se limpia y el icono pasa a desconectado (toast). Comando `madison-vpn heal` + `heal_vpn.sh`.
@@ -415,11 +415,11 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - Verify + reintento si el modo no cuadra tras el apply.
 - **GTK/Thunar** siguen el esquema dinámico de la activity (`enableGtk` siempre on; `colors.css` para `colorreload`).
 - **Apps claras** de la activity: `prefer-light` + sin motor Qt oscuro; Thunar puede seguir el CSS del esquema.
-- Iconos del launcher vía tema KDE: sync **Papirus** en `kdeglobals` desde `sylphrena-quiet.py` (ya no depende solo de Breeze).
+- Iconos del launcher vía tema KDE: sync **Papirus** en `kdeglobals` desde `lunele-quiet.py` (ya no depende solo de Breeze).
 
 ### Grabación de pantalla
 
-- Carpeta por defecto: `~/Vídeos/Videocapturas de pantalla` (`SYLPHRENA_RECORDINGS_DIR` / `Paths.recsdir`).
+- Carpeta por defecto: `~/Vídeos/Videocapturas de pantalla` (`LUNELE_RECORDINGS_DIR` / `Paths.recsdir`).
 - Wrappers `record-start.sh` / `record.sh` fijan esa ruta al start/stop/pause.
 - Abrir carpeta desde la lista usa el explorador configurado (`thunar` por defecto).
 - Reproducir (▶) abre con `apps.playback` (**VLC** por defecto); MIME `video/*` también apunta a VLC.
@@ -459,7 +459,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 - Overview: arrastrar ventanas entre desktops/activities y enfocar el destino al soltar.
 - Estilo por activity al cambiar de foco (wallpaper, esquema, modo, transparency, light apps).
 - Integración Kitty: plantilla de usuario, `include` del tema generado, recarga en vivo al cambiar activity.
-- `sylphrena-quiet.py` recarga Kitty tras aplicar colores; `sync-light-apps-cli.py` conserva el hook de recarga (ya no lo pisa).
+- `lunele-quiet.py` recarga Kitty tras aplicar colores; `sync-light-apps-cli.py` conserva el hook de recarga (ya no lo pisa).
 
 ### Barra / UI
 

@@ -4,10 +4,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Sylphrena.I18n
+import Lunele.I18n
 import qs.utils
 
-// The apps that come with Sylphrena (Seeker, Things, Veo, and kitty, which it themes live): are they
+// The apps that come with Lunele (Seeker, Things, Veo, and kitty, which it themes live): are they
 // installed, open them. The welcome assistant presents them; the base package is what installs them.
 Singleton {
     id: root
@@ -39,7 +39,7 @@ Singleton {
             id: "kitty",
             name: "kitty",
             icon: "terminal",
-            description: Tr.tr("Fast terminal: Sylphrena changes its colours live with your theme"),
+            description: Tr.tr("Fast terminal: Lunele changes its colours live with your theme"),
             bin: "kitty"
         }
     ]

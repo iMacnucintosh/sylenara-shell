@@ -1,7 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Sylphrena.Config
+import Lunele.Config
 import qs.components
 import qs.services
 
@@ -50,7 +50,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         visible: Updates.anyUpdates && !Updates.busy && !Updates.installing
         text: {
-            const n = Updates.count + SylphrenaUpdates.updates.length;
+            const n = Updates.count + LuneleUpdates.updates.length;
             return n > 99 ? "99+" : `${n}`;
         }
         color: root.colour

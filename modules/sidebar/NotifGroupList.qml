@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Sylphrena
-import Sylphrena.Components
-import Sylphrena.Config
+import Lunele
+import Lunele.Components
+import Lunele.Config
 import qs.components
 import qs.services
 

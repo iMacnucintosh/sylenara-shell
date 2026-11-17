@@ -1,8 +1,8 @@
 import QtQuick
-import Sylphrena.Config
-import Sylphrena.Models
-import Sylphrena.Multimedia
-import Sylphrena.State
+import Lunele.Config
+import Lunele.Models
+import Lunele.Multimedia
+import Lunele.State
 import qs.components
 import qs.components.effects
 import qs.services

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install Sylphrena pieces that live under /etc.
+# Install Lunele pieces that live under /etc.
 #
 # Asks for root once (re-exec via sudo) and runs every step in
 # scripts/system/NN-name.sh. A step is a file that defines step_main.
@@ -16,7 +16,7 @@ SELF="$(readlink -f "${BASH_SOURCE[0]}")"
 ROOT="$(cd "$(dirname "$SELF")/.." && pwd)"
 
 if [[ "$(id -u)" -ne 0 ]]; then
-  echo "Sylphrena system install. One root prompt."
+  echo "Lunele system install. One root prompt."
   if [[ -t 0 ]] || sudo -n true 2>/dev/null; then
     exec sudo -- "$SELF" "$@"
   elif command -v pkexec >/dev/null; then
@@ -40,9 +40,9 @@ if [[ -z "$OWNER_HOME" || ! -d "$OWNER_HOME" ]]; then
   exit 1
 fi
 
-export SYLPHRENA_ROOT="$ROOT"
-export SYLPHRENA_OWNER="$OWNER"
-export SYLPHRENA_OWNER_HOME="$OWNER_HOME"
+export LUNELE_ROOT="$ROOT"
+export LUNELE_OWNER="$OWNER"
+export LUNELE_OWNER_HOME="$OWNER_HOME"
 
 shopt -s nullglob
 steps=("$ROOT"/scripts/system/[0-9]*.sh)
