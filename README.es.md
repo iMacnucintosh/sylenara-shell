@@ -3,7 +3,7 @@
 <p align="center"><a href="./README.md">English</a> · <strong>Español</strong></p>
 
 <p align="center">
-Un escritorio <strong>Material You</strong> completo para <a href="https://hypr.land">Hyprland</a>: barra, paneles, actividades, ajustes, pantalla de inicio de sesión y apps propias, todo con el mismo aspecto y en español.
+<strong>Sylenara</strong> (<em>si-le-NA-ra</em>) es un escritorio <strong>Material You</strong> completo para <a href="https://hypr.land">Hyprland</a>, hecho con Quickshell: barra, paneles, actividades, ajustes, pantalla de inicio de sesión y apps propias, todo con el mismo aspecto y en español.
 </p>
 
 <div align="center">

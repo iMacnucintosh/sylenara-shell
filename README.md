@@ -3,7 +3,7 @@
 <p align="center"><strong>English</strong> · <a href="./README.es.md">Español</a></p>
 
 <p align="center">
-A complete <strong>Material You</strong> desktop for <a href="https://hypr.land">Hyprland</a>: bar, panels, activities, settings, login screen and its own apps, all with the same look.
+<strong>Sylenara</strong> (<em>si-le-NA-ra</em>) is a complete <strong>Material You</strong> desktop for <a href="https://hypr.land">Hyprland</a>, built on Quickshell: bar, panels, activities, settings, login screen and its own apps, all with the same look.
 </p>
 
 <div align="center">
