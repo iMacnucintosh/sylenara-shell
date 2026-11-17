@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
@@ -222,6 +223,16 @@ Item {
                                     text: "push_pin"
                                     color: Colours.palette.m3primary
                                     fontStyle: Tokens.font.icon.small
+
+                                    // A little shadow, so it stands out over any window preview
+                                    layer.enabled: visible
+                                    layer.effect: MultiEffect {
+                                        shadowEnabled: true
+                                        shadowColor: Colours.palette.m3shadow
+                                        shadowOpacity: 0.75
+                                        shadowBlur: 0.5
+                                        shadowVerticalOffset: 1
+                                    }
                                 }
                             }
 
