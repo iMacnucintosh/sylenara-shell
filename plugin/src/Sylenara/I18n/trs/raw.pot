@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 11:08+0100\n"
+"POT-Creation-Date: 2026-11-17 17:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -353,6 +353,7 @@ msgid "Bluetooth"
 msgstr ""
 
 #: modules/bar/popouts/Bluetooth.qml modules/bar/popouts/Network.qml
+#: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/DashboardPanel.qml
 #: modules/nexus/pages/panels/LauncherPanel.qml
 #: modules/nexus/pages/panels/SidebarPanel.qml
@@ -2127,12 +2128,85 @@ msgid "Allow nearby devices to pair with this one"
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
+msgctxt "display that is turned off"
+msgid "Off"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Copy of %1"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "screen rotation"
+msgid "Normal"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "90°"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "180°"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "270°"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Flipped"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
 msgctxt "monitor settings"
 msgid "Display"
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
+msgid "Identify"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Drag the displays to arrange them as they are on your desk. Pick one to change its settings."
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "New arrangement, not applied yet"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Discard"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Apply"
+msgstr ""
+
+#. TRANSLATORS: %1 = seconds left
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Keep these display settings? Going back in %1 s"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Go back"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Keep"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
 msgid "No displays detected"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "It is the only display that is on"
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
@@ -2151,6 +2225,24 @@ msgstr ""
 #: modules/nexus/pages/DisplayPage.qml utils/Strings.qml
 #, qt-format
 msgid "%1%"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Rotation"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Copy another display"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Shows what %1 shows"
+msgstr ""
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "not copying another display"
+msgid "No"
 msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml

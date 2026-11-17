@@ -10,6 +10,7 @@ import qs.components.controls
 import qs.services
 import qs.modules.nexus
 import qs.modules.nexus.common
+import "../../../utils/scripts/displaylayout.js" as Layout
 
 // Monitor settings block — lives inline on Connected devices (not a Stack subpage).
 ColumnLayout {
@@ -22,8 +23,214 @@ ColumnLayout {
 
     Component.onCompleted: Displays.refresh()
 
-    SectionHeader {
-        text: Tr.trCtx("Display", "monitor settings")
+    // The display whose settings are shown below the canvas (with a single display, its settings are all there is)
+    property string selected
+    readonly property bool multi: Displays.monitors.length > 1
+    // Numbers as they are on the desk, left to right
+    readonly property var numbers: Layout.numbering(Displays.layoutOf(Displays.monitors))
+    readonly property var labels: {
+        const out = {};
+        for (let i = 0; i < Displays.monitors.length; i++) {
+            const m = Displays.monitors[i];
+            out[m.name] = {
+                number: root.numbers[m.name] ? String(root.numbers[m.name]) : "",
+                title: m.model || m.description || m.name,
+                detail: m.disabled ? Tr.trCtx("Off", "display that is turned off") : (m.mirror ? Tr.tr("Copy of %1").arg(m.mirror) : `${Displays.formatResolutionLabel(Displays.resolutionKeyOf(m.mode))} · ${Displays.formatRateLabel(m.mode)}`)
+            };
+        }
+        return out;
+    }
+
+    function selectedName(): string {
+        return Displays.findMonitor(root.selected) ? root.selected : (Displays.monitors[0]?.name ?? "");
+    }
+
+    function isShown(name: string): bool {
+        return !root.multi || root.selectedName() === name;
+    }
+
+    function rotationLabel(transform: int): string {
+        switch (transform) {
+        case 0:
+            return Tr.trCtx("Normal", "screen rotation");
+        case 1:
+            return Tr.tr("90°");
+        case 2:
+            return Tr.tr("180°");
+        case 3:
+            return Tr.tr("270°");
+        }
+        return Tr.tr("Flipped");
+    }
+
+    DisplayIdentify {
+        id: identify
+
+        labels: root.labels
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+        spacing: Tokens.spacing.small
+
+        SectionHeader {
+            text: Tr.trCtx("Display", "monitor settings")
+        }
+
+        IconTextButton {
+            visible: root.multi
+            Layout.topMargin: Tokens.spacing.extraSmall
+            isRound: true
+            type: IconTextButton.Tonal
+            horizontalPadding: Tokens.padding.large
+            verticalPadding: Tokens.padding.small
+            icon: "badge"
+            text: Tr.tr("Identify")
+            onClicked: identify.show()
+        }
+    }
+
+    DisplayCanvas {
+        id: canvas
+
+        visible: root.multi
+        Layout.fillWidth: true
+        Layout.preferredHeight: implicitHeight
+        Layout.bottomMargin: Tokens.spacing.small
+        enabled: !Displays.confirming
+        layout: Displays.currentLayout()
+        labels: root.labels
+        selected: root.selectedName()
+        canvasColor: Colours.tPalette.m3surfaceContainer
+        tileColor: Colours.palette.m3surfaceContainerHigh
+        tileBorderColor: Colours.palette.m3outlineVariant
+        selectedColor: Colours.palette.m3primaryContainer
+        selectedBorderColor: Colours.palette.m3primary
+        textColor: Colours.palette.m3onSurface
+        detailColor: Colours.palette.m3onSurfaceVariant
+        ghostColor: Colours.palette.m3primary
+        numberFont: Tokens.font.headline.small
+        titleFont: Tokens.font.label.large
+        detailFont: Tokens.font.label.small
+        tileRadius: Tokens.rounding.large
+        onPicked: name => root.selected = name
+        onDropped: (name, x, y) => Displays.dropMonitor(name, x, y)
+    }
+
+    StyledText {
+        Layout.fillWidth: true
+        Layout.leftMargin: Tokens.padding.small
+        Layout.bottomMargin: Tokens.spacing.small
+        visible: root.multi
+        text: Tr.tr("Drag the displays to arrange them as they are on your desk. Pick one to change its settings.")
+        color: Colours.palette.m3outline
+        font: Tokens.font.label.small
+        wrapMode: Text.Wrap
+    }
+
+    // Displays that are off or copy another one are not on the canvas: they are picked here
+    Flow {
+        Layout.fillWidth: true
+        Layout.bottomMargin: Tokens.spacing.small
+        visible: root.multi
+        spacing: Tokens.spacing.small
+
+        Repeater {
+            model: Displays.monitors
+
+            TextButton {
+                required property var modelData
+
+                isRound: true
+                type: root.selectedName() === modelData.name ? TextButton.Tonal : TextButton.Text
+                horizontalPadding: Tokens.padding.large
+                text: `${root.numbers[modelData.name] ? root.numbers[modelData.name] + " · " : ""}${modelData.model || modelData.description || modelData.name}`
+                onClicked: root.selected = modelData.name
+            }
+        }
+    }
+
+    // A new arrangement waits to be applied
+    StyledRect {
+        Layout.fillWidth: true
+        Layout.bottomMargin: Tokens.spacing.small
+        visible: Displays.hasDraftChanges
+        implicitHeight: draftRow.implicitHeight + Tokens.padding.medium * 2
+        radius: Tokens.rounding.large
+        color: Colours.palette.m3secondaryContainer
+
+        RowLayout {
+            id: draftRow
+
+            anchors.fill: parent
+            anchors.margins: Tokens.padding.medium
+            anchors.leftMargin: Tokens.padding.largeIncreased
+            spacing: Tokens.spacing.small
+
+            StyledText {
+                Layout.fillWidth: true
+                text: Tr.tr("New arrangement, not applied yet")
+                color: Colours.palette.m3onSecondaryContainer
+                font: Tokens.font.body.small
+                wrapMode: Text.Wrap
+            }
+
+            TextButton {
+                isRound: true
+                type: TextButton.Text
+                text: Tr.trCtx("Discard", "button")
+                onClicked: Displays.discardDraft()
+            }
+
+            TextButton {
+                isRound: true
+                type: TextButton.Filled
+                text: Tr.trCtx("Apply", "button")
+                onClicked: Displays.applyDraft()
+            }
+        }
+    }
+
+    // A change that could leave a screen unusable is undone by itself if nobody keeps it
+    StyledRect {
+        Layout.fillWidth: true
+        Layout.bottomMargin: Tokens.spacing.small
+        visible: Displays.confirming
+        implicitHeight: keepRow.implicitHeight + Tokens.padding.medium * 2
+        radius: Tokens.rounding.large
+        color: Colours.palette.m3tertiaryContainer
+
+        RowLayout {
+            id: keepRow
+
+            anchors.fill: parent
+            anchors.margins: Tokens.padding.medium
+            anchors.leftMargin: Tokens.padding.largeIncreased
+            spacing: Tokens.spacing.small
+
+            StyledText {
+                Layout.fillWidth: true
+                // TRANSLATORS: %1 = seconds left
+                text: Tr.tr("Keep these display settings? Going back in %1 s").arg(Displays.revertIn)
+                color: Colours.palette.m3onTertiaryContainer
+                font: Tokens.font.body.small
+                wrapMode: Text.Wrap
+            }
+
+            TextButton {
+                isRound: true
+                type: TextButton.Text
+                text: Tr.trCtx("Go back", "button")
+                onClicked: Displays.revert()
+            }
+
+            TextButton {
+                isRound: true
+                type: TextButton.Filled
+                text: Tr.trCtx("Keep", "button")
+                onClicked: Displays.confirm()
+            }
+        }
     }
 
     StyledText {
@@ -68,7 +275,8 @@ ColumnLayout {
             readonly property var rates: Displays.ratesForResolution(mon.availableModes, monCol.resKey)
 
             Layout.fillWidth: true
-            Layout.topMargin: index === 0 ? 0 : Tokens.spacing.large - parent.spacing
+            Layout.topMargin: root.multi || index === 0 ? 0 : Tokens.spacing.large - parent.spacing
+            visible: root.isShown(mon.name)
             spacing: Tokens.spacing.extraSmall / 2
 
             StyledText {
@@ -81,10 +289,24 @@ ColumnLayout {
                 elide: Text.ElideRight
             }
 
+            ToggleRow {
+                id: enabledRow
+
+                visible: root.multi
+                first: true
+                last: mon.disabled
+                text: Tr.trCtx("Enabled", "toggle label")
+                subtext: !mon.disabled && Displays.activeCount <= 1 ? Tr.tr("It is the only display that is on") : ""
+                checked: !mon.disabled
+                disabled: !mon.disabled ? Displays.activeCount <= 1 : false
+                onToggled: Displays.setEnabled(mon.name, checked)
+            }
+
             SelectRow {
                 id: resRow
 
-                first: true
+                visible: !mon.disabled
+                first: !root.multi
                 label: Tr.tr("Resolution")
                 subtext: Displays.formatResolutionLabel(monCol.resKey)
                 active: resItems.instances.find(i => i.modelData === monCol.resKey) ?? null
@@ -109,6 +331,7 @@ ColumnLayout {
             SelectRow {
                 id: rateRow
 
+                visible: !mon.disabled
                 label: Tr.tr("Refresh rate")
                 subtext: Displays.formatRateLabel(mon.mode)
                 // Short list (same resolution only) so the menu stays inside Nexus.
@@ -134,6 +357,7 @@ ColumnLayout {
             SelectRow {
                 id: scaleRow
 
+                visible: !mon.disabled
                 label: Tr.tr("Scale")
                 subtext: Tr.tr("%1%").arg(Math.round((Number(mon.scale) || 1) * 100))
                 active: scaleItems.instances.find(i => Math.abs(i.modelData - (Number(mon.scale) || 1)) < 0.001) ?? null
@@ -156,8 +380,60 @@ ColumnLayout {
             }
 
             SelectRow {
+                id: rotationRow
+
+                visible: !mon.disabled
+                label: Tr.tr("Rotation")
+                subtext: root.rotationLabel(Number(mon.transform) || 0)
+                active: rotationItems.instances.find(i => i.modelData === (Number(mon.transform) || 0)) ?? null
+                fallbackText: root.rotationLabel(Number(mon.transform) || 0)
+                onSelected: item => Displays.setTransform(mon.name, item.modelData)
+
+                menuItems: rotationItems.instances
+
+                Variants {
+                    id: rotationItems
+
+                    model: [0, 1, 2, 3]
+
+                    MenuItem {
+                        required property int modelData
+
+                        text: root.rotationLabel(modelData)
+                    }
+                }
+            }
+
+            SelectRow {
+                id: mirrorRow
+
+                visible: root.multi && !mon.disabled
+                label: Tr.tr("Copy another display")
+                subtext: mon.mirror ? Tr.tr("Shows what %1 shows").arg(mon.mirror) : Tr.trCtx("No", "not copying another display")
+                active: mirrorItems.instances.find(i => i.modelData === (mon.mirror || "")) ?? null
+                fallbackText: mon.mirror || Tr.trCtx("No", "not copying another display")
+                onSelected: item => Displays.setMirror(mon.name, item.modelData)
+
+                menuItems: mirrorItems.instances
+
+                Variants {
+                    id: mirrorItems
+
+                    // "" is not copying; the others are the displays that can be copied
+                    model: [""].concat(Displays.monitors.filter(m => !m.disabled && !m.mirror && m.name !== mon.name).map(m => m.name))
+
+                    MenuItem {
+                        required property string modelData
+
+                        text: modelData === "" ? Tr.trCtx("No", "not copying another display") : modelData
+                    }
+                }
+            }
+
+            SelectRow {
                 id: vrrRow
 
+                visible: !mon.disabled
                 last: true
                 label: Tr.tr("Adaptive Sync")
                 subtext: Displays.vrrLabel(monCol.vrrPolicy)

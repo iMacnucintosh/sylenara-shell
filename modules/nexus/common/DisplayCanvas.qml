@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import "../../../utils/scripts/displaylayout.js" as Layout
 
@@ -12,7 +14,6 @@ Item {
     property var layout: []
     property var labels: ({})
     property string selected
-    property bool enabled: true
 
     property color canvasColor: "#202020"
     property color tileColor: "#303030"
@@ -88,8 +89,8 @@ Item {
         visible: root.ghost !== null
         x: root.ghost ? root.toPixelsX(root.ghost.x) : 0
         y: root.ghost ? root.toPixelsY(root.ghost.y) : 0
-        width: tileFor(root.dragName).w * root.view.k
-        height: tileFor(root.dragName).h * root.view.k
+        width: ghostTile.tileFor(root.dragName).w * root.view.k
+        height: ghostTile.tileFor(root.dragName).h * root.view.k
         radius: root.tileRadius
         color: "transparent"
         border.width: 2
@@ -109,21 +110,21 @@ Item {
 
             required property var modelData
 
-            readonly property bool dragging: root.dragName === modelData.name
-            readonly property bool picked: root.selected === modelData.name
-            readonly property var info: root.labels[modelData.name] ?? ({})
+            readonly property bool dragging: root.dragName === tile.modelData.name
+            readonly property bool isSelected: root.selected === tile.modelData.name
+            readonly property var info: root.labels[tile.modelData.name] ?? ({})
 
-            objectName: `tile-${modelData.name}`
-            x: root.toPixelsX(dragging ? root.dragX : modelData.x)
-            y: root.toPixelsY(dragging ? root.dragY : modelData.y)
-            width: Math.max(8, modelData.w * root.view.k - 4)
-            height: Math.max(8, modelData.h * root.view.k - 4)
-            z: dragging ? 2 : 0
+            objectName: `tile-${tile.modelData.name}`
+            x: root.toPixelsX(tile.dragging ? root.dragX : tile.modelData.x)
+            y: root.toPixelsY(tile.dragging ? root.dragY : tile.modelData.y)
+            width: Math.max(8, tile.modelData.w * root.view.k - 4)
+            height: Math.max(8, tile.modelData.h * root.view.k - 4)
+            z: tile.dragging ? 2 : 0
             radius: root.tileRadius * 0.7
-            color: picked ? root.selectedColor : root.tileColor
-            border.width: picked ? 2 : 1
-            border.color: picked ? root.selectedBorderColor : root.tileBorderColor
-            opacity: dragging ? 0.85 : 1
+            color: tile.isSelected ? root.selectedColor : root.tileColor
+            border.width: tile.isSelected ? 2 : 1
+            border.color: tile.isSelected ? root.selectedBorderColor : root.tileBorderColor
+            opacity: tile.dragging ? 0.85 : 1
 
             Behavior on x {
                 enabled: !tile.dragging
@@ -185,7 +186,6 @@ Item {
                 property bool moved
 
                 anchors.fill: parent
-                enabled: root.enabled
                 cursorShape: pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                 acceptedButtons: Qt.LeftButton
 

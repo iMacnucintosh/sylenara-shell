@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 11:08+0100\n"
+"POT-Creation-Date: 2026-11-17 17:48+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -352,6 +352,7 @@ msgid "Bluetooth"
 msgstr "Bluetooth"
 
 #: modules/bar/popouts/Bluetooth.qml modules/bar/popouts/Network.qml
+#: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/DashboardPanel.qml
 #: modules/nexus/pages/panels/LauncherPanel.qml
 #: modules/nexus/pages/panels/SidebarPanel.qml
@@ -2128,13 +2129,86 @@ msgid "Allow nearby devices to pair with this one"
 msgstr "Permitir que los dispositivos cercanos se emparejen con este"
 
 #: modules/nexus/pages/DisplayPage.qml
+msgctxt "display that is turned off"
+msgid "Off"
+msgstr "Apagada"
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Copy of %1"
+msgstr "Copia de %1"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "screen rotation"
+msgid "Normal"
+msgstr "Normal"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "90°"
+msgstr "90°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "180°"
+msgstr "180°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "270°"
+msgstr "270°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Flipped"
+msgstr "Volteada"
+
+#: modules/nexus/pages/DisplayPage.qml
 msgctxt "monitor settings"
 msgid "Display"
 msgstr "Pantalla"
 
 #: modules/nexus/pages/DisplayPage.qml
+msgid "Identify"
+msgstr "Identificar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Drag the displays to arrange them as they are on your desk. Pick one to change its settings."
+msgstr "Arrastra las pantallas para colocarlas como las tienes en tu mesa. Pulsa una para cambiar sus ajustes."
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "New arrangement, not applied yet"
+msgstr "Nueva disposición, aún sin aplicar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Discard"
+msgstr "Descartar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Apply"
+msgstr "Aplicar"
+
+#. TRANSLATORS: %1 = seconds left
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Keep these display settings? Going back in %1 s"
+msgstr "¿Mantener estos ajustes de pantalla? Se deshará en %1 s"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Go back"
+msgstr "Deshacer"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Keep"
+msgstr "Mantener"
+
+#: modules/nexus/pages/DisplayPage.qml
 msgid "No displays detected"
 msgstr "No se detectaron pantallas"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "It is the only display that is on"
+msgstr "Es la única pantalla encendida"
 
 #: modules/nexus/pages/DisplayPage.qml
 msgid "Resolution"
@@ -2153,6 +2227,24 @@ msgstr "Escala"
 #, qt-format
 msgid "%1%"
 msgstr "%1%"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Rotation"
+msgstr "Rotación"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Copy another display"
+msgstr "Duplicar otra pantalla"
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Shows what %1 shows"
+msgstr "Muestra lo mismo que %1"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "not copying another display"
+msgid "No"
+msgstr "No"
 
 #: modules/nexus/pages/DisplayPage.qml
 msgid "Adaptive Sync"
