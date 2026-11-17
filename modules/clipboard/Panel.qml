@@ -206,12 +206,14 @@ StyledWindow {
 
                     IconButton {
                         icon: "delete_sweep"
+                        tooltip: Tr.tr("Clear history")
                         type: IconButton.Text
                         onClicked: Clipboard.clearHistory()
                     }
 
                     IconButton {
                         icon: "close"
+                        tooltip: Tr.tr("Close")
                         type: IconButton.Text
                         onClicked: Clipboard.close()
                     }
@@ -434,6 +436,7 @@ StyledWindow {
 
                             IconButton {
                                 icon: "star"
+                                tooltip: row.isFav ? Tr.tr("Remove from favourites") : Tr.tr("Add to favourites")
                                 type: IconButton.Text
                                 isToggle: true
                                 checked: row.isFav
@@ -455,6 +458,7 @@ StyledWindow {
 
                             IconButton {
                                 icon: "close"
+                                tooltip: Tr.tr("Delete")
                                 type: IconButton.Text
                                 implicitWidth: implicitHeight
                                 opacity: row.selected || row.hovered ? 1 : 0.55

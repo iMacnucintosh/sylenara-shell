@@ -350,6 +350,7 @@ StyledRect {
                     isRound: true
                     label.animate: true
                     icon: Recorder.paused ? "play_arrow" : "pause"
+                    tooltip: Recorder.paused ? Tr.tr("Resume") : Tr.tr("Pause")
                     isToggle: true
                     checked: Recorder.paused
                     type: IconButton.Tonal
@@ -371,6 +372,7 @@ StyledRect {
                     shapeMorph: true
                     isRound: true
                     icon: "stop"
+                    tooltip: Tr.tr("Stop recording")
                     inactiveColour: Colours.palette.m3error
                     inactiveOnColour: Colours.palette.m3onError
                     font: Tokens.font.icon.medium

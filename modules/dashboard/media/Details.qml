@@ -126,6 +126,7 @@ ColumnLayout {
         IconButton {
             type: IconButton.Tonal
             icon: "shuffle"
+            tooltip: Tr.tr("Shuffle")
             isRound: true
             shapeMorph: true
             checked: Players.active?.shuffle ?? false
@@ -140,6 +141,7 @@ ColumnLayout {
 
             type: IconButton.Tonal
             icon: "skip_previous"
+            tooltip: Tr.tr("Previous")
             isRound: true
             shapeMorph: true
             font: Tokens.font.icon.large
@@ -151,6 +153,7 @@ ColumnLayout {
             id: playPauseBtn
 
             icon: Players.active?.isPlaying ? "pause" : "play_arrow"
+            tooltip: Players.active?.isPlaying ? Tr.tr("Pause") : Tr.tr("Play")
             isRound: true
             shapeMorph: true
             fillWidth: true
@@ -165,6 +168,7 @@ ColumnLayout {
 
             type: IconButton.Tonal
             icon: "skip_next"
+            tooltip: Tr.tr("Next")
             isRound: true
             shapeMorph: true
             font: Tokens.font.icon.large
@@ -175,6 +179,7 @@ ColumnLayout {
         IconButton {
             type: IconButton.Tonal
             icon: Players.active?.loopState === MprisLoopState.Track ? "repeat_one" : "repeat"
+            tooltip: Tr.tr("Repeat")
             isRound: true
             shapeMorph: true
             checked: Players.active?.loopState === MprisLoopState.Track || Players.active?.loopState === MprisLoopState.Playlist

@@ -49,6 +49,7 @@ ColumnLayout {
 
         IconButton {
             icon: Updates.busy ? "stop" : "autorenew"
+            tooltip: Updates.busy ? Tr.tr("Stop") : Tr.tr("Check for updates")
             type: IconButton.Text
             isRound: true
             onClicked: Updates.busy ? Updates.stop() : Updates.refresh()
@@ -214,6 +215,7 @@ ColumnLayout {
 
         IconButton {
             icon: "open_in_new"
+            tooltip: Tr.tr("Open in Settings")
             type: IconButton.Tonal
             isRound: true
             onClicked: {

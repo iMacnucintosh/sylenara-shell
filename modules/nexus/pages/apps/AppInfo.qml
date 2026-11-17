@@ -109,6 +109,7 @@ PageBase {
                 Layout.minimumWidth: height
                 Layout.maximumWidth: height
                 icon: "open_in_new"
+                tooltip: Tr.tr("Open")
                 type: IconButton.Tonal
                 isRound: true
                 font: Tokens.font.icon.medium
@@ -167,6 +168,7 @@ PageBase {
 
             IconButton {
                 icon: "edit"
+                tooltip: Tr.tr("Edit")
                 type: IconButton.Text
                 font: Tokens.font.icon.small
                 inactiveOnColour: Colours.palette.m3onSurfaceVariant

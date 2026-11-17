@@ -121,6 +121,7 @@ ConnectedRect {
         IconButton {
             visible: !root.isDefault || root.currentBind === ""
             icon: "restart_alt"
+            tooltip: Tr.tr("Reset to default")
             type: IconButton.Text
             isRound: true
             font: Tokens.font.icon.medium

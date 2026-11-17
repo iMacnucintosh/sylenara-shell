@@ -1,6 +1,8 @@
 import QtQuick
 import Sylphrena.Config
+import Sylphrena.I18n
 import qs.components
+import qs.components.controls
 import qs.components.effects
 import qs.services
 import qs.utils
@@ -12,12 +14,21 @@ Item {
     implicitHeight: Math.round(Tokens.font.body.large.pointSize * 1.2)
 
     MouseArea {
+        id: hit
+
         anchors.fill: parent
+        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
             const screenState = ShellState.forActive();
             screenState.launcher = !screenState.launcher;
         }
+    }
+
+    StyledToolTip {
+        shown: hit.containsMouse
+        text: Tr.tr("Launcher")
+        side: "right"
     }
 
     Loader {

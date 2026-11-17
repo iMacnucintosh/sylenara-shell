@@ -186,6 +186,7 @@ Item {
             id: clearBtn
 
             icon: "clear_all"
+            tooltip: Tr.tr("Clear all")
             font: Tokens.font.icon.large
             onClicked: clearTimer.start()
 

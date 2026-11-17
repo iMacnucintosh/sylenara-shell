@@ -1,5 +1,6 @@
 import QtQuick
 import Sylphrena.Config
+import Sylphrena.I18n
 import qs.components
 import qs.services
 
@@ -77,6 +78,7 @@ TextFieldBase {
         anchors.rightMargin: Tokens.padding.medium
 
         icon: "clear"
+        tooltip: Tr.trCtx("Clear", "clear a search field")
         type: IconButton.Text
         radius: Tokens.rounding.full
         radiusMorph: false

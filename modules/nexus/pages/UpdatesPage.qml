@@ -40,6 +40,7 @@ PageBase {
 
                 IconButton {
                     icon: Updates.busy ? "stop" : "autorenew"
+                    tooltip: Updates.busy ? Tr.tr("Stop") : Tr.tr("Check for updates")
                     type: IconButton.Tonal
                     isRound: true
                     enabled: !Updates.installing
@@ -88,6 +89,7 @@ PageBase {
 
                 IconButton {
                     icon: "settings"
+                    tooltip: Tr.tr("Settings")
                     type: IconButton.Text
                     isRound: true
                     onClicked: root.nState.openSubPage(1)
@@ -391,6 +393,7 @@ PageBase {
 
                         IconButton {
                             icon: pkgRow.expanded ? "expand_less" : "expand_more"
+                            tooltip: pkgRow.expanded ? Tr.tr("Hide details") : Tr.tr("Show details")
                             type: IconButton.Text
                             isRound: true
                             onClicked: pkgRow.expanded = !pkgRow.expanded
@@ -509,6 +512,7 @@ PageBase {
                     IconButton {
                         visible: Updates.installing
                         icon: "stop"
+                        tooltip: Tr.tr("Stop")
                         type: IconButton.Text
                         isRound: true
                         onClicked: Updates.stopInstall()
@@ -517,6 +521,7 @@ PageBase {
                     IconButton {
                         visible: !Updates.installing
                         icon: "close"
+                        tooltip: Tr.tr("Close")
                         type: IconButton.Text
                         isRound: true
                         onClicked: Updates.logVisible = false

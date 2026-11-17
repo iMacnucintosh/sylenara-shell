@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 10:58+0100\n"
+"POT-Creation-Date: 2026-11-17 11:08+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -29,6 +29,11 @@ msgstr "Llamadas"
 msgctxt "bluetooth audio mode"
 msgid "Auto"
 msgstr "Auto"
+
+#: components/controls/SearchBar.qml
+msgctxt "clear a search field"
+msgid "Clear"
+msgstr "Borrar"
 
 #: components/filedialog/FileDialog.qml
 msgid "All files"
@@ -149,6 +154,10 @@ msgid "Eraser"
 msgstr "Goma de borrar"
 
 #: modules/areapicker/ShotPreview.qml
+msgid "Undo"
+msgstr "Deshacer"
+
+#: modules/areapicker/ShotPreview.qml
 msgid "Discard"
 msgstr "Descartar"
 
@@ -156,7 +165,7 @@ msgstr "Descartar"
 msgid "Save"
 msgstr "Guardar"
 
-#: modules/areapicker/ShotPreview.qml
+#: modules/areapicker/ShotPreview.qml modules/notifications/Notification.qml
 msgid "Copy"
 msgstr "Copiar"
 
@@ -181,6 +190,16 @@ msgstr "¡Configúralo ahora!"
 msgctxt "shown when no window is focused"
 msgid "Desktop"
 msgstr "Escritorio"
+
+#: modules/bar/components/OsIcon.qml modules/nexus/pages/apps/AppInfo.qml
+#: modules/nexus/pages/panels/LauncherPanel.qml
+#: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
+msgid "Launcher"
+msgstr "Lanzador"
+
+#: modules/bar/components/Power.qml
+msgid "Power"
+msgstr "Energía"
 
 #: modules/bar/components/RecordingIndicator.qml
 msgctxt "recording status"
@@ -328,6 +347,7 @@ msgstr "Rendimiento reducido"
 #: modules/bar/popouts/Bluetooth.qml modules/nexus/pages/BluetoothPage.qml
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
@@ -351,8 +371,16 @@ msgid "Timers"
 msgstr "Temporizadores"
 
 #: modules/bar/popouts/ClockPopout.qml
+msgid "Start timer"
+msgstr "Iniciar temporizador"
+
+#: modules/bar/popouts/ClockPopout.qml
 msgid "No active timers"
 msgstr "Sin temporizadores activos"
+
+#: modules/bar/popouts/ClockPopout.qml
+msgid "Cancel timer"
+msgstr "Cancelar temporizador"
 
 #. TRANSLATORS: %1 = layout code, %2 = layout name
 #: modules/bar/popouts/kblayout/KbLayout.qml
@@ -440,6 +468,14 @@ msgid "Password"
 msgstr "Contraseña"
 
 #: modules/bar/popouts/UpdatesPassword.qml
+msgid "Hide password"
+msgstr "Ocultar contraseña"
+
+#: modules/bar/popouts/UpdatesPassword.qml
+msgid "Show password"
+msgstr "Mostrar contraseña"
+
+#: modules/bar/popouts/UpdatesPassword.qml
 #: modules/bar/popouts/WirelessPassword.qml
 #: modules/nexus/common/DialogRowButton.qml
 #: modules/nexus/common/NetworkPasswordForm.qml
@@ -482,6 +518,15 @@ msgid "%1 Updates"
 msgstr "%1 Actualizaciones"
 
 #: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Stop"
+msgstr "Parar"
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+msgid "Check for updates"
+msgstr "Buscar actualizaciones"
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
 #, qt-format
 msgid "New · %1"
 msgstr "Nuevo · %1"
@@ -499,7 +544,12 @@ msgstr "No hay actualizaciones disponibles."
 msgid "Update system"
 msgstr "Actualizar sistema"
 
+#: modules/bar/popouts/UpdatesPopout.qml
+msgid "Open in Settings"
+msgstr "Abrir en Ajustes"
+
 #: modules/bar/popouts/WirelessPassword.qml
+#: modules/nexus/common/EthernetSection.qml
 #: modules/nexus/common/NetworkPasswordForm.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
 #: modules/nexus/pages/network/EthernetDetailPage.qml
@@ -533,6 +583,15 @@ msgid "Clipboard"
 msgstr "Portapapeles"
 
 #: modules/clipboard/Panel.qml
+msgid "Clear history"
+msgstr "Borrar historial"
+
+#: modules/clipboard/Panel.qml modules/nexus/Nexus.qml
+#: modules/nexus/pages/UpdatesPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "Close"
+msgstr "Cerrar"
+
+#: modules/clipboard/Panel.qml
 msgid "Search clipboard…"
 msgstr "Buscar en el portapapeles…"
 
@@ -543,6 +602,19 @@ msgstr "Sin resultados"
 #: modules/clipboard/Panel.qml
 msgid "Clipboard is empty"
 msgstr "El portapapeles está vacío"
+
+#: modules/clipboard/Panel.qml modules/launcher/items/AppItem.qml
+msgid "Remove from favourites"
+msgstr "Quitar de favoritos"
+
+#: modules/clipboard/Panel.qml modules/launcher/items/AppItem.qml
+msgid "Add to favourites"
+msgstr "Añadir a favoritos"
+
+#: modules/clipboard/Panel.qml modules/nexus/common/ListEditor.qml
+#: modules/nexus/pages/network/AddVpnPage.qml
+msgid "Delete"
+msgstr "Eliminar"
 
 #: modules/dashboard/Content.qml modules/nexus/pages/panels/DashboardPanel.qml
 #: modules/nexus/pages/PanelsPage.qml modules/nexus/pages/ShellPage.qml
@@ -564,6 +636,14 @@ msgstr "Rendimiento"
 msgid "Weather"
 msgstr "Tiempo"
 
+#: modules/dashboard/dash/Calendar.qml
+msgid "Previous month"
+msgstr "Mes anterior"
+
+#: modules/dashboard/dash/Calendar.qml
+msgid "Next month"
+msgstr "Mes siguiente"
+
 #: modules/dashboard/dash/Media.qml
 msgid "No media"
 msgstr "Sin contenido multimedia"
@@ -580,6 +660,29 @@ msgstr "Álbum desconocido"
 #: modules/lock/Media.qml
 msgid "Unknown artist"
 msgstr "Artista desconocido"
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/welcome/WelcomeWindow.qml
+msgid "Previous"
+msgstr "Anterior"
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/utilities/cards/Record.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Pause"
+msgstr "Pausa"
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/utilities/cards/RecordingList.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Play"
+msgstr "Reproducir"
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Next"
+msgstr "Siguiente"
 
 #. TRANSLATORS: %1 = system uptime, e.g. "2 days, 3 hours"
 #: modules/dashboard/dash/User.qml
@@ -599,6 +702,14 @@ msgstr "No se está reproduciendo nada"
 #: modules/dashboard/Media.qml
 msgid "Play something for it to show up here!"
 msgstr "¡Reproduce algo para que aparezca aquí!"
+
+#: modules/dashboard/media/Details.qml
+msgid "Shuffle"
+msgstr "Aleatorio"
+
+#: modules/dashboard/media/Details.qml
+msgid "Repeat"
+msgstr "Repetir"
 
 #: modules/dashboard/media/LyricList.qml
 msgid "Loading lyrics..."
@@ -882,6 +993,11 @@ msgstr "Icono"
 msgid "Theme name or file path"
 msgstr "Nombre del tema o ruta de archivo"
 
+#: modules/launcher/DesktopEditDialog.qml
+#: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
+msgid "Browse"
+msgstr "Examinar"
+
 #: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/apps/AppInfo.qml
 msgid "Command"
 msgstr "Comando"
@@ -918,7 +1034,7 @@ msgstr "Ejecutar en un terminal"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: modules/launcher/DesktopEditDialog.qml
+#: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/ShellPage.qml
 msgid "Choose icon"
 msgstr "Elegir icono"
 
@@ -929,14 +1045,6 @@ msgstr "Imágenes"
 #: modules/launcher/items/AppItem.qml
 msgid "Edit application…"
 msgstr "Editar aplicación…"
-
-#: modules/launcher/items/AppItem.qml
-msgid "Remove from favourites"
-msgstr "Quitar de favoritos"
-
-#: modules/launcher/items/AppItem.qml
-msgid "Add to favourites"
-msgstr "Añadir a favoritos"
 
 #: modules/launcher/items/AppItem.qml
 msgid "Hide from launcher"
@@ -1359,6 +1467,24 @@ msgstr "Dirección IP local"
 msgid "Primary DNS"
 msgstr "DNS principal"
 
+#: modules/nexus/common/EthernetSection.qml
+#: modules/nexus/pages/network/EthernetDetailPage.qml
+#: modules/nexus/pages/network/NetworkDetailPage.qml
+msgid "Disconnect"
+msgstr "Desconectar"
+
+#: modules/nexus/common/ExtensionCard.qml
+#: modules/nexus/pages/panels/DashboardPanel.qml
+#: modules/nexus/pages/panels/taskbar/BarClock.qml
+msgid "Hide settings"
+msgstr "Ocultar ajustes"
+
+#: modules/nexus/common/ExtensionCard.qml
+#: modules/nexus/pages/panels/DashboardPanel.qml
+#: modules/nexus/pages/panels/taskbar/BarClock.qml
+msgid "Show settings"
+msgstr "Mostrar ajustes"
+
 #: modules/nexus/common/ExtensionCard.qml
 msgid "Its system components are missing: install the extension again from Things."
 msgstr "Faltan sus componentes del sistema: vuelve a instalar la extensión desde Things."
@@ -1375,6 +1501,10 @@ msgstr "Pulsa una tecla…"
 #: modules/nexus/common/KeybindRow.qml modules/welcome/WelcomeWindow.qml
 msgid "None"
 msgstr "Ninguno"
+
+#: modules/nexus/common/KeybindRow.qml
+msgid "Reset to default"
+msgstr "Restablecer valor por defecto"
 
 #: modules/nexus/common/NetworkList.qml
 msgid "No networks found"
@@ -1417,9 +1547,18 @@ msgstr "Error de conexión: comprueba la contraseña"
 msgid "Password must be at least 8 characters"
 msgstr "La contraseña debe tener al menos 8 caracteres"
 
+#: modules/nexus/common/PageBase.qml modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Back"
+msgstr "Atrás"
+
 #: modules/nexus/NavPane.qml
 msgid "Search settings"
 msgstr "Buscar en los ajustes"
+
+#: modules/nexus/Nexus.qml
+msgid "Open in a window"
+msgstr "Abrir en una ventana"
 
 #: modules/nexus/PageCompRegistry.qml
 msgid "Page under construction"
@@ -1631,11 +1770,9 @@ msgstr "Buscar apps"
 msgid "App info"
 msgstr "Información de la aplicación"
 
-#: modules/nexus/pages/apps/AppInfo.qml
-#: modules/nexus/pages/panels/LauncherPanel.qml
-#: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
-msgid "Launcher"
-msgstr "Lanzador"
+#: modules/nexus/pages/apps/AppInfo.qml modules/welcome/WelcomeWindow.qml
+msgid "Open"
+msgstr "Abrir"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Favourite"
@@ -1664,6 +1801,10 @@ msgstr "Ocultar del lanzador"
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Details"
 msgstr "Detalles"
+
+#: modules/nexus/pages/apps/AppInfo.qml modules/nexus/pages/NetworkPage.qml
+msgid "Edit"
+msgstr "Editar"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "App ID"
@@ -1958,6 +2099,14 @@ msgctxt "bluetooth device state"
 msgid "Saved"
 msgstr "Guardado"
 
+#: modules/nexus/pages/BluetoothPage.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/nexus/pages/ShellPage.qml modules/nexus/pages/UpdatesPage.qml
+#: modules/utilities/cards/Toggles.qml modules/welcome/WelcomeWindow.qml
+#: services/Keybinds.qml
+msgid "Settings"
+msgstr "Ajustes"
+
 #. TRANSLATORS: adjective: other devices can find this computer
 #: modules/nexus/pages/BluetoothPage.qml
 msgctxt "bluetooth setting"
@@ -2036,6 +2185,7 @@ msgstr "Esta conexión llega como máximo a %1 Hz. El panel puede admitir más p
 
 #: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Compact layout"
 msgstr "Diseño compacto"
 
@@ -2123,6 +2273,15 @@ msgstr "Las del sistema. Si cambias algo aquí, Sylphrena pasa a guardarlas"
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
 msgid "Default"
 msgstr "Principal"
+
+#: modules/nexus/pages/KeyboardLayoutsCard.qml
+msgid "Set as main layout"
+msgstr "Poner como distribución principal"
+
+#: modules/nexus/pages/KeyboardLayoutsCard.qml
+#: modules/nexus/pages/ShellPage.qml
+msgid "Remove"
+msgstr "Quitar"
 
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
 msgid "Add a layout: search by language or code"
@@ -2386,10 +2545,6 @@ msgid "Disconnect command"
 msgstr "Comando de desconexión"
 
 #: modules/nexus/pages/network/AddVpnPage.qml
-msgid "Delete"
-msgstr "Eliminar"
-
-#: modules/nexus/pages/network/AddVpnPage.qml
 msgctxt "button"
 msgid "Save"
 msgstr "Guardar"
@@ -2429,11 +2584,6 @@ msgstr "5 GHz"
 msgctxt "network filter"
 msgid "2.4 GHz"
 msgstr "2,4 GHz"
-
-#: modules/nexus/pages/network/EthernetDetailPage.qml
-#: modules/nexus/pages/network/NetworkDetailPage.qml
-msgid "Disconnect"
-msgstr "Desconectar"
 
 #: modules/nexus/pages/network/EthernetDetailPage.qml
 #: modules/nexus/pages/network/NetworkDetailPage.qml
@@ -2596,6 +2746,7 @@ msgstr "Conectada • %1"
 
 #: modules/nexus/pages/NetworkPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -2614,7 +2765,8 @@ msgid "How often available networks are rescanned (seconds)"
 msgstr "Con qué frecuencia se vuelven a buscar las redes disponibles (segundos)"
 
 #: modules/nexus/pages/NetworkPage.qml
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/VPN.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/VPN.qml
 msgid "VPN"
 msgstr "VPN"
 
@@ -2733,6 +2885,14 @@ msgstr "Carrusel de widgets"
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "The centre of the Dashboard shows one widget at a time; switch with the dots, the wheel or by dragging. Enable and reorder them here."
 msgstr "El centro del panel muestra un widget a la vez; cambia con los puntos, la rueda o arrastrando. Aquí los activas y los ordenas."
+
+#: modules/nexus/pages/panels/DashboardPanel.qml
+msgid "Move up"
+msgstr "Subir"
+
+#: modules/nexus/pages/panels/DashboardPanel.qml
+msgid "Move down"
+msgstr "Bajar"
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "Tabs"
@@ -2986,6 +3146,7 @@ msgstr "Altavoces"
 
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Microphone"
 msgstr "Micrófono"
 
@@ -3174,6 +3335,7 @@ msgid "Cards"
 msgstr "Tarjetas"
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Keep awake"
 msgstr "Mantener activo"
 
@@ -3211,12 +3373,6 @@ msgid "Mute or unmute the default source"
 msgstr "Silenciar o reactivar la fuente predeterminada"
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
-#: modules/nexus/pages/ShellPage.qml modules/welcome/WelcomeWindow.qml
-#: services/Keybinds.qml
-msgid "Settings"
-msgstr "Ajustes"
-
-#: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Open the settings window"
 msgstr "Abrir la ventana de ajustes"
 
@@ -3224,7 +3380,8 @@ msgstr "Abrir la ventana de ajustes"
 msgid "Prevent sleep / idle suspend"
 msgstr "Impedir la suspensión por inactividad"
 
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/Keybinds.qml
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
@@ -3236,7 +3393,8 @@ msgstr "Todo oscuro, también las apps claras, por encima del aspecto de cada ac
 msgid "Maximise screen use: no frame or gaps"
 msgstr "Aprovechar la pantalla: sin marco ni huecos"
 
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/Keybinds.qml
 msgid "Do not disturb"
 msgstr "No molestar"
 
@@ -3700,6 +3858,10 @@ msgid "General look"
 msgstr "Look general"
 
 #: modules/nexus/pages/ShellPage.qml
+msgid "Delete activity"
+msgstr "Eliminar actividad"
+
+#: modules/nexus/pages/ShellPage.qml
 msgid "Name"
 msgstr "Nombre"
 
@@ -3819,6 +3981,14 @@ msgid "Extension"
 msgstr "Extensión"
 
 #: modules/nexus/pages/UpdatesPage.qml
+msgid "Hide details"
+msgstr "Ocultar detalles"
+
+#: modules/nexus/pages/UpdatesPage.qml
+msgid "Show details"
+msgstr "Mostrar detalles"
+
+#: modules/nexus/pages/UpdatesPage.qml
 msgid "Info"
 msgstr "Info"
 
@@ -3933,10 +4103,6 @@ msgid "How the wallpaper colours are interpreted."
 msgstr "Cómo se interpretan los colores del fondo de pantalla."
 
 #: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
-msgid "Browse"
-msgstr "Examinar"
-
-#: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
 msgid "Select an image"
 msgstr "Selecciona una imagen"
 
@@ -3961,6 +4127,30 @@ msgstr "No se han encontrado fondos de pantalla locales"
 msgid "Settings — %1"
 msgstr "Ajustes — %1"
 
+#: modules/notifications/Notification.qml
+msgid "Dismiss"
+msgstr "Descartar"
+
+#: modules/notifications/Notification.qml
+msgid "Copied"
+msgstr "Copiado"
+
+#: modules/session/Content.qml
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: modules/session/Content.qml
+msgid "Shut down"
+msgstr "Apagar"
+
+#: modules/session/Content.qml
+msgid "Suspend"
+msgstr "Suspender"
+
+#: modules/session/Content.qml
+msgid "Reboot"
+msgstr "Reiniciar"
+
 #. TRANSLATORS: the count itself is rendered separately, immediately to the left
 #: modules/sidebar/NotifDock.qml
 msgctxt "notification count label, number shown separately"
@@ -3972,6 +4162,10 @@ msgstr[1] "notificaciones"
 #: modules/sidebar/NotifDock.qml
 msgid "All up to date!"
 msgstr "¡Todo al día!"
+
+#: modules/sidebar/NotifDock.qml
+msgid "Clear all"
+msgstr "Borrar todo"
 
 #: modules/utilities/cards/IdleInhibit.qml
 msgctxt "idle inhibitor"
@@ -4035,9 +4229,25 @@ msgstr "EN PAUSA"
 msgid "Recording for %1"
 msgstr "Grabando durante %1"
 
+#: modules/utilities/cards/Record.qml
+msgid "Resume"
+msgstr "Reanudar"
+
+#: modules/utilities/cards/Record.qml
+msgid "Stop recording"
+msgstr "Detener grabación"
+
 #: modules/utilities/cards/RecordingList.qml
 msgid "Recordings"
 msgstr "Grabaciones"
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Hide recordings"
+msgstr "Ocultar grabaciones"
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Show recordings"
+msgstr "Mostrar grabaciones"
 
 #. TRANSLATORS: %1 = date, %2 = time
 #: modules/utilities/cards/RecordingList.qml
@@ -4046,8 +4256,20 @@ msgid "Recording at %1 %2"
 msgstr "Grabación a las %1 %2"
 
 #: modules/utilities/cards/RecordingList.qml
+msgid "Show in folder"
+msgstr "Mostrar en la carpeta"
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Delete recording"
+msgstr "Eliminar grabación"
+
+#: modules/utilities/cards/RecordingList.qml
 msgid "No recordings found"
 msgstr "No se han encontrado grabaciones"
+
+#: modules/utilities/cards/Toggles.qml
+msgid "Live wallpaper"
+msgstr "Fondo animado"
 
 #: modules/utilities/RecordingDeleteModal.qml
 msgid "Delete recording?"
@@ -4070,14 +4292,6 @@ msgstr "Te damos la bienvenida a Sylphrena"
 #: modules/welcome/WelcomeWindow.qml
 msgid "Skip"
 msgstr "Omitir"
-
-#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
-msgid "Back"
-msgstr "Atrás"
-
-#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
-msgid "Next"
-msgstr "Siguiente"
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Finish"
@@ -4144,10 +4358,6 @@ msgid "They come with Sylphrena and follow its theme."
 msgstr "Vienen con Sylphrena y siguen su tema."
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Open"
-msgstr "Abrir"
-
-#: modules/welcome/WelcomeWindow.qml
 msgid "Not installed"
 msgstr "No instalada"
 
@@ -4190,22 +4400,6 @@ msgstr "Brillo +"
 #: modules/welcome/WelcomeWindow.qml
 msgid "Brightness −"
 msgstr "Brillo −"
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Play"
-msgstr "Reproducir"
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Pause"
-msgstr "Pausa"
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Previous"
-msgstr "Anterior"
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Stop"
-msgstr "Parar"
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Left click"
@@ -4280,10 +4474,6 @@ msgstr "Abrir Ajustes"
 #, qt-format
 msgid "What's new in Sylphrena %1"
 msgstr "Novedades de Sylphrena %1"
-
-#: modules/welcome/WhatsNewWindow.qml
-msgid "Close"
-msgstr "Cerrar"
 
 #: modules/welcome/WhatsNewWindow.qml
 msgid "Done"

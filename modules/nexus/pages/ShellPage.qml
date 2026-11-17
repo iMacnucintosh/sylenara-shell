@@ -382,6 +382,7 @@ PageBase {
 
                         IconButton {
                             icon: "delete"
+                            tooltip: Tr.tr("Delete activity")
                             type: IconButton.Text
                             isRound: true
                             visible: !root.isPrincipal(actRow.modelData)
@@ -417,6 +418,7 @@ PageBase {
                             IconButton {
                                 Layout.alignment: Qt.AlignVCenter
                                 icon: actRow.modelData.icon || "home"
+                                tooltip: Tr.tr("Choose icon")
                                 type: IconButton.Tonal
                                 isRound: true
                                 onClicked: iconPicker.open = true
@@ -655,6 +657,7 @@ PageBase {
 
                                             IconButton {
                                                 icon: "close"
+                                                tooltip: Tr.tr("Remove")
                                                 type: IconButton.Text
                                                 isRound: true
                                                 inactiveOnColour: Colours.palette.m3error

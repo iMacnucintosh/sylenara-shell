@@ -178,6 +178,7 @@ ColumnLayout {
             anchors.rightMargin: Tokens.padding.small
             anchors.verticalCenter: parent.verticalCenter
             icon: passwordField.reveal ? "visibility_off" : "visibility"
+            tooltip: passwordField.reveal ? Tr.tr("Hide password") : Tr.tr("Show password")
             type: IconButton.Text
             isRound: true
             onClicked: {

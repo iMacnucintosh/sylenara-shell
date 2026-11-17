@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Sylphrena.Blobs
 import Sylphrena.Config
+import Sylphrena.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -80,6 +81,7 @@ Item {
 
         anchors.centerIn: windowBtnRect
         icon: nState.isWindow ? "close" : "pip"
+        tooltip: nState.isWindow ? Tr.tr("Close") : Tr.tr("Open in a window")
         type: IconButton.Text
         label.fill: 0
         inactiveOnColour: hovered ? nState.isWindow ? Colours.palette.m3error : Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant

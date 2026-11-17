@@ -184,6 +184,7 @@ PageBase {
                         IconButton {
                             isRound: true
                             icon: "arrow_upward"
+                            tooltip: Tr.tr("Move up")
                             type: IconButton.Text
                             font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                             padding: Tokens.padding.small
@@ -196,6 +197,7 @@ PageBase {
                         IconButton {
                             isRound: true
                             icon: "arrow_downward"
+                            tooltip: Tr.tr("Move down")
                             type: IconButton.Text
                             font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                             padding: Tokens.padding.small
@@ -209,6 +211,7 @@ PageBase {
                             visible: card.hasSettings
                             isRound: true
                             icon: card.settingsOpen ? "expand_less" : "expand_more"
+                            tooltip: card.settingsOpen ? Tr.tr("Hide settings") : Tr.tr("Show settings")
                             type: IconButton.Text
                             font: Tokens.font.icon.builders.small.weight(Font.Bold).build()
                             padding: Tokens.padding.small

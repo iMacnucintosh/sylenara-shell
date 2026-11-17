@@ -151,6 +151,7 @@ PageBase {
 
                                 IconButton {
                                     icon: "settings"
+                                    tooltip: Tr.tr("Settings")
                                     type: IconButton.Text
                                     padding: Tokens.padding.small
                                     inactiveOnColour: device.connected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant

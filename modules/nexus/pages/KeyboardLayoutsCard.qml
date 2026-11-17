@@ -142,6 +142,7 @@ ColumnLayout {
                         IconButton {
                             visible: layoutRow.index > 0
                             icon: "vertical_align_top"
+                            tooltip: Tr.tr("Set as main layout")
                             type: IconButton.Text
                             implicitWidth: implicitHeight
                             onClicked: {
@@ -156,6 +157,7 @@ ColumnLayout {
                             enabled: root.entries.length > 1
                             opacity: enabled ? 1 : 0.38
                             icon: "close"
+                            tooltip: Tr.tr("Remove")
                             type: IconButton.Text
                             implicitWidth: implicitHeight
                             onClicked: root.setEntries(root.entries.filter((_, i) => i !== layoutRow.index))

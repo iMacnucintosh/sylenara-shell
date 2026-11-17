@@ -82,6 +82,7 @@ ConnectedRect {
                 isRound: true
                 type: IconButton.Text
                 icon: root.settingsOpen ? "expand_less" : "expand_more"
+                tooltip: root.settingsOpen ? Tr.tr("Hide settings") : Tr.tr("Show settings")
                 padding: Tokens.padding.small
                 Layout.alignment: Qt.AlignVCenter
                 onClicked: root.settingsOpen = !root.settingsOpen

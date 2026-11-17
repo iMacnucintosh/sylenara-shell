@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Sylphrena.Config
+import Sylphrena.I18n
 import qs.components
 import qs.components.containers
 import qs.components.controls
@@ -40,6 +41,7 @@ ColumnLayout {
                 asynchronous: true
                 sourceComponent: IconButton {
                     icon: "arrow_back"
+                    tooltip: Tr.tr("Back")
                     font: Tokens.font.icon.medium
                     type: IconButton.Tonal
                     isRound: true

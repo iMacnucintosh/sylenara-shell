@@ -347,6 +347,7 @@ PageBase {
                         type: IconButton.Tonal
                         isRound: true
                         icon: "edit"
+                        tooltip: Tr.tr("Edit")
                         onClicked: {
                             root.nState.editingVpnIndex = provider.index;
                             root.nState.openSubPage(4); // Add/edit provider sub-page

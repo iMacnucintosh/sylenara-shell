@@ -185,6 +185,7 @@ StyledRect {
                     roleValue: "wifi"
                     delegate: Toggle {
                         icon: "wifi"
+                        tooltip: Tr.tr("Wi-Fi")
                         checked: Nmcli.wifiEnabled
                         onClicked: Nmcli.toggleWifi()
                     }
@@ -193,6 +194,7 @@ StyledRect {
                     roleValue: "bluetooth"
                     delegate: Toggle {
                         icon: "bluetooth"
+                        tooltip: Tr.tr("Bluetooth")
                         checked: Bluetooth.defaultAdapter?.enabled ?? false
                         onClicked: {
                             const adapter = Bluetooth.defaultAdapter;
@@ -205,6 +207,7 @@ StyledRect {
                     roleValue: "mic"
                     delegate: Toggle {
                         icon: "mic"
+                        tooltip: Tr.tr("Microphone")
                         checked: !Audio.sourceMuted
                         onClicked: {
                             const audio = Audio.source?.audio;
@@ -217,6 +220,7 @@ StyledRect {
                     roleValue: "settings"
                     delegate: Toggle {
                         icon: "settings"
+                        tooltip: Tr.tr("Settings")
                         inactiveOnColour: Colours.palette.m3onSurfaceVariant
                         isToggle: false
                         onClicked: {
@@ -229,6 +233,7 @@ StyledRect {
                     roleValue: "keepAwake"
                     delegate: Toggle {
                         icon: "coffee"
+                        tooltip: Tr.tr("Keep awake")
                         checked: RuntimeState.inhibitIdle
                         onClicked: RuntimeState.inhibitIdle = !RuntimeState.inhibitIdle
                     }
@@ -237,6 +242,7 @@ StyledRect {
                     roleValue: "darkMode"
                     delegate: Toggle {
                         icon: "dark_mode"
+                        tooltip: Tr.tr("Dark mode")
                         checked: Activities.forceDark
                         onClicked: Activities.setForceDark(!Activities.forceDark)
                     }
@@ -245,6 +251,7 @@ StyledRect {
                     roleValue: "gameMode"
                     delegate: Toggle {
                         icon: "fit_screen"
+                        tooltip: Tr.tr("Compact layout")
                         checked: RuntimeState.gameMode
                         onClicked: RuntimeState.gameMode = !RuntimeState.gameMode
                     }
@@ -253,6 +260,7 @@ StyledRect {
                     roleValue: "wallpaperPlaying"
                     delegate: Toggle {
                         icon: "smart_display"
+                        tooltip: Tr.tr("Live wallpaper")
                         checked: PersistentState.wallpaperPlaying
                         onClicked: PersistentState.wallpaperPlaying = !PersistentState.wallpaperPlaying
                     }
@@ -261,6 +269,7 @@ StyledRect {
                     roleValue: "dnd"
                     delegate: Toggle {
                         icon: "notifications_off"
+                        tooltip: Tr.tr("Do not disturb")
                         checked: PersistentState.doNotDisturb
                         onClicked: PersistentState.doNotDisturb = !PersistentState.doNotDisturb
                     }
@@ -269,6 +278,7 @@ StyledRect {
                     roleValue: "vpn"
                     delegate: Toggle {
                         icon: "vpn_key"
+                        tooltip: Tr.tr("VPN")
                         checked: VPN.connected && VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
                         enabled: !VPN.connecting && !VPN.disconnecting
                         isToggle: VPN.status.state !== "needs-auth" && VPN.status.state !== "error"

@@ -257,6 +257,7 @@ Item {
                                 Layout.topMargin: Tokens.padding.extraSmall
                                 isRound: true
                                 icon: "folder_open"
+                                tooltip: Tr.tr("Browse")
                                 type: IconButton.Tonal
                                 // Defer so this button isn't hidden before the click fully finishes
                                 onClicked: Qt.callLater(() => root.startIconBrowse())

@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Sylphrena.Config
+import Sylphrena.I18n
 import qs.components
 import qs.components.controls
 import qs.components.effects
@@ -315,6 +316,7 @@ ListView {
                     type: IconButton.Text
                     isRound: true
                     icon: "delete"
+                    tooltip: Tr.tr("Delete")
                     inactiveOnColour: Colours.palette.m3error
                     font: Tokens.font.icon.medium
                     label.fill: 0

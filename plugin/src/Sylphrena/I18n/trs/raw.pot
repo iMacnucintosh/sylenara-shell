@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 10:58+0100\n"
+"POT-Creation-Date: 2026-11-17 11:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,11 @@ msgstr ""
 #: components/bluetooth/BtModeSelector.qml
 msgctxt "bluetooth audio mode"
 msgid "Auto"
+msgstr ""
+
+#: components/controls/SearchBar.qml
+msgctxt "clear a search field"
+msgid "Clear"
 msgstr ""
 
 #: components/filedialog/FileDialog.qml
@@ -150,6 +155,10 @@ msgid "Eraser"
 msgstr ""
 
 #: modules/areapicker/ShotPreview.qml
+msgid "Undo"
+msgstr ""
+
+#: modules/areapicker/ShotPreview.qml
 msgid "Discard"
 msgstr ""
 
@@ -157,7 +166,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/areapicker/ShotPreview.qml
+#: modules/areapicker/ShotPreview.qml modules/notifications/Notification.qml
 msgid "Copy"
 msgstr ""
 
@@ -181,6 +190,16 @@ msgstr ""
 #: modules/bar/components/ActiveWindow.qml
 msgctxt "shown when no window is focused"
 msgid "Desktop"
+msgstr ""
+
+#: modules/bar/components/OsIcon.qml modules/nexus/pages/apps/AppInfo.qml
+#: modules/nexus/pages/panels/LauncherPanel.qml
+#: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
+msgid "Launcher"
+msgstr ""
+
+#: modules/bar/components/Power.qml
+msgid "Power"
 msgstr ""
 
 #: modules/bar/components/RecordingIndicator.qml
@@ -329,6 +348,7 @@ msgstr ""
 #: modules/bar/popouts/Bluetooth.qml modules/nexus/pages/BluetoothPage.qml
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Bluetooth"
 msgstr ""
 
@@ -352,7 +372,15 @@ msgid "Timers"
 msgstr ""
 
 #: modules/bar/popouts/ClockPopout.qml
+msgid "Start timer"
+msgstr ""
+
+#: modules/bar/popouts/ClockPopout.qml
 msgid "No active timers"
+msgstr ""
+
+#: modules/bar/popouts/ClockPopout.qml
+msgid "Cancel timer"
 msgstr ""
 
 #. TRANSLATORS: %1 = layout code, %2 = layout name
@@ -441,6 +469,14 @@ msgid "Password"
 msgstr ""
 
 #: modules/bar/popouts/UpdatesPassword.qml
+msgid "Hide password"
+msgstr ""
+
+#: modules/bar/popouts/UpdatesPassword.qml
+msgid "Show password"
+msgstr ""
+
+#: modules/bar/popouts/UpdatesPassword.qml
 #: modules/bar/popouts/WirelessPassword.qml
 #: modules/nexus/common/DialogRowButton.qml
 #: modules/nexus/common/NetworkPasswordForm.qml
@@ -483,6 +519,15 @@ msgid "%1 Updates"
 msgstr ""
 
 #: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Stop"
+msgstr ""
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
+msgid "Check for updates"
+msgstr ""
+
+#: modules/bar/popouts/UpdatesPopout.qml modules/nexus/pages/UpdatesPage.qml
 #, qt-format
 msgid "New · %1"
 msgstr ""
@@ -500,7 +545,12 @@ msgstr ""
 msgid "Update system"
 msgstr ""
 
+#: modules/bar/popouts/UpdatesPopout.qml
+msgid "Open in Settings"
+msgstr ""
+
 #: modules/bar/popouts/WirelessPassword.qml
+#: modules/nexus/common/EthernetSection.qml
 #: modules/nexus/common/NetworkPasswordForm.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
 #: modules/nexus/pages/network/EthernetDetailPage.qml
@@ -534,6 +584,15 @@ msgid "Clipboard"
 msgstr ""
 
 #: modules/clipboard/Panel.qml
+msgid "Clear history"
+msgstr ""
+
+#: modules/clipboard/Panel.qml modules/nexus/Nexus.qml
+#: modules/nexus/pages/UpdatesPage.qml modules/welcome/WhatsNewWindow.qml
+msgid "Close"
+msgstr ""
+
+#: modules/clipboard/Panel.qml
 msgid "Search clipboard…"
 msgstr ""
 
@@ -543,6 +602,19 @@ msgstr ""
 
 #: modules/clipboard/Panel.qml
 msgid "Clipboard is empty"
+msgstr ""
+
+#: modules/clipboard/Panel.qml modules/launcher/items/AppItem.qml
+msgid "Remove from favourites"
+msgstr ""
+
+#: modules/clipboard/Panel.qml modules/launcher/items/AppItem.qml
+msgid "Add to favourites"
+msgstr ""
+
+#: modules/clipboard/Panel.qml modules/nexus/common/ListEditor.qml
+#: modules/nexus/pages/network/AddVpnPage.qml
+msgid "Delete"
 msgstr ""
 
 #: modules/dashboard/Content.qml modules/nexus/pages/panels/DashboardPanel.qml
@@ -565,6 +637,14 @@ msgstr ""
 msgid "Weather"
 msgstr ""
 
+#: modules/dashboard/dash/Calendar.qml
+msgid "Previous month"
+msgstr ""
+
+#: modules/dashboard/dash/Calendar.qml
+msgid "Next month"
+msgstr ""
+
 #: modules/dashboard/dash/Media.qml
 msgid "No media"
 msgstr ""
@@ -580,6 +660,29 @@ msgstr ""
 #: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
 #: modules/lock/Media.qml
 msgid "Unknown artist"
+msgstr ""
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/welcome/WelcomeWindow.qml
+msgid "Previous"
+msgstr ""
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/utilities/cards/Record.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Pause"
+msgstr ""
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/utilities/cards/RecordingList.qml
+#: modules/welcome/WelcomeWindow.qml
+msgid "Play"
+msgstr ""
+
+#: modules/dashboard/dash/Media.qml modules/dashboard/media/Details.qml
+#: modules/lock/Media.qml modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Next"
 msgstr ""
 
 #. TRANSLATORS: %1 = system uptime, e.g. "2 days, 3 hours"
@@ -599,6 +702,14 @@ msgstr ""
 
 #: modules/dashboard/Media.qml
 msgid "Play something for it to show up here!"
+msgstr ""
+
+#: modules/dashboard/media/Details.qml
+msgid "Shuffle"
+msgstr ""
+
+#: modules/dashboard/media/Details.qml
+msgid "Repeat"
 msgstr ""
 
 #: modules/dashboard/media/LyricList.qml
@@ -883,6 +994,11 @@ msgstr ""
 msgid "Theme name or file path"
 msgstr ""
 
+#: modules/launcher/DesktopEditDialog.qml
+#: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
+msgid "Browse"
+msgstr ""
+
 #: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/apps/AppInfo.qml
 msgid "Command"
 msgstr ""
@@ -919,7 +1035,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: modules/launcher/DesktopEditDialog.qml
+#: modules/launcher/DesktopEditDialog.qml modules/nexus/pages/ShellPage.qml
 msgid "Choose icon"
 msgstr ""
 
@@ -929,14 +1045,6 @@ msgstr ""
 
 #: modules/launcher/items/AppItem.qml
 msgid "Edit application…"
-msgstr ""
-
-#: modules/launcher/items/AppItem.qml
-msgid "Remove from favourites"
-msgstr ""
-
-#: modules/launcher/items/AppItem.qml
-msgid "Add to favourites"
 msgstr ""
 
 #: modules/launcher/items/AppItem.qml
@@ -1358,6 +1466,24 @@ msgstr ""
 msgid "Primary DNS"
 msgstr ""
 
+#: modules/nexus/common/EthernetSection.qml
+#: modules/nexus/pages/network/EthernetDetailPage.qml
+#: modules/nexus/pages/network/NetworkDetailPage.qml
+msgid "Disconnect"
+msgstr ""
+
+#: modules/nexus/common/ExtensionCard.qml
+#: modules/nexus/pages/panels/DashboardPanel.qml
+#: modules/nexus/pages/panels/taskbar/BarClock.qml
+msgid "Hide settings"
+msgstr ""
+
+#: modules/nexus/common/ExtensionCard.qml
+#: modules/nexus/pages/panels/DashboardPanel.qml
+#: modules/nexus/pages/panels/taskbar/BarClock.qml
+msgid "Show settings"
+msgstr ""
+
 #: modules/nexus/common/ExtensionCard.qml
 msgid "Its system components are missing: install the extension again from Things."
 msgstr ""
@@ -1373,6 +1499,10 @@ msgstr ""
 
 #: modules/nexus/common/KeybindRow.qml modules/welcome/WelcomeWindow.qml
 msgid "None"
+msgstr ""
+
+#: modules/nexus/common/KeybindRow.qml
+msgid "Reset to default"
 msgstr ""
 
 #: modules/nexus/common/NetworkList.qml
@@ -1416,8 +1546,17 @@ msgstr ""
 msgid "Password must be at least 8 characters"
 msgstr ""
 
+#: modules/nexus/common/PageBase.qml modules/welcome/WelcomeWindow.qml
+#: modules/welcome/WhatsNewWindow.qml
+msgid "Back"
+msgstr ""
+
 #: modules/nexus/NavPane.qml
 msgid "Search settings"
+msgstr ""
+
+#: modules/nexus/Nexus.qml
+msgid "Open in a window"
 msgstr ""
 
 #: modules/nexus/PageCompRegistry.qml
@@ -1630,10 +1769,8 @@ msgstr ""
 msgid "App info"
 msgstr ""
 
-#: modules/nexus/pages/apps/AppInfo.qml
-#: modules/nexus/pages/panels/LauncherPanel.qml
-#: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
-msgid "Launcher"
+#: modules/nexus/pages/apps/AppInfo.qml modules/welcome/WelcomeWindow.qml
+msgid "Open"
 msgstr ""
 
 #: modules/nexus/pages/apps/AppInfo.qml
@@ -1662,6 +1799,10 @@ msgstr ""
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Details"
+msgstr ""
+
+#: modules/nexus/pages/apps/AppInfo.qml modules/nexus/pages/NetworkPage.qml
+msgid "Edit"
 msgstr ""
 
 #: modules/nexus/pages/apps/AppInfo.qml
@@ -1957,6 +2098,14 @@ msgctxt "bluetooth device state"
 msgid "Saved"
 msgstr ""
 
+#: modules/nexus/pages/BluetoothPage.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/nexus/pages/ShellPage.qml modules/nexus/pages/UpdatesPage.qml
+#: modules/utilities/cards/Toggles.qml modules/welcome/WelcomeWindow.qml
+#: services/Keybinds.qml
+msgid "Settings"
+msgstr ""
+
 #. TRANSLATORS: adjective: other devices can find this computer
 #: modules/nexus/pages/BluetoothPage.qml
 msgctxt "bluetooth setting"
@@ -2035,6 +2184,7 @@ msgstr ""
 
 #: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Compact layout"
 msgstr ""
 
@@ -2121,6 +2271,15 @@ msgstr ""
 
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
 msgid "Default"
+msgstr ""
+
+#: modules/nexus/pages/KeyboardLayoutsCard.qml
+msgid "Set as main layout"
+msgstr ""
+
+#: modules/nexus/pages/KeyboardLayoutsCard.qml
+#: modules/nexus/pages/ShellPage.qml
+msgid "Remove"
 msgstr ""
 
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
@@ -2385,10 +2544,6 @@ msgid "Disconnect command"
 msgstr ""
 
 #: modules/nexus/pages/network/AddVpnPage.qml
-msgid "Delete"
-msgstr ""
-
-#: modules/nexus/pages/network/AddVpnPage.qml
 msgctxt "button"
 msgid "Save"
 msgstr ""
@@ -2427,11 +2582,6 @@ msgstr ""
 #: modules/nexus/pages/network/AllNetworksPage.qml
 msgctxt "network filter"
 msgid "2.4 GHz"
-msgstr ""
-
-#: modules/nexus/pages/network/EthernetDetailPage.qml
-#: modules/nexus/pages/network/NetworkDetailPage.qml
-msgid "Disconnect"
 msgstr ""
 
 #: modules/nexus/pages/network/EthernetDetailPage.qml
@@ -2595,6 +2745,7 @@ msgstr ""
 
 #: modules/nexus/pages/NetworkPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Wi-Fi"
 msgstr ""
 
@@ -2613,7 +2764,8 @@ msgid "How often available networks are rescanned (seconds)"
 msgstr ""
 
 #: modules/nexus/pages/NetworkPage.qml
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/VPN.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/VPN.qml
 msgid "VPN"
 msgstr ""
 
@@ -2731,6 +2883,14 @@ msgstr ""
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "The centre of the Dashboard shows one widget at a time; switch with the dots, the wheel or by dragging. Enable and reorder them here."
+msgstr ""
+
+#: modules/nexus/pages/panels/DashboardPanel.qml
+msgid "Move up"
+msgstr ""
+
+#: modules/nexus/pages/panels/DashboardPanel.qml
+msgid "Move down"
 msgstr ""
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
@@ -2985,6 +3145,7 @@ msgstr ""
 
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Microphone"
 msgstr ""
 
@@ -3173,6 +3334,7 @@ msgid "Cards"
 msgstr ""
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml
 msgid "Keep awake"
 msgstr ""
 
@@ -3210,12 +3372,6 @@ msgid "Mute or unmute the default source"
 msgstr ""
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
-#: modules/nexus/pages/ShellPage.qml modules/welcome/WelcomeWindow.qml
-#: services/Keybinds.qml
-msgid "Settings"
-msgstr ""
-
-#: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Open the settings window"
 msgstr ""
 
@@ -3223,7 +3379,8 @@ msgstr ""
 msgid "Prevent sleep / idle suspend"
 msgstr ""
 
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/Keybinds.qml
 msgid "Dark mode"
 msgstr ""
 
@@ -3235,7 +3392,8 @@ msgstr ""
 msgid "Maximise screen use: no frame or gaps"
 msgstr ""
 
-#: modules/nexus/pages/panels/UtilitiesPanel.qml services/Keybinds.qml
+#: modules/nexus/pages/panels/UtilitiesPanel.qml
+#: modules/utilities/cards/Toggles.qml services/Keybinds.qml
 msgid "Do not disturb"
 msgstr ""
 
@@ -3699,6 +3857,10 @@ msgid "General look"
 msgstr ""
 
 #: modules/nexus/pages/ShellPage.qml
+msgid "Delete activity"
+msgstr ""
+
+#: modules/nexus/pages/ShellPage.qml
 msgid "Name"
 msgstr ""
 
@@ -3818,6 +3980,14 @@ msgid "Extension"
 msgstr ""
 
 #: modules/nexus/pages/UpdatesPage.qml
+msgid "Hide details"
+msgstr ""
+
+#: modules/nexus/pages/UpdatesPage.qml
+msgid "Show details"
+msgstr ""
+
+#: modules/nexus/pages/UpdatesPage.qml
 msgid "Info"
 msgstr ""
 
@@ -3932,10 +4102,6 @@ msgid "How the wallpaper colours are interpreted."
 msgstr ""
 
 #: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
-msgid "Browse"
-msgstr ""
-
-#: modules/nexus/pages/wallandstyle/WallpaperSelect.qml
 msgid "Select an image"
 msgstr ""
 
@@ -3960,6 +4126,30 @@ msgstr ""
 msgid "Settings — %1"
 msgstr ""
 
+#: modules/notifications/Notification.qml
+msgid "Dismiss"
+msgstr ""
+
+#: modules/notifications/Notification.qml
+msgid "Copied"
+msgstr ""
+
+#: modules/session/Content.qml
+msgid "Log out"
+msgstr ""
+
+#: modules/session/Content.qml
+msgid "Shut down"
+msgstr ""
+
+#: modules/session/Content.qml
+msgid "Suspend"
+msgstr ""
+
+#: modules/session/Content.qml
+msgid "Reboot"
+msgstr ""
+
 #. TRANSLATORS: the count itself is rendered separately, immediately to the left
 #: modules/sidebar/NotifDock.qml
 msgctxt "notification count label, number shown separately"
@@ -3970,6 +4160,10 @@ msgstr[1] ""
 
 #: modules/sidebar/NotifDock.qml
 msgid "All up to date!"
+msgstr ""
+
+#: modules/sidebar/NotifDock.qml
+msgid "Clear all"
 msgstr ""
 
 #: modules/utilities/cards/IdleInhibit.qml
@@ -4034,8 +4228,24 @@ msgstr ""
 msgid "Recording for %1"
 msgstr ""
 
+#: modules/utilities/cards/Record.qml
+msgid "Resume"
+msgstr ""
+
+#: modules/utilities/cards/Record.qml
+msgid "Stop recording"
+msgstr ""
+
 #: modules/utilities/cards/RecordingList.qml
 msgid "Recordings"
+msgstr ""
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Hide recordings"
+msgstr ""
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Show recordings"
 msgstr ""
 
 #. TRANSLATORS: %1 = date, %2 = time
@@ -4045,7 +4255,19 @@ msgid "Recording at %1 %2"
 msgstr ""
 
 #: modules/utilities/cards/RecordingList.qml
+msgid "Show in folder"
+msgstr ""
+
+#: modules/utilities/cards/RecordingList.qml
+msgid "Delete recording"
+msgstr ""
+
+#: modules/utilities/cards/RecordingList.qml
 msgid "No recordings found"
+msgstr ""
+
+#: modules/utilities/cards/Toggles.qml
+msgid "Live wallpaper"
 msgstr ""
 
 #: modules/utilities/RecordingDeleteModal.qml
@@ -4068,14 +4290,6 @@ msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Skip"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
-msgid "Back"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml modules/welcome/WhatsNewWindow.qml
-msgid "Next"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
@@ -4143,10 +4357,6 @@ msgid "They come with Sylphrena and follow its theme."
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Open"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml
 msgid "Not installed"
 msgstr ""
 
@@ -4188,22 +4398,6 @@ msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Brightness −"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Play"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Pause"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Previous"
-msgstr ""
-
-#: modules/welcome/WelcomeWindow.qml
-msgid "Stop"
 msgstr ""
 
 #: modules/welcome/WelcomeWindow.qml
@@ -4278,10 +4472,6 @@ msgstr ""
 #: modules/welcome/WhatsNewWindow.qml
 #, qt-format
 msgid "What's new in Sylphrena %1"
-msgstr ""
-
-#: modules/welcome/WhatsNewWindow.qml
-msgid "Close"
 msgstr ""
 
 #: modules/welcome/WhatsNewWindow.qml

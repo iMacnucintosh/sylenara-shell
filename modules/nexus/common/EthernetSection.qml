@@ -212,6 +212,7 @@ ColumnLayout {
                     isRound: true
                     checked: ethRow.isConnected
                     icon: ethRow.isConnected ? "link_off" : "link"
+                    tooltip: ethRow.isConnected ? Tr.tr("Disconnect") : Tr.tr("Connect")
                     onClicked: {
                         if (ethRow.isConnected)
                             Nmcli.disconnectEthernet(ethRow.modelData.connection);

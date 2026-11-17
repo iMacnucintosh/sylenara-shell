@@ -129,6 +129,7 @@ Item {
             IconButton {
                 type: IconButton.Tonal
                 icon: "skip_previous"
+                tooltip: Tr.tr("Previous")
                 isRound: true
                 shapeMorph: true
                 disabled: !Players.active?.canGoPrevious
@@ -138,6 +139,7 @@ Item {
             IconButton {
                 fillWidth: true
                 icon: Players.active?.isPlaying ? "pause" : "play_arrow"
+                tooltip: Players.active?.isPlaying ? Tr.tr("Pause") : Tr.tr("Play")
                 isRound: true
                 shapeMorph: true
                 checked: Players.active?.isPlaying ?? false
@@ -148,6 +150,7 @@ Item {
             IconButton {
                 type: IconButton.Tonal
                 icon: "skip_next"
+                tooltip: Tr.tr("Next")
                 isRound: true
                 shapeMorph: true
                 disabled: !Players.active?.canGoNext
