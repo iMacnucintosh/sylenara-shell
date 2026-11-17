@@ -272,7 +272,9 @@ Singleton {
     // ── Compatibility (manifest `apiVersion`, `requires.sylenara`) ─────────────────────────────
     // Version of the extension contract this shell implements, and of the shell itself (from the git
     // tag it was built from). An extension that needs more is listed but not loaded.
-    readonly property int apiVersion: 1
+    // 2: the modules of the shell changed their names (Sylenara.*), so an extension of the first generation
+    // cannot be loaded by this shell, and the other way round.
+    readonly property int apiVersion: 2
     readonly property string shellVersion: CUtils.version
 
     // Numbers of "1", "1.2", "1.2.3" or "v1.2.3-dev" as [major, minor, patch]

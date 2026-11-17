@@ -2,9 +2,9 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
-## Sin publicar
+## 0.7.0 (2026-11-17)
 
-- **Nuevo nombre: Sylenara.** La shell, la CLI (`sylenara`), el hub de extensiones, el repositorio de paquetes (`[sylenara]`) y el instalador pasan a llamarse Sylenara, igual que las carpetas (`~/.config/sylenara`, `~/.local/state/sylenara`) y el módulo de configuración (`Sylenara.*`). Es un cambio completo, sin compatibilidad con el nombre anterior: quien tenga una instalación previa debe desinstalarla y volver a instalar. Seeker, Things y Veo conservan su nombre. Toda la familia queda bajo **GPL-3.0**, con el crédito al proyecto original en `NOTICE`.
+- **Nuevo nombre: Sylenara.** La shell, la CLI (`syl`), el hub de extensiones, el repositorio de paquetes (`[sylenara]`) y el instalador pasan a llamarse Sylenara, igual que las carpetas (`~/.config/sylenara`, `~/.local/state/sylenara`) y el módulo de configuración (`Sylenara.*`). Es un cambio completo, sin compatibilidad con el nombre anterior: quien tenga una instalación previa debe desinstalarla y volver a instalar. Seeker, Things y Veo conservan su nombre. Toda la familia queda bajo **GPL-3.0**, con el crédito al proyecto original en `NOTICE`.
 - **Añadir y quitar desktops desde la vista de actividades:** un botón **+** junto al título de cada actividad añade un desktop al final, y al pasar el ratón por uno vacío sale un badge discreto con un **−** para eliminarlo (nunca el último de la actividad, ni uno con una app anclada por una regla, aunque esté cerrada). El botón de cerrar de la vista desaparece (se cierra con un clic fuera o con Esc), las actividades inactivas se distinguen mejor y el desktop nuevo aparece con una pequeña animación. Las ventanas de los desktops siguientes se mueven con la renumeración, así que ninguna cambia de actividad. Ya no hace falta pasar por Ajustes.
 - **Nexus pasa a llamarse Ajustes:** la ventana de configuración se llama como lo que es («Settings» en inglés) en su título, la guía de bienvenida, los atajos y los avisos, y en la guía usa el mismo engranaje que los ajustes rápidos y el lanzador. Por dentro sigue siendo `nexus`: el atajo, la IPC (`nexus openPage`) y la configuración no cambian. Things y las extensiones Juegos (0.1.5) y VPN FortiClient (0.4.3) también lo nombran así.
 
