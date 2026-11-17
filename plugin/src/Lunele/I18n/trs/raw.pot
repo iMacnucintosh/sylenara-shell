@@ -4306,12 +4306,6 @@ msgstr ""
 msgid "Made by %1"
 msgstr ""
 
-#. TRANSLATORS: %1 = the name of the original project, %2 = its author
-#: modules/welcome/WelcomeWindow.qml
-#, qt-format
-msgid "A fork of %1 by %2"
-msgstr ""
-
 #: modules/welcome/WelcomeWindow.qml
 msgid "What Lunele gives you"
 msgstr ""

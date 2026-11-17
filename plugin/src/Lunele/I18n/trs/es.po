@@ -4307,12 +4307,6 @@ msgstr "Una shell de escritorio Material You para Hyprland, pensada para que sea
 msgid "Made by %1"
 msgstr "Hecho por %1"
 
-#. TRANSLATORS: %1 = the name of the original project, %2 = its author
-#: modules/welcome/WelcomeWindow.qml
-#, qt-format
-msgid "A fork of %1 by %2"
-msgstr "Un fork de %1, de %2"
-
 #: modules/welcome/WelcomeWindow.qml
 msgid "What Lunele gives you"
 msgstr "Qué te ofrece Lunele"
