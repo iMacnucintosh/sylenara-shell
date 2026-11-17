@@ -386,7 +386,7 @@ Item {
         id: cardHover
     }
 
-    // Remove badge: on the top right corner, a little outside of the card, like a notification badge. Only on hover,
+    // Remove badge (a minus): on the top right corner, a little outside of the card, like a notification badge. Only on hover,
     // and only when the desktop has no windows
     IconButton {
         id: removeBadge
@@ -398,13 +398,16 @@ Item {
         anchors.topMargin: -Math.round(implicitHeight / 3)
         anchors.rightMargin: -Math.round(implicitWidth / 3)
         z: 20
-        icon: "close"
+        icon: "remove"
         type: IconButton.Filled
         isRound: true
         font: Tokens.font.icon.small
         padding: Tokens.padding.extraSmall
-        inactiveColour: Colours.palette.m3error
-        inactiveOnColour: Colours.palette.m3onError
+        // Discreet: a neutral surface with a hairline, not an alarm colour
+        inactiveColour: Colours.palette.m3surfaceContainerHighest
+        inactiveOnColour: Colours.palette.m3onSurfaceVariant
+        border.width: 1
+        border.color: Qt.alpha(Colours.palette.m3outline, 0.5)
         opacity: shown ? 1 : 0
         scale: shown ? 1 : 0.6
         visible: opacity > 0
