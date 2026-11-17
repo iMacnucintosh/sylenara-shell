@@ -124,6 +124,9 @@ QtObject {
                 Component {
                     SavedNetworksPage {}
                 }
+                Component {
+                    ConnectNetworkPage {}
+                }
             }
         },
         Component {

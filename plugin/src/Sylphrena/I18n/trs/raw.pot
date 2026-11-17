@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 14:15+0100\n"
+"POT-Creation-Date: 2026-11-17 10:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -431,6 +431,7 @@ msgstr ""
 #: modules/bar/popouts/UpdatesPassword.qml
 #: modules/bar/popouts/WirelessPassword.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/UpdatesPage.qml
 msgid "Password"
 msgstr ""
@@ -440,6 +441,7 @@ msgstr ""
 #: modules/nexus/common/DialogRowButton.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
 #: modules/nexus/pages/network/AddVpnPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/UpdatesPage.qml
 #: modules/utilities/RecordingDeleteModal.qml
 msgctxt "button"
@@ -496,6 +498,7 @@ msgstr ""
 
 #: modules/bar/popouts/WirelessPassword.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/network/EthernetDetailPage.qml
 msgid "Connect"
 msgstr ""
@@ -2290,14 +2293,17 @@ msgstr ""
 
 #. TRANSLATORS: WPA is a protocol name, leave it untranslated
 #: modules/nexus/pages/network/AddNetworkPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 msgid "WPA passwords are at least 8 characters"
 msgstr ""
 
 #: modules/nexus/pages/network/AddNetworkPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 msgid "Connection failed — check the password"
 msgstr ""
 
 #: modules/nexus/pages/network/AddNetworkPage.qml
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
 msgid "Password must be at least 8 characters"
 msgstr ""
 
@@ -2418,6 +2424,15 @@ msgstr ""
 #: modules/nexus/pages/network/AllNetworksPage.qml
 msgctxt "network filter"
 msgid "2.4 GHz"
+msgstr ""
+
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
+#, qt-format
+msgid "Connect to %1"
+msgstr ""
+
+#: modules/nexus/pages/network/ConnectNetworkPage.qml
+msgid "This network is protected. Enter its password to connect."
 msgstr ""
 
 #: modules/nexus/pages/network/EthernetDetailPage.qml

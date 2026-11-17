@@ -62,7 +62,12 @@ ItemList {
 
         onClicked: {
             if (!modelData.active) {
-                NetworkConnection.handleConnect(modelData);
+                // NetworkManager needs a password (none saved, or a profile without it): the connect sub-page asks
+                NetworkConnection.handleConnect(modelData, null, ap => {
+                    network.currentSelected = false;
+                    root.nState.pendingNetwork = ap;
+                    root.nState.openSubPage(7);
+                });
                 currentSelected = true;
                 root.networkSelected(modelData);
             } else {
