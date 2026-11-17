@@ -1,5 +1,5 @@
 import QtQuick
-import Lunele.Components
+import Sylenara.Components
 
 Item {
     id: root

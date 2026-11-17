@@ -1,4 +1,4 @@
-<h1 align="center">Lunele</h1>
+<h1 align="center">Sylenara</h1>
 
 <p align="center"><a href="./README.md">English</a> · <strong>Español</strong></p>
 
@@ -8,8 +8,8 @@ Un escritorio <strong>Material You</strong> completo para <a href="https://hypr.
 
 <div align="center">
 
-![Última versión](https://img.shields.io/github/v/tag/iMacnucintosh/lunele-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=versi%C3%B3n)
-![Último commit](https://img.shields.io/github/last-commit/iMacnucintosh/lunele-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=%C3%BAltimo%20cambio)
+![Última versión](https://img.shields.io/github/v/tag/iMacnucintosh/sylenara-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=versi%C3%B3n)
+![Último commit](https://img.shields.io/github/last-commit/iMacnucintosh/sylenara-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=%C3%BAltimo%20cambio)
 
 </div>
 
@@ -20,18 +20,18 @@ https://github.com/user-attachments/assets/1d005d8f-ab43-442d-a75a-917899f02845
 Necesitas **Arch Linux**. Desde una terminal, con tu usuario (no como root):
 
 ```sh
-git clone https://github.com/iMacnucintosh/lunele-shell
-cd lunele-shell
+git clone https://github.com/iMacnucintosh/sylenara-shell
+cd sylenara-shell
 ./install.sh
 ```
 
-El instalador mira qué tiene tu sistema, te enseña qué va a instalar y por qué, y **no toca nada hasta que confirmas**. Pide la contraseña una sola vez, e instala también Hyprland si aún no lo tienes. Al terminar, cierra sesión (o reinicia): entrarás por la pantalla de inicio de sesión de Lunele y, la primera vez, te recibirá un asistente de bienvenida con lo básico.
+El instalador mira qué tiene tu sistema, te enseña qué va a instalar y por qué, y **no toca nada hasta que confirmas**. Pide la contraseña una sola vez, e instala también Hyprland si aún no lo tienes. Al terminar, cierra sesión (o reinicia): entrarás por la pantalla de inicio de sesión de Sylenara y, la primera vez, te recibirá un asistente de bienvenida con lo básico.
 
 Puedes repetirlo cuando quieras: solo hace lo que falte. Para ver qué haría sin cambiar nada, `./install.sh --dry-run`.
 
-Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Ajustes → Actualizaciones); desde una terminal, `lunele update`.
+Para actualizar más adelante, la shell avisa de las versiones nuevas en su lista de actualizaciones (icono de la barra y Ajustes → Actualizaciones); desde una terminal, `syl update`.
 
-Los paquetes de Lunele llegan ya compilados y firmados desde su propio repositorio de pacman (`[lunele]`, que el instalador añade con su clave), así que instalar lleva unos minutos y las actualizaciones llegan con las del sistema. Si el repositorio no responde, o con `./install.sh --from-source`, los compila desde el código.
+Los paquetes de Sylenara llegan ya compilados y firmados desde su propio repositorio de pacman (`[sylenara]`, que el instalador añade con su clave), así que instalar lleva unos minutos y las actualizaciones llegan con las del sistema. Si el repositorio no responde, o con `./install.sh --from-source`, los compila desde el código.
 
 <!-- captura: docs/media/installer.webp — el instalador con la lista de pasos -->
 
@@ -70,11 +70,11 @@ Cuando hay paquetes nuevos (Arch, AUR o Flatpak), aparece un aviso en la barra. 
 
 ### Extensiones y Things
 
-Lunele se amplía con extensiones (hidratación, tareas, tu biblioteca de Steam con logros y tiempo de juego, VPN FortiClient…). Se instalan con un clic desde **Things**, el gestor de paquetes que viene con Lunele, que además busca e instala programas de Arch, AUR y Flatpak.
+Sylenara se amplía con extensiones (hidratación, tareas, tu biblioteca de Steam con logros y tiempo de juego, VPN FortiClient…). Se instalan con un clic desde **Things**, el gestor de paquetes que viene con Sylenara, que además busca e instala programas de Arch, AUR y Flatpak.
 
-<!-- captura: docs/media/things.webp — Things en la sección Lunele -->
+<!-- captura: docs/media/things.webp — Things en la sección Sylenara -->
 
-### Apps que vienen con Lunele
+### Apps que vienen con Sylenara
 
 - **[Things](https://github.com/iMacnucintosh/things)**: gestor de paquetes y de extensiones.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: explorador de archivos, con el mismo aspecto que la shell.
@@ -124,10 +124,10 @@ Todos se cambian en Ajustes → Teclado y ratón.
 | [CHANGELOG.md](./CHANGELOG.md) | Qué cambia en cada versión |
 | [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) | Instalación manual, compilar desde el código y contribuir |
 
-¿Algo no funciona o echas algo en falta? [Abre una issue](https://github.com/iMacnucintosh/lunele-shell/issues/new).
+¿Algo no funciona o echas algo en falta? [Abre una issue](https://github.com/iMacnucintosh/sylenara-shell/issues/new).
 
 ## Créditos
 
-Lunele empezó como un fork de [caelestia-shell](https://github.com/caelestia-dots/shell), de soramane, y hoy es un proyecto propio de [iMacnucintosh](https://github.com/iMacnucintosh). Gracias también a [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), sobre el que está construida, y a [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) y [Ax-Shell](https://github.com/Axenide/Ax-Shell) por la inspiración.
+Sylenara empezó como un fork de [caelestia-shell](https://github.com/caelestia-dots/shell), de soramane, y hoy es un proyecto propio de [iMacnucintosh](https://github.com/iMacnucintosh). Gracias también a [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), sobre el que está construida, y a [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) y [Ax-Shell](https://github.com/Axenide/Ax-Shell) por la inspiración.
 
 Licencia GPL-3.0. Copyright (C) 2026 Manuel López Mallorquín. Créditos y componentes de terceros en [NOTICE](NOTICE).

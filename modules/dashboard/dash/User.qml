@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import M3Shapes
-import Lunele.Config
-import Lunele.I18n
-import Lunele.Multimedia
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Multimedia
 import qs.components
 import qs.components.effects
 import qs.components.filedialog
@@ -146,7 +146,7 @@ Item {
 
         Loader {
             anchors.centerIn: parent
-            sourceComponent: SysInfo.isDefaultLogo ? luneleLogo : osLogo
+            sourceComponent: SysInfo.isDefaultLogo ? sylenaraLogo : osLogo
         }
     }
 
@@ -163,7 +163,7 @@ Item {
     }
 
     Component {
-        id: luneleLogo
+        id: sylenaraLogo
 
         Logo {
             implicitWidth: Tokens.sizes.dashboard.logoSize

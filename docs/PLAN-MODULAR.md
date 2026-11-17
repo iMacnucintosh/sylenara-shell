@@ -1,4 +1,4 @@
-# Plan: separar la base de Lunele de sus extensiones
+# Plan: separar la base de Sylenara de sus extensiones
 
 Documento de trabajo para el agente que lo implemente. Léelo entero antes de tocar nada, junto con
 [AGENTS.md](../AGENTS.md) (convenciones del repo, trampas conocidas). Si algo de este plan choca
@@ -6,7 +6,7 @@ con lo que encuentres en el código, **para y pregunta al usuario**; no improvis
 
 Estado: **cerrado: publicado como `v0.2.0` (PR #34, 2026-11-11)**. Siguiente: [PLAN-0.3.md](./PLAN-0.3.md). Fases 0–5 ejecutadas el 2026-11-10 en `dev/0.2` (ver [PLAN-LOG.md](./PLAN-LOG.md)). Pendiente: que el usuario pruebe y, si todo va bien, borrar la copia de seguridad, abrir la PR `dev/0.2` → `main` y crear el tag `v0.2.0`.
 
-**Rama de trabajo: `dev/0.2`.** Todo este refactor es la versión **0.2.0** de Lunele y se
+**Rama de trabajo: `dev/0.2`.** Todo este refactor es la versión **0.2.0** de Sylenara y se
 desarrolla en esta rama de larga duración. **`main` no se toca** hasta que el conjunto sea estable:
 se queda en la línea 0.1.x, que es lo que el usuario puede seguir usando si algo sale mal. Cada
 fase es una rama `feature/*` que sale de `dev/0.2` y se fusiona **en `dev/0.2`** (nunca en `main`).
@@ -17,7 +17,7 @@ crea el tag `v0.2.0` (el build lee la versión de los tags `v0.*`; no crees el t
 
 ## 1. Objetivo
 
-Lunele es una shell Quickshell/QML para Hyprland. Hoy es un único repo donde
+Sylenara es una shell Quickshell/QML para Hyprland. Hoy es un único repo donde
 conviven la shell base y funciones personales u opcionales. Queremos:
 
 1. Una **base** estable e instalable en cualquier equipo (a futuro, paquete AUR), sin nada personal.
@@ -70,7 +70,7 @@ Verifícalo con `git grep` antes de empezar; puede haber cambiado.
 
 **Rutas personales** (2):
 - `shell.qml:11` — pragma `QT_ADDITIONAL_PACKAGES_PREFIX_PATH=/home/manu/.local/lib/qt6/qml`
-- `scripts/start-shell-with-tray-watcher.sh:8` — `LUNELE=/home/manu/.local/bin/lunele`
+- `scripts/start-shell-with-tray-watcher.sh:8` — `SYLENARA=/home/manu/.local/bin/syl`
 
 **VPN (Madison)**: `services/MadisonVpn.qml`, `modules/bar/popouts/{Vpn,VpnOtp,VpnSettings}.qml`,
 `modules/bar/components/status/VpnStatus.qml`, referencias en `modules/bar/components/StatusIcons.qml`,
@@ -81,9 +81,9 @@ Verifícalo con `git grep` antes de empezar; puede haber cambiado.
 `services/VPN.qml`, que es el VPN genérico de upstream y **no** es esto.
 
 **Hidratación**: `services/Hydration.qml`, `modules/dashboard/dash/HydrationWidget.qml`, shader
-`plugin/src/Lunele/Shaders/water.frag`, ajustes en `modules/nexus/pages/panels/DashboardPanel.qml`,
+`plugin/src/Sylenara/Shaders/water.frag`, ajustes en `modules/nexus/pages/panels/DashboardPanel.qml`,
 registro en `services/DashWidgets.qml` y `modules/dashboard/dash/WidgetCarousel.qml`, arranque en
-`shell.qml`, config `addons.hydration`, estado `~/.local/state/lunele/hydration.json`.
+`shell.qml`, config `addons.hydration`, estado `~/.local/state/sylenara/hydration.json`.
 
 **Tareas**: `services/Tasks.qml`, `modules/dashboard/dash/TasksWidget.qml`, registro en
 `DashWidgets`/`WidgetCarousel`, `dashboardTyping` en `components/ScreenState.qml`, config
@@ -98,9 +98,9 @@ registro en `services/DashWidgets.qml` y `modules/dashboard/dash/WidgetCarousel.
 **Ratón Razer**: `services/RazerMouse.qml`, uso en `modules/dashboard/dash/Resources.qml`, fila en
 `ComplementsPage.qml`, config `addons.razerMouse`, estado `razer-mouse.json`.
 
-**Config compilada**: `plugin/src/Lunele/Config/addonsconfig.hpp` define `addons.*` en C++
+**Config compilada**: `plugin/src/Sylenara/Config/addonsconfig.hpp` define `addons.*` en C++
 (cambiarla exige recompilar e instalar el plugin). Las traducciones están en
-`plugin/src/Lunele/I18n/trs/es.po` (también compiladas).
+`plugin/src/Sylenara/I18n/trs/es.po` (también compiladas).
 
 ## 5. Diseño objetivo
 
@@ -158,7 +158,7 @@ conectar. No lo rediseñes: complétalo.
 - `services/Extensions.qml` — singleton cargador. Lanza `scripts/list-extensions.py` sobre los
   directorios de extensiones, compila los QML con `Qt.createComponent("file://…")`, crea el
   servicio de cada extensión y expone `loaded`, `widgets` y `service(id)`. Tiene un `IpcHandler`
-  de depuración: `qs -c lunele ipc call extensions status`.
+  de depuración: `qs -c sylenara ipc call extensions status`.
 - `components/ExtensionSlot.qml` — coloca un componente aportado por una extensión, creándolo con
   `ext` y `service` ya asignados.
 - `scripts/list-extensions.py` — devuelve los manifiestos en JSON (valida el `id`, el primero gana).
@@ -178,15 +178,15 @@ conectar. No lo rediseñes: complétalo.
   `Extensions`. Y una extensión nunca importa ficheros de otra.
 
 **Lo que se comprobó que funciona** (y por tanto puedes dar por hecho)
-- Cargar desde dentro del repo (`extensions/`) **y desde fuera** (`~/.local/share/lunele/extensions/`):
+- Cargar desde dentro del repo (`extensions/`) **y desde fuera** (`~/.local/share/sylenara/extensions/`):
   en ambos casos los ficheros de la extensión pueden hacer `import qs.services`, `qs.components`,
-  `qs.utils`, `Lunele.Config`, `Lunele.I18n` y usar `Colours`, `Tokens`, `Paths`,
+  `qs.utils`, `Sylenara.Config`, `Sylenara.I18n` y usar `Colours`, `Tokens`, `Paths`,
   `GlobalConfig`, `Tr.tr`.
 - Ficheros hermanos por nombre de tipo (`Sibling {}`) y subcarpetas con `import "parts"`.
 - Un shader propio: la extensión incluye el `.qsb` ya compilado y lo usa con
   `fragmentShader: Qt.resolvedUrl("water.frag.qsb")`. Hay que distribuir el `.qsb`, no el `.frag`
   (se genera con `/usr/lib/qt6/bin/qsb`; el build del plugin lo deja en
-  `build/plugin/src/Lunele/Shaders/.qsb/`). Así el shader de hidratación puede salir del plugin.
+  `build/plugin/src/Sylenara/Shaders/.qsb/`). Así el shader de hidratación puede salir del plugin.
 - El widget pintado en el carrusel con su servicio actualizándose en vivo.
 - **Aislamiento de fallos**: una extensión con un error de sintaxis o un import inexistente deja
   un aviso claro en el log (`Extensions: <id>/<fichero>: <error>`), queda marcada con `error`, y ni
@@ -215,12 +215,12 @@ conectar. No lo rediseñes: complétalo.
 
 ### 5.4 Configuración y traducciones
 
-- Cada extensión guarda su configuración en `~/.config/lunele/extensions/<id>.json`, leída y
+- Cada extensión guarda su configuración en `~/.config/sylenara/extensions/<id>.json`, leída y
   escrita desde QML (patrón `FileView` ya usado en `services/Tasks.qml`). Deja de depender de
   `addons.*` en C++. La base solo guarda **qué extensiones están activadas** y el orden de widgets.
 - Migración: al primer arranque con el sistema nuevo, copiar los valores existentes de `addons.*`
   y `dashboard.tasksEnabled` al fichero nuevo. El usuario no debe perder su configuración.
-- El estado (`~/.local/state/lunele/*.json`) no cambia de sitio en este plan.
+- El estado (`~/.local/state/sylenara/*.json`) no cambia de sitio en este plan.
 - Traducciones: hoy son un `.po` compilado en el plugin. Para este plan, **las cadenas de las
   extensiones se quedan en el `es.po` común**. Sacarlas es trabajo futuro; anótalo, no lo resuelvas.
 
@@ -235,7 +235,7 @@ reiniciada, log sin errores nuevos, `AGENTS.md`/`FEATURES.md`/`CONFIG.md`/`CHANG
 - **Código**: `main` no se toca y está en GitHub. Volver a la versión estable = `git checkout main`
   y reiniciar la shell.
 - **Datos del usuario** (lo que git no cubre): copia en
-  `~/Backups/lunele-pre-0.2-2026-11-10/` de `~/.config/lunele`, `~/.local/state/lunele` y
+  `~/Backups/sylenara-pre-0.2-2026-11-10/` de `~/.config/sylenara`, `~/.local/state/sylenara` y
   `~/.local/share/madison-vpn`, con un `LEEME.txt` que explica cómo restaurar. Contiene datos
   privados (clave de Steam, scripts de la VPN): **nunca la subas ni la copies al repo**.
 - **Sistema**: el usuario tiene Timeshift (Btrfs). Ojo: su restauración no incluye `/home` por
@@ -250,7 +250,7 @@ reiniciada, log sin errores nuevos, `AGENTS.md`/`FEATURES.md`/`CONFIG.md`/`CHANG
 
 ### Fase 1 — Quitar lo personal
 - Sustituir las dos rutas `/home/manu`. El pragma de `shell.qml` no admite variables: investiga
-  cómo resolverlo (generar el valor en el arranque desde `lunele`/el script, o instalar el plugin
+  cómo resolverlo (generar el valor en el arranque desde `sylenara`/el script, o instalar el plugin
   donde Qt lo encuentre sin pragma) y propón la opción al usuario antes de implementarla.
 - Renombrar Madison VPN → **VPN FortiClient**: servicio, popouts, textos, id de config
   (`addons.madisonVpn` → nombre nuevo, con migración del valor), y directorio de scripts.
@@ -292,7 +292,7 @@ Orden: **Hidratación** (añade servicio con notificaciones y shader) → **Rat�
 - Eliminar `addons.*` de `addonsconfig.hpp` (solo lo ya migrado) y recompilar el plugin.
 - Repetir las mediciones de la fase 0: no debe haber regresión de memoria ni de CPU en reposo.
 - Documentar en `AGENTS.md` y `FEATURES.md` cómo es una extensión y cómo se añade una.
-- **Borrar la copia de seguridad** `~/Backups/lunele-pre-0.2-2026-11-10/` — solo cuando se
+- **Borrar la copia de seguridad** `~/Backups/sylenara-pre-0.2-2026-11-10/` — solo cuando se
   cumplan las tres condiciones: `dev/0.2` fusionada en `main`, tag `v0.2.0` creado, y el usuario
   ha usado la 0.2.0 con normalidad y **confirma expresamente** que se puede borrar. Pregúntaselo;
   no la borres por tu cuenta. Quita entonces también este apartado de red de seguridad del plan.
@@ -304,24 +304,24 @@ Orden: **Hidratación** (añade servicio con notificaciones y shader) → **Rat�
   se añade un punto de enganche a la base.
 - **No cambies el comportamiento visible.** Esto es una reorganización: tras cada fase el usuario
   debe ver exactamente lo mismo. Las mejoras van aparte.
-- **Reinicia la shell vía Hyprland** (`hyprctl dispatch 'hl.dsp.exec_cmd("/home/manu/.local/bin/lunele shell -r -d")'`),
+- **Reinicia la shell vía Hyprland** (`hyprctl dispatch 'hl.dsp.exec_cmd("/home/manu/.local/bin/syl shell -r -d")'`),
   nunca desde tu propio terminal: hereda `no_new_privs` y rompe `sudo` dentro de la shell.
 - La recarga en caliente de QML no siempre aplica: reinicia antes de sacar conclusiones.
 - No pruebes con el ratón o el teclado del usuario sin avisar, ni reinicies la shell mientras juega.
-- No toques `~/.config/lunele/shell.json` del usuario sin copia y sin restaurarlo.
+- No toques `~/.config/sylenara/shell.json` del usuario sin copia y sin restaurarlo.
 - Commits locales, sin trailers ni pies de agente; push y fusión solo cuando el usuario lo diga.
 - Di siempre qué has verificado y qué no (no puedes hacer clic: dilo y pide al usuario que pruebe).
 - Si una fase se complica más de lo previsto, para y explica el problema; no la fuerces.
 
 ## 8. Fuera de alcance (trabajo futuro, solo contexto)
 
-- **Paquetes AUR**: `lunele-shell`, `lunele-cli`, y paquetes para Seeker y Things. Seeker y
+- **Paquetes AUR**: `sylenara-shell`, `sylenara-cli`, y paquetes para Seeker y Things. Seeker y
   Things son **dependencias opcionales**, nunca obligatorias.
 - **Asistente de primer arranque** en la shell (pacman no permite pasos interactivos al instalar):
   sugiere instalar Seeker, Things y extensiones.
-- **Extensiones como paquetes** (`lunele-widget-*`, `lunele-addon-*`) en un directorio de
+- **Extensiones como paquetes** (`sylenara-widget-*`, `sylenara-addon-*`) en un directorio de
   sistema, más un directorio de usuario para instalar desde una carpeta local.
-- **Sección en Things** que aparece si detecta Lunele y lista las extensiones por pestañas.
+- **Sección en Things** que aparece si detecta Sylenara y lista las extensiones por pestañas.
 - **Más huecos de widgets** (escritorio, paneles a medida y redimensionables).
 - **Extensiones de terceros** y guía para crearlas (implica pensar la seguridad: una extensión es
   código que corre con los permisos del usuario).
@@ -335,7 +335,7 @@ Orden: **Hidratación** (añade servicio con notificaciones y shader) → **Rat�
   **«proveedor de batería por dispositivo»**. Ese enganche serviría también a otros dispositivos
   (teclado, ratón), por lo que merece diseñarse aparte. **No lo toques en este plan.**
 - **Temas y efectos** (cambian el aspecto global): serían un tercer tipo de extensión, con reglas propias.
-- **Dónde se alojan las extensiones**: un único repo `lunele-extensions` con una carpeta por
+- **Dónde se alojan las extensiones**: un único repo `sylenara-extensions` con una carpeta por
   extensión y un índice (`index.json`) que Things lee; cada extensión se publica además como
   paquete. Por eso en este plan viven en `extensions/` con esa misma forma de carpeta.
 

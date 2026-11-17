@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Shapes
-import Lunele
-import Lunele.Config
+import Sylenara
+import Sylenara.Config
 import qs.services
 
 MouseArea {

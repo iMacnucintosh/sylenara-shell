@@ -1,10 +1,10 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-import Lunele
-import Lunele.Config
-import Lunele.I18n
-import Lunele.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 
 Scope {
     id: root

@@ -3,9 +3,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.UPower
-import Lunele
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.effects
 import qs.services
@@ -54,7 +54,7 @@ StyledRect {
 
             MonoText {
                 Layout.fillWidth: true
-                text: "lunelefetch.sh"
+                text: "sylenarafetch.sh"
                 elide: Text.ElideRight
             }
 
@@ -64,7 +64,7 @@ StyledRect {
                 Layout.preferredHeight: 0
                 active: !iconLoader.active
 
-                sourceComponent: SysInfo.isDefaultLogo ? luneleLogo : distroIcon
+                sourceComponent: SysInfo.isDefaultLogo ? sylenaraLogo : distroIcon
             }
         }
 
@@ -79,7 +79,7 @@ StyledRect {
                 Layout.fillHeight: true
                 active: root.width > Tokens.sizes.lock.largeLogoWidth
 
-                sourceComponent: SysInfo.isDefaultLogo ? luneleLogo : distroIcon
+                sourceComponent: SysInfo.isDefaultLogo ? sylenaraLogo : distroIcon
             }
 
             ColumnLayout {
@@ -159,7 +159,7 @@ StyledRect {
     }
 
     Component {
-        id: luneleLogo
+        id: sylenaraLogo
 
         Logo {
             width: height

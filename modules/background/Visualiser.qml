@@ -3,9 +3,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Effects
 import Quickshell
-import Lunele.Components
-import Lunele.Config
-import Lunele.Services
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.Services
 import qs.components
 import qs.services
 

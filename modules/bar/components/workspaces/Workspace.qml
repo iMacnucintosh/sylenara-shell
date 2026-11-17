@@ -6,8 +6,8 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import M3Shapes
-import Lunele.Components
-import Lunele.Config
+import Sylenara.Components
+import Sylenara.Config
 import qs.components
 import qs.services
 import qs.utils

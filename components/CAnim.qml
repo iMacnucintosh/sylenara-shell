@@ -1,5 +1,5 @@
 import QtQuick
-import Lunele.Config
+import Sylenara.Config
 
 ColorAnimation {
     duration: Tokens.anim.durations.expressiveSlowEffects

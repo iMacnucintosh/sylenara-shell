@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import Lunele.Config
+import Sylenara.Config
 import qs.components
 import qs.modules.bar as Bar
 import qs.modules.dashboard as Dashboard

@@ -4,8 +4,8 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import Lunele
-import Lunele.I18n
+import Sylenara
+import Sylenara.I18n
 import qs.components
 import qs.components.effects
 import qs.services
@@ -82,7 +82,7 @@ MouseArea {
     }
 
     function save(): void {
-        const tmpfile = Qt.resolvedUrl(`/tmp/lunele-picker-${Quickshell.processId}-${Date.now()}.png`);
+        const tmpfile = Qt.resolvedUrl(`/tmp/sylenara-picker-${Quickshell.processId}-${Date.now()}.png`);
         CUtils.saveItem(screencopy, tmpfile, Qt.rect(Math.ceil(rsx), Math.ceil(rsy), Math.floor(sw), Math.floor(sh)), path => {
             if (root.loader.clipboardOnly) {
                 // Clipboard only — no notification (user preference).

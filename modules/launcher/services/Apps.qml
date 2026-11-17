@@ -3,9 +3,9 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele
-import Lunele.Config
-import Lunele.Models
+import Sylenara
+import Sylenara.Config
+import Sylenara.Models
 import qs.utils
 
 Searcher {

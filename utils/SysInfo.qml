@@ -3,8 +3,8 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele.Config
-import Lunele.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.utils
 
 Singleton {
@@ -61,7 +61,7 @@ Singleton {
             root.osIdLike = fd("ID_LIKE").split(" ");
 
             const logo = Quickshell.iconPath(fd("LOGO"), true);
-            if (GlobalConfig.general.logo === "lunele" || GlobalConfig.general.logo === "lunele") {
+            if (GlobalConfig.general.logo === "sylenara" || GlobalConfig.general.logo === "sylenara") {
                 root.osLogo = Qt.resolvedUrl(`${Quickshell.shellDir}/assets/logo.svg`);
                 root.isDefaultLogo = true;
             } else if (GlobalConfig.general.logo) {

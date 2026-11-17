@@ -12,4 +12,4 @@ Full resolution (5299 × 5301 px), recompressed as JPEG quality 90 without chrom
 quality 100, 12.8 MB): 6.2 MB, no visible difference (PSNR ≈ 51 dB).
 
 It is the wallpaper of the first activity on a new install: `scripts/setup-defaults.py` points Principal at it the
-first time Lunele runs.
+first time Sylenara runs.

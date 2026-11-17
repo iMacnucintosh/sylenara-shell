@@ -1,4 +1,4 @@
-"""Terminal look of the Lunele installer: banner, checklist, spinner. Plain text when there is no colour terminal
+"""Terminal look of the Sylenara installer: banner, checklist, spinner. Plain text when there is no colour terminal
 (a pipe, NO_COLOR, TERM=dumb), so logs and CI stay readable."""
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ def mix(a: tuple[int, int, int], b: tuple[int, int, int], t: float) -> tuple[int
 
 
 def banner(tagline: str, version: str = "") -> None:
-    word = "LUNELE"
+    word = "SYLENARA"
     rows = ["", "", ""]
     for idx, ch in enumerate(word):
         color = mix(LAVENDER, ROSE, idx / (len(word) - 1))
@@ -122,7 +122,7 @@ FOOTER_LINES = 3    # blank, count, keys
 
 
 def title_words(text: str) -> str:
-    """The first letter of every word in capitals; the rest is left as it is (DDC/CI, lunele…)."""
+    """The first letter of every word in capitals; the rest is left as it is (DDC/CI, sylenara…)."""
     return " ".join(w[:1].upper() + w[1:] for w in text.split(" "))
 
 

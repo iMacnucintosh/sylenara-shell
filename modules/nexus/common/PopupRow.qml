@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Lunele
-import Lunele.Config
+import Sylenara
+import Sylenara.Config
 import qs.components
 import qs.services
 import qs.modules.drawers

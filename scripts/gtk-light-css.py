@@ -7,7 +7,7 @@ light adw-gtk3 base that paints headers, lists and inputs black while the rest s
 Octopi…). With light apps only the accent colours survive; everything else is the plain light theme.
 
     gtk-light-css.py            neutralise the existing files (idempotent) and bump the reload stamp
-Also importable: light_css(filename, text) is what lunele-quiet.py applies while the CLI writes.
+Also importable: light_css(filename, text) is what sylenara-quiet.py applies while the CLI writes.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def light_css(filename: str, text: str) -> str:
     if filename == "colors.css":
         # Already derived from gtk.css; keep the leading reload stamp comment, filter the rest.
         lines = text.splitlines()
-        stamp = lines[0] if lines and lines[0].startswith("/* lunele-reload") else ""
+        stamp = lines[0] if lines and lines[0].startswith("/* sylenara-reload") else ""
         body = "\n".join(lines[1:] if stamp else lines)
         return (stamp + "\n" if stamp else "") + light_css("gtk.css", body)
     kept = [ln for ln in text.splitlines() if ln.startswith("@define-color accent")]
@@ -50,7 +50,7 @@ def neutralise() -> int:
         # colors.css is what the colorreload module watches: rebuild it from the filtered gtk.css
         gtk_css = base / "gtk.css"
         if gtk_css.is_file():
-            stamp = f"/* lunele-reload {time.time_ns()} */\n"
+            stamp = f"/* sylenara-reload {time.time_ns()} */\n"
             (base / "colors.css").write_text(stamp + gtk_css.read_text())
     return changed
 

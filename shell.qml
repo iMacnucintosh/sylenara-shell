@@ -1,18 +1,18 @@
-//@ pragma Env QS_CRASHREPORT_URL=https://github.com/iMacnucintosh/lunele-shell/issues/new
+//@ pragma Env QS_CRASHREPORT_URL=https://github.com/iMacnucintosh/sylenara-shell/issues/new
 //@ pragma DefaultEnv QS_NO_RELOAD_POPUP=1
 //@ pragma DefaultEnv QS_DROP_EXPENSIVE_FONTS=1
 //@ pragma DefaultEnv QSG_RENDER_LOOP=threaded
 //@ pragma DefaultEnv QT_QUICK_FLICKABLE_WHEEL_DECELERATION=10000
 // Use qt6ct platform theme so QIcon reads qt6ct.conf [Appearance] icon_theme (Papirus) and the
-// Material palette is applied to Qt widgets; kept in sync by lunele-quiet (see _sync_qt6ct)
+// Material palette is applied to Qt widgets; kept in sync by sylenara-quiet (see _sync_qt6ct)
 //@ pragma Env QT_QPA_PLATFORMTHEME=qt6ct
-// A locally built plugin (~/.local/lib/qt6/qml) is picked up by `lunele shell`, which exports
+// A locally built plugin (~/.local/lib/qt6/qml) is picked up by `syl shell`, which exports
 // QT_ADDITIONAL_PACKAGES_PREFIX_PATH when it exists. It cannot be set here: pragma Env does not
 // expand $HOME, and the repo must not carry a user's path. Packaged installs need nothing.
 
 import QtQuick
 import Quickshell
-import Lunele.Config
+import Sylenara.Config
 import qs.services
 import qs.modules.activities
 import qs.modules.areapicker

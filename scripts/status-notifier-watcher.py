@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Persistent org.kde.StatusNotifierWatcher for Lunele.
+"""Persistent org.kde.StatusNotifierWatcher for Sylenara.
 
 Quickshell's tray stack registers the watcher inside the `qs` process. A
-`lunele shell -r` therefore drops every StatusNotifierItem. libappindicator
+`syl shell -r` therefore drops every StatusNotifierItem. libappindicator
 clients (Steam) re-bind when the name returns; Chromium/Electron trays
 (Teams Flatpak) do not — minimize then leaves no window and no icon.
 
@@ -30,7 +30,7 @@ WATCHER_NAME = "org.kde.StatusNotifierWatcher"
 WATCHER_PATH = "/StatusNotifierWatcher"
 WATCHER_IFACE = "org.kde.StatusNotifierWatcher"
 
-_STATE_DIR = Path(os.environ.get("XDG_RUNTIME_DIR") or f"/run/user/{os.getuid()}") / "lunele"
+_STATE_DIR = Path(os.environ.get("XDG_RUNTIME_DIR") or f"/run/user/{os.getuid()}") / "sylenara"
 _PIDFILE = _STATE_DIR / "status-notifier-watcher.pid"
 
 INTROSPECTION_XML = f"""
@@ -272,8 +272,8 @@ class Watcher:
 
 def main() -> int:
     # Detach from a controlling TTY when launched via hyprland exec so the
-    # watcher survives the launcher context (same idea as `lunele shell -d`).
-    if os.environ.get("LUNELE_SNI_WATCHER_FOREGROUND") != "1":
+    # watcher survives the launcher context (same idea as `syl shell -d`).
+    if os.environ.get("SYLENARA_SNI_WATCHER_FOREGROUND") != "1":
         if os.fork() != 0:
             return 0
         os.setsid()

@@ -3,15 +3,15 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Lunele.Config
-import Lunele.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
 import qs.modules.nexus
 import qs.modules.nexus.common
 
-// The welcome assistant window (see services/Welcome.qml): what Lunele is, what it offers, and
+// The welcome assistant window (see services/Welcome.qml): what Sylenara is, what it offers, and
 // the apps of its family that are worth installing. Five steps; skipping or finishing both count as seen.
 FloatingWindow {
     id: win
@@ -59,7 +59,7 @@ FloatingWindow {
         win.destroy();
     }
 
-    title: Tr.tr("Welcome to Lunele")
+    title: Tr.tr("Welcome to Sylenara")
     color: Colours.tPalette.m3surface
     surfaceFormat.opaque: false
     // A small window of fixed size: Hyprland floats those (and centres them) instead of tiling them
@@ -189,7 +189,7 @@ FloatingWindow {
     }
 
     // The orb (above the pages)
-    LuneleOrb {
+    SylenaraOrb {
         id: orb
 
         x: win.orbCx - width / 2
@@ -262,7 +262,7 @@ FloatingWindow {
         }
     }
 
-    // ── 1 · Who Lunele is ──────────────────────────────────────────────────────────────
+    // ── 1 · Who Sylenara is ──────────────────────────────────────────────────────────────
     Component {
         id: welcomePage
 
@@ -286,7 +286,7 @@ FloatingWindow {
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Lunele"
+                text: "Sylenara"
                 font: Tokens.font.headline.medium
             }
 
@@ -322,7 +322,7 @@ FloatingWindow {
                 verticalPadding: Tokens.padding.small
                 icon: "open_in_new"
                 text: "GitHub"
-                onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/lunele-shell"])
+                onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylenara-shell"])
             }
 
             Item {
@@ -339,7 +339,7 @@ FloatingWindow {
             spacing: Tokens.spacing.large
 
             PageHeader {
-                title: Tr.tr("What Lunele gives you")
+                title: Tr.tr("What Sylenara gives you")
                 subtitle: Tr.tr("A quick look. You can change all of it in Settings.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
@@ -434,7 +434,7 @@ FloatingWindow {
         }
     }
 
-    // ── 3 · Apps that come with Lunele (informative: the base package installs them) ────
+    // ── 3 · Apps that come with Sylenara (informative: the base package installs them) ────
     Component {
         id: companionsPage
 
@@ -444,8 +444,8 @@ FloatingWindow {
             Component.onCompleted: Companions.check()
 
             PageHeader {
-                title: Tr.tr("Apps made for Lunele")
-                subtitle: Tr.tr("They come with Lunele and follow its theme.")
+                title: Tr.tr("Apps made for Sylenara")
+                subtitle: Tr.tr("They come with Sylenara and follow its theme.")
                 onSlotReady: (slot, size) => win.registerSlot(slot, size)
             }
 
@@ -528,7 +528,7 @@ FloatingWindow {
                 }
             }
 
-            // kitty comes with Lunele, but nobody is tied to it
+            // kitty comes with Sylenara, but nobody is tied to it
             RowLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Tokens.spacing.small
@@ -854,7 +854,7 @@ FloatingWindow {
 
                             StyledText {
                                 Layout.fillWidth: true
-                                text: Tr.tr("An extension is a folder with a manifest and a few QML files. Build one for yourself, and share it in the Lunele Hub for others to install.")
+                                text: Tr.tr("An extension is a folder with a manifest and a few QML files. Build one for yourself, and share it in the Sylenara Hub for others to install.")
                                 color: Colours.palette.m3onSurfaceVariant
                                 font: Tokens.font.body.medium
                                 wrapMode: Text.WordWrap
@@ -875,8 +875,8 @@ FloatingWindow {
                             horizontalPadding: Tokens.padding.large
                             verticalPadding: Tokens.padding.small
                             icon: "open_in_new"
-                            text: Tr.tr("Lunele Hub")
-                            onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/lunele-hub"])
+                            text: Tr.tr("Sylenara Hub")
+                            onClicked: Quickshell.execDetached(["xdg-open", "https://github.com/iMacnucintosh/sylenara-hub"])
                         }
                     }
                 }

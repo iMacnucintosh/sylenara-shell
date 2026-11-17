@@ -1,13 +1,13 @@
 import Quickshell
 import Quickshell.Wayland
-import Lunele.Config
+import Sylenara.Config
 
 // qmllint disable uncreatable-type
 PanelWindow {
     // qmllint enable uncreatable-type
     required property string name
 
-    WlrLayershell.namespace: `lunele-${name}`
+    WlrLayershell.namespace: `sylenara-${name}`
     color: "transparent"
 
     contentItem.Config.screen: screen.name

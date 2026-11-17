@@ -2,7 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
-import Lunele
+import Sylenara
 import qs.components
 import qs.services
 

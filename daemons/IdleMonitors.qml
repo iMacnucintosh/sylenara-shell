@@ -4,9 +4,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.UPower
-import Lunele.Config
-import Lunele.Services
-import Lunele.State
+import Sylenara.Config
+import Sylenara.Services
+import Sylenara.State
 import qs.services
 import qs.modules.lock
 

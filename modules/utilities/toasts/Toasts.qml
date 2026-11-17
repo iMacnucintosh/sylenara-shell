@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Widgets
-import Lunele
-import Lunele.Config
+import Sylenara
+import Sylenara.Config
 import qs.components
 import qs.components.containers
 import qs.services

@@ -1,13 +1,13 @@
 # Packaging (AUR)
 
-Lunele is four packages. All are `-git` packages: their version follows the repository.
+Sylenara is four packages. All are `-git` packages: their version follows the repository.
 
 | Package | Repository | What it is |
 | --- | --- | --- |
-| `lunele-cli-git` | [lunele-cli](https://github.com/iMacnucintosh/lunele-cli) | the `lunele` command |
+| `sylenara-cli-git` | [sylenara-cli](https://github.com/iMacnucintosh/sylenara-cli) | the `sylenara` command |
 | `seeker-git` | [seeker](https://github.com/iMacnucintosh/seeker) | the file manager (`seeker`) |
 | `things-git` | [things](https://github.com/iMacnucintosh/things) | the package manager and extension manager |
-| `lunele-shell-git` | this repository | the shell; depends on the three above |
+| `sylenara-shell-git` | this repository | the shell; depends on the three above |
 
 Each has its `PKGBUILD` and `.SRCINFO` in its repository's `packaging/` folder.
 
@@ -24,7 +24,7 @@ cd packaging && makepkg -si      # in each repository, the three apps first and 
 ## Publish in the AUR (needs an AUR account and your SSH key)
 
 ```bash
-pkg=things-git                    # then seeker-git, lunele-cli-git, lunele-shell-git
+pkg=things-git                    # then seeker-git, sylenara-cli-git, sylenara-shell-git
 git clone ssh://aur@aur.archlinux.org/$pkg.git /tmp/aur-$pkg
 cp PKGBUILD .SRCINFO /tmp/aur-$pkg/        # from the repository's packaging/ folder
 cd /tmp/aur-$pkg && git add PKGBUILD .SRCINFO && git commit -m "Update" && git push

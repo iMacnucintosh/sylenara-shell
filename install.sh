@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Lunele installer entry point: makes sure git, base-devel and python are there, then runs scripts/installer.py.
+# Sylenara installer entry point: makes sure git, base-devel and python are there, then runs scripts/installer.py.
 #   ./install.sh [--yes] [--dry-run] [--list] [--only ID,ID] [--skip ID,ID] [--no-login-screen]
 set -euo pipefail
 

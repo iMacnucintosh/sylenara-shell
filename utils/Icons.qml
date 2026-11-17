@@ -3,7 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
-import Lunele.Config
+import Sylenara.Config
 
 Singleton {
     id: root
@@ -98,7 +98,7 @@ Singleton {
 
     readonly property var notifIconRules: [
         [["reboot"], "restart_alt"],
-        // Screen recorder (EN/ES summary text from lunele record)
+        // Screen recorder (EN/ES summary text from syl record)
         [["recording", "grabaci", "grabando", "grabar"], "screen_record"],
         [["battery"], "power"],
         [["screenshot"], "screenshot_monitor"],

@@ -1,8 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele
-import Lunele.Config
+import Sylenara
+import Sylenara.Config
 import qs.components.misc
 import qs.services
 import qs.modules.nexus
@@ -246,7 +246,7 @@ Scope {
     LoggingCategory {
         id: lc
 
-        name: "lunele.qml.shortcuts"
+        name: "sylenara.qml.shortcuts"
         defaultLogLevel: LoggingCategory.Info
     }
 }

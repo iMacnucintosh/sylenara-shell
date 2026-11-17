@@ -3,10 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Bluetooth
-import Lunele.Components
-import Lunele.Config
-import Lunele.I18n
-import Lunele.State
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.State
 import qs.components
 import qs.components.controls
 import qs.services

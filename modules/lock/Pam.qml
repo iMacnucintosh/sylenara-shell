@@ -5,8 +5,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Services.Pam
-import Lunele.Config
-import Lunele.Services
+import Sylenara.Config
+import Sylenara.Services
 
 Scope {
     id: root

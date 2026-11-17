@@ -9,7 +9,7 @@ SCRIPT = "setup-hyprland.py"
 
 
 def run(home: Path, *args: str, keyboard: str = "") -> dict:
-    p = run_script(SCRIPT, list(args), home, {"LUNELE_TEST_KEYBOARD": keyboard})
+    p = run_script(SCRIPT, list(args), home, {"SYLENARA_TEST_KEYBOARD": keyboard})
     return {**json.loads(p.stdout), "rc": p.returncode}
 
 
@@ -24,17 +24,17 @@ class Hyprland(unittest.TestCase):
             conf(home).parent.mkdir(parents=True)
             conf(home).write_text('hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })\n')
             self.assertEqual(run(home, "--check")["status"], "needed")
-            self.assertEqual(conf(home).read_text().count("lunele"), 0)  # --check writes nothing
+            self.assertEqual(conf(home).read_text().count("sylenara"), 0)  # --check writes nothing
             self.assertEqual(run(home)["status"], "done")
             text = conf(home).read_text()
             self.assertIn("hl.monitor(", text)
-            self.assertEqual(text.count(">>> lunele"), 1)
+            self.assertEqual(text.count(">>> sylenara"), 1)
             self.assertIn('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")', text)
             self.assertIn("start-shell-with-tray-watcher.sh", text)
-            for name in ("lunele-monitors", "lunele-input", "lunele-binds", "lunele-activity-rules", "lunele-animation"):
+            for name in ("sylenara-monitors", "sylenara-input", "sylenara-binds", "sylenara-activity-rules", "sylenara-animation"):
                 self.assertIn(f'"{name}"', text)
             self.assertIn("pcall(require", text)
-            self.assertEqual(Path(str(conf(home)) + ".lunele-backup").read_text().count("lunele"), 0)
+            self.assertEqual(Path(str(conf(home)) + ".sylenara-backup").read_text().count("sylenara"), 0)
             before = text
             self.assertEqual(run(home)["status"], "already")
             self.assertEqual(conf(home).read_text(), before)
@@ -44,33 +44,33 @@ class Hyprland(unittest.TestCase):
             home = Path(d)
             conf(home).parent.mkdir(parents=True)
             conf(home).write_text('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")\n'
-                                  'hl.on("hyprland.start", function() hl.exec_cmd("lunele shell -d") end)\n'
-                                  'require("lunele-binds")\nrequire("lunele-monitors")\n')
+                                  'hl.on("hyprland.start", function() hl.exec_cmd("syl shell -d") end)\n'
+                                  'require("sylenara-binds")\nrequire("sylenara-monitors")\n')
             self.assertEqual(run(home, "--check")["notes"], ["the configuration already starts the shell"])
             self.assertEqual(run(home)["status"], "done")
             text = conf(home).read_text()
             self.assertEqual(text.count("QT_QPA_PLATFORMTHEME"), 1)
-            self.assertEqual(text.count("lunele shell"), 1)
-            self.assertEqual(text.count('"lunele-binds"'), 1)
-            self.assertIn('"lunele-input"', text)
+            self.assertEqual(text.count("syl shell"), 1)
+            self.assertEqual(text.count('"sylenara-binds"'), 1)
+            self.assertIn('"sylenara-input"', text)
 
     def test_a_file_that_already_has_everything_is_not_touched(self):
         with tmpdir() as d:
             home = Path(d)
             conf(home).parent.mkdir(parents=True)
-            text = ('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")\nhl.exec_cmd("qs -c lunele")\n'
+            text = ('hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")\nhl.exec_cmd("qs -c sylenara")\n'
                     'hl.config({ misc = { disable_hyprland_logo = true } })\n'
-                    + "".join(f'require("{n}")\n' for n in ("lunele-monitors", "lunele-input", "lunele-binds", "lunele-activity-rules", "lunele-animation")))
+                    + "".join(f'require("{n}")\n' for n in ("sylenara-monitors", "sylenara-input", "sylenara-binds", "sylenara-activity-rules", "sylenara-animation")))
             conf(home).write_text(text)
             self.assertEqual(run(home)["status"], "already")
             self.assertEqual(conf(home).read_text(), text)
-            self.assertFalse(Path(str(conf(home)) + ".lunele-backup").exists())
+            self.assertFalse(Path(str(conf(home)) + ".sylenara-backup").exists())
 
     def test_creates_the_file_when_there_is_none(self):
         with tmpdir() as d:
             home = Path(d)
             self.assertEqual(run(home)["status"], "done")
-            self.assertIn(">>> lunele", conf(home).read_text())
+            self.assertIn(">>> sylenara", conf(home).read_text())
 
     def test_a_result_that_is_not_valid_is_not_written(self):
         with tmpdir() as d:
@@ -126,7 +126,7 @@ class Wallpaper(unittest.TestCase):
             conf(home).parent.mkdir(parents=True)
             conf(home).write_text('hl.config({ misc = { disable_hyprland_logo = false } })\n')
             run(home)
-            self.assertIn("disable_hyprland_logo = true", conf(home).read_text().split(">>> lunele")[1])
+            self.assertIn("disable_hyprland_logo = true", conf(home).read_text().split(">>> sylenara")[1])
 
     def test_left_alone_when_the_configuration_already_does_it(self):
         with tmpdir() as d:

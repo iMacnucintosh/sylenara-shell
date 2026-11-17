@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Lunele.Config
-import Lunele.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services
@@ -97,11 +97,11 @@ PageBase {
             }
         }
 
-        // A new release of Lunele, with its notes
+        // A new release of Sylenara, with its notes
         ConnectedRect {
             Layout.fillWidth: true
             Layout.topMargin: Tokens.spacing.small
-            visible: LuneleUpdates.hasUpdate && !!(LuneleUpdates.shell ?? LuneleUpdates.updates[0] ?? {}).notes
+            visible: SylenaraUpdates.hasUpdate && !!(SylenaraUpdates.shell ?? SylenaraUpdates.updates[0] ?? {}).notes
             first: true
             last: true
             implicitHeight: sylCol.implicitHeight + Tokens.padding.medium * 2
@@ -121,7 +121,7 @@ PageBase {
                     Layout.fillWidth: true
                     spacing: Tokens.spacing.medium
 
-                    LuneleOrb {
+                    SylenaraOrb {
                         orbSize: Math.round(Tokens.font.icon.medium.pointSize * 1.4)
                     }
 
@@ -131,14 +131,14 @@ PageBase {
 
                         StyledText {
                             Layout.fillWidth: true
-                            text: Tr.tr("Lunele %1 is available").arg(LuneleUpdates.version)
+                            text: Tr.tr("Sylenara %1 is available").arg(SylenaraUpdates.version)
                             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
                             elide: Text.ElideRight
                         }
 
                         StyledText {
                             Layout.fillWidth: true
-                            text: LuneleUpdates.updates.map(u => `${u.name} ${u.installed} → ${u.latest}`).join(" · ")
+                            text: SylenaraUpdates.updates.map(u => `${u.name} ${u.installed} → ${u.latest}`).join(" · ")
                             color: Colours.palette.m3outline
                             font: Tokens.font.label.small
                             wrapMode: Text.WordWrap
@@ -149,7 +149,7 @@ PageBase {
                 StyledText {
                     Layout.fillWidth: true
                     visible: text.length > 0
-                    text: (LuneleUpdates.shell ?? LuneleUpdates.updates[0] ?? {}).notes ?? ""
+                    text: (SylenaraUpdates.shell ?? SylenaraUpdates.updates[0] ?? {}).notes ?? ""
                     textFormat: Text.MarkdownText
                     color: Colours.palette.m3onSurfaceVariant
                     font: Tokens.font.body.small
@@ -335,7 +335,7 @@ PageBase {
                         MaterialIcon {
                             visible: {
                                 const s = (pkgRow.modelData.source || "").toUpperCase();
-                                return s !== "AUR" && s !== "LUNELE";
+                                return s !== "AUR" && s !== "SYLENARA";
                             }
                             text: {
                                 const s = (pkgRow.modelData.source || "").toUpperCase();
@@ -349,8 +349,8 @@ PageBase {
                             fontStyle: Tokens.font.icon.medium
                         }
 
-                        LuneleOrb {
-                            visible: pkgRow.modelData.source === "LUNELE"
+                        SylenaraOrb {
+                            visible: pkgRow.modelData.source === "SYLENARA"
                             orbSize: Math.round(Tokens.font.icon.medium.pointSize * 1.1)
                             Layout.preferredWidth: Tokens.font.icon.medium.pointSize * 1.6
                             Layout.preferredHeight: Tokens.font.icon.medium.pointSize * 1.6
@@ -378,7 +378,7 @@ PageBase {
                                 Layout.fillWidth: true
                                 text: {
                                     const raw = pkgRow.modelData.source || "";
-                                    const s = raw === "LUNELE" ? "Lunele" : raw === "EXTENSION" ? Tr.tr("Extension") : raw;
+                                    const s = raw === "SYLENARA" ? "Sylenara" : raw === "EXTENSION" ? Tr.tr("Extension") : raw;
                                     const frm = pkgRow.modelData.from || "";
                                     const to = pkgRow.modelData.to || "";
                                     if (pkgRow.modelData.isNew)
@@ -434,8 +434,8 @@ PageBase {
                             }
 
                             IconTextButton {
-                                // Lunele and its extensions are removed elsewhere (Things), not from here
-                                visible: pkgRow.modelData.source !== "LUNELE" && pkgRow.modelData.source !== "EXTENSION"
+                                // Sylenara and its extensions are removed elsewhere (Things), not from here
+                                visible: pkgRow.modelData.source !== "SYLENARA" && pkgRow.modelData.source !== "EXTENSION"
                                 icon: "delete"
                                 text: Tr.tr("Uninstall")
                                 type: IconTextButton.Text

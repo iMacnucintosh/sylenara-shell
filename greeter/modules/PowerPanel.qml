@@ -23,7 +23,7 @@ StyledRect {
 
     function runPower(argv: list<string>): void {
         // Cover the greeter before systemd tears down Hyprland so the VT
-        // spam + Lunele mark never flash on the way out.
+        // spam + Sylenara mark never flash on the way out.
         Shutdown.arm(argv);
     }
 

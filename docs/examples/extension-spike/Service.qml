@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import Lunele.Config
+import Sylenara.Config
 import qs.services
 import qs.utils
 

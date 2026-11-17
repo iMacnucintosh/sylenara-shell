@@ -1,8 +1,8 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Lunele
-import Lunele.Config
+import Sylenara
+import Sylenara.Config
 import qs.components
 
 Item {

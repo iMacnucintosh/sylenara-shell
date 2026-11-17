@@ -1,6 +1,6 @@
 import QtQuick
-import Lunele.Config
-import Lunele.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.components.effects
@@ -34,11 +34,11 @@ Item {
     Loader {
         asynchronous: true
         anchors.centerIn: parent
-        sourceComponent: SysInfo.isDefaultLogo ? luneleLogo : distroIcon
+        sourceComponent: SysInfo.isDefaultLogo ? sylenaraLogo : distroIcon
     }
 
     Component {
-        id: luneleLogo
+        id: sylenaraLogo
 
         Logo {
             implicitWidth: Math.round(Tokens.font.body.large.pointSize * 1.6)

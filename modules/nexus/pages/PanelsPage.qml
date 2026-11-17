@@ -1,6 +1,6 @@
 import QtQuick.Layouts
-import Lunele.Config
-import Lunele.I18n
+import Sylenara.Config
+import Sylenara.I18n
 import qs.modules.nexus.common
 
 PageBase {

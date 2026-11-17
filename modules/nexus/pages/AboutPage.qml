@@ -6,10 +6,10 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import M3Shapes
-import Lunele
-import Lunele.Config
-import Lunele.I18n
-import Lunele.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.components
 import qs.components.controls
 import qs.components.effects
@@ -132,10 +132,10 @@ PageBase {
         }
 
         // User-local pip/editable install exposes importlib metadata; pacman
-        // package (if present) is the fallback via lunele -v.
+        // package (if present) is the fallback via sylenara -v.
         Process {
             running: true
-            command: ["sh", "-c", "python3 -c \"import importlib.metadata as m; print(m.version('lunele'))\" 2>/dev/null || lunele -v 2>/dev/null | sed -n 's/^[[:space:]]*lunele-cli[[:space:]]\\+\\([0-9][^[:space:]]*\\).*/\\1/p'"]
+            command: ["sh", "-c", "python3 -c \"import importlib.metadata as m; print(m.version('sylenara'))\" 2>/dev/null || sylenara -v 2>/dev/null | sed -n 's/^[[:space:]]*sylenara-cli[[:space:]]\\+\\([0-9][^[:space:]]*\\).*/\\1/p'"]
             stdout: StdioCollector {
                 onStreamFinished: root.cliVersion = text.trim().split("\n")[0] ?? ""
             }
@@ -211,11 +211,11 @@ PageBase {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.preferredWidth: implicitWidth
                     Layout.preferredHeight: implicitHeight
-                    implicitWidth: lunele.implicitWidth
-                    implicitHeight: lunele.implicitHeight
+                    implicitWidth: sylenara.implicitWidth
+                    implicitHeight: sylenara.implicitHeight
 
-                    LuneleOrb {
-                        id: lunele
+                    SylenaraOrb {
+                        id: sylenara
 
                         anchors.centerIn: parent
                         orbSize: 96
@@ -227,8 +227,8 @@ PageBase {
                         readonly property int badgeSize: Tokens.padding.extraLarge * 2 + Tokens.padding.small
 
                         // Top-left of the cookie, overlapping like the dashboard logo.
-                        x: (parent.width - lunele.orbSize) / 3 - Tokens.padding.label
-                        y: (parent.height - lunele.orbSize) / 3 - Tokens.padding.large
+                        x: (parent.width - sylenara.orbSize) / 3 - Tokens.padding.label
+                        y: (parent.height - sylenara.orbSize) / 3 - Tokens.padding.large
                         z: 2
                         implicitSize: badgeSize
                         shape: MaterialShape.Gem
@@ -250,7 +250,7 @@ PageBase {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.topMargin: Tokens.spacing.small
-                    text: "Lunele"
+                    text: "Sylenara"
                     font: Tokens.font.headline.builders.large.width(110).build()
                 }
 
@@ -466,13 +466,13 @@ PageBase {
 
         InfoRow {
             icon: "auto_awesome"
-            label: Tr.trCtx("Shell", "the lunele shell itself, not a unix shell")
+            label: Tr.trCtx("Shell", "the syl shell itself, not a unix shell")
             value: CUtils.version || "…"
         }
 
         InfoRow {
             icon: "terminal"
-            label: Tr.trCtx("CLI", "the lunele command line tool")
+            label: Tr.trCtx("CLI", "the sylenara command line tool")
             value: root.cliVersion || "…"
         }
 

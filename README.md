@@ -1,4 +1,4 @@
-<h1 align="center">Lunele</h1>
+<h1 align="center">Sylenara</h1>
 
 <p align="center"><strong>English</strong> · <a href="./README.es.md">Español</a></p>
 
@@ -8,8 +8,8 @@ A complete <strong>Material You</strong> desktop for <a href="https://hypr.land"
 
 <div align="center">
 
-![Latest version](https://img.shields.io/github/v/tag/iMacnucintosh/lunele-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=version)
-![Last commit](https://img.shields.io/github/last-commit/iMacnucintosh/lunele-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=last%20change)
+![Latest version](https://img.shields.io/github/v/tag/iMacnucintosh/sylenara-shell?filter=v0.*&style=for-the-badge&labelColor=101418&color=9ccbfb&label=version)
+![Last commit](https://img.shields.io/github/last-commit/iMacnucintosh/sylenara-shell?style=for-the-badge&labelColor=101418&color=b9c8da&label=last%20change)
 
 </div>
 
@@ -20,18 +20,18 @@ https://github.com/user-attachments/assets/1d005d8f-ab43-442d-a75a-917899f02845
 You need **Arch Linux**. From a terminal, as your user (not as root):
 
 ```sh
-git clone https://github.com/iMacnucintosh/lunele-shell
-cd lunele-shell
+git clone https://github.com/iMacnucintosh/sylenara-shell
+cd sylenara-shell
 ./install.sh
 ```
 
-The installer looks at your system, shows what it is going to install and why, and **changes nothing until you confirm**. It asks for your password once, and installs Hyprland too if it is not there yet. When it finishes, log out (or reboot): you will come in through the Lunele login screen and, the first time, a welcome guide shows you the basics.
+The installer looks at your system, shows what it is going to install and why, and **changes nothing until you confirm**. It asks for your password once, and installs Hyprland too if it is not there yet. When it finishes, log out (or reboot): you will come in through the Sylenara login screen and, the first time, a welcome guide shows you the basics.
 
 You can run it again whenever you want: it only does what is still missing. To see what it would do without changing anything, `./install.sh --dry-run`.
 
-To update later, the shell offers new versions in its updates list (bar icon and Settings → Updates); from a terminal, `lunele update`.
+To update later, the shell offers new versions in its updates list (bar icon and Settings → Updates); from a terminal, `syl update`.
 
-Lunele's packages come ready-built and signed from its own pacman repository (`[lunele]`, which the installer adds with its key), so installing takes a few minutes and updates arrive with the system's. If the repository does not answer, or with `./install.sh --from-source`, it builds them from source.
+Sylenara's packages come ready-built and signed from its own pacman repository (`[sylenara]`, which the installer adds with its key), so installing takes a few minutes and updates arrive with the system's. If the repository does not answer, or with `./install.sh --from-source`, it builds them from source.
 
 <!-- screenshot: docs/media/installer.webp — the installer with its list of steps -->
 
@@ -70,11 +70,11 @@ When there are new packages (Arch, AUR or Flatpak), a notice shows up in the bar
 
 ### Extensions and Things
 
-Lunele grows with extensions (hydration, tasks, your Steam library with achievements and play time, a FortiClient VPN…). They are installed with one click from **Things**, the package manager that comes with Lunele, which also finds and installs programs from Arch, the AUR and Flatpak.
+Sylenara grows with extensions (hydration, tasks, your Steam library with achievements and play time, a FortiClient VPN…). They are installed with one click from **Things**, the package manager that comes with Sylenara, which also finds and installs programs from Arch, the AUR and Flatpak.
 
-<!-- screenshot: docs/media/things.webp — Things on its Lunele section -->
+<!-- screenshot: docs/media/things.webp — Things on its Sylenara section -->
 
-### Apps that come with Lunele
+### Apps that come with Sylenara
 
 - **[Things](https://github.com/iMacnucintosh/things)**: package and extension manager.
 - **[Seeker](https://github.com/iMacnucintosh/seeker)**: file manager, with the same look as the shell.
@@ -126,10 +126,10 @@ The detailed documentation is in Spanish for now:
 | [CHANGELOG.md](./CHANGELOG.md) | What changes in each version |
 | [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) | Manual installation, building from source and contributing |
 
-Something does not work, or something is missing? [Open an issue](https://github.com/iMacnucintosh/lunele-shell/issues/new).
+Something does not work, or something is missing? [Open an issue](https://github.com/iMacnucintosh/sylenara-shell/issues/new).
 
 ## Credits
 
-Lunele started as a fork of [caelestia-shell](https://github.com/caelestia-dots/shell), by soramane, and today is a project of its own by [iMacnucintosh](https://github.com/iMacnucintosh). Thanks also to [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), which it is built on, and to [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) and [Ax-Shell](https://github.com/Axenide/Ax-Shell) for the inspiration.
+Sylenara started as a fork of [caelestia-shell](https://github.com/caelestia-dots/shell), by soramane, and today is a project of its own by [iMacnucintosh](https://github.com/iMacnucintosh). Thanks also to [Quickshell](https://github.com/outfoxxed/quickshell) ([@outfoxxed](https://github.com/outfoxxed)), which it is built on, and to [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) and [Ax-Shell](https://github.com/Axenide/Ax-Shell) for the inspiration.
 
 Licensed under GPL-3.0. Copyright (C) 2026 Manuel López Mallorquín. Credits and third-party components in [NOTICE](NOTICE).

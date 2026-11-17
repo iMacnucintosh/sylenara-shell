@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import "cards"
 import QtQuick
 import QtQuick.Layouts
-import Lunele.Config
+import Sylenara.Config
 import qs.components
 import qs.modules.bar.popouts as BarPopouts
 

@@ -1,13 +1,13 @@
 # Desarrollo e instalación manual
 
-Para usar Lunele basta con el instalador del [README](../README.md). Esta guía es para trabajar sobre el código: instalarlo a mano, compilar el plugin, engancharlo a Hyprland y actualizar desde un clon. El mapa del código, las convenciones y las trampas conocidas están en [AGENTS.md](../AGENTS.md).
+Para usar Sylenara basta con el instalador del [README](../README.md). Esta guía es para trabajar sobre el código: instalarlo a mano, compilar el plugin, engancharlo a Hyprland y actualizar desde un clon. El mapa del código, las convenciones y las trampas conocidas están en [AGENTS.md](../AGENTS.md).
 
 ## Dependencias
 
 Runtime (Arch):
 
 - [`quickshell-git`](https://git.outfoxxed.me/quickshell/quickshell) (la versión git, no solo el tag estable)
-- CLI **`lunele`** (paquete `lunele-cli-git`, o el binario user-local en `~/.local/bin`)
+- CLI **`sylenara`** (paquete `sylenara-cli-git`, o el binario user-local en `~/.local/bin`)
 - `brightnessctl`, `libcava`, `networkmanager`, `lm_sensors`, `aubio`, `libpipewire`, `libqalculate`, `power-profiles-daemon`; `ddcutil` para el brillo de monitores externos
 - Fuentes: `ttf-material-symbols-variable`, `ttf-rubik-vf`, `ttf-cascadia-code-nerd`
 - Qt 6: `qt6-base`, `qt6-declarative`, `qt6-imageformats`, `qt6-multimedia`, [`qt6-m3shapes-git`](https://github.com/soramanew/m3shapes)
@@ -19,7 +19,7 @@ Compilación: `cmake`, `ninja`, `qt6-shadertools`.
 
 Opcionales: `yay` (actualizaciones del AUR), Flatpak, `gpu-screen-recorder` (grabar pantalla), `greetd` (pantalla de inicio de sesión), y lo que pida cada extensión.
 
-Hay PKGBUILD de los cinco paquetes (`lunele-shell-git`, `lunele-cli-git`, `seeker-git`, `things-git`, `veo-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
+Hay PKGBUILD de los cinco paquetes (`sylenara-shell-git`, `sylenara-cli-git`, `seeker-git`, `things-git`, `veo-git`) en el `packaging/` de cada repo; ver [`packaging/README.md`](../packaging/README.md). La publicación en el AUR está pendiente.
 
 ## Instalar desde un clon
 
@@ -27,8 +27,8 @@ El código que corre es el checkout:
 
 ```sh
 mkdir -p ~/.config/quickshell
-git clone https://github.com/iMacnucintosh/lunele-shell.git ~/.config/quickshell/lunele
-cd ~/.config/quickshell/lunele
+git clone https://github.com/iMacnucintosh/sylenara-shell.git ~/.config/quickshell/sylenara
+cd ~/.config/quickshell/sylenara
 ```
 
 ### Plugin C++ (en tu usuario, sin sudo)
@@ -41,23 +41,23 @@ cmake --build build
 cmake --install build
 ```
 
-Con `ENABLE_MODULES=plugin` no se sobrescribe `shell.qml`. `lunele shell` exporta `QT_ADDITIONAL_PACKAGES_PREFIX_PATH=~/.local/lib/qt6/qml` para que se cargue este plugin y no el del sistema. Las traducciones viven en el plugin: tras tocar `es.po`, recompila e instala.
+Con `ENABLE_MODULES=plugin` no se sobrescribe `shell.qml`. `syl shell` exporta `QT_ADDITIONAL_PACKAGES_PREFIX_PATH=~/.local/lib/qt6/qml` para que se cargue este plugin y no el del sistema. Las traducciones viven en el plugin: tras tocar `es.po`, recompila e instala.
 
 `-UVERSION` importa: la versión que la shell anuncia (y con la que se comprueban las extensiones) sale del último tag `v0.*`, y un `-DVERSION` fijo en la caché de CMake la congelaría.
 
 ### Hyprland
 
-`scripts/setup-hyprland.py` añade a `~/.config/hypr/hyprland.lua` un bloque marcado con el arranque de la shell, `QT_QPA_PLATFORMTHEME` y los ficheros que Lunele genera desde Ajustes (con copia de seguridad y validación). A mano, sería:
+`scripts/setup-hyprland.py` añade a `~/.config/hypr/hyprland.lua` un bloque marcado con el arranque de la shell, `QT_QPA_PLATFORMTHEME` y los ficheros que Sylenara genera desde Ajustes (con copia de seguridad y validación). A mano, sería:
 
 ```lua
-pcall(require, "lunele-binds")            -- atajos (Ajustes → Teclado y ratón)
-pcall(require, "lunele-activity-rules")   -- actividades y apps ancladas
-pcall(require, "lunele-monitors")         -- modos y VRR (Ajustes → Pantalla)
-pcall(require, "lunele-input")            -- foco del ratón
-pcall(require, "lunele-animation")        -- transiciones (después de tus animaciones)
+pcall(require, "sylenara-binds")            -- atajos (Ajustes → Teclado y ratón)
+pcall(require, "sylenara-activity-rules")   -- actividades y apps ancladas
+pcall(require, "sylenara-monitors")         -- modos y VRR (Ajustes → Pantalla)
+pcall(require, "sylenara-input")            -- foco del ratón
+pcall(require, "sylenara-animation")        -- transiciones (después de tus animaciones)
 ```
 
-Para arrancar, `scripts/start-shell-with-tray-watcher.sh`: deja vivo el watcher de la bandeja del sistema aunque reinicies la shell (si no, los iconos de apps Electron o Flatpak desaparecen tras `lunele shell -r`). El `PATH` del compositor no suele incluir `~/.local/bin`: usa rutas absolutas.
+Para arrancar, `scripts/start-shell-with-tray-watcher.sh`: deja vivo el watcher de la bandeja del sistema aunque reinicies la shell (si no, los iconos de apps Electron o Flatpak desaparecen tras `syl shell -r`). El `PATH` del compositor no suele incluir `~/.local/bin`: usa rutas absolutas.
 
 ### Pantalla de inicio de sesión
 
@@ -69,21 +69,21 @@ Para arrancar, `scripts/start-shell-with-tray-watcher.sh`: deja vivo el watcher 
 ## Arrancar y actualizar
 
 ```sh
-lunele shell -d     # en segundo plano
-lunele shell -r     # reiniciar tras cambios en QML
+syl shell -d     # en segundo plano
+syl shell -r     # reiniciar tras cambios en QML
 ```
 
 ```sh
-cd ~/.config/quickshell/lunele
+cd ~/.config/quickshell/sylenara
 git pull
 cmake --build build && cmake --install build   # si cambió el plugin C++ o las traducciones
-lunele shell -r
+syl shell -r
 ```
 
-Configuración: `~/.config/lunele/` (`shell.json`, `keybinds.json`, `cli.json`). Estado: `~/.local/state/lunele/`.
+Configuración: `~/.config/sylenara/` (`shell.json`, `keybinds.json`, `cli.json`). Estado: `~/.local/state/sylenara/`.
 
 ## Antes de mandar un cambio
 
 - Tests: `cd tests && python3 -m unittest -q`.
-- Textos: todo lo visible pasa por `Tr.tr` y se traduce en `plugin/src/Lunele/I18n/trs/es.po` (`fish scripts/trs.fish raw` + `msgmerge`, sin cadenas sin traducir ni `fuzzy`; `python3 scripts/trs-check.py`).
+- Textos: todo lo visible pasa por `Tr.tr` y se traduce en `plugin/src/Sylenara/I18n/trs/es.po` (`fish scripts/trs.fish raw` + `msgmerge`, sin cadenas sin traducir ni `fuzzy`; `python3 scripts/trs-check.py`).
 - Commits con *conventional commits* (`feat:`, `fix:`, `docs:`) y PR contra `main`.

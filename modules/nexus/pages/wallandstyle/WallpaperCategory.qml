@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Lunele.Config
-import Lunele.Models
+import Sylenara.Config
+import Sylenara.Models
 import qs.services
 import qs.modules.nexus.common
 

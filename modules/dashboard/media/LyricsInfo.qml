@@ -1,10 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
-import Lunele
-import Lunele.Blobs
-import Lunele.Config
-import Lunele.I18n
-import Lunele.Services
+import Sylenara
+import Sylenara.Blobs
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.components
 import qs.services
 

@@ -1,9 +1,9 @@
 import QtQuick
-import Lunele
-import Lunele.Config
-import Lunele.Multimedia
-import Lunele.Shaders
-import Lunele.State
+import Sylenara
+import Sylenara.Config
+import Sylenara.Multimedia
+import Sylenara.Shaders
+import Sylenara.State
 import qs.services
 
 Item {

@@ -4,10 +4,10 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
-import Lunele
-import Lunele.Components
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Components
+import Sylenara.Config
+import Sylenara.I18n
 import qs.components
 import qs.components.controls
 import qs.services

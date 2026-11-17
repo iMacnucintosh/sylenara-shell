@@ -3,9 +3,9 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 
 Singleton {
     id: root
@@ -956,7 +956,7 @@ Singleton {
     LoggingCategory {
         id: lc
 
-        name: "lunele.qml.services.vpn"
+        name: "sylenara.qml.services.vpn"
         defaultLogLevel: LoggingCategory.Info
     }
 

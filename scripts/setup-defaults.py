@@ -3,10 +3,10 @@
 
   setup-defaults.py [--check] [--force]
 
-If there is no ~/.config/lunele/shell.json (or it holds nothing), write assets/defaults/shell.json there:
-the settings Lunele is meant to be used with (bar, dashboard, launcher, notifications, utilities…), one
+If there is no ~/.config/sylenara/shell.json (or it holds nothing), write assets/defaults/shell.json there:
+the settings Sylenara is meant to be used with (bar, dashboard, launcher, notifications, utilities…), one
 activity (Principal, two desktops) and its wallpaper, which ships with the shell (assets/wallpapers/). It
-never touches an existing configuration, and it runs once: ~/.local/state/lunele/defaults.json remembers it.
+never touches an existing configuration, and it runs once: ~/.local/state/sylenara/defaults.json remembers it.
 --force ignores that memory (still without overwriting a configuration that has content); --check only reports.
 Prints {"status": "done" | "kept" | "seen" | "needed", "wallpaper": <path or "">}.
 """
@@ -24,8 +24,8 @@ PLACEHOLDER = "@DEFAULT_WALLPAPER@"
 
 
 def dirs() -> tuple[Path, Path]:
-    config = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config") / "lunele"
-    state = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "lunele"
+    config = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config") / "sylenara"
+    state = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "sylenara"
     return config, state
 
 

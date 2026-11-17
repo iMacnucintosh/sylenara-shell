@@ -1,7 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Lunele.Config
+import Sylenara.Config
 import qs.services
 
 Text {

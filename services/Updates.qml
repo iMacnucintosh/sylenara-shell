@@ -4,9 +4,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.utils
 
 Singleton {
@@ -44,8 +44,8 @@ Singleton {
     // Ephemeral; cleared after writing to the update script stdin
     property string _authPw: ""
 
-    // Everything that can be updated: the system's packages, then Lunele's own and its extensions
-    readonly property var entries: [...packages, ...LuneleUpdates.entries]
+    // Everything that can be updated: the system's packages, then Sylenara's own and its extensions
+    readonly property var entries: [...packages, ...SylenaraUpdates.entries]
     readonly property int count: entries.length
     readonly property bool hasUpdates: count > 0
     readonly property bool anyUpdates: hasUpdates
@@ -73,8 +73,8 @@ Singleton {
     function refresh(): void {
         if (checkProc.running || root.installing)
             return;
-        // Lunele and its extensions, on the same refresh as the packages
-        LuneleUpdates.check();
+        // Sylenara and its extensions, on the same refresh as the packages
+        SylenaraUpdates.check();
         root.busy = true;
         root.error = "";
         root.statusMessage = Tr.tr("Checking for updates…");
@@ -131,7 +131,7 @@ Singleton {
 
     function _terminalScript(shellCmd: string): string {
         // Our own texts, in single quotes (nothing expands inside them)
-        const banner = Tr.tr("##### Lunele updates #####").replace(/'/g, "'\\''");
+        const banner = Tr.tr("##### Sylenara updates #####").replace(/'/g, "'\\''");
         const close = Tr.tr("Press any key to close…").replace(/'/g, "'\\''");
         return `printf '%s\\n' '${banner}'; ${shellCmd}; echo; read -n 1 -p '${close}'`;
     }
@@ -154,14 +154,14 @@ Singleton {
         }
         if (!root.checkAur && !root.checkArch && !root.checkFlatpak)
             args.push("--arch");
-        // Lunele and its extensions, after the system. Its packages may also be among the system's (from its
+        // Sylenara and its extensions, after the system. Its packages may also be among the system's (from its
         // package repository): the installer then finishes what comes after them (the login screen, its setup)
-        const family = root.packages.filter(p => LuneleUpdates.familyPackages.includes(p.name));
-        if (LuneleUpdates.updates.length || family.length)
-            args.push("--lunele");
-        for (const e of LuneleUpdates.extensions)
+        const family = root.packages.filter(p => SylenaraUpdates.familyPackages.includes(p.name));
+        if (SylenaraUpdates.updates.length || family.length)
+            args.push("--sylenara");
+        for (const e of SylenaraUpdates.extensions)
             args.push("--extension", e.id);
-        root._shellUpdating = !!LuneleUpdates.shell || family.some(p => p.name === "lunele-shell-git");
+        root._shellUpdating = !!SylenaraUpdates.shell || family.some(p => p.name === "sylenara-shell-git");
         return args;
     }
 
@@ -290,10 +290,10 @@ Singleton {
         }
         root.statusIcon = root.glyph;
         root.refresh();
-        LuneleUpdates.check();
+        SylenaraUpdates.check();
         // The shell itself was replaced: start the new one (what runs now is the old one)
         if (code === 0 && root._shellUpdating)
-            Quickshell.execDetached(["sh", "-c", "sleep 3; PATH=\"$HOME/.local/bin:$PATH\" exec lunele shell -r -d"]);
+            Quickshell.execDetached(["sh", "-c", "sleep 3; PATH=\"$HOME/.local/bin:$PATH\" exec syl shell -r -d"]);
         root._shellUpdating = false;
     }
 
@@ -301,7 +301,7 @@ Singleton {
         if (!pkg)
             return;
         const message = Tr.tr("Updating %1…").arg(pkg.name);
-        if (pkg.source === "LUNELE") {
+        if (pkg.source === "SYLENARA") {
             root.runInTerminal(`python3 "$1" --update`, message, [Quickshell.shellPath("scripts/installer.py")]);
             return;
         }
@@ -338,7 +338,7 @@ Singleton {
     function showPackageInfo(pkg: var): void {
         if (!pkg)
             return;
-        if (pkg.source === "LUNELE" || pkg.source === "EXTENSION") {
+        if (pkg.source === "SYLENARA" || pkg.source === "EXTENSION") {
             root.openPackageUrl(pkg);
             return;
         }
@@ -433,7 +433,7 @@ Singleton {
     IpcHandler {
         target: "updates"
 
-        // [{ name, from, to, source, pkg?, id? }]: source ARCH | AUR | FLATPAK… | LUNELE (pkg = its package) |
+        // [{ name, from, to, source, pkg?, id? }]: source ARCH | AUR | FLATPAK… | SYLENARA (pkg = its package) |
         // EXTENSION (id = the extension); `checking` while a check runs
         function list(): string {
             return JSON.stringify({

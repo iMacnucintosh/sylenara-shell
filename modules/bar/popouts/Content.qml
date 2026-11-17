@@ -4,7 +4,7 @@ import "./kblayout"
 import QtQuick
 import Quickshell
 import Quickshell.Services.SystemTray
-import Lunele.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 

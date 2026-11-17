@@ -3,9 +3,9 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Lunele
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 import qs.utils
 
 Singleton {
@@ -185,7 +185,7 @@ Singleton {
 
         const nominatimUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=geocodejson&accept-language=${lang}`;
         const nominatimHeaders = {
-            "User-Agent": `lunele-shell/${CUtils.version} (+https://github.com/iMacnucintosh/lunele-shell)`
+            "User-Agent": `sylenara-shell/${CUtils.version} (+https://github.com/iMacnucintosh/sylenara-shell)`
         };
 
         Requests.get(nominatimUrl, text => {
@@ -539,7 +539,7 @@ Singleton {
     LoggingCategory {
         id: lc
 
-        name: "lunele.qml.services.weather"
+        name: "sylenara.qml.services.weather"
         defaultLogLevel: LoggingCategory.Info
     }
 }

@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Lunele.Config
-import Lunele.State
+import Sylenara.Config
+import Sylenara.State
 import qs.components.containers
 import qs.modules.bar as Bar
 

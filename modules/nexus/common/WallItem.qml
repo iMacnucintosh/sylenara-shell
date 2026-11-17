@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Lunele.Config
-import Lunele.Multimedia
+import Sylenara.Config
+import Sylenara.Multimedia
 import qs.components
 import qs.components.controls
 import qs.services

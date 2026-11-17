@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Start-only wrapper: never toggle-stop an in-progress recording.
-# `lunele record` without flags stops gpu-screen-recorder if it is already running,
+# `syl record` without flags stops gpu-screen-recorder if it is already running,
 # which races when a UI click is delivered twice (menu item + SplitButton underneath).
 set -euo pipefail
 
-# The compositor PATH has no ~/.local/bin, where the user-local `lunele` CLI lives.
+# The compositor PATH has no ~/.local/bin, where the user-local `sylenara` CLI lives.
 export PATH="$HOME/.local/bin:$PATH"
 
 # Prefer XDG Videos (e.g. ~/Vídeos); fall back to the Spanish folder name.
@@ -14,11 +14,11 @@ if [[ -z "$videos_dir" && -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" 
     videos_dir="$(. "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" >/dev/null; echo "${XDG_VIDEOS_DIR:-}")"
 fi
 videos_dir="${videos_dir:-$HOME/Vídeos}"
-recs_dir="${LUNELE_RECORDINGS_DIR:-$videos_dir/Videocapturas de pantalla}"
-export LUNELE_RECORDINGS_DIR="$recs_dir"
+recs_dir="${SYLENARA_RECORDINGS_DIR:-$videos_dir/Videocapturas de pantalla}"
+export SYLENARA_RECORDINGS_DIR="$recs_dir"
 mkdir -p "$recs_dir"
 
 if pidof gpu-screen-recorder >/dev/null 2>&1; then
     exit 0
 fi
-exec lunele record "$@"
+exec syl record "$@"

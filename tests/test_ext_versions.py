@@ -54,7 +54,7 @@ class DataPaths(unittest.TestCase):
         paths = [str(p) for p in ext.data_paths("demo", {"data": [
             "state:demo.json", "config:vpn/x.conf", "state:../escape", "state:/abs", "other:thing", "state:", "nothing"]})]
         self.assertTrue(any(p.endswith("extensions/demo.json") for p in paths))
-        self.assertTrue(any(p.endswith(".local/state/lunele/demo.json") or p.endswith("lunele/demo.json") for p in paths))
+        self.assertTrue(any(p.endswith(".local/state/sylenara/demo.json") or p.endswith("sylenara/demo.json") for p in paths))
         self.assertFalse(any("escape" in p or "/abs" in p or "thing" in p for p in paths))
 
 
@@ -64,7 +64,7 @@ class Hardening(unittest.TestCase):
             "config:shell.json", "config:extensions", "config:keybinds.json", "state:scheme.json", "state:theme/kitty.conf",
             "state:demo.json"]})]
         self.assertFalse(any(p.endswith(("shell.json", "keybinds.json", "scheme.json", "kitty.conf"))
-                             or p.endswith("lunele/extensions") for p in paths))
+                             or p.endswith("sylenara/extensions") for p in paths))
         self.assertTrue(any(p.endswith("demo.json") and "/state/" in p.replace(".local/state", "/state/") for p in paths))
 
     def test_remove_refuses_something_that_is_not_an_id(self):
@@ -84,7 +84,7 @@ class UpdateHub(unittest.TestCase):
             index = Path(d) / "index.json"
             index.write_text(json.dumps({"items": [{"id": "games", "version": "0.1.5", "zip": "https://x/games.zip", "sha256": "a" * 64}]}))
             calls = []
-            with mock.patch.dict(os.environ, {"LUNELE_HUB_INDEX": index.as_uri()}), \
+            with mock.patch.dict(os.environ, {"SYLENARA_HUB_INDEX": index.as_uri()}), \
                     mock.patch.object(ext, "cmd_install_hub", side_effect=lambda a: calls.append(a) or 0):
                 self.assertEqual(ext.cmd_update_hub("games"), 0)
                 self.assertEqual(calls[0], ["games", "--url", "https://x/games.zip", "--sha256", "a" * 64, "--version", "0.1.5"])

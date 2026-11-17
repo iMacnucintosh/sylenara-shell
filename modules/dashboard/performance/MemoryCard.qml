@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
-import Lunele.Config
-import Lunele.I18n
-import Lunele.Services
+import Sylenara.Config
+import Sylenara.I18n
+import Sylenara.Services
 import qs.components
 import qs.components.controls
 import qs.services

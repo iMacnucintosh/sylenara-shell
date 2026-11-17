@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Shapes
 import Quickshell
 import M3Shapes
-import Lunele
-import Lunele.Config
-import Lunele.Services
+import Sylenara
+import Sylenara.Config
+import Sylenara.Services
 import qs.components
 import qs.components.widgets
 import qs.services

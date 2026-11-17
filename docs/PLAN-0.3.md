@@ -10,13 +10,13 @@ Estado: **0.3.0 publicada (`v0.3.0`, 2026-11-11)**: fases 0, B, 1, 2 y 4 hechas 
 ## 1. Objetivo
 
 Que **Things** (`~/Desarrollo/things`, gestor de paquetes Material You) sea un paquete **base y requerido**
-de Lunele y gestione el **catálogo, la instalación, la actualización y la eliminación** de
+de Sylenara y gestione el **catálogo, la instalación, la actualización y la eliminación** de
 extensiones y widgets, leyendo el catálogo del hub público
-([`lunele-hub`](https://github.com/iMacnucintosh/lunele-hub), `index.json`).
+([`sylenara-hub`](https://github.com/iMacnucintosh/sylenara-hub), `index.json`).
 
 Reparto de responsabilidades (decidido):
 
-| | Things | Lunele (shell / Nexus) |
+| | Things | Sylenara (shell / Nexus) |
 | --- | --- | --- |
 | Descubrir, descargar, comprobar `sha256` | sí | no |
 | Instalar / actualizar / eliminar ficheros | sí | no (solo vía CLI de emergencia) |
@@ -24,9 +24,9 @@ Reparto de responsabilidades (decidido):
 | Cargar, activar y desactivar (`extensions.enabled`) | no | **sí** (estado en vivo) |
 | Ajustes de cada extensión | no | **sí** (tarjeta / páginas propias) |
 
-El contrato entre las dos aplicaciones es **la carpeta `~/.local/share/lunele/extensions/<id>/`
+El contrato entre las dos aplicaciones es **la carpeta `~/.local/share/sylenara/extensions/<id>/`
 más el `manifest.json`**, y un aviso a la shell para que vuelva a escanear
-(`qs -c lunele ipc call extensions rescan`, por añadir).
+(`qs -c sylenara ipc call extensions rescan`, por añadir).
 
 Nexus **conserva una página «Extensiones» pequeña**: lista de las instaladas con su interruptor y
 sus ajustes, y un botón «Buscar más en Things». Desaparece de ella: instalar desde zip, la petición
@@ -36,12 +36,12 @@ de contraseña y la gestión de piezas de sistema.
 
 - **Requerido en el paquete, opcional en el código:** la shell no falla ni pierde extensiones si
   Things no está. Lo ya instalado sigue cargando. Hay una vía mínima por línea de comandos
-  (`lunele ext install <zip>`, basada en `scripts/install-extension.py`) para no quedarse sin
+  (`syl ext install <zip>`, basada en `scripts/install-extension.py`) para no quedarse sin
   instalar nada si Things se rompe.
 - **Confianza:** el catálogo es público y las extensiones pueden ejecutar scripts como root. Things
   comprueba `sha256` del índice, muestra siempre qué se va a instalar (nombre, versión, si pide
   root) y pide confirmación. A medio plazo, índice firmado.
-- **Compatibilidad:** cada extensión declara con qué versión de Lunele funciona
+- **Compatibilidad:** cada extensión declara con qué versión de Sylenara funciona
   (`requires` en el manifiesto) y Things lo comprueba antes de instalar.
 - **i18n siempre** (regla de AGENTS.md §3), también en Things y en el catálogo: textos con `Tr`, sin
   cadenas sin traducir.
@@ -57,16 +57,16 @@ Decisiones del usuario:
 - **Extensiones instaladas a mano:** se muestran como «local» y se respetan.
 
 Entregado:
-- Contrato escrito en `AGENTS.md` («Contrato con Things»): carpeta, manifiesto (`apiVersion`, `requires.lunele`), recibo `.source.json`, orden de instalar/eliminar, IPC y confianza.
+- Contrato escrito en `AGENTS.md` («Contrato con Things»): carpeta, manifiesto (`apiVersion`, `requires.sylenara`), recibo `.source.json`, orden de instalar/eliminar, IPC y confianza.
 - Shell: comprobación de `apiVersion` / `requires` al cargar (incompatible = listada, no cargada, con motivo), recibo de origen en `list-extensions.py`, y IPC `extensions list | rescan | enable | disable | prepareRemoval`.
-- `scripts/ext.py` (instalar / quitar / listar / activar desde terminal; `lunele ext` lo llamará: el CLI vive en otro repo, aún sin tocar).
+- `scripts/ext.py` (instalar / quitar / listar / activar desde terminal; `syl ext` lo llamará: el CLI vive en otro repo, aún sin tocar).
 - Corregido de paso: el plugin instalado decía `0.1.0` (caché de CMake con `-DVERSION`); ahora toma el último tag.
 - Pendiente de la fase 0 en el **hub** (se hace en la fase 4): que `build.py` copie `requires` / `apiVersion` del manifiesto al `index.json` y los valide.
 
 ### Fase B · Cerrar la base: asistente de bienvenida y enlace a Things — HECHA (2026-11-11)
 Orden decidido por el usuario: antes de centrarse en Things, dejar bien cerrado el sistema base.
 Decisiones:
-- **Ventana propia**, flotante y de tamaño fijo (960×720), de 4 pasos; sale sola la primera vez y se reabre con un botón de varita en la tarjeta de Lunele de Nexus → Acerca de. El orbe vuela del centro al lado del título.
+- **Ventana propia**, flotante y de tamaño fijo (960×720), de 4 pasos; sale sola la primera vez y se reabre con un botón de varita en la tarjeta de Sylenara de Nexus → Acerca de. El orbe vuela del centro al lado del título.
 - **Visual:** el orbe y tarjetas Material You; **capturas reales a futuro**. Invita a crear extensiones propias (enlace al hub).
 - **Autoría:** alias de GitHub (`iMacnucintosh`) con enlace. Sin nombre real ni correo.
 - **El asistente es solo informativo con las apps** (Seeker, Things, kitty): **las instala el paquete base** (fase 3), no el asistente. (Se descartó instalar desde el asistente con `makepkg`: añadía contraseña, compilación y fallos posibles.)
@@ -75,12 +75,12 @@ Decisiones:
 Entregado: `services/Companions.qml`, `services/Welcome.qml`, `modules/welcome/WelcomeWindow.qml`, botón en Acerca de, fila de Things en Extensiones.
 
 ### Fase 1 · Things lee el hub — HECHA en local, sin publicar (2026-11-11)
-Decisiones: **sección propia «Lunele»** en la columna lateral de Things (no un filtro más junto a pacman/AUR/Flatpak) y **la lógica de instalar vive en la shell** (`scripts/ext.py install-hub …`); Things solo la llama, como un comando más de su cola `Operations`, con su `askpass` (solo si la extensión tiene piezas de sistema).
+Decisiones: **sección propia «Sylenara»** en la columna lateral de Things (no un filtro más junto a pacman/AUR/Flatpak) y **la lógica de instalar vive en la shell** (`scripts/ext.py install-hub …`); Things solo la llama, como un comando más de su cola `Operations`, con su `askpass` (solo si la extensión tiene piezas de sistema).
 Hecho:
 - **Shell:** `ext.py install-hub`, `remove`, `list --json`, `info`, `sudo -A` con `SUDO_ASKPASS`; `inspect` con `requires`/`apiVersion`; IPC `extensions tools` (dónde está `ext.py`).
-- **Hub** (`~/Desarrollo/lunele-hub`, rama `feature/index-fields`, local): el índice lleva `apiVersion`, `requires` y `system`; `vpn-forticlient` 0.4.2 con `requires`.
-- **Things** (`~/Desarrollo/things`, rama `feature/hub`, local): `HubCatalog` (índice con caché de 1 h y sin conexión, cada entrada validada, cruzado con lo instalado: disponible / instalada / actualización / local), fuente `lunele` en `Operations` (vista previa, cola, registro en vivo, error del propio `ext.py`), sección «Lunele» (`Ctrl+4`, contador de actualizaciones) y `HubPage.qml`. README al día.
-- **Probado:** estados y validación del catálogo con un índice de pruebas (URL ajena, sha256 roto, id/versión/tipo inválidos, índice roto o de otro esquema); la sección en pantalla; instalar y quitar **de extremo a extremo desde Things** con un hub y un zip locales (`--hub-op`, `LUNELE_HUB_TEST_PREFIX`).
+- **Hub** (`~/Desarrollo/sylenara-hub`, rama `feature/index-fields`, local): el índice lleva `apiVersion`, `requires` y `system`; `vpn-forticlient` 0.4.2 con `requires`.
+- **Things** (`~/Desarrollo/things`, rama `feature/hub`, local): `HubCatalog` (índice con caché de 1 h y sin conexión, cada entrada validada, cruzado con lo instalado: disponible / instalada / actualización / local), fuente `sylenara` en `Operations` (vista previa, cola, registro en vivo, error del propio `ext.py`), sección «Sylenara» (`Ctrl+4`, contador de actualizaciones) y `HubPage.qml`. README al día.
+- **Probado:** estados y validación del catálogo con un índice de pruebas (URL ajena, sha256 roto, id/versión/tipo inválidos, índice roto o de otro esquema); la sección en pantalla; instalar y quitar **de extremo a extremo desde Things** con un hub y un zip locales (`--hub-op`, `SYLENARA_HUB_TEST_PREFIX`).
 - **Sin probar:** el camino con **contraseña** (extensión con piezas de sistema: `SUDO_ASKPASS` de Things → `ext.py` → `sudo -A`) y la descarga real desde GitHub (la release `vpn-forticlient-0.4.2` no está publicada).
 
 Pendiente para cerrar la fase (depende del usuario): publicar en el hub la release `vpn-forticlient-0.4.2` e integrar `feature/index-fields`; hacer PR de `feature/hub` en el repo de Things; y probar la instalación real con contraseña.
@@ -94,8 +94,8 @@ Pendiente para cerrar la fase (depende del usuario): publicar en el hub la relea
 - Documentación (AGENTS.md, FEATURES.md, CHANGELOG.md) y cadenas al día.
 
 ### Fase 3 · Empaquetado — HECHA salvo el AUR (2026-11-11)
-**Estado final:** PKGBUILD y `.SRCINFO` de `lunele-shell-git`, `lunele-cli-git`, `seeker-git` y `things-git` en `main` de cada repo (`packaging/README.md` explica cómo construirlos y subirlos). El de la shell se construye con `makepkg`; el del CLI **no se ha podido compilar** aquí (faltan `python-build`/`hatchling`). **Falta:** subirlos al AUR (cuenta y clave SSH del usuario; el registro de usuarios estaba caído) y probar una instalación base real. El texto de abajo es el registro histórico de la fase.
-- **Hecho:** `setup-kitty.py` + `KittySetup` (probado en HOME aislados); `PKGBUILD` de Things (`makepkg` probado, no instalado); `packaging/PKGBUILD` de la shell (**borrador sin compilar**: los nombres de los paquetes de fuentes están por comprobar); el install del módulo `shell` incluye `scripts/`, `extensions/` y `greeter/`. **`install-system.sh`** se queda como paso opcional del greeter (toca `/etc/greetd`); lo de root de las extensiones lo instala Things, así que no hay solape. **Actualización:** el PKGBUILD de la shell se construye con `makepkg` (probado con `--nodeps`: instala la config en `/etc/xdg`, con los permisos de ejecución, el plugin en `/usr/lib/qt6/qml`), y hay PKGBUILD + `.SRCINFO` de `lunele-cli-git` (sin probar su compilación: faltan `python-build`/`hatchling` en este equipo), `seeker-git` y `things-git`; ver `packaging/README.md`. Falta subirlos al AUR (necesita cuenta y clave SSH) y probar una instalación base real.
+**Estado final:** PKGBUILD y `.SRCINFO` de `sylenara-shell-git`, `sylenara-cli-git`, `seeker-git` y `things-git` en `main` de cada repo (`packaging/README.md` explica cómo construirlos y subirlos). El de la shell se construye con `makepkg`; el del CLI **no se ha podido compilar** aquí (faltan `python-build`/`hatchling`). **Falta:** subirlos al AUR (cuenta y clave SSH del usuario; el registro de usuarios estaba caído) y probar una instalación base real. El texto de abajo es el registro histórico de la fase.
+- **Hecho:** `setup-kitty.py` + `KittySetup` (probado en HOME aislados); `PKGBUILD` de Things (`makepkg` probado, no instalado); `packaging/PKGBUILD` de la shell (**borrador sin compilar**: los nombres de los paquetes de fuentes están por comprobar); el install del módulo `shell` incluye `scripts/`, `extensions/` y `greeter/`. **`install-system.sh`** se queda como paso opcional del greeter (toca `/etc/greetd`); lo de root de las extensiones lo instala Things, así que no hay solape. **Actualización:** el PKGBUILD de la shell se construye con `makepkg` (probado con `--nodeps`: instala la config en `/etc/xdg`, con los permisos de ejecución, el plugin en `/usr/lib/qt6/qml`), y hay PKGBUILD + `.SRCINFO` de `sylenara-cli-git` (sin probar su compilación: faltan `python-build`/`hatchling` en este equipo), `seeker-git` y `things-git`; ver `packaging/README.md`. Falta subirlos al AUR (necesita cuenta y clave SSH) y probar una instalación base real.
 - **El paquete base depende de Things, Seeker y kitty** (decidido): Things y Seeker necesitan su `PKGBUILD` (Seeker ya lo tiene en la rama local `feature/pkgbuild` de su repo, sin fusionar; Things falta); kitty es de los repos oficiales. Siguen siendo opcionales en el código (la shell funciona sin ellos).
 - **Conectar kitty:** ser dueña de kitty significa que la base debe dejarlo integrado, no solo instalado: en el primer arranque, añadir a `~/.config/kitty/kitty.conf` (solo si faltan, con copia) el `include` del tema, `allow_remote_control yes` y `listen_on …`, y crear la plantilla y el script de recarga (hoy se hace a mano, ver FEATURES «Kitty y colores»).
 - Dependencias duras del paquete (no sugerencias): `qt6ct`, `cliphist`, `wl-clipboard`, `wtype`, fuentes; recomendadas: Papirus y `adw-gtk-theme`.
@@ -106,9 +106,9 @@ Pendiente para cerrar la fase (depende del usuario): publicar en el hub la relea
 - **Hecho:** las tres están en la rama local `feature/tasks-hydration-games` del hub (`requires >=0.2.0`, `i18n/es.json`, zips) y se quitaron de `extensions/` de la shell; instaladas con `ext.py` desde los zips locales, cargan sin errores y conservan sus datos. `extension-catalog.py` y `Tr.trN` soportan plurales. **Falta publicar** las releases `tasks|hydration|games-0.1.0` y el índice (usuario), `build.py --check` en CI y añadir widgets nuevos.
 - `scripts/build.py --check` en CI del hub; `requires` y `apiVersion` copiados del manifiesto al índice y validados.
 - **Migrar al hub Tareas, Hidratación y Juegos.** Orden: publicarlas en el hub **antes** de quitarlas de `extensions/` de la shell, y quitarlas solo cuando Things pueda instalarlas (fase 1). Antes de cada una:
-  - comprobar de qué depende del plugin y de `qs.*` (Hidratación lleva un shader; Juegos scripts Python y varias capas) y que funcione desde `~/.local/share/lunele/extensions/`;
+  - comprobar de qué depende del plugin y de `qs.*` (Hidratación lleva un shader; Juegos scripts Python y varias capas) y que funcione desde `~/.local/share/sylenara/extensions/`;
   - su `i18n/es.json` (`scripts/extension-catalog.py`): hoy sus cadenas viven en el `es.po` de la shell y dejarían de estar;
-  - sus ajustes y su estado (`~/.config/lunele/extensions/<id>.json`, `~/.local/state/lunele/…`) **no se tocan**: los ids no cambian, así que el usuario que ya las usa no pierde datos;
+  - sus ajustes y su estado (`~/.config/sylenara/extensions/<id>.json`, `~/.local/state/sylenara/…`) **no se tocan**: los ids no cambian, así que el usuario que ya las usa no pierde datos;
   - el usuario actual (Manu) las reinstala desde Things o con `scripts/ext.py install`.
 - La shell sigue aceptando una carpeta `extensions/` propia (para desarrollar), aunque vacía.
 - Añadir widgets al hub y documentar cómo publicar (ya está en el README del hub).

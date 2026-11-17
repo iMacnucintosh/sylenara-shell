@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Shapes
-import Lunele.Config
+import Sylenara.Config
 import qs.components
 import qs.services
 

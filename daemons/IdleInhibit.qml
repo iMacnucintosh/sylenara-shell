@@ -2,13 +2,13 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import Lunele.State
+import Sylenara.State
 
 Scope {
     id: root
 
-    // Respect persisted RuntimeState.inhibitIdle (default true; survives lunele shell -r
-    // via /run/user/.../lunele/state.json). Do not force-enable on every start.
+    // Respect persisted RuntimeState.inhibitIdle (default true; survives syl shell -r
+    // via /run/user/.../sylenara/state.json). Do not force-enable on every start.
     Component.onCompleted: {
         if (RuntimeState.inhibitIdle)
             RuntimeState.inhibitingIdleSince = new Date().getTime();

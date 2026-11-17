@@ -1,7 +1,7 @@
 pragma Singleton
 
 import QtQuick
-import Lunele.I18n
+import Sylenara.I18n
 
 QtObject {
     id: root

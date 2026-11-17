@@ -16,8 +16,8 @@ include(cmake/pch.cmake)
 include(cmake/qml-module.cmake)
 
 # Header only helpers
-add_library(lunele-util INTERFACE)
-target_include_directories(lunele-util INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+add_library(sylenara-util INTERFACE)
+target_include_directories(sylenara-util INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 add_subdirectory(3rdparty/rgbcx)
-add_subdirectory(src/Lunele)
+add_subdirectory(src/Sylenara)

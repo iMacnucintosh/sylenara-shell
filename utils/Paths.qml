@@ -2,9 +2,9 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
-import Lunele
-import Lunele.Config
-import Lunele.I18n
+import Sylenara
+import Sylenara.Config
+import Sylenara.I18n
 
 Singleton {
     id: root
@@ -13,10 +13,10 @@ Singleton {
     readonly property string pictures: Quickshell.env("XDG_PICTURES_DIR") || `${home}/Pictures`
     readonly property string videos: Quickshell.env("XDG_VIDEOS_DIR") || `${home}/Videos`
 
-    readonly property string data: `${Quickshell.env("XDG_DATA_HOME") || `${home}/.local/share`}/lunele`
-    readonly property string state: `${Quickshell.env("XDG_STATE_HOME") || `${home}/.local/state`}/lunele`
-    readonly property string cache: `${Quickshell.env("XDG_CACHE_HOME") || `${home}/.cache`}/lunele`
-    readonly property string config: `${Quickshell.env("XDG_CONFIG_HOME") || `${home}/.config`}/lunele`
+    readonly property string data: `${Quickshell.env("XDG_DATA_HOME") || `${home}/.local/share`}/sylenara`
+    readonly property string state: `${Quickshell.env("XDG_STATE_HOME") || `${home}/.local/state`}/sylenara`
+    readonly property string cache: `${Quickshell.env("XDG_CACHE_HOME") || `${home}/.cache`}/sylenara`
+    readonly property string config: `${Quickshell.env("XDG_CONFIG_HOME") || `${home}/.config`}/sylenara`
 
     readonly property string imagecache: `${cache}/imagecache`
     readonly property string notifimagecache: `${imagecache}/notifs`
@@ -44,7 +44,7 @@ Singleton {
 
     function envVar(name: string): string {
         // Unset is null, and the string return type would turn it into "null" (screenshots went to ~/null)
-        return Quickshell.env(`LUNELE_${name}`) ?? "";
+        return Quickshell.env(`SYLENARA_${name}`) ?? "";
     }
 
     function toLocalFile(path: url): string {
