@@ -12,13 +12,17 @@ import qs.services
 Scope {
     id: root
 
+    // The monitor with the focus when the overview opened
+    property string focusedName: ""
+
     LazyLoader {
         id: loader
 
         activeAsync: Activities.overviewOpen && Activities.enabled
 
         Variants {
-            model: Screens.screens
+            // Only on the monitor that has the focus
+            model: Screens.screens.filter(s => s.name === root.focusedName)
 
             StyledWindow {
                 id: win
@@ -51,6 +55,7 @@ Scope {
         function onOverviewOpenChanged(): void {
             if (!Activities.overviewOpen)
                 return;
+            root.focusedName = Hypr.focusedMonitor?.name ?? Screens.screens[0]?.name ?? "";
             // Close competing drawers on the active screen
             const st = ShellState.forActive();
             if (!st)

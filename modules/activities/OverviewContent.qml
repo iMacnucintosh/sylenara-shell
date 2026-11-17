@@ -19,8 +19,15 @@ Item {
         const sidePad = Tokens.padding.extraLarge * 4;
         const gaps = Tokens.spacing.large * Math.max(0, activityCount - 1);
         const perAct = (width - sidePad - gaps) / activityCount;
-        // leave room for activity card padding; prefer ~0.9 of column for the preview
-        return Math.min(420, Math.max(220, perAct * 0.72));
+        // As large as the width allows, but the desktops of the busiest activity must fit in the height
+        const byWidth = perAct * 0.85 - Tokens.padding.large * 2;
+        let most = 1;
+        for (const a of Activities.mappedActivities)
+            most = Math.max(most, a.workspaceCount);
+        const aspect = Activities.monitorBounds.w / Math.max(1, Activities.monitorBounds.h);
+        const avail = height * 0.88 - Tokens.padding.large * 4 - 120;
+        const byHeight = (avail / most - 40) * aspect;
+        return Math.max(220, Math.min(720, byWidth, byHeight));
     }
 
     // Same translucent surface + Hyprland blur as shell drawers with Transparency on.

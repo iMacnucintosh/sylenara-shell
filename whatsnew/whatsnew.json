@@ -2,6 +2,44 @@
     "_comment": "What's new after an update (services/Welcome.qml, modules/welcome/WhatsNewWindow.qml): per version, the highlights worth a card, in every language, with an optional screenshot (whatsnew/<version>/<file>.webp, about 1280x800, 100-200 KB). The full list of changes is CHANGELOG.md. A version is shown once, to whoever updates to it or past it.",
     "versions": [
         {
+            "version": "0.7.1",
+            "highlights": [
+                {
+                    "icon": "monitor",
+                    "title": {
+                        "en": "Several displays, as on your desk",
+                        "es": "Varias pantallas, como en tu mesa"
+                    },
+                    "text": {
+                        "en": "In Settings → Display the displays are drawn to scale and you drag them into place, identify them, rotate, copy or turn them off. A risky change undoes itself after 15 seconds if you do not keep it.",
+                        "es": "En Ajustes → Pantalla las pantallas se dibujan en proporción y se arrastran a su sitio; puedes identificarlas, girarlas, duplicarlas o apagarlas. Un cambio arriesgado se deshace solo a los 15 segundos si no lo mantienes."
+                    }
+                },
+                {
+                    "icon": "desktop_windows",
+                    "title": {
+                        "en": "Desktops that span every display",
+                        "es": "Escritorios que abarcan todas las pantallas"
+                    },
+                    "text": {
+                        "en": "Changing desktop or activity changes every monitor at once, the bar shows the same icons everywhere, and the overview draws a thumbnail per display where you drag apps between them. Super+Alt+arrows sends a window to the next display.",
+                        "es": "Cambiar de escritorio o de actividad mueve todos los monitores a la vez, la barra enseña los mismos iconos en todos y la vista de actividades dibuja una miniatura por pantalla donde arrastras las apps de una a otra. Super+Alt+flechas manda una ventana a la pantalla vecina."
+                    }
+                },
+                {
+                    "icon": "star",
+                    "title": {
+                        "en": "A main display",
+                        "es": "Una pantalla principal"
+                    },
+                    "text": {
+                        "en": "Mark a display with the star and the notifications, volume and brightness show there only.",
+                        "es": "Marca una pantalla con la estrella y las notificaciones, el volumen y el brillo salen solo en ella."
+                    }
+                }
+            ]
+        },
+        {
             "version": "0.6.0",
             "highlights": [
                 {

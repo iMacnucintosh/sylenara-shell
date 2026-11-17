@@ -193,15 +193,34 @@ Después de una actualización, a los 5 s de arrancar la shell sale una ventana 
 Flechas `←`/`→` (o `RePág`/`AvPág`) o la rueda del ratón en cualquier punto de la ventana para pasar páginas (sobre la lista de cambios, la rueda la desplaza), `Esc` para cerrar. Si te saltaste varias versiones, las junta. En una instalación nueva no sale (sale la bienvenida). Se vuelve a ver con el botón **Novedades** (confeti, abajo a la derecha) de la tarjeta de Sylenara en **Ajustes → Acerca de**, o `qs -c sylenara ipc call welcome whatsnew` (`closeNews`, y `resetNews` para probarla).
 
 **Al sacar una versión:** su entrada en `whatsnew/whatsnew.json` (novedades destacadas, en inglés y español, con `icon` de Material Symbols y, si se quiere, `image` → `whatsnew/<versión>/<nombre>.webp`, ~1280 px de ancho, 50-150 KB) y la sección «Sin publicar» del CHANGELOG renombrada a `## X.Y.Z (fecha)`.
-## Pantalla (modos, escala, VRR)
+## Pantalla (disposición, modos, escala, rotación, VRR)
 
-Bloque **Pantalla** inline en **Ajustes → Dispositivos conectados** (categoría Dispositivos; sin entrada propia en el sidebar), una tarjeta por monitor:
+Bloque **Pantalla** inline en **Ajustes → Dispositivos conectados** (categoría Dispositivos; sin entrada propia en el sidebar).
 
+**Con varias pantallas** arriba hay un **esquema** con las pantallas dibujadas en proporción y en el sitio que ocupan:
+
+- **Arrastra** una pantalla para colocarla como está en tu mesa: al soltarla se **pega al borde** de otra (alineada con su arriba, centro o abajo si queda cerca), nunca encima de otra, y el resto se junta para que el puntero pueda llegar a todas. Mientras arrastras, un contorno enseña dónde caería.
+- La disposición queda **pendiente**: una barra avisa («Nueva disposición, aún sin aplicar») y hasta pulsar **Aplicar** no cambia nada en las pantallas; **Descartar** vuelve atrás.
+- Las pantallas se **numeran** de izquierda a derecha. **Identificar** muestra ese número en grande, unos segundos, sobre cada monitor físico (imprescindible si hay dos iguales).
+- Pulsa una pantalla (en el esquema o en los selectores de debajo) para ver **sus** ajustes. Las que están apagadas o duplicando a otra solo salen en los selectores.
+- Los cambios que podrían dejar una pantalla inservible (resolución, frecuencia, escala, rotación, apagar, duplicar, cambiar la disposición) piden confirmación: **«¿Mantener estos ajustes? Se deshará en 15 s»** con **Mantener** y **Deshacer**; si nadie contesta, se deshacen solos.
+
+- La **estrella** de cada pantalla marca la **principal** (`general.primaryDisplay`; vacía = la primera que lista Hyprland). En la principal salen las **notificaciones, los avisos emergentes y el volumen y brillo**; cambiarla no mueve ninguna ventana. Si la principal se desenchufa, otra (la primera por nombre) la sustituye mientras tanto y la elección se conserva.
+
+### Escritorios enlazados (varios monitores)
+
+Un escritorio (el 1 de Juegos) tiene **un workspace por monitor**: los monitores, ordenados por nombre, usan los ids 1…N, 1001…, 2001…. Cambiar de escritorio o de actividad en un monitor cambia todos a la vez, y cada barra marca el escritorio activo y enseña los **mismos iconos** en todos los monitores: primero las apps de la principal, una línea fina y las del siguiente monitor, y así con todos. `Super+1…0` cambia en el monitor con el foco; `Super+Shift+1…0` manda la ventana a ese escritorio **sin sacarla de su monitor**; `Super+Alt+←/→/↑/↓` la manda a la pantalla vecina en esa dirección. La **vista de actividades** (`Super+Tab`, solo en el monitor con el foco) dibuja cada escritorio con una miniatura por monitor, en la posición y el tamaño de Ajustes → Pantalla, y se arrastran las apps de una a otra.
+
+Con una sola pantalla no hay esquema: solo sus ajustes. Una tarjeta por monitor:
+
+- **Activada**: apaga la pantalla (nunca la última que queda encendida); al volver a encenderla recupera su modo preferido y Hyprland la coloca.
+- **Rotación**: normal, 90°, 180° o 270°.
+- **Duplicar otra pantalla**: copia lo que muestra otra (un proyector, por ejemplo).
 - **Resolución** y **Frecuencia** por separado (la lista de Hz solo muestra modos de la resolución actual).
 - **Escala**.
 - **VRR / Adaptive Sync** con política estilo Plasma: **Nunca / Automático / Siempre** (Automático = solo mientras haya algo a pantalla completa).
 
-Persistencia por conector en `~/.config/hypr/sylenara-monitors.lua`; al aplicar se ejecuta `hyprctl reload`, que es lo que hace que el apagado de VRR llegue de verdad al CRTC. La política vive en el Lua y el estado "activo" que reporta `hyprctl` no pisa tu elección. Requiere en tu config de Hyprland:
+Persistencia por conector en `~/.config/hypr/sylenara-monitors.lua` (modo, posición, escala, rotación, duplicado, apagado y VRR); al aplicar se ejecuta `hyprctl reload`, que es lo que hace que el apagado de VRR llegue de verdad al CRTC. La política vive en el Lua y el estado "activo" que reporta `hyprctl` no pisa tu elección. Requiere en tu config de Hyprland:
 
 ```lua
 require("sylenara-monitors")

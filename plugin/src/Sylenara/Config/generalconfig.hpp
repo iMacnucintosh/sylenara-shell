@@ -121,6 +121,9 @@ class GeneralConfig : public settings::ObjectNode {
     CONFIG_PROPERTY(QString, workspaceAnimationSpeed, u"normal"_s)
     CONFIG_PROPERTY(QString, activityAnimation, u"fade"_s)
     CONFIG_PROPERTY(QString, activityAnimationSpeed, u"normal"_s)
+    // The main display (its connector name, "DP-1"): notifications, volume and brightness show there. Empty = the
+    // first one by name. Settings → Display, the star on a display.
+    CONFIG_PROPERTY(QString, primaryDisplay, {})
     CONFIG_GLOBAL_SUBOBJECT(GeneralApps, apps)
     CONFIG_GLOBAL_SUBOBJECT(GeneralIdle, idle)
     CONFIG_GLOBAL_SUBOBJECT(GeneralBattery, battery)

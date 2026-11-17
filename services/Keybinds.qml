@@ -117,7 +117,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(1),
             description: () => Tr.tr("Switch to workspace %1").arg(1),
             defaultBind: "SUPER + 1",
-            dispatch: "hl.dsp.focus({ workspace = 1 })",
+            global: "sylenara:desktopGo1",
             category: "workspaces"
         },
         {
@@ -125,7 +125,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(2),
             description: () => Tr.tr("Switch to workspace %1").arg(2),
             defaultBind: "SUPER + 2",
-            dispatch: "hl.dsp.focus({ workspace = 2 })",
+            global: "sylenara:desktopGo2",
             category: "workspaces"
         },
         {
@@ -133,7 +133,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(3),
             description: () => Tr.tr("Switch to workspace %1").arg(3),
             defaultBind: "SUPER + 3",
-            dispatch: "hl.dsp.focus({ workspace = 3 })",
+            global: "sylenara:desktopGo3",
             category: "workspaces"
         },
         {
@@ -141,7 +141,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(4),
             description: () => Tr.tr("Switch to workspace %1").arg(4),
             defaultBind: "SUPER + 4",
-            dispatch: "hl.dsp.focus({ workspace = 4 })",
+            global: "sylenara:desktopGo4",
             category: "workspaces"
         },
         {
@@ -149,7 +149,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(5),
             description: () => Tr.tr("Switch to workspace %1").arg(5),
             defaultBind: "SUPER + 5",
-            dispatch: "hl.dsp.focus({ workspace = 5 })",
+            global: "sylenara:desktopGo5",
             category: "workspaces"
         },
         {
@@ -157,7 +157,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(6),
             description: () => Tr.tr("Switch to workspace %1").arg(6),
             defaultBind: "SUPER + 6",
-            dispatch: "hl.dsp.focus({ workspace = 6 })",
+            global: "sylenara:desktopGo6",
             category: "workspaces"
         },
         {
@@ -165,7 +165,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(7),
             description: () => Tr.tr("Switch to workspace %1").arg(7),
             defaultBind: "SUPER + 7",
-            dispatch: "hl.dsp.focus({ workspace = 7 })",
+            global: "sylenara:desktopGo7",
             category: "workspaces"
         },
         {
@@ -173,7 +173,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(8),
             description: () => Tr.tr("Switch to workspace %1").arg(8),
             defaultBind: "SUPER + 8",
-            dispatch: "hl.dsp.focus({ workspace = 8 })",
+            global: "sylenara:desktopGo8",
             category: "workspaces"
         },
         {
@@ -181,7 +181,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(9),
             description: () => Tr.tr("Switch to workspace %1").arg(9),
             defaultBind: "SUPER + 9",
-            dispatch: "hl.dsp.focus({ workspace = 9 })",
+            global: "sylenara:desktopGo9",
             category: "workspaces"
         },
         {
@@ -189,7 +189,7 @@ Singleton {
             label: () => Tr.tr("Workspace %1").arg(10),
             description: () => Tr.tr("Switch to workspace %1").arg(10),
             defaultBind: "SUPER + 0",
-            dispatch: "hl.dsp.focus({ workspace = 10 })",
+            global: "sylenara:desktopGo10",
             category: "workspaces"
         },
         {
@@ -197,7 +197,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(1),
             description: () => Tr.tr("Move the active window to workspace %1").arg(1),
             defaultBind: "SUPER + SHIFT + 1",
-            dispatch: "hl.dsp.window.move({ workspace = 1 })",
+            global: "sylenara:desktopMove1",
             category: "workspaces"
         },
         {
@@ -205,7 +205,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(2),
             description: () => Tr.tr("Move the active window to workspace %1").arg(2),
             defaultBind: "SUPER + SHIFT + 2",
-            dispatch: "hl.dsp.window.move({ workspace = 2 })",
+            global: "sylenara:desktopMove2",
             category: "workspaces"
         },
         {
@@ -213,7 +213,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(3),
             description: () => Tr.tr("Move the active window to workspace %1").arg(3),
             defaultBind: "SUPER + SHIFT + 3",
-            dispatch: "hl.dsp.window.move({ workspace = 3 })",
+            global: "sylenara:desktopMove3",
             category: "workspaces"
         },
         {
@@ -221,7 +221,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(4),
             description: () => Tr.tr("Move the active window to workspace %1").arg(4),
             defaultBind: "SUPER + SHIFT + 4",
-            dispatch: "hl.dsp.window.move({ workspace = 4 })",
+            global: "sylenara:desktopMove4",
             category: "workspaces"
         },
         {
@@ -229,7 +229,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(5),
             description: () => Tr.tr("Move the active window to workspace %1").arg(5),
             defaultBind: "SUPER + SHIFT + 5",
-            dispatch: "hl.dsp.window.move({ workspace = 5 })",
+            global: "sylenara:desktopMove5",
             category: "workspaces"
         },
         {
@@ -237,7 +237,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(6),
             description: () => Tr.tr("Move the active window to workspace %1").arg(6),
             defaultBind: "SUPER + SHIFT + 6",
-            dispatch: "hl.dsp.window.move({ workspace = 6 })",
+            global: "sylenara:desktopMove6",
             category: "workspaces"
         },
         {
@@ -245,7 +245,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(7),
             description: () => Tr.tr("Move the active window to workspace %1").arg(7),
             defaultBind: "SUPER + SHIFT + 7",
-            dispatch: "hl.dsp.window.move({ workspace = 7 })",
+            global: "sylenara:desktopMove7",
             category: "workspaces"
         },
         {
@@ -253,7 +253,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(8),
             description: () => Tr.tr("Move the active window to workspace %1").arg(8),
             defaultBind: "SUPER + SHIFT + 8",
-            dispatch: "hl.dsp.window.move({ workspace = 8 })",
+            global: "sylenara:desktopMove8",
             category: "workspaces"
         },
         {
@@ -261,7 +261,7 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(9),
             description: () => Tr.tr("Move the active window to workspace %1").arg(9),
             defaultBind: "SUPER + SHIFT + 9",
-            dispatch: "hl.dsp.window.move({ workspace = 9 })",
+            global: "sylenara:desktopMove9",
             category: "workspaces"
         },
         {
@@ -269,7 +269,39 @@ Singleton {
             label: () => Tr.tr("Move to workspace %1").arg(10),
             description: () => Tr.tr("Move the active window to workspace %1").arg(10),
             defaultBind: "SUPER + SHIFT + 0",
-            dispatch: "hl.dsp.window.move({ workspace = 10 })",
+            global: "sylenara:desktopMove10",
+            category: "workspaces"
+        },
+        {
+            id: "moveToMonitorLeft",
+            label: () => Tr.tr("Move window to the display left"),
+            description: () => Tr.tr("Send the active window to the display on the left, on the same desktop, and follow it"),
+            defaultBind: "SUPER + ALT + left",
+            global: "sylenara:moveToMonitorLeft",
+            category: "workspaces"
+        },
+        {
+            id: "moveToMonitorRight",
+            label: () => Tr.tr("Move window to the display right"),
+            description: () => Tr.tr("Send the active window to the display on the right, on the same desktop, and follow it"),
+            defaultBind: "SUPER + ALT + right",
+            global: "sylenara:moveToMonitorRight",
+            category: "workspaces"
+        },
+        {
+            id: "moveToMonitorUp",
+            label: () => Tr.tr("Move window to the display up"),
+            description: () => Tr.tr("Send the active window to the display above, on the same desktop, and follow it"),
+            defaultBind: "SUPER + ALT + up",
+            global: "sylenara:moveToMonitorUp",
+            category: "workspaces"
+        },
+        {
+            id: "moveToMonitorDown",
+            label: () => Tr.tr("Move window to the display down"),
+            description: () => Tr.tr("Send the active window to the display below, on the same desktop, and follow it"),
+            defaultBind: "SUPER + ALT + down",
+            global: "sylenara:moveToMonitorDown",
             category: "workspaces"
         },
         {

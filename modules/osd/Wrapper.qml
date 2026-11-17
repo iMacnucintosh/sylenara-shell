@@ -15,7 +15,8 @@ Item {
 
     property bool hovered
     readonly property Brightness.Monitor monitor: Brightness.getMonitorForScreen(root.screen)
-    readonly property bool shouldBeActive: screenState.osd && Config.osd.enabled && !(screenState.utilities && Config.utilities.enabled)
+    // Volume and brightness show on the main display only
+    readonly property bool shouldBeActive: screenState.osd && Config.osd.enabled && Activities.isPrimaryScreen(root.screen?.name ?? "") && !(screenState.utilities && Config.utilities.enabled)
     property real offsetScale: shouldBeActive ? 0 : 1
     property real sidebarOffset: sidebarOrSessionVisible ? 12 : 0
 

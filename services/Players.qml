@@ -48,6 +48,33 @@ Singleton {
         return !/\/(watch|shorts|live)\b/i.test(url);
     }
 
+    // Hovering a thumbnail on a YouTube video page (the recommendations) plays a muted preview too, and the browser
+    // reports the title and artist of that preview under the URL of the page. A real change of video changes the
+    // URL, so the same URL with another title is a preview. Only for YouTube: web music players change track
+    // without changing URL.
+    property string pageUrl: ""
+    property string pageTitle: ""
+
+    function isWatchPagePreview(player: MprisPlayer): bool {
+        const url = `${player.metadata["xesam:url"] ?? ""}`;
+        if (!/youtube\.com\/(watch|shorts|live)\b/i.test(url))
+            return false;
+
+        const title = player.trackTitle ?? "";
+        if (url !== pageUrl) {
+            // Another video: whatever it reports first is the real one
+            pageUrl = url;
+            pageTitle = title;
+            return false;
+        }
+        if (!pageTitle) {
+            // The title can arrive after the URL
+            pageTitle = title;
+            return false;
+        }
+        return !!title && title !== pageTitle;
+    }
+
     // Quickshell only emits postTrackChanged when trackid/url/title change, so late
     // artist updates (common with mpv-mpris + yt-dlp player) never retrigger it. Watch
     // title/artist too and toast once both are usable.
@@ -61,7 +88,7 @@ Singleton {
 
         // Soft-mute when the player reports it (Spotify etc.). Do not record the key:
         // unmuting / opening the real watch URL should still be allowed to toast.
-        if ((player.volumeSupported && player.volume <= 0) || root.isListingPreview(player))
+        if ((player.volumeSupported && player.volume <= 0) || root.isListingPreview(player) || root.isWatchPagePreview(player))
             return;
 
         const title = player.trackTitle ?? "";

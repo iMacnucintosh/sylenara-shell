@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 11:08+0100\n"
+"POT-Creation-Date: 2026-11-17 19:02+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -352,6 +352,7 @@ msgid "Bluetooth"
 msgstr "Bluetooth"
 
 #: modules/bar/popouts/Bluetooth.qml modules/bar/popouts/Network.qml
+#: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/DashboardPanel.qml
 #: modules/nexus/pages/panels/LauncherPanel.qml
 #: modules/nexus/pages/panels/SidebarPanel.qml
@@ -1083,7 +1084,9 @@ msgstr "Vibrante"
 
 #: modules/launcher/services/M3Variants.qml
 msgid "A high chroma palette. The primary palette's chroma is at maximum."
-msgstr "Una paleta de alta intensidad cromática. La intensidad de la paleta primaria está al máximo."
+msgstr ""
+"Una paleta de alta intensidad cromática. La intensidad de la paleta primaria "
+"está al máximo."
 
 #: modules/launcher/services/M3Variants.qml
 msgctxt "M3 scheme variant name"
@@ -1092,7 +1095,9 @@ msgstr "Tono suave"
 
 #: modules/launcher/services/M3Variants.qml
 msgid "Default for Material theme colours. A pastel palette with a low chroma."
-msgstr "Predeterminado para los colores del tema Material. Una paleta pastel de baja intensidad cromática."
+msgstr ""
+"Predeterminado para los colores del tema Material. Una paleta pastel de baja "
+"intensidad cromática."
 
 #: modules/launcher/services/M3Variants.qml
 msgctxt "M3 scheme variant name"
@@ -1100,8 +1105,12 @@ msgid "Expressive"
 msgstr "Expresivo"
 
 #: modules/launcher/services/M3Variants.qml
-msgid "A medium chroma palette. The primary palette's hue is different from the seed colour, for variety."
-msgstr "Una paleta de intensidad cromática media. El matiz de la paleta primaria es distinto del color semilla, para dar variedad."
+msgid ""
+"A medium chroma palette. The primary palette's hue is different from the "
+"seed colour, for variety."
+msgstr ""
+"Una paleta de intensidad cromática media. El matiz de la paleta primaria es "
+"distinto del color semilla, para dar variedad."
 
 #: modules/launcher/services/M3Variants.qml
 msgctxt "M3 scheme variant name"
@@ -1109,8 +1118,12 @@ msgid "Fidelity"
 msgstr "Fidelidad"
 
 #: modules/launcher/services/M3Variants.qml
-msgid "Matches the seed colour, even if the seed colour is very bright (high chroma)."
-msgstr "Coincide con el color semilla, incluso si este es muy brillante (alta intensidad cromática)."
+msgid ""
+"Matches the seed colour, even if the seed colour is very bright (high "
+"chroma)."
+msgstr ""
+"Coincide con el color semilla, incluso si este es muy brillante (alta "
+"intensidad cromática)."
 
 #: modules/launcher/services/M3Variants.qml
 msgctxt "M3 scheme variant name"
@@ -1226,7 +1239,8 @@ msgstr "Se alcanzó el máximo de intentos de contraseña. Usa el rostro."
 
 #: modules/lock/center/StateMessage.qml
 msgid "Maximum attempts for all authentication methods reached."
-msgstr "Se alcanzó el máximo de intentos de todos los métodos de autenticación."
+msgstr ""
+"Se alcanzó el máximo de intentos de todos los métodos de autenticación."
 
 #: modules/lock/center/StateMessage.qml
 msgid "Maximum password attempts reached."
@@ -1486,8 +1500,11 @@ msgid "Show settings"
 msgstr "Mostrar ajustes"
 
 #: modules/nexus/common/ExtensionCard.qml
-msgid "Its system components are missing: install the extension again from Things."
-msgstr "Faltan sus componentes del sistema: vuelve a instalar la extensión desde Things."
+msgid ""
+"Its system components are missing: install the extension again from Things."
+msgstr ""
+"Faltan sus componentes del sistema: vuelve a instalar la extensión desde "
+"Things."
 
 #: modules/nexus/common/ExtensionCard.qml
 #: modules/nexus/pages/ExtensionsPage.qml
@@ -1780,7 +1797,9 @@ msgstr "Favorita"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Matched by a regex in favouriteApps — edit the config file to change"
-msgstr "Coincide con una expresión regular en favouriteApps: edita el archivo de configuración para cambiarlo"
+msgstr ""
+"Coincide con una expresión regular en favouriteApps: edita el archivo de "
+"configuración para cambiarlo"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Pin to the top of the launcher"
@@ -1792,7 +1811,9 @@ msgstr "Oculta"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Matched by a regex in hiddenApps — edit the config file to change"
-msgstr "Coincide con una expresión regular en hiddenApps: edita el archivo de configuración para cambiarlo"
+msgstr ""
+"Coincide con una expresión regular en hiddenApps: edita el archivo de "
+"configuración para cambiarlo"
 
 #: modules/nexus/pages/apps/AppInfo.qml
 msgid "Hide from the launcher"
@@ -2128,13 +2149,89 @@ msgid "Allow nearby devices to pair with this one"
 msgstr "Permitir que los dispositivos cercanos se emparejen con este"
 
 #: modules/nexus/pages/DisplayPage.qml
+msgctxt "display that is turned off"
+msgid "Off"
+msgstr "Apagada"
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Copy of %1"
+msgstr "Copia de %1"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "screen rotation"
+msgid "Normal"
+msgstr "Normal"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "90°"
+msgstr "90°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "180°"
+msgstr "180°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "270°"
+msgstr "270°"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Flipped"
+msgstr "Volteada"
+
+#: modules/nexus/pages/DisplayPage.qml
 msgctxt "monitor settings"
 msgid "Display"
 msgstr "Pantalla"
 
 #: modules/nexus/pages/DisplayPage.qml
+msgid "Identify"
+msgstr "Identificar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid ""
+"Drag the displays to arrange them as they are on your desk. Pick one to "
+"change its settings. The star marks the main display: it shows the "
+"notifications, volume and brightness."
+msgstr "Arrastra las pantallas para colocarlas como están en tu mesa. Pulsa una para cambiar sus ajustes. La estrella marca la pantalla principal: muestra las notificaciones, el volumen y el brillo."
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "New arrangement, not applied yet"
+msgstr "Nueva disposición, aún sin aplicar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Discard"
+msgstr "Descartar"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Apply"
+msgstr "Aplicar"
+
+#. TRANSLATORS: %1 = seconds left
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Keep these display settings? Going back in %1 s"
+msgstr "¿Mantener estos ajustes de pantalla? Se deshará en %1 s"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Go back"
+msgstr "Deshacer"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "button"
+msgid "Keep"
+msgstr "Mantener"
+
+#: modules/nexus/pages/DisplayPage.qml
 msgid "No displays detected"
 msgstr "No se detectaron pantallas"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "It is the only display that is on"
+msgstr "Es la única pantalla encendida"
 
 #: modules/nexus/pages/DisplayPage.qml
 msgid "Resolution"
@@ -2153,6 +2250,24 @@ msgstr "Escala"
 #, qt-format
 msgid "%1%"
 msgstr "%1%"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Rotation"
+msgstr "Rotación"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgid "Copy another display"
+msgstr "Duplicar otra pantalla"
+
+#: modules/nexus/pages/DisplayPage.qml
+#, qt-format
+msgid "Shows what %1 shows"
+msgstr "Muestra lo mismo que %1"
+
+#: modules/nexus/pages/DisplayPage.qml
+msgctxt "not copying another display"
+msgid "No"
+msgstr "No"
 
 #: modules/nexus/pages/DisplayPage.qml
 msgid "Adaptive Sync"
@@ -2180,8 +2295,12 @@ msgstr "Inactiva ahora en esta salida"
 
 #: modules/nexus/pages/DisplayPage.qml
 #, qt-format
-msgid "This connection tops out at %1 Hz. The panel may support a higher rate over DisplayPort."
-msgstr "Esta conexión llega como máximo a %1 Hz. El panel puede admitir más por DisplayPort."
+msgid ""
+"This connection tops out at %1 Hz. The panel may support a higher rate over "
+"DisplayPort."
+msgstr ""
+"Esta conexión llega como máximo a %1 Hz. El panel puede admitir más por "
+"DisplayPort."
 
 #: modules/nexus/pages/DisplayPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
@@ -2218,12 +2337,17 @@ msgid "Focus windows"
 msgstr "Enfocar ventanas"
 
 #: modules/nexus/pages/KeybindsPage.qml
-msgid "On hover focuses as you move; on click keeps typing until you click (better with “Focus last window”)."
-msgstr "Al pasar enfoca al mover el ratón; al clic mantiene la escritura hasta que hagas clic (mejor con «Última ventana»)."
+msgid ""
+"On hover focuses as you move; on click keeps typing until you click (better "
+"with “Focus last window”)."
+msgstr ""
+"Al pasar enfoca al mover el ratón; al clic mantiene la escritura hasta que "
+"hagas clic (mejor con «Última ventana»)."
 
 #: modules/nexus/pages/KeybindsPage.qml
 msgid "Click a shortcut, then press a key or mouse button. Esc cancels."
-msgstr "Haz clic en un atajo y pulsa una tecla o un botón del ratón. Esc cancela."
+msgstr ""
+"Haz clic en un atajo y pulsa una tecla o un botón del ratón. Esc cancela."
 
 #: modules/nexus/pages/KeybindsPage.qml
 msgid "Export"
@@ -2263,8 +2387,12 @@ msgid "Replace"
 msgstr "Reemplazar"
 
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
-msgid "The first one is used when the session starts; switch from the bar or with the shortcut below"
-msgstr "La primera es la que se usa al entrar; cambia de una a otra desde la barra o con el atajo de abajo"
+msgid ""
+"The first one is used when the session starts; switch from the bar or with "
+"the shortcut below"
+msgstr ""
+"La primera es la que se usa al entrar; cambia de una a otra desde la barra o "
+"con el atajo de abajo"
 
 #: modules/nexus/pages/KeyboardLayoutsCard.qml
 msgid "The ones of the system. Changing anything here makes Sylenara keep them"
@@ -2483,8 +2611,12 @@ msgid "Commands"
 msgstr "Comandos"
 
 #: modules/nexus/pages/network/AddVpnPage.qml
-msgid "This provider type comes from an extension that is disabled. Enable it in Settings → Extensions to edit the connection."
-msgstr "Este tipo de proveedor es de una extensión desactivada. Actívala en Ajustes → Extensiones para editar la conexión."
+msgid ""
+"This provider type comes from an extension that is disabled. Enable it in "
+"Settings → Extensions to edit the connection."
+msgstr ""
+"Este tipo de proveedor es de una extensión desactivada. Actívala en Ajustes "
+"→ Extensiones para editar la conexión."
 
 #: modules/nexus/pages/network/AddVpnPage.qml
 msgid "Connection name"
@@ -2501,8 +2633,13 @@ msgstr "El nombre del proveedor es obligatorio"
 
 #. TRANSLATORS: the four names in brackets are provider identifiers, leave them untranslated
 #: modules/nexus/pages/network/AddVpnPage.qml
-msgid "Built-in names (wireguard, warp, tailscale, netbird) auto-fill their commands. For others, provide the connect/disconnect commands."
-msgstr "Los nombres integrados (wireguard, warp, tailscale, netbird) rellenan automáticamente sus comandos. Para los demás, indica los comandos de conexión y desconexión."
+msgid ""
+"Built-in names (wireguard, warp, tailscale, netbird) auto-fill their "
+"commands. For others, provide the connect/disconnect commands."
+msgstr ""
+"Los nombres integrados (wireguard, warp, tailscale, netbird) rellenan "
+"automáticamente sus comandos. Para los demás, indica los comandos de "
+"conexión y desconexión."
 
 #: modules/nexus/pages/network/AddVpnPage.qml
 msgid "Provider name"
@@ -2762,7 +2899,8 @@ msgstr "Reescaneo de Wi-Fi"
 
 #: modules/nexus/pages/NetworkPage.qml
 msgid "How often available networks are rescanned (seconds)"
-msgstr "Con qué frecuencia se vuelven a buscar las redes disponibles (segundos)"
+msgstr ""
+"Con qué frecuencia se vuelven a buscar las redes disponibles (segundos)"
 
 #: modules/nexus/pages/NetworkPage.qml
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
@@ -2883,8 +3021,12 @@ msgid "Widget carousel"
 msgstr "Carrusel de widgets"
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
-msgid "The centre of the Dashboard shows one widget at a time; switch with the dots, the wheel or by dragging. Enable and reorder them here."
-msgstr "El centro del panel muestra un widget a la vez; cambia con los puntos, la rueda o arrastrando. Aquí los activas y los ordenas."
+msgid ""
+"The centre of the Dashboard shows one widget at a time; switch with the "
+"dots, the wheel or by dragging. Enable and reorder them here."
+msgstr ""
+"El centro del panel muestra un widget a la vez; cambia con los puntos, la "
+"rueda o arrastrando. Aquí los activas y los ordenas."
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "Move up"
@@ -2913,7 +3055,8 @@ msgstr "Actualización de multimedia"
 #. TRANSLATORS: ms is the millisecond unit, leave it untranslated
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "How often the media position updates (ms)"
-msgstr "Con qué frecuencia se actualiza la posición del contenido multimedia (ms)"
+msgstr ""
+"Con qué frecuencia se actualiza la posición del contenido multimedia (ms)"
 
 #: modules/nexus/pages/panels/DashboardPanel.qml
 msgid "System stats refresh"
@@ -3084,7 +3227,8 @@ msgstr "Ventana emergente al pasar el cursor"
 
 #: modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
 msgid "Show a window details popout when hovering"
-msgstr "Muestra una ventana emergente con detalles de la ventana al pasar el cursor"
+msgstr ""
+"Muestra una ventana emergente con detalles de la ventana al pasar el cursor"
 
 #: modules/nexus/pages/panels/taskbar/BarClock.qml
 #: modules/nexus/pages/panels/TaskbarPanel.qml
@@ -3169,7 +3313,9 @@ msgstr "Añadir nueva entrada"
 
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 msgid "Show a details popout when hovering the status icons"
-msgstr "Muestra una ventana emergente con detalles al pasar el cursor sobre los iconos de estado"
+msgstr ""
+"Muestra una ventana emergente con detalles al pasar el cursor sobre los "
+"iconos de estado"
 
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 msgid "Auto-hide"
@@ -3181,7 +3327,8 @@ msgstr "Updates solo cuando toca"
 
 #: modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 msgid "The updates badge appears only with pending or installing packages"
-msgstr "El icono de updates aparece solo con paquetes pendientes o instalándose"
+msgstr ""
+"El icono de updates aparece solo con paquetes pendientes o instalándose"
 
 #: modules/nexus/pages/panels/taskbar/BarTray.qml
 #: modules/nexus/pages/panels/TaskbarPanel.qml
@@ -3234,23 +3381,30 @@ msgstr "Atenuar los escritorios de otro monitor"
 
 #: modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
 msgid "With several monitors, the desktops open on another one look faded"
-msgstr "Con varios monitores, los escritorios abiertos en otro se ven más apagados"
+msgstr ""
+"Con varios monitores, los escritorios abiertos en otro se ven más apagados"
 
 #: modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
 msgid "Window preview on hover"
 msgstr "Vista previa de la ventana al pasar el ratón"
 
 #: modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
-msgid "Hovering an app icon of a desktop in the bar shows a live thumbnail of its window; click it to go there"
-msgstr "Al pasar el ratón por el icono de una app en los escritorios de la barra se ve una miniatura en vivo de su ventana; pulsa en ella para ir allí"
+msgid ""
+"Hovering an app icon of a desktop in the bar shows a live thumbnail of its "
+"window; click it to go there"
+msgstr ""
+"Al pasar el ratón por el icono de una app en los escritorios de la barra se "
+"ve una miniatura en vivo de su ventana; pulsa en ella para ir allí"
 
 #: modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
 msgid "Window icons on the desktops"
 msgstr "Iconos de ventana en los escritorios"
 
 #: modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
-msgid "Showing windows and their icons lives in Activities → Desktops in the bar"
-msgstr "Mostrar ventanas y sus iconos vive en Activities → Escritorios de la barra"
+msgid ""
+"Showing windows and their icons lives in Activities → Desktops in the bar"
+msgstr ""
+"Mostrar ventanas y sus iconos vive en Activities → Escritorios de la barra"
 
 #: modules/nexus/pages/panels/TaskbarPanel.qml
 #: modules/nexus/pages/PanelsPage.qml
@@ -3303,7 +3457,8 @@ msgstr "Acciones de desplazamiento"
 
 #: modules/nexus/pages/panels/TaskbarPanel.qml
 msgid "Scroll over the workspace indicator to switch workspaces"
-msgstr "Desplázate sobre el indicador de espacios de trabajo para cambiar de espacio"
+msgstr ""
+"Desplázate sobre el indicador de espacios de trabajo para cambiar de espacio"
 
 #: modules/nexus/pages/panels/TaskbarPanel.qml
 msgid "Volume"
@@ -3387,7 +3542,9 @@ msgstr "Modo oscuro"
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Everything dark, light apps included, over every activity's look"
-msgstr "Todo oscuro, también las apps claras, por encima del aspecto de cada actividad"
+msgstr ""
+"Todo oscuro, también las apps claras, por encima del aspecto de cada "
+"actividad"
 
 #: modules/nexus/pages/panels/UtilitiesPanel.qml
 msgid "Maximise screen use: no frame or gaps"
@@ -3506,7 +3663,8 @@ msgstr "Mostrar en pantalla completa"
 
 #: modules/nexus/pages/services/NotificationsPage.qml
 msgid "Whether notifications appear over fullscreen apps"
-msgstr "Si las notificaciones aparecen sobre las aplicaciones en pantalla completa"
+msgstr ""
+"Si las notificaciones aparecen sobre las aplicaciones en pantalla completa"
 
 #: modules/nexus/pages/services/NotificationsPage.qml
 msgid "Expire automatically"
@@ -3547,7 +3705,8 @@ msgstr "Avisos emergentes"
 
 #: modules/nexus/pages/services/NotificationsPage.qml
 msgid "Whether toasts appear over fullscreen apps"
-msgstr "Si los avisos emergentes aparecen sobre las aplicaciones en pantalla completa"
+msgstr ""
+"Si los avisos emergentes aparecen sobre las aplicaciones en pantalla completa"
 
 #: modules/nexus/pages/services/NotificationsPage.qml
 msgid "Position"
@@ -3753,32 +3912,48 @@ msgid "Untitled rule"
 msgstr "Regla sin título"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "Group workspaces into activities and give each one its own wallpaper and colours. Empty look fields inherit from Home."
-msgstr "Agrupa escritorios en actividades y dale a cada una su fondo y colores. Los campos vacíos heredan de Principal."
+msgid ""
+"Group workspaces into activities and give each one its own wallpaper and "
+"colours. Empty look fields inherit from Home."
+msgstr ""
+"Agrupa escritorios en actividades y dale a cada una su fondo y colores. Los "
+"campos vacíos heredan de Principal."
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Show app icons on workspaces"
 msgstr "Mostrar iconos de apps en los escritorios"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "Use real application icons; when off, show category icons under the workspace marker"
-msgstr "Usar iconos reales de las apps; si está desactivado, se muestran iconos de categoría bajo el marcador"
+msgid ""
+"Use real application icons; when off, show category icons under the "
+"workspace marker"
+msgstr ""
+"Usar iconos reales de las apps; si está desactivado, se muestran iconos de "
+"categoría bajo el marcador"
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Cross-activity desktop shortcuts"
 msgstr "Saltar entre actividades al cambiar de escritorio"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "Allow next/previous desktop shortcuts to leave the current activity; when off, they stay inside it"
-msgstr "Permitir que los atajos de escritorio anterior/siguiente salten a otra actividad; si está desactivado, se quedan dentro de la actual"
+msgid ""
+"Allow next/previous desktop shortcuts to leave the current activity; when "
+"off, they stay inside it"
+msgstr ""
+"Permitir que los atajos de escritorio anterior/siguiente salten a otra "
+"actividad; si está desactivado, se quedan dentro de la actual"
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Desktop transition"
 msgstr "Transición entre escritorios"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "How the screen changes when you move between desktops of an activity; sliding gives a sense of where you are"
-msgstr "Cómo cambia la pantalla al moverte entre los escritorios de una actividad; deslizar da sensación de dónde estás"
+msgid ""
+"How the screen changes when you move between desktops of an activity; "
+"sliding gives a sense of where you are"
+msgstr ""
+"Cómo cambia la pantalla al moverte entre los escritorios de una actividad; "
+"deslizar da sensación de dónde estás"
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Desktop transition speed"
@@ -3817,8 +3992,11 @@ msgid "Smart colour scheme"
 msgstr "Esquema de color inteligente"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "Derive theme mode and variant from the wallpaper (activity look still wins)"
-msgstr "Deduce el modo y la variante del tema a partir del fondo (el look de la activity gana)"
+msgid ""
+"Derive theme mode and variant from the wallpaper (activity look still wins)"
+msgstr ""
+"Deduce el modo y la variante del tema a partir del fondo (el look de la "
+"activity gana)"
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Desktops in the bar"
@@ -3844,8 +4022,11 @@ msgid "Workspace look on the taskbar"
 msgstr "Aspecto de workspaces en la barra"
 
 #: modules/nexus/pages/ShellPage.qml
-msgid "Indicators, trail and occupied background live in Panels → Taskbar → Workspaces"
-msgstr "Indicadores, rastro y fondo ocupado viven en Paneles → Taskbar → Workspaces"
+msgid ""
+"Indicators, trail and occupied background live in Panels → Taskbar → "
+"Workspaces"
+msgstr ""
+"Indicadores, rastro y fondo ocupado viven en Paneles → Taskbar → Workspaces"
 
 #. TRANSLATORS: %1 = workspace id range, e.g. "1–2"
 #: modules/nexus/pages/ShellPage.qml
@@ -3964,8 +4145,12 @@ msgid "Enter your password to start the system update."
 msgstr "Introduce tu contraseña para iniciar la actualización del sistema."
 
 #: modules/nexus/pages/UpdatesPage.qml
-msgid "Updating single packages is blocked by default due to high risk of system breakage. Enable it in settings?"
-msgstr "Actualizar paquetes sueltos está bloqueado por defecto por el alto riesgo de romper el sistema. ¿Quieres activarlo en ajustes?"
+msgid ""
+"Updating single packages is blocked by default due to high risk of system "
+"breakage. Enable it in settings?"
+msgstr ""
+"Actualizar paquetes sueltos está bloqueado por defecto por el alto riesgo de "
+"romper el sistema. ¿Quieres activarlo en ajustes?"
 
 #: modules/nexus/pages/UpdatesPage.qml
 msgctxt "button"
@@ -4092,7 +4277,8 @@ msgstr "Desde el fondo de pantalla"
 
 #: modules/nexus/pages/wallandstyle/ColourSelect.qml
 msgid "Generates a Material You palette from your current wallpaper."
-msgstr "Genera una paleta Material You a partir de tu fondo de pantalla actual."
+msgstr ""
+"Genera una paleta Material You a partir de tu fondo de pantalla actual."
 
 #: modules/nexus/pages/wallandstyle/ColourSelect.qml
 msgid "Material style"
@@ -4298,8 +4484,13 @@ msgid "Finish"
 msgstr "Terminar"
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "A Material You desktop shell for Hyprland, made to be yours: every look, shortcut and widget can be changed, and what you do not need can be left out."
-msgstr "Una shell de escritorio Material You para Hyprland, pensada para que sea tuya: se puede cambiar el aspecto, los atajos y los widgets, y dejar fuera lo que no necesites."
+msgid ""
+"A Material You desktop shell for Hyprland, made to be yours: every look, "
+"shortcut and widget can be changed, and what you do not need can be left out."
+msgstr ""
+"Una shell de escritorio Material You para Hyprland, pensada para que sea "
+"tuya: se puede cambiar el aspecto, los atajos y los widgets, y dejar fuera "
+"lo que no necesites."
 
 #. TRANSLATORS: %1 = the author's name on GitHub
 #: modules/welcome/WelcomeWindow.qml
@@ -4316,8 +4507,12 @@ msgid "A quick look. You can change all of it in Settings."
 msgstr "Un vistazo rápido. Todo se cambia en Ajustes."
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "A look for each part of your day: wallpaper, colours and the apps pinned to its desktops."
-msgstr "Un aspecto para cada parte de tu día: fondo, colores y las apps ancladas a sus escritorios."
+msgid ""
+"A look for each part of your day: wallpaper, colours and the apps pinned to "
+"its desktops."
+msgstr ""
+"Un aspecto para cada parte de tu día: fondo, colores y las apps ancladas a "
+"sus escritorios."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Every setting in one window, with search."
@@ -4329,11 +4524,14 @@ msgstr "El tiempo, la música, el rendimiento y tus widgets de un vistazo."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Colours that follow your wallpaper, in the shell and in your apps."
-msgstr "Colores que siguen a tu fondo de pantalla, en la shell y en tus aplicaciones."
+msgstr ""
+"Colores que siguen a tu fondo de pantalla, en la shell y en tus aplicaciones."
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Add only what you need: widgets, VPN, games and more. Or build your own."
-msgstr "Añade solo lo que necesites: widgets, VPN, juegos y más. O crea las tuyas."
+msgid ""
+"Add only what you need: widgets, VPN, games and more. Or build your own."
+msgstr ""
+"Añade solo lo que necesites: widgets, VPN, juegos y más. O crea las tuyas."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Lock and login"
@@ -4341,7 +4539,8 @@ msgstr "Bloqueo e inicio de sesión"
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "A lock screen and a login screen that match the shell."
-msgstr "Una pantalla de bloqueo y otra de inicio de sesión que combinan con la shell."
+msgstr ""
+"Una pantalla de bloqueo y otra de inicio de sesión que combinan con la shell."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Apps made for Sylenara"
@@ -4357,7 +4556,8 @@ msgstr "No instalada"
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "kitty comes preinstalled, but you can use any terminal you like."
-msgstr "kitty viene preinstalada, pero puedes usar la terminal que más te guste."
+msgstr ""
+"kitty viene preinstalada, pero puedes usar la terminal que más te guste."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Choose terminal"
@@ -4428,8 +4628,12 @@ msgid "Your shortcuts"
 msgstr "Tus atajos"
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "These are the ones in use now. Change any of them in Settings and they update here."
-msgstr "Estos son los que están en uso ahora. Cambia cualquiera en Ajustes y se actualizan aquí."
+msgid ""
+"These are the ones in use now. Change any of them in Settings and they "
+"update here."
+msgstr ""
+"Estos son los que están en uso ahora. Cambia cualquiera en Ajustes y se "
+"actualizan aquí."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "In Settings you can also export and import them."
@@ -4444,16 +4648,24 @@ msgid "You are all set"
 msgstr "Todo listo"
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "Open Settings whenever you want to change something. This guide is in Settings → About."
-msgstr "Abre Ajustes cuando quieras cambiar algo. Esta guía está en Ajustes → Acerca de."
+msgid ""
+"Open Settings whenever you want to change something. This guide is in "
+"Settings → About."
+msgstr ""
+"Abre Ajustes cuando quieras cambiar algo. Esta guía está en Ajustes → Acerca "
+"de."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Make it yours: create your own extensions"
 msgstr "Hazla tuya: crea tus propias extensiones"
 
 #: modules/welcome/WelcomeWindow.qml
-msgid "An extension is a folder with a manifest and a few QML files. Build one for yourself, and share it in the Sylenara Hub for others to install."
-msgstr "Una extensión es una carpeta con un manifiesto y unos pocos ficheros QML. Crea una para ti y compártela en el Sylenara Hub para que otros la instalen."
+msgid ""
+"An extension is a folder with a manifest and a few QML files. Build one for "
+"yourself, and share it in the Sylenara Hub for others to install."
+msgstr ""
+"Una extensión es una carpeta con un manifiesto y unos pocos ficheros QML. "
+"Crea una para ti y compártela en el Sylenara Hub para que otros la instalen."
 
 #: modules/welcome/WelcomeWindow.qml
 msgid "Sylenara Hub"
@@ -4797,15 +5009,20 @@ msgstr "Datos binarios"
 
 #: services/Companions.qml
 msgid "Material You file manager, in tune with the shell's theme"
-msgstr "Explorador de archivos Material You, en sintonía con el tema de la shell"
+msgstr ""
+"Explorador de archivos Material You, en sintonía con el tema de la shell"
 
 #: services/Companions.qml
 msgid "Package manager: pacman, AUR and Flatpak in one list"
 msgstr "Gestor de paquetes: pacman, AUR y Flatpak en una sola lista"
 
 #: services/Companions.qml
-msgid "Video player: every audio and subtitle track, and it remembers where you left off"
-msgstr "Reproductor de vídeo: todas las pistas de audio y subtítulos, y recuerda dónde lo dejaste"
+msgid ""
+"Video player: every audio and subtitle track, and it remembers where you "
+"left off"
+msgstr ""
+"Reproductor de vídeo: todas las pistas de audio y subtítulos, y recuerda "
+"dónde lo dejaste"
 
 #: services/Companions.qml
 msgid "Fast terminal: Sylenara changes its colours live with your theme"
@@ -4831,7 +5048,8 @@ msgstr "%1 Hz"
 
 #: services/Displays.qml
 msgid "Adaptive Sync stays on, including the desktop"
-msgstr "La sincronización adaptativa permanece activa, también en el escritorio"
+msgstr ""
+"La sincronización adaptativa permanece activa, también en el escritorio"
 
 #: services/Displays.qml
 msgid "Adaptive Sync only while a window is fullscreen"
@@ -4840,6 +5058,14 @@ msgstr "Sincronización adaptativa solo con una ventana a pantalla completa"
 #: services/Displays.qml
 msgid "Fixed refresh rate; least flicker on flaky HDMI FreeSync"
 msgstr "Frecuencia fija; menos parpadeo con FreeSync inestable por HDMI"
+
+#: services/Displays.qml
+msgid "Display settings went back"
+msgstr "La configuración de pantalla se ha deshecho"
+
+#: services/Displays.qml
+msgid "The change was not confirmed in time."
+msgstr "El cambio no se confirmó a tiempo."
 
 #: services/Displays.qml
 msgid "Could not read monitor list"
@@ -4989,8 +5215,12 @@ msgid "Focus last window"
 msgstr "Última ventana"
 
 #: services/Keybinds.qml
-msgid "Toggle focus between the current and previously focused window (any desktop or activity)"
-msgstr "Alternar el foco entre la ventana actual y la anterior (cualquier escritorio o actividad)"
+msgid ""
+"Toggle focus between the current and previously focused window (any desktop "
+"or activity)"
+msgstr ""
+"Alternar el foco entre la ventana actual y la anterior (cualquier escritorio "
+"o actividad)"
 
 #: services/Keybinds.qml
 msgid "Move window (drag)"
@@ -5029,6 +5259,54 @@ msgid "Move the active window to workspace %1"
 msgstr "Mover la ventana activa al escritorio %1"
 
 #: services/Keybinds.qml
+msgid "Move window to the display left"
+msgstr "Mover ventana a la pantalla de la izquierda"
+
+#: services/Keybinds.qml
+msgid ""
+"Send the active window to the display on the left, on the same desktop, and "
+"follow it"
+msgstr ""
+"Envía la ventana activa a la pantalla de la izquierda, en el mismo "
+"escritorio, y la sigue"
+
+#: services/Keybinds.qml
+msgid "Move window to the display right"
+msgstr "Mover ventana a la pantalla de la derecha"
+
+#: services/Keybinds.qml
+msgid ""
+"Send the active window to the display on the right, on the same desktop, and "
+"follow it"
+msgstr ""
+"Envía la ventana activa a la pantalla de la derecha, en el mismo escritorio, "
+"y la sigue"
+
+#: services/Keybinds.qml
+msgid "Move window to the display up"
+msgstr "Mover ventana a la pantalla de arriba"
+
+#: services/Keybinds.qml
+msgid ""
+"Send the active window to the display above, on the same desktop, and follow "
+"it"
+msgstr ""
+"Envía la ventana activa a la pantalla de arriba, en el mismo escritorio, y "
+"la sigue"
+
+#: services/Keybinds.qml
+msgid "Move window to the display down"
+msgstr "Mover ventana a la pantalla de abajo"
+
+#: services/Keybinds.qml
+msgid ""
+"Send the active window to the display below, on the same desktop, and follow "
+"it"
+msgstr ""
+"Envía la ventana activa a la pantalla de abajo, en el mismo escritorio, y la "
+"sigue"
+
+#: services/Keybinds.qml
 msgid "Toggle scratchpad"
 msgstr "Alternar scratchpad"
 
@@ -5049,16 +5327,24 @@ msgid "Next workspace"
 msgstr "Escritorio siguiente"
 
 #: services/Keybinds.qml
-msgid "Switch to the next desktop (respects activity boundaries unless cross-activity is enabled)"
-msgstr "Cambiar al siguiente escritorio (respeta los límites de actividad salvo que esté permitido saltar)"
+msgid ""
+"Switch to the next desktop (respects activity boundaries unless cross-"
+"activity is enabled)"
+msgstr ""
+"Cambiar al siguiente escritorio (respeta los límites de actividad salvo que "
+"esté permitido saltar)"
 
 #: services/Keybinds.qml
 msgid "Previous workspace"
 msgstr "Escritorio anterior"
 
 #: services/Keybinds.qml
-msgid "Switch to the previous desktop (respects activity boundaries unless cross-activity is enabled)"
-msgstr "Cambiar al escritorio anterior (respeta los límites de actividad salvo que esté permitido saltar)"
+msgid ""
+"Switch to the previous desktop (respects activity boundaries unless cross-"
+"activity is enabled)"
+msgstr ""
+"Cambiar al escritorio anterior (respeta los límites de actividad salvo que "
+"esté permitido saltar)"
 
 #: services/Keybinds.qml
 msgid "Next activity"
@@ -5411,8 +5697,12 @@ msgid "kitty now follows your colours"
 msgstr "kitty ahora sigue tus colores"
 
 #: services/KittySetup.qml
-msgid "Sylenara added a block to your kitty.conf (a backup is next to it). Remove the block to disconnect it."
-msgstr "Sylenara ha añadido un bloque a tu kitty.conf (hay una copia de seguridad al lado). Quita el bloque para desconectarlo."
+msgid ""
+"Sylenara added a block to your kitty.conf (a backup is next to it). Remove "
+"the block to disconnect it."
+msgstr ""
+"Sylenara ha añadido un bloque a tu kitty.conf (hay una copia de seguridad al "
+"lado). Quita el bloque para desconectarlo."
 
 #: services/Nmcli.qml
 msgid "Enterprise"
@@ -5640,8 +5930,12 @@ msgid "Authentication timed out."
 msgstr "La autenticación agotó el tiempo."
 
 #: services/Updates.qml
-msgid "Authentication timed out. Wait a minute if the account was locked, then try again."
-msgstr "La autenticación agotó el tiempo. Si la cuenta se bloqueó, espera un minuto y vuelve a intentarlo."
+msgid ""
+"Authentication timed out. Wait a minute if the account was locked, then try "
+"again."
+msgstr ""
+"La autenticación agotó el tiempo. Si la cuenta se bloqueó, espera un minuto "
+"y vuelve a intentarlo."
 
 #: services/Updates.qml
 msgid "Update timed out."

@@ -72,13 +72,139 @@ Singleton {
 
     readonly property int activeWsId: Hyprland.focusedWorkspace?.id ?? 1
 
+    // ---- Linked desktops: one Hyprland workspace per monitor ---------------------------------------------------------
+    // A desktop (the 1 of Games) is a set of workspaces, one per monitor. The first monitor keeps the ids 1..N; the
+    // second one has 1001..1000+N, the third 2001.. and so on. Changing desktop changes every monitor (linkDesktops).
+    readonly property int slotStep: 1000
+    // Monitors in a stable order (the id Hyprland gave them): their position is their slot
+    // The monitors by name: a monitor keeps its workspaces whichever is plugged first or wherever it is on the desk
+    readonly property var monitorNames: Hyprland.monitors.values.map(m => m.name).sort()
+    // The main display: the one chosen with the star, else the first by name
+    readonly property string primaryName: root.monitorNames.includes(GlobalConfig.general.primaryDisplay) ? GlobalConfig.general.primaryDisplay : (root.monitorNames[0] ?? "")
+    // The main display first, then the others by name (the order of the icons in the bar)
+    readonly property var displayOrder: [root.primaryName].concat(root.monitorNames.filter(n => n !== root.primaryName)).filter(n => n !== "")
+
+    // The desktop a workspace belongs to (special workspaces are negative and stay as they are)
+    function desktopOf(ws: int): int {
+        return ws > 0 ? ws % root.slotStep : ws;
+    }
+
+    function slotOf(monitorName: string): int {
+        return Math.max(0, root.monitorNames.indexOf(monitorName));
+    }
+
+    // The workspace a desktop has on a monitor
+    function wsFor(desktop: int, monitorName: string): int {
+        return desktop > 0 ? root.slotOf(monitorName) * root.slotStep + desktop : desktop;
+    }
+
+    readonly property int activeDesktop: root.desktopOf(root.activeWsId)
+
+    // Notifications, toasts, volume and brightness go to the main display only (all of them when there is just one)
+    function isPrimaryScreen(screenName: string): bool {
+        return root.monitorNames.length < 2 || root.primaryName === screenName;
+    }
+
+    // The size a monitor has in the layout (scaled and turned), and where it is
+    function logicalRect(m: var): var {
+        const i = m?.lastIpcObject ?? ({});
+        const sc = Math.max(0.1, i.scale ?? 1);
+        const sideways = (i.transform ?? 0) % 2 === 1;
+        const w = (sideways ? i.height : i.width) ?? 1920;
+        const h = (sideways ? i.width : i.height) ?? 1080;
+        return {
+            x: i.x ?? m?.x ?? 0,
+            y: i.y ?? m?.y ?? 0,
+            w: w / sc,
+            h: h / sc
+        };
+    }
+
+    // The monitors as the overview draws them, in slot order
+    readonly property var monitorRects: {
+        const mons = Hyprland.monitors.values;
+        return root.monitorNames.map(n => mons.find(m => m.name === n)).filter(m => !!m).map(m => Object.assign({
+                    monitor: m,
+                    name: m.name
+                }, root.logicalRect(m)));
+    }
+
+    // The box that holds all the monitors
+    readonly property var monitorBounds: {
+        const r = root.monitorRects;
+        if (r.length === 0)
+            return {
+                x: 0,
+                y: 0,
+                w: 1920,
+                h: 1080
+            };
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        for (const m of r) {
+            x0 = Math.min(x0, m.x);
+            y0 = Math.min(y0, m.y);
+            x1 = Math.max(x1, m.x + m.w);
+            y1 = Math.max(y1, m.y + m.h);
+        }
+        return {
+            x: x0,
+            y: y0,
+            w: x1 - x0,
+            h: y1 - y0
+        };
+    }
+
     readonly property var currentActivity: {
-        const ws = root.activeWsId;
+        const ws = root.activeDesktop;
         return root.mappedActivities.find(a => ws >= a.startWs && ws <= a.endWs) ?? root.mappedActivities[0] ?? null;
     }
 
     function activityForWs(ws: int): var {
-        return root.mappedActivities.find(a => ws >= a.startWs && ws <= a.endWs) ?? null;
+        const d = root.desktopOf(ws);
+        return root.mappedActivities.find(a => d >= a.startWs && d <= a.endWs) ?? null;
+    }
+
+    // Makes a display the main one: notifications, volume and brightness show there
+    function setPrimaryDisplay(name: string): void {
+        if (root.monitorNames.includes(name))
+            GlobalConfig.general.primaryDisplay = name;
+    }
+
+    // Every monitor shows the desktop of the one with focus. A monitor is moved by focusing its workspace; the focus
+    // goes back to where it was at the end
+    function linkDesktops(): void {
+        const mons = Hyprland.monitors.values;
+        const fm = Hyprland.focusedMonitor;
+        if (!root.enabled || mons.length < 2 || !fm)
+            return;
+        const fws = fm.activeWorkspace?.id ?? 0;
+        if (fws <= 0)
+            return;
+        const d = root.desktopOf(fws);
+        const moves = [];
+        for (const m of mons) {
+            const cur = m.activeWorkspace?.id ?? 0;
+            if (m === fm || cur <= 0 || root.desktopOf(cur) === d)
+                continue;
+            moves.push(root.wsFor(d, m.name));
+        }
+        if (moves.length === 0)
+            return;
+        // Focusing another monitor warps the pointer to its centre: off while the focus goes there and back, so the
+        // pointer stays where it is (on the bar, when the desktop was picked from it)
+        const cmds = ["eval hl.config({ cursor = { no_warps = true } })"];
+        for (const ws of moves)
+            cmds.push(`dispatch hl.dsp.focus({ workspace = ${ws} })`);
+        cmds.push(`dispatch hl.dsp.focus({ workspace = ${fws} })`);
+        cmds.push("eval hl.config({ cursor = { no_warps = false } })");
+        Quickshell.execDetached(["hyprctl", "--batch", cmds.join(" ; ")]);
+    }
+
+    Timer {
+        id: linkTimer
+
+        interval: 60
+        onTriggered: root.linkDesktops()
     }
 
     readonly property int currentActivityIndex: root.currentActivity?.index ?? 0
@@ -445,13 +571,17 @@ Singleton {
         return s.toLowerCase();
     }
 
-    function moveWindowToWorkspace(toplevel: var, ws: int, force = false, follow = false): void {
+    // `exact`: ws is the very workspace wanted (a monitor included), not a desktop
+    function moveWindowToWorkspace(toplevel: var, ws: int, force = false, follow = false, exact = false): void {
         if (!toplevel || !ws)
             return;
         // Overview drag must not move pins; rule enforcement may force them home
         if (!force && root.isWindowPinned(toplevel))
             return;
         const cur = toplevel.workspace?.id ?? -1;
+        // A window on the second monitor stays on it when it changes desktop
+        if (!exact && ws > 0 && ws < root.slotStep && cur >= root.slotStep)
+            ws = Math.floor(cur / root.slotStep) * root.slotStep + ws;
         // Already home: never steal focus (opening Steam used to yank back to Cursor)
         if (cur === ws)
             return;
@@ -461,6 +591,52 @@ Singleton {
         Hyprland.dispatch(`hl.dsp.window.move({ window = "address:0x${addr}", workspace = "${ws}", follow = ${follow} })`);
         if (follow)
             Qt.callLater(() => root.focusWorkspace(ws));
+    }
+
+    // The active window to a desktop, on the monitor it is on
+    function moveActiveWindowToDesktop(desktop: int): void {
+        const t = Hypr.activeToplevel;
+        const addr = root.normalizeAddress(t?.address);
+        if (!addr)
+            return;
+        const cur = t.workspace?.id ?? -1;
+        const real = cur > 0 ? Math.floor(cur / root.slotStep) * root.slotStep + desktop : desktop;
+        Hyprland.dispatch(`hl.dsp.window.move({ window = "address:0x${addr}", workspace = "${real}", follow = true })`);
+    }
+
+    // The active window to the display next to its own in that direction, on the same desktop
+    function moveActiveWindowToMonitor(direction: string): void {
+        const t = Hypr.activeToplevel;
+        const addr = root.normalizeAddress(t?.address);
+        const cur = t?.workspace?.id ?? -1;
+        if (!addr || cur <= 0)
+            return;
+        const rects = root.monitorRects;
+        const from = rects.find(r => r.name === t.workspace.monitor?.name);
+        if (!from || rects.length < 2)
+            return;
+        const cx = from.x + from.w / 2, cy = from.y + from.h / 2;
+        const vx = direction === "left" ? -1 : (direction === "right" ? 1 : 0);
+        const vy = direction === "up" ? -1 : (direction === "down" ? 1 : 0);
+        let best = null, bestScore = Infinity;
+        for (const r of rects) {
+            if (r === from)
+                continue;
+            const dx = r.x + r.w / 2 - cx, dy = r.y + r.h / 2 - cy;
+            const along = dx * vx + dy * vy;
+            if (along <= 0)
+                continue;
+            // The nearest in that direction, the straightest first
+            const score = along + Math.abs(dx * vy + dy * vx) * 2;
+            if (score < bestScore) {
+                bestScore = score;
+                best = r;
+            }
+        }
+        if (!best)
+            return;
+        const real = root.wsFor(root.desktopOf(cur), best.name);
+        Hyprland.dispatch(`hl.dsp.window.move({ window = "address:0x${addr}", workspace = "${real}", follow = true })`);
     }
 
     function moveOpenWindowsForRule(rule: var, followAddress = ""): void {
@@ -524,8 +700,11 @@ Singleton {
             Hypr.focusWorkspaceInOtherActivity(ws);
             return;
         }
+        // The workspace of that desktop on the monitor with focus (the others follow: linkDesktops)
+        const mon = Hyprland.focusedMonitor?.name ?? "";
+        const real = ws > 0 && ws < root.slotStep ? root.wsFor(ws, mon) : ws;
         // Hyprland-lua expects dsp expressions; classic syntax still works for non-lua
-        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${ws} })`);
+        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${real} })`);
     }
 
     function focusActivity(activityId: string): void {
@@ -544,7 +723,7 @@ Singleton {
         const tops = Hyprland.toplevels.values;
         for (let i = 0; i < tops.length; i++) {
             const t = tops[i];
-            const ws = t.workspace?.id ?? -1;
+            const ws = root.desktopOf(t.workspace?.id ?? -1);
             if (ws < act.startWs || ws > act.endWs)
                 continue;
             if (Hypr.isToplevelIgnored(t, ignored))
@@ -563,7 +742,7 @@ Singleton {
         if (!root.enabled || !root.currentActivity)
             return;
         const act = root.currentActivity;
-        const local = root.activeWsId - act.startWs;
+        const local = root.activeDesktop - act.startWs;
         const next = local + delta;
         if (next >= 0 && next < act.workspaceCount) {
             root.focusWorkspace(act.workspaceIds[next]);
@@ -599,10 +778,10 @@ Singleton {
 
     // The windows on desktops from `ws` on (special workspaces have negative ids and stay), farthest desktop first
     function windowsFrom(ws: int): var {
-        return Hyprland.toplevels.values.filter(t => t.address && (t.workspace?.id ?? -1) >= ws).map(t => ({
+        return Hyprland.toplevels.values.filter(t => t.address && root.desktopOf(t.workspace?.id ?? -1) >= ws && (t.workspace?.id ?? -1) > 0).map(t => ({
                     address: t.address,
                     ws: t.workspace.id
-                })).sort((a, b) => b.ws - a.ws);
+                })).sort((a, b) => root.desktopOf(b.ws) - root.desktopOf(a.ws));
     }
 
     // Moves the windows `delta` desktops. Going up, the farthest first so none lands on a desktop still occupied;
@@ -630,7 +809,7 @@ Singleton {
         if (!act || !entry || act.workspaceCount >= root.maxDesktops)
             return;
         const at = act.endWs + 1;
-        const active = root.activeWsId;
+        const active = root.activeDesktop;
         const wins = root.windowsFrom(at);
         root.addedWs = at;
         addedTimer.restart();
@@ -650,9 +829,9 @@ Singleton {
         if (!act || !entry || act.workspaceCount <= 1)
             return false;
         const pos = act.workspaceIds.indexOf(ws);
-        if (pos < 0 || root.wsHasRule(ws) || Hyprland.toplevels.values.some(t => (t.workspace?.id ?? -1) === ws))
+        if (pos < 0 || root.wsHasRule(ws) || Hyprland.toplevels.values.some(t => root.desktopOf(t.workspace?.id ?? -1) === ws))
             return false;
-        const active = root.activeWsId;
+        const active = root.activeDesktop;
         const wins = root.windowsFrom(ws + 1);
         // An app pinned to a later desktop of this activity keeps its desktop, one position lower
         const rules = GlobalConfig.activities.appRules.values;
@@ -771,9 +950,9 @@ Singleton {
             return;
         if (root.isWindowPinned(toplevel))
             return;
-        root.moveWindowToWorkspace(toplevel, target);
+        root.moveWindowToWorkspace(toplevel, target, false, false, true);
         // Defer focus so Hyprland can apply the move first
-        Qt.callLater(() => root.selectWorkspace(target));
+        Qt.callLater(() => root.selectWorkspace(root.desktopOf(target)));
     }
 
     onOverviewOpenChanged: {
@@ -800,8 +979,14 @@ Singleton {
         let out = "-- Auto-generated by Sylenara Activities. Do not edit.\n\n";
 
         const total = Math.max(1, root.totalWorkspaces);
-        for (let i = 1; i <= total; i++)
-            out += `hl.workspace_rule({ workspace = "${i}", persistent = true })\n`;
+        // One workspace per desktop and monitor, each tied to its monitor
+        const names = root.monitorNames.length > 0 ? root.monitorNames : [""];
+        for (let m = 0; m < names.length; m++) {
+            for (let i = 1; i <= total; i++) {
+                const mon = names[m] ? `, monitor = \"${Strings.luaString(names[m])}\"` : "";
+                out += `hl.workspace_rule({ workspace = "${m * root.slotStep + i}"${mon}, persistent = true })\n`;
+            }
+        }
 
         out += "\n";
 
@@ -905,6 +1090,12 @@ Singleton {
             } else if (n === "movewindow") {
                 enforceTimer.restart();
                 enforceRetryTimer.restart();
+            } else if (n === "workspace" || n === "focusedmon") {
+                linkTimer.restart();
+            } else if (n === "monitoradded" || n === "monitorremoved") {
+                // A monitor more or less: its workspaces and rules change
+                root.syncSoon();
+                linkTimer.restart();
             }
         }
     }

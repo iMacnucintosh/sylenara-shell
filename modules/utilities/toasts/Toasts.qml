@@ -80,6 +80,9 @@ Item {
             model: ScriptModel {
                 values: {
                     const toasts = [];
+                    // Only on the first monitor
+                    if (!Activities.isPrimaryScreen((QsWindow.window as QsWindow)?.screen?.name ?? ""))
+                        return toasts;
                     for (const toast of Toaster.toasts) {
                         if (toast.closed || !root.shouldShowToast(toast))
                             continue;
