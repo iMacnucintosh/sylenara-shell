@@ -33,7 +33,11 @@ Item {
 
     // The workspace this desktop has on the monitor of the bar
     readonly property int realWs: Activities.wsFor(ws, monitor?.name ?? "")
-    readonly property list<HyprlandToplevel> toplevels: Hypr.toplevelsForWs(realWs, GlobalConfig.bar.workspaces.ignoredTags)
+    // The windows of the desktop on every monitor, the same in every bar: the main display's first, then the others
+    readonly property var groups: Activities.displayOrder.map(n => Hypr.toplevelsForWs(Activities.wsFor(ws, n), GlobalConfig.bar.workspaces.ignoredTags))
+    readonly property var toplevels: groups.reduce((all, g) => all.concat(g), [])
+    // A line between the icons of two monitors (stable objects, so the list does not rebuild them)
+    readonly property var dividers: [({divider: true}), ({divider: true}), ({divider: true}), ({divider: true}), ({divider: true}), ({divider: true}), ({divider: true})]
     readonly property bool isOccupied: toplevels.length > 0
     readonly property bool hasWindows: isOccupied && showWindows && Config.bar.workspaces.maxWindowIcons > 0
     readonly property bool hasDesktopAppIcons: hasWindows && desktopAppIcons
@@ -249,9 +253,20 @@ Item {
 
                 model: ScriptModel {
                     values: {
-                        const windows = root.toplevels;
-                        const maxIcons = root.Config.bar.workspaces.maxWindowIcons;
-                        return maxIcons > 0 ? windows.slice(0, maxIcons) : windows;
+                        let budget = root.Config.bar.workspaces.maxWindowIcons;
+                        const out = [];
+                        for (const g of root.groups) {
+                            if (g.length === 0)
+                                continue;
+                            if (budget <= 0)
+                                break;
+                            if (out.length > 0)
+                                out.push(root.dividers[Math.min(out.length, root.dividers.length - 1)]);
+                            const take = g.slice(0, budget);
+                            out.push(...take);
+                            budget -= take.length;
+                        }
+                        return out;
                     }
                 }
 
@@ -261,16 +276,34 @@ Item {
                     required property var modelData
                     required property int index // Needed, LazyListView will fail to set it if it doesn't exist
 
+                    readonly property bool isDivider: modelData?.divider === true
                     readonly property int iconSize: Math.round((Tokens.sizes.bar.innerWidth - Tokens.padding.small) * 0.55)
-                    readonly property string appClass: modelData.lastIpcObject?.class ?? ""
+                    readonly property string appClass: isDivider ? "" : (modelData.lastIpcObject?.class ?? "")
                     // For the preview popout: which window this icon is
-                    readonly property var toplevel: modelData
+                    readonly property var toplevel: isDivider ? null : modelData
 
-                    Component.onCompleted: BarWindowIcons.add(win)
-                    Component.onDestruction: BarWindowIcons.remove(win)
+                    Component.onCompleted: {
+                        if (!win.isDivider)
+                            BarWindowIcons.add(win);
+                    }
+                    Component.onDestruction: {
+                        if (!win.isDivider)
+                            BarWindowIcons.remove(win);
+                    }
 
                     width: parent?.width ?? Tokens.sizes.bar.innerWidth
-                    implicitHeight: root.desktopAppIcons ? iconSize + Tokens.padding.extraSmall : (winIcon.implicitHeight || iconSize)
+                    implicitHeight: isDivider ? Tokens.spacing.small : (root.desktopAppIcons ? iconSize + Tokens.padding.extraSmall : (winIcon.implicitHeight || iconSize))
+
+                    // The line between the windows of two monitors
+                    Rectangle {
+                        visible: win.isDivider
+                        anchors.centerIn: parent
+                        width: win.iconSize * 0.6
+                        height: 1
+                        radius: 1
+                        // On the active desktop (the primary pill) a soft line, not the full outline
+                        color: root.focused ? Qt.alpha(Colours.palette.m3onPrimary, 0.3) : Colours.palette.m3outlineVariant
+                    }
 
                     opacity: LazyListView.adding || LazyListView.removing ? 0 : (root.onOtherMonitor ? 0.55 : 1)
 
@@ -278,7 +311,7 @@ Item {
                     IconImage {
                         anchors.centerIn: parent
                         asynchronous: true
-                        visible: root.desktopAppIcons
+                        visible: root.desktopAppIcons && !win.isDivider
                         implicitSize: win.iconSize
                         source: Icons.getAppIcon(win.appClass, "image-missing")
                     }
@@ -288,7 +321,7 @@ Item {
                         id: winIcon
 
                         anchors.horizontalCenter: parent.horizontalCenter
-                        visible: !root.desktopAppIcons
+                        visible: !root.desktopAppIcons && !win.isDivider
                         grade: 0
                         horizontalAlignment: Text.AlignHCenter
                         text: Icons.getAppCategoryIcon(win.appClass, "terminal")
