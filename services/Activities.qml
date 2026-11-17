@@ -594,6 +594,8 @@ Singleton {
     // Hyprland numbers the desktops of every activity one after another, so adding or removing one renumbers all
     // the ones after it. Their windows are moved along: otherwise they would end up on another activity's desktop.
     readonly property int maxDesktops: 10
+    // The desktop just added from the overview: its card grows in (reset after a moment, so a later opening does not)
+    property int addedWs: -1
 
     // The windows on desktops from `ws` on (special workspaces have negative ids and stay), farthest desktop first
     function windowsFrom(ws: int): var {
@@ -611,6 +613,16 @@ Singleton {
             Hyprland.dispatch(`hl.dsp.window.move({ window = "address:0x${w.address}", workspace = "${w.ws + delta}", follow = false })`);
     }
 
+    // Some app is pinned to this desktop (a rule of Settings → Activities), open or not
+    function wsHasRule(ws: int): bool {
+        const rules = GlobalConfig.activities.appRules.values;
+        for (let i = 0; i < rules.length; i++) {
+            if ((rules[i].classMatch || "").trim() && root.workspaceForRule(rules[i]) === ws)
+                return true;
+        }
+        return false;
+    }
+
     // One more desktop at the end of the activity
     function addDesktop(activityId: string): void {
         const act = root.activityById(activityId);
@@ -620,6 +632,8 @@ Singleton {
         const at = act.endWs + 1;
         const active = root.activeWsId;
         const wins = root.windowsFrom(at);
+        root.addedWs = at;
+        addedTimer.restart();
         entry.workspaceCount = act.workspaceCount + 1;
         root.moveShifted(wins, 1);
         root.syncSoon();
@@ -628,14 +642,15 @@ Singleton {
             root.focusWorkspace(active + 1);
     }
 
-    // Removes an empty desktop of the activity (never the last one). False when it is not possible
+    // Removes an empty desktop of the activity (never the last one, nor one an app is pinned to). False when it is
+    // not possible
     function removeDesktop(activityId: string, ws: int): bool {
         const act = root.activityById(activityId);
         const entry = root.activityEntry(activityId);
         if (!act || !entry || act.workspaceCount <= 1)
             return false;
         const pos = act.workspaceIds.indexOf(ws);
-        if (pos < 0 || Hyprland.toplevels.values.some(t => (t.workspace?.id ?? -1) === ws))
+        if (pos < 0 || root.wsHasRule(ws) || Hyprland.toplevels.values.some(t => (t.workspace?.id ?? -1) === ws))
             return false;
         const active = root.activeWsId;
         const wins = root.windowsFrom(ws + 1);
@@ -837,6 +852,13 @@ Singleton {
             icon: "home",
             workspaceCount: 2
         });
+    }
+
+    Timer {
+        id: addedTimer
+
+        interval: 1000
+        onTriggered: root.addedWs = -1
     }
 
     Timer {

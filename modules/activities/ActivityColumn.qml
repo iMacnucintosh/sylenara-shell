@@ -22,12 +22,16 @@ ColumnLayout {
 
     Item {
         Layout.fillWidth: true
-        implicitHeight: headerRow.implicitHeight
+        implicitHeight: headerRow.implicitHeight + Tokens.padding.small * 2
 
         RowLayout {
             id: headerRow
 
             anchors.fill: parent
+            anchors.leftMargin: Tokens.padding.medium
+            anchors.rightMargin: Tokens.padding.small
+            anchors.topMargin: Tokens.padding.small
+            anchors.bottomMargin: Tokens.padding.small
             spacing: Tokens.spacing.small
             // Above the header's click area, so the button gets its own clicks
             z: 1
@@ -53,7 +57,7 @@ ColumnLayout {
                 readonly property bool atMax: (root.activity?.workspaceCount ?? 1) >= Activities.maxDesktops
 
                 icon: "add"
-                type: IconButton.Text
+                type: IconButton.Tonal
                 isRound: true
                 opacity: atMax ? 0.38 : 1
                 stateLayer.disabled: atMax
@@ -68,6 +72,7 @@ ColumnLayout {
 
         StateLayer {
             anchors.fill: parent
+            radius: Tokens.rounding.large
             onClicked: {
                 if (root.activity)
                     Activities.focusActivity(root.activity.id);

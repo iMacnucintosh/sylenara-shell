@@ -6,7 +6,6 @@ import Quickshell
 import Sylphrena.Config
 import Sylphrena.I18n
 import qs.components
-import qs.components.controls
 import qs.services
 
 Item {
@@ -45,18 +44,12 @@ Item {
             Layout.fillWidth: true
             spacing: Tokens.spacing.small
 
+            // No close button: a click outside the activities (or Esc) closes it
             StyledText {
                 Layout.fillWidth: true
                 text: Tr.tr("Activities overview")
                 font: Tokens.font.headline.small
                 color: Colours.palette.m3onSurface
-            }
-
-            IconButton {
-                icon: "close"
-                type: IconButton.Text
-                isRound: true
-                onClicked: Activities.closeOverview()
             }
         }
 
@@ -81,12 +74,17 @@ Item {
                     // Current activity: soft primaryContainer; others stay surface.
                     color: actCard.isCurrent
                            ? Colours.layer(Colours.palette.m3primaryContainer, 1)
-                           : Colours.tPalette.m3surfaceContainer
-                    border.width: actCard.isCurrent ? 1 : 0
-                    border.color: Qt.alpha(Colours.palette.m3primary, 0.45)
+                           : Colours.tPalette.m3surfaceContainerHigh
+                    border.width: 1
+                    border.color: actCard.isCurrent ? Qt.alpha(Colours.palette.m3primary, 0.45) : Qt.alpha(Colours.palette.m3outlineVariant, 0.6)
 
                     Behavior on color {
                         CAnim {}
+                    }
+
+                    // Grows when a desktop is added
+                    Behavior on height {
+                        Anim {}
                     }
 
                     ActivityColumn {

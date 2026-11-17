@@ -30,8 +30,9 @@ Item {
         return mon.width / mon.height;
     }
 
-    // An empty desktop can be removed, unless it is the last one of its activity
-    readonly property bool canRemove: windows.length === 0 && (Activities.activityForWs(wsId)?.workspaceCount ?? 1) > 1
+    // An empty desktop can be removed, unless an app is pinned to it (open or not) or it is the last one of its
+    // activity
+    readonly property bool canRemove: windows.length === 0 && !Activities.wsHasRule(wsId) && (Activities.activityForWs(wsId)?.workspaceCount ?? 1) > 1
 
     implicitWidth: cardWidth
     implicitHeight: cardWidth / Math.max(0.5, aspect)
@@ -69,7 +70,7 @@ Item {
                 radius: Math.max(0, Tokens.rounding.large - anchors.margins)
                 color: root.dropHover ? Colours.palette.m3tertiaryContainer
                        : (root.isActive ? Colours.layer(Colours.palette.m3secondaryContainer, 1)
-                       : Colours.tPalette.m3surfaceContainerHigh)
+                       : Colours.tPalette.m3surfaceContainerHighest)
 
                 Behavior on color {
                     CAnim {}
@@ -417,6 +418,30 @@ Item {
         }
     }
 
-    Component.onCompleted: Activities.registerOverviewCard(root)
+    // A desktop just added from the overview grows in
+    ParallelAnimation {
+        id: enterAnim
+
+        Anim {
+            target: root
+            property: "opacity"
+            from: 0
+            to: 1
+            type: Anim.DefaultEffects
+        }
+
+        Anim {
+            target: root
+            property: "scale"
+            from: 0.82
+            to: 1
+        }
+    }
+
+    Component.onCompleted: {
+        Activities.registerOverviewCard(root);
+        if (Activities.addedWs === root.wsId)
+            enterAnim.start();
+    }
     Component.onDestruction: Activities.unregisterOverviewCard(root)
 }
