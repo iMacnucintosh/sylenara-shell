@@ -221,6 +221,7 @@ Item {
                                     anchors.margins: 2
                                     visible: winItem.pinned
                                     text: "push_pin"
+                                    fill: 1
                                     color: Colours.palette.m3primary
                                     fontStyle: Tokens.font.icon.small
 
