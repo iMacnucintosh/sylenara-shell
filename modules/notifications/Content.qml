@@ -69,7 +69,7 @@ Item {
             id: list
 
             model: ScriptModel {
-                values: Notifs.popups.filter(n => !n.closed)
+                values: Activities.isPrimaryScreen((QsWindow.window as QsWindow)?.screen?.name ?? "") ? Notifs.popups.filter(n => !n.closed) : []
             }
 
             anchors.fill: parent

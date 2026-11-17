@@ -113,7 +113,10 @@ ColumnLayout {
         titleFont: Tokens.font.label.large
         detailFont: Tokens.font.label.small
         tileRadius: Tokens.rounding.large
+        primary: Activities.primaryName
+        starColor: Colours.palette.m3tertiary
         onPicked: name => root.selected = name
+        onPrimaryPicked: name => Activities.setPrimaryDisplay(name)
         onDropped: (name, x, y) => Displays.dropMonitor(name, x, y)
     }
 
@@ -122,7 +125,7 @@ ColumnLayout {
         Layout.leftMargin: Tokens.padding.small
         Layout.bottomMargin: Tokens.spacing.small
         visible: root.multi
-        text: Tr.tr("Drag the displays to arrange them as they are on your desk. Pick one to change its settings.")
+        text: Tr.tr("Drag the displays to arrange them as they are on your desk. Pick one to change its settings. The star marks the main display: it shows the notifications, volume and brightness.")
         color: Colours.palette.m3outline
         font: Tokens.font.label.small
         wrapMode: Text.Wrap

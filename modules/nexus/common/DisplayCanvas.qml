@@ -14,6 +14,9 @@ Item {
     property var layout: []
     property var labels: ({})
     property string selected
+    // The main display, with a star
+    property string primary
+    property color starColor: "#ffd54f"
 
     property color canvasColor: "#202020"
     property color tileColor: "#303030"
@@ -33,6 +36,7 @@ Item {
 
     // Picked: pressed without being moved. Dropped: left at (x, y), the corner of the display in logical pixels.
     signal picked(string name)
+    signal primaryPicked(string name)
     signal dropped(string name, real x, real y)
 
     // The view is fixed while a display is being dragged, so what is under the pointer does not move away
@@ -174,6 +178,29 @@ Item {
                     color: root.detailColor
                     font: root.detailFont
                     visible: tile.height > 84 && tile.width > 80
+                }
+            }
+
+            // The star: filled on the main display; a click on another one makes it the main
+            Text {
+                id: star
+
+                objectName: `star-${tile.modelData.name}`
+                z: 3
+                visible: tile.height > 34 && tile.width > 34
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.margins: 6
+                text: root.primary === tile.modelData.name ? "★" : "☆"
+                color: root.primary === tile.modelData.name ? root.starColor : root.detailColor
+                font.pixelSize: 18
+
+                MouseArea {
+                    anchors.fill: parent
+                    anchors.margins: -6
+                    enabled: star.visible
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.primaryPicked(tile.modelData.name)
                 }
             }
 
