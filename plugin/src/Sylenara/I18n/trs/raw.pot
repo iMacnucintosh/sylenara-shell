@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 17:48+0100\n"
+"POT-Creation-Date: 2026-11-17 17:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4930,6 +4930,14 @@ msgstr ""
 
 #: services/Displays.qml
 msgid "Fixed refresh rate; least flicker on flaky HDMI FreeSync"
+msgstr ""
+
+#: services/Displays.qml
+msgid "Display settings went back"
+msgstr ""
+
+#: services/Displays.qml
+msgid "The change was not confirmed in time."
 msgstr ""
 
 #: services/Displays.qml

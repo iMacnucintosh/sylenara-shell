@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 17:48+0100\n"
+"POT-Creation-Date: 2026-11-17 17:56+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4932,6 +4932,14 @@ msgstr "Sincronización adaptativa solo con una ventana a pantalla completa"
 #: services/Displays.qml
 msgid "Fixed refresh rate; least flicker on flaky HDMI FreeSync"
 msgstr "Frecuencia fija; menos parpadeo con FreeSync inestable por HDMI"
+
+#: services/Displays.qml
+msgid "Display settings went back"
+msgstr "La configuración de pantalla se ha deshecho"
+
+#: services/Displays.qml
+msgid "The change was not confirmed in time."
+msgstr "El cambio no se confirmó a tiempo."
 
 #: services/Displays.qml
 msgid "Could not read monitor list"

@@ -221,7 +221,7 @@ ColumnLayout {
                 isRound: true
                 type: TextButton.Text
                 text: Tr.trCtx("Go back", "button")
-                onClicked: Displays.revert()
+                onClicked: Displays.revert(false)
             }
 
             TextButton {

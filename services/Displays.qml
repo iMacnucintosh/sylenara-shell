@@ -5,6 +5,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
+import Sylenara
 import Sylenara.I18n
 import qs.utils
 import "../utils/scripts/displaylayout.js" as Layout
@@ -380,13 +381,16 @@ Singleton {
         root.revertIn = 0;
     }
 
-    function revert(): void {
+    // `automatic`: nobody answered. Whoever closed Settings in the meantime has to know why the screens changed back.
+    function revert(automatic: bool): void {
         confirmTimer.stop();
         if (root.previous) {
             root.monitors = root.previous;
             root.applyAll();
             root.persist();
             postApplyRefresh.restart();
+            if (automatic)
+                Toaster.toast(Tr.tr("Display settings went back"), Tr.tr("The change was not confirmed in time."), "monitor", Toast.Warning);
         }
         root.previous = null;
         root.revertIn = 0;
@@ -624,7 +628,7 @@ Singleton {
         onTriggered: {
             root.revertIn = Math.max(0, root.revertIn - 1);
             if (root.revertIn === 0)
-                root.revert();
+                root.revert(true);
         }
     }
 
