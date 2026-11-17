@@ -101,13 +101,6 @@ Item {
                 }
             }
         }
-
-        StyledText {
-            Layout.alignment: Qt.AlignHCenter
-            text: Tr.tr("Click a desktop to switch · Drag windows to move · Esc to close")
-            color: Colours.palette.m3onSurfaceVariant
-            font: Tokens.font.label.medium
-        }
     }
 
     // Reparented window previews live here while dragging between desktops

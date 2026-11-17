@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 10:50+0100\n"
+"POT-Creation-Date: 2026-11-17 10:58+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -101,10 +101,6 @@ msgstr "Añadir escritorio"
 #: modules/activities/OverviewContent.qml services/Keybinds.qml
 msgid "Activities overview"
 msgstr "Vista de actividades"
-
-#: modules/activities/OverviewContent.qml
-msgid "Click a desktop to switch · Drag windows to move · Esc to close"
-msgstr "Clic en un escritorio para cambiar · Arrastra ventanas para mover · Esc para cerrar"
 
 #: modules/activities/WorkspaceCard.qml
 msgid "Empty"
