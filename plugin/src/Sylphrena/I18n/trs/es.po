@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylphrena-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 10:34+0100\n"
+"POT-Creation-Date: 2026-11-17 10:45+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -387,15 +387,15 @@ msgid "Wireless"
 msgstr "Inalámbrico"
 
 #: modules/bar/popouts/Network.qml
+msgid "Rescan networks"
+msgstr "Volver a buscar redes"
+
+#: modules/bar/popouts/Network.qml
 #, qt-plural-format
 msgid "%n network available"
 msgid_plural "%n networks available"
 msgstr[0] "%n red disponible"
 msgstr[1] "%n redes disponibles"
-
-#: modules/bar/popouts/Network.qml
-msgid "Rescan networks"
-msgstr "Volver a buscar redes"
 
 #: modules/bar/popouts/Network.qml modules/nexus/common/EthernetSection.qml
 #: modules/nexus/pages/network/EthernetDetailPage.qml
@@ -429,8 +429,8 @@ msgstr "Introduce tu contraseña para actualizar el sistema en segundo plano."
 
 #: modules/bar/popouts/UpdatesPassword.qml
 #: modules/bar/popouts/WirelessPassword.qml
+#: modules/nexus/common/NetworkPasswordForm.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/UpdatesPage.qml
 msgid "Password"
 msgstr "Contraseña"
@@ -438,9 +438,9 @@ msgstr "Contraseña"
 #: modules/bar/popouts/UpdatesPassword.qml
 #: modules/bar/popouts/WirelessPassword.qml
 #: modules/nexus/common/DialogRowButton.qml
+#: modules/nexus/common/NetworkPasswordForm.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
 #: modules/nexus/pages/network/AddVpnPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/UpdatesPage.qml
 #: modules/utilities/RecordingDeleteModal.qml
 msgctxt "button"
@@ -496,8 +496,8 @@ msgid "Update system"
 msgstr "Actualizar sistema"
 
 #: modules/bar/popouts/WirelessPassword.qml
+#: modules/nexus/common/NetworkPasswordForm.qml
 #: modules/nexus/pages/network/AddNetworkPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
 #: modules/nexus/pages/network/EthernetDetailPage.qml
 msgid "Connect"
 msgstr "Conectar"
@@ -1403,6 +1403,16 @@ msgctxt "network security"
 msgid "Security: %1"
 msgstr "Seguridad: %1"
 
+#: modules/nexus/common/NetworkPasswordForm.qml
+#: modules/nexus/pages/network/AddNetworkPage.qml
+msgid "Connection failed — check the password"
+msgstr "Error de conexión: comprueba la contraseña"
+
+#: modules/nexus/common/NetworkPasswordForm.qml
+#: modules/nexus/pages/network/AddNetworkPage.qml
+msgid "Password must be at least 8 characters"
+msgstr "La contraseña debe tener al menos 8 caracteres"
+
 #: modules/nexus/NavPane.qml
 msgid "Search settings"
 msgstr "Buscar en los ajustes"
@@ -2294,19 +2304,8 @@ msgstr "Ninguna (abierta)"
 
 #. TRANSLATORS: WPA is a protocol name, leave it untranslated
 #: modules/nexus/pages/network/AddNetworkPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
 msgid "WPA passwords are at least 8 characters"
 msgstr "Las contraseñas WPA tienen al menos 8 caracteres"
-
-#: modules/nexus/pages/network/AddNetworkPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
-msgid "Connection failed — check the password"
-msgstr "Error de conexión: comprueba la contraseña"
-
-#: modules/nexus/pages/network/AddNetworkPage.qml
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
-msgid "Password must be at least 8 characters"
-msgstr "La contraseña debe tener al menos 8 caracteres"
 
 #: modules/nexus/pages/network/AddVpnPage.qml
 msgid "Edit VPN provider"
@@ -2426,15 +2425,6 @@ msgstr "5 GHz"
 msgctxt "network filter"
 msgid "2.4 GHz"
 msgstr "2,4 GHz"
-
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
-#, qt-format
-msgid "Connect to %1"
-msgstr "Conectar a %1"
-
-#: modules/nexus/pages/network/ConnectNetworkPage.qml
-msgid "This network is protected. Enter its password to connect."
-msgstr "Esta red está protegida. Introduce su contraseña para conectarte."
 
 #: modules/nexus/pages/network/EthernetDetailPage.qml
 #: modules/nexus/pages/network/NetworkDetailPage.qml

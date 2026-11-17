@@ -16,8 +16,6 @@ QtObject {
     property DesktopEntry selectedApp
     property int editingVpnIndex: -1
     property string selectedNetworkSsid
-    // The visible network whose password is being asked for (sub-page ConnectNetworkPage)
-    property var pendingNetwork
     property string selectedEthernetInterface
     property bool networkDetailsFromSaved
 
