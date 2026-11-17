@@ -54,16 +54,16 @@ AUR_DEPS = ["quickshell-git", "qt6-m3shapes-git", "python-materialyoucolor", "li
 # Lunele's pacman repository: built and signed by iMacnucintosh/lunele-packages (GitHub Actions)
 REPO_NAME = "lunele"
 REPO_SERVER = "https://github.com/iMacnucintosh/lunele-packages/releases/download/x86_64"
-REPO_KEY = "D48895A048042C67AB45D200903338E0D2D31CEC"
+REPO_KEY = "A13DAD18CEFF0DB5E6C0AD4C1CD7CBE72F0DD14B"
 REPO_KEY_FILE = "/etc/pacman.d/lunele.gpg"
 REPO_KEY_ARMOR = """-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-mDMEavmvkxYJKwYBBAHaRw8BAQdAF+DnckVK/I8VeKsmAXFpjuIR/y3z6x/dx04E
-+5U7lpS0ElN5bHBocmVuYSBwYWNrYWdlc4iQBBMWCgA4FiEE1IiVoEgELGerRdIA
-kDM44NLTHOwFAmr5r5MCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQkDM4
-4NLTHOywlwD/R1eYlonRGO2vKh9eJQ2DKWGv4jZMOKDBKsz97mW4f/IA+gNgIgaB
-2TwsC4UFZQqVVO3PlgUY3F7I8KeR9BsXsSEE
-=yZmw
+mDMEavxQRRYJKwYBBAHaRw8BAQdAAKq0G/6WgMWg4aw0quzxLYbr4Eo5YrA6DLDw
+q+o0c8u0D0x1bmVsZSBwYWNrYWdlc4iQBBMWCgA4FiEEoT2tGM7/DbXmwK1MHNfL
+5y8N0UsFAmr8UEUCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQHNfL5y8N
+0UtDAwEAvJnkFXc/5UB63SemLljaZDVR9kMTrmSphmn5BnIeB6QBANT/XWuSZSwq
+tBmFAqoQ1GlSxZCW/6RAkp4t0KlXSekM
+=p1v6
 -----END PGP PUBLIC KEY BLOCK-----
 """
 PACMAN_CONF = Path("/etc/pacman.conf")
