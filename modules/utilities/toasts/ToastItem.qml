@@ -6,6 +6,7 @@ import Sylenara
 import Sylenara.Config
 import Sylenara.I18n
 import qs.components
+import qs.components.controls
 import qs.components.widgets
 import qs.services
 
@@ -173,6 +174,31 @@ StyledRect {
                 }
                 opacity: 0.8
                 wrapMode: Text.WordWrap
+            }
+
+            // Actions ("Restart now", "Later"…): the last one is the main one
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: Tokens.spacing.small
+                visible: (root.modelData?.actions.length ?? 0) > 0
+                spacing: Tokens.spacing.small
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                Repeater {
+                    model: root.modelData?.actions ?? []
+
+                    TextButton {
+                        required property string modelData
+                        required property int index
+
+                        text: Tr.trMarked(modelData)
+                        type: index === (root.modelData?.actions.length ?? 0) - 1 ? ButtonBase.Filled : ButtonBase.Text
+                        onClicked: root.modelData?.trigger(index)
+                    }
+                }
             }
         }
     }

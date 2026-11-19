@@ -8,7 +8,8 @@ namespace sylenara::shell {
 
 using Qt::StringLiterals::operator""_s;
 
-Toast::Toast(QString title, QString message, QString icon, Type type, int timeout, QString image, QObject* parent)
+Toast::Toast(QString title, QString message, QString icon, Type type, int timeout, QString image, QStringList actions,
+    QObject* parent)
     : QObject(parent)
     , m_closed(false)
     , m_title(std::move(title))
@@ -16,8 +17,11 @@ Toast::Toast(QString title, QString message, QString icon, Type type, int timeou
     , m_icon(std::move(icon))
     , m_image(std::move(image))
     , m_type(type)
-    , m_timeout(timeout) {
-    QTimer::singleShot(timeout, this, &Toast::close);
+    , m_timeout(timeout)
+    , m_actions(std::move(actions)) {
+    // With actions it waits for the answer
+    if (m_actions.isEmpty())
+        QTimer::singleShot(timeout, this, &Toast::close);
 
     if (m_icon.isEmpty()) {
         switch (m_type) {
@@ -71,6 +75,17 @@ QString Toast::image() const {
     return m_image;
 }
 
+QStringList Toast::actions() const {
+    return m_actions;
+}
+
+void Toast::trigger(int index) {
+    if (index < 0 || index >= m_actions.size())
+        return;
+    emit actionTriggered(index);
+    close();
+}
+
 int Toast::timeout() const {
     return m_timeout;
 }
@@ -121,9 +136,9 @@ QQmlListProperty<Toast> Toaster::toasts() {
     return { this, &m_toasts };
 }
 
-void Toaster::toast(const QString& title, const QString& message, const QString& icon, Toast::Type type, int timeout,
-    const QString& image) {
-    auto* const toast = new Toast(title, message, icon, type, timeout, image, this);
+Toast* Toaster::toast(const QString& title, const QString& message, const QString& icon, Toast::Type type, int timeout,
+    const QString& image, const QStringList& actions) {
+    auto* const toast = new Toast(title, message, icon, type, timeout, image, actions, this);
     QObject::connect(toast, &Toast::finishedClose, this, [toast, this] {
         if (m_toasts.removeOne(toast)) {
             emit toastsChanged();
@@ -132,6 +147,7 @@ void Toaster::toast(const QString& title, const QString& message, const QString&
     });
     m_toasts.push_front(toast);
     emit toastsChanged();
+    return toast;
 }
 
 } // namespace sylenara::shell

@@ -21,6 +21,8 @@ class Toast : public QObject {
     Q_PROPERTY(QString image READ image CONSTANT)
     Q_PROPERTY(int timeout READ timeout CONSTANT)
     Q_PROPERTY(Type type READ type CONSTANT)
+    // Buttons under the message ("Restart now", "Later"…): a toast with actions stays until one is chosen
+    Q_PROPERTY(QStringList actions READ actions CONSTANT)
 
 public:
     enum class Type : quint8 {
@@ -32,7 +34,7 @@ public:
     Q_ENUM(Type)
 
     explicit Toast(QString title, QString message, QString icon, Type type, int timeout, QString image = {},
-        QObject* parent = nullptr);
+        QStringList actions = {}, QObject* parent = nullptr);
 
     [[nodiscard]] bool closed() const;
     [[nodiscard]] QString title() const;
@@ -41,14 +43,18 @@ public:
     [[nodiscard]] QString image() const;
     [[nodiscard]] int timeout() const;
     [[nodiscard]] Type type() const;
+    [[nodiscard]] QStringList actions() const;
 
     Q_INVOKABLE void close();
+    // One of the actions was pressed: says which (its index) and closes the toast
+    Q_INVOKABLE void trigger(int index);
     Q_INVOKABLE void lock(QObject* sender);
     Q_INVOKABLE void unlock(QObject* sender);
 
 signals:
     void closedChanged();
     void finishedClose();
+    void actionTriggered(int index);
 
 private:
     QSet<QObject*> m_locks;
@@ -60,6 +66,7 @@ private:
     QString m_image;
     Type m_type;
     int m_timeout;
+    QStringList m_actions;
 };
 
 class Toaster : public QObject {
@@ -75,8 +82,10 @@ public:
 
     [[nodiscard]] QQmlListProperty<Toast> toasts();
 
-    Q_INVOKABLE void toast(const QString& title, const QString& message, const QString& icon = {},
-        sylenara::shell::Toast::Type type = Toast::Type::Info, int timeout = 5000, const QString& image = {});
+    // Returns the toast, so a caller can listen to its actions (actionTriggered)
+    Q_INVOKABLE sylenara::shell::Toast* toast(const QString& title, const QString& message, const QString& icon = {},
+        sylenara::shell::Toast::Type type = Toast::Type::Info, int timeout = 5000, const QString& image = {},
+        const QStringList& actions = {});
 
 signals:
     void toastsChanged();
