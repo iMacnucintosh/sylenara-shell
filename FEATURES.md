@@ -389,52 +389,6 @@ Cámbialos en **Ajustes → Teclado y ratón**.
 
 ---
 
-## OpenCode — plugin file-tree con estados git
-
-**Fuera de la shell** (entorno de agente, no QML): el plugin TUI de OpenCode que muestra el
-sidebar de ficheros usa en esta máquina un **fork local** en
-`~/.config/opencode/plugins/opencode-file-tree` (se autodescubre; el paquete npm
-`opencodev2-file-tree` está fuera de la config).
-
-Extra sobre upstream (`Muyuu-wml/opencode-file-tree` v0.1.3): **colorea carpetas y ficheros
-según el estado git**, con glifo delante del nombre:
-
-| Glifo | Estado | Color |
-| --- | --- | --- |
-| `A` | añadido (staged / nuevo) | verde `diff.text.added` |
-| `M` | modificado | ámbar `text.feedback.warning` |
-| `D` | borrado | rojo `diff.text.removed` |
-| `R` | renombrado/copiado | info `text.feedback.info` |
-| `?` | sin seguimiento | verde `diff.text.added` |
-
-- Las **carpetas agregan** el estado de su contenido, prioridad *deleted > modified > added > renamed > untracked* (como los IDEs).
-- Un solo `git status --porcelain=v1 -z` por refresco (botón **Refresh**); rutas rebaseadas si el árbol arranca en un subdirectorio; fuera de un repo, árbol normal.
-- La fila seleccionada conserva el color primario del tema.
-- Cambios en los fuentes posteriormente: `bun run typecheck && bun run build` (bun, no npm) y `opencode service restart`.
-- Verificación manual: `test.md` dentro del directorio del plugin. Pendiente de proponer upstream (PR/issue) tras validar.
-
-## OpenCode — tema sincronizado con el esquema
-
-**Fuera de la shell**: el TUI de OpenCode usa un tema `sylenara` generado desde el esquema
-M3 de la activity activa. `scripts/sylenara-quiet.py` (paso `_sync_opencode_theme`, justo tras
-el theming de GTK/iconos) invoca `scripts/generate-opencode-theme.py` + escribe `cli.json`.
-
-- Salida: `~/.config/opencode/themes/sylenara.json` (formato hue de OpenCode V2, `$schema`
-  `https://opencode.ai/theme.json`) + `~/.config/opencode/cli.json` → `{"theme":{"name":"sylenara","mode":...}}`.
-- Genera la paleta del modo que llega (dark/light): gradas tonales M3 vía `materialyoucolor.hct`
-  (bins de hue asignados por cercanía: red/orange/yellow/green/cyan/blue/purple + gray anclada a
-  onSurface/outline/background) y overrides con los colores del esquema (background/surface
-  containers, diff containers, syntax/markdown via keys catppuccin `k*`/`term*`).
-- Hot-reload: OpenCode **solo** re-aplica el tema cuando cambia `theme.name` en `cli.json`
-  (ni el contenido del theme file ni el resto de settings externos se re-leen en caliente, bugs
-  conocidos upstream: issues #815/#37423). Por eso el tema vive en **dos gemelas idénticas**
-  (`sylenara.json` y `sylenara-alt.json`): cada apply con paleta o modo nuevo flipea `cli.json`
-  al otro nombre, lo que fuerza la recarga en los TUI abiertos. Si la paleta no cambió se salta
-  (no-op, sin churn). La paleta del otro modo se conserva en la gemela entre runs.
-- Peculiaridad del format: los hex DEBEN llevar `#` y **no se aceptan referencias entre tokens**
-  (`$text.*`/`$background.*`) en temas de usuario — solo refs `$hue.<nombre>.<step>`; los
-  built-in evitan esa validación, los nuestros no (lecciones del debug en este script).
-
 ## Lockscreen
 
 La columna derecha del lock (tras CPU/RAM) se parte **35/65**:
