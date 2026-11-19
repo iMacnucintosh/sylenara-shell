@@ -3,15 +3,14 @@
 -- corre tras un logout. Al cerrar qs, el compositor sale para que greetd
 -- lance la sesión de usuario.
 --
--- HOME/XDG deben venir ya del command de greetd (passwd del greeter es HOME=/).
--- Rollback a regreet: sustituir el exec_cmd de abajo por
---   regreet --style /etc/greetd/sylenara/regreet.css; hyprctl dispatch exit
+-- HOME/XDG: el usuario greeter tiene HOME=/ en passwd; su carpeta es /var/lib/sylenara-greeter (la crea
+-- /etc/tmpfiles.d/sylenara-greeter.conf, que instala scripts/system/10-greeter.sh).
 
 hl.env("SYLENARA_GREETER_DIR", "/etc/greetd/sylenara")
-hl.env("HOME", "/var/lib/regreet")
-hl.env("XDG_CACHE_HOME", "/var/lib/regreet/cache")
-hl.env("XDG_CONFIG_HOME", "/var/lib/regreet/config")
-hl.env("XDG_STATE_HOME", "/var/lib/regreet/state")
+hl.env("HOME", "/var/lib/sylenara-greeter")
+hl.env("XDG_CACHE_HOME", "/var/lib/sylenara-greeter/cache")
+hl.env("XDG_CONFIG_HOME", "/var/lib/sylenara-greeter/config")
+hl.env("XDG_STATE_HOME", "/var/lib/sylenara-greeter/state")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("QT_QPA_PLATFORMTHEME", "")
 hl.env("GDK_DEBUG", "no-portals")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 19:02+0100\n"
+"POT-Creation-Date: 2026-11-19 21:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5224,11 +5224,11 @@ msgid "Open the file manager"
 msgstr ""
 
 #: services/Keybinds.qml
-msgid "App menu"
+msgid "Launcher (second shortcut)"
 msgstr ""
 
 #: services/Keybinds.qml
-msgid "Open the application launcher menu"
+msgid "Another shortcut to toggle the app launcher"
 msgstr ""
 
 #: services/Keybinds.qml

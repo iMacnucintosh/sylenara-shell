@@ -13,12 +13,12 @@ license=('GPL-3.0-only' 'LicenseRef-Unsplash')
 options=('!debug')
 depends=(
   # What it is made on (the git Quickshell: the stable tag lacks what the shell uses)
-  'quickshell-git' 'hyprland' 'qt6-base' 'qt6-declarative' 'qt6-5compat' 'qt6-multimedia' 'qt6-svg'
+  'quickshell-git' 'hyprland' 'qt6-base' 'qt6-declarative' 'qt6-multimedia' 'qt6-svg'
   'qt6-imageformats' 'qt6-m3shapes-git' 'libqalculate' 'libpipewire' 'aubio' 'libcava'
   'xdg-desktop-portal-hyprland' 'xdg-desktop-portal-gtk'
   # What its scripts and services call
   'python' 'python-gobject' 'networkmanager' 'wireplumber' 'libpulse' 'libxml2' 'curl' 'systemd' 'brightnessctl' 'lm_sensors'
-  'power-profiles-daemon' 'cliphist' 'wl-clipboard' 'wtype' 'grim' 'slurp' 'playerctl' 'libnotify' 'qt6ct'
+  'power-profiles-daemon' 'cliphist' 'wl-clipboard' 'wtype' 'grim' 'slurp' 'libnotify' 'qt6ct'
   # Look: icons and GTK theme that follow the colours of the shell (sylenara-quiet writes their settings)
   'papirus-icon-theme' 'adw-gtk-theme'
   # Fonts of the interface (Rubik: the clock and the desktops, from the AUR)
