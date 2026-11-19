@@ -63,7 +63,8 @@ step_main() {
   chmod 755 "$data_dir"
   # Which shell the login screen was copied from (the installer's update refreshes it when the shell changes)
   local version
-  version="$(pacman -Q sylenara-shell-git 2>/dev/null | awk '{print $2}')"
+  # (|| true: running from a checkout there is no package, and pacman failing must not end the step)
+  version="$(pacman -Q sylenara-shell-git 2>/dev/null | awk '{print $2}' || true)"
   [[ -n "$version" ]] || version="$(git -C "$SYLENARA_ROOT" describe --tags --always 2>/dev/null || echo unknown)"
   printf '%s\n' "$version" >"$greeter_dir/version"
 
