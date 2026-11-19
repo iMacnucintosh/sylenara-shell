@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-19 22:04+0100\n"
+"POT-Creation-Date: 2026-11-20 00:27+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -196,6 +196,10 @@ msgstr "Escritorio"
 #: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
 msgid "Launcher"
 msgstr "Lanzador"
+
+#: modules/bar/components/Power.qml
+msgid "Power · restart recommended after the update"
+msgstr "Apagado · se recomienda reiniciar tras la actualización"
 
 #: modules/bar/components/Power.qml
 msgid "Power"
@@ -5902,14 +5906,6 @@ msgid "Update finished successfully."
 msgstr "Actualización finalizada correctamente."
 
 #: services/Updates.qml
-msgid "System updated"
-msgstr "Sistema actualizado"
-
-#: services/Updates.qml
-msgid "All updates were installed."
-msgstr "Se instalaron todas las actualizaciones."
-
-#: services/Updates.qml
 #, qt-format
 msgid "Update failed (exit %1)."
 msgstr "La actualización falló (código %1)."
@@ -5946,6 +5942,31 @@ msgstr[1] "%n actualizaciones nuevas"
 #: services/Updates.qml
 msgid "Update check failed"
 msgstr "Error al comprobar actualizaciones"
+
+#: services/Updates.qml
+msgid "System updated"
+msgstr "Sistema actualizado"
+
+#: services/Updates.qml
+msgid "All updates were installed."
+msgstr "Se instalaron todas las actualizaciones."
+
+#: services/Updates.qml
+msgid "A new kernel was installed, a restart is recommended to use it."
+msgstr "Se ha instalado un nuevo kernel, se recomienda reiniciar para utilizarlo."
+
+#: services/Updates.qml
+#, qt-format
+msgid "%1 were updated, a restart is recommended to use them."
+msgstr "Se han actualizado %1, se recomienda reiniciar para utilizarlos."
+
+#: services/Updates.qml
+msgid "Later"
+msgstr "Más tarde"
+
+#: services/Updates.qml
+msgid "Restart now"
+msgstr "Reiniciar ahora"
 
 #: services/Updates.qml
 msgid "Update check timed out"
@@ -6542,6 +6563,10 @@ msgstr "Ajustes"
 #: plugin/src/Sylenara/Config/launcherconfig.hpp
 msgid "Configure the shell"
 msgstr "Configura el shell"
+
+#, qt-format
+#~ msgid "%1 only take effect after a restart."
+#~ msgstr "%1: los cambios se aplican al reiniciar."
 
 #~ msgid "App menu"
 #~ msgstr "Menú de aplicaciones"

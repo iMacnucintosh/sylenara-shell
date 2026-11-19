@@ -7,6 +7,7 @@ import Quickshell.Io
 import Sylenara
 import Sylenara.Config
 import Sylenara.I18n
+import Sylenara.Services
 import qs.utils
 
 Singleton {
@@ -73,6 +74,7 @@ Singleton {
     function refresh(): void {
         if (checkProc.running || root.installing)
             return;
+        root.checkReboot(false);
         // Sylenara and its extensions, on the same refresh as the packages
         SylenaraUpdates.check();
         root.busy = true;
@@ -200,6 +202,8 @@ Singleton {
         root.authError = "";
         root.installMode = root.pendingMode;
         root.installing = true;
+        // What this update installs is read from pacman's log from here on (scripts/reboot-advice.py)
+        root.installStartedAt = Date.now() / 1000 - 5;
         root.logLines = [];
         root.logVisible = root.installMode === "logged";
         root.lastExitCode = 0;
@@ -276,7 +280,9 @@ Singleton {
         root.installMode = "";
         if (code === 0) {
             root.appendLog(Tr.tr("Update finished successfully."));
-            Toaster.toast(Tr.tr("System updated"), Tr.tr("All updates were installed."), "check_circle");
+            // The toast waits for the restart check: one toast, with the restart buttons when it is needed
+            root._toastAfterRebootCheck = true;
+            root.checkReboot(true);
         } else {
             root.appendLog(Tr.tr("Update failed (exit %1).").arg(code));
             // Background has no Nexus log panel — surface the last stderr lines in the toast
@@ -451,6 +457,62 @@ Singleton {
     Component.onCompleted: {
         root.ensureStatusIcon();
         root.refresh();
+    }
+
+    // ---- Restart recommended after an update --------------------------------------------------------------------
+    // A new kernel (the running one's modules are gone) or system pieces that only take effect after a restart
+    // (firmware, microcode, systemd, glibc, the graphics drivers). Remembered until the next boot.
+    property bool rebootKernel: false
+    property var rebootPackages: []
+    readonly property bool rebootRecommended: rebootKernel || rebootPackages.length > 0
+    property real installStartedAt: 0
+    property bool _toastAfterRebootCheck: false
+
+    function checkReboot(afterUpdate: bool): void {
+        if (rebootProc.running)
+            return;
+        const args = afterUpdate && root.installStartedAt > 0 ? ["record", "--since", String(Math.floor(root.installStartedAt))] : ["check"];
+        rebootProc.command = ["python3", "-I", Quickshell.shellPath("scripts/reboot-advice.py")].concat(args);
+        rebootProc.running = true;
+    }
+
+    function restartNow(): void {
+        const command = GlobalConfig.session.commands.reboot;
+        if (!SessionManager.exec(command))
+            Quickshell.execDetached(command);
+    }
+
+    function _finishedToast(): void {
+        if (!root.rebootRecommended) {
+            Toaster.toast(Tr.tr("System updated"), Tr.tr("All updates were installed."), "check_circle");
+            return;
+        }
+        const message = root.rebootKernel ? Tr.tr("A new kernel was installed, a restart is recommended to use it.") : Tr.tr("%1 were updated, a restart is recommended to use them.").arg(root.rebootPackages.join(", "));
+        const toast = Toaster.toast(Tr.tr("System updated"), message, "restart_alt", Toast.Info, 0, "", [Tr.tr("Later"), Tr.tr("Restart now")]);
+        toast.actionTriggered.connect(index => {
+            if (index === 1)
+                root.restartNow();
+        });
+    }
+
+    Process {
+        id: rebootProc
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const data = JSON.parse(text);
+                    root.rebootKernel = !!data.kernel;
+                    root.rebootPackages = Array.isArray(data.packages) ? data.packages : [];
+                } catch (e) {}
+            }
+        }
+        onExited: {
+            if (root._toastAfterRebootCheck) {
+                root._toastAfterRebootCheck = false;
+                root._finishedToast();
+            }
+        }
     }
 
     Timer {
