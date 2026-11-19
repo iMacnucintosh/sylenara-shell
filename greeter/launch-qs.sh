@@ -2,7 +2,7 @@
 # Launch the Quickshell greeter under greetd and always leave a log behind.
 set -u
 
-export HOME="${HOME:-/var/lib/regreet}"
+export HOME="${HOME:-/var/lib/sylenara-greeter}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/cache}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/config}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/state}"

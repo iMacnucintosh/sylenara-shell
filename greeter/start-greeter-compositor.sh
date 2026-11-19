@@ -3,7 +3,8 @@
 set -u
 ulimit -c 0 2>/dev/null || true
 
-export HOME="${HOME:-/var/lib/regreet}"
+# greetd hands the greeter its passwd HOME, which is /: it has a folder of its own
+[ "${HOME:-/}" = / ] && export HOME=/var/lib/sylenara-greeter
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/cache}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/config}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/state}"
@@ -29,4 +30,4 @@ mkdir -p "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" 2>/dev/null || t
 export SYLENARA_QUIET_LOG="$XDG_STATE_HOME/hyprland-greeter.log"
 
 exec "$SYLENARA_GREETER_DIR/quiet-exec.sh" \
-  /usr/bin/start-hyprland -- -c /etc/greetd/hyprland-greeter.lua
+  /usr/bin/start-hyprland -- -c "$SYLENARA_GREETER_DIR/hyprland-greeter.lua"

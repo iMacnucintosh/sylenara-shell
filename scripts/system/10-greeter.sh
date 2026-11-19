@@ -87,7 +87,20 @@ ns["_sync_greeter"]()
 print(f"Synced greeter assets into {ns['_GREETER_DIR']}")
 PY
 
-  install -m 644 "$SYLENARA_ROOT/greeter/hyprland-greeter.lua" /etc/greetd/hyprland-greeter.lua
+  # The greeter user's own folder (its passwd HOME is /): created now and at every boot. Before, the login screen
+  # borrowed regreet's, which only existed with that package installed. The leftovers of that are removed.
+  local greeter_uid
+  greeter_uid="$(id -u greeter 2>/dev/null || true)"
+  {
+    echo "# Sylenara login screen: the greeter user's folders (scripts/system/10-greeter.sh)"
+    [[ -n "$greeter_uid" ]] && echo "d /run/user/$greeter_uid 0700 greeter greeter -"
+    echo "d /var/lib/sylenara-greeter 0700 greeter greeter -"
+    echo "d /var/lib/sylenara-greeter/cache 0755 greeter greeter -"
+    echo "d /var/lib/sylenara-greeter/config 0755 greeter greeter -"
+    echo "d /var/lib/sylenara-greeter/state 0755 greeter greeter -"
+  } >/etc/tmpfiles.d/sylenara-greeter.conf
+  systemd-tmpfiles --create /etc/tmpfiles.d/sylenara-greeter.conf
+  rm -f /etc/tmpfiles.d/regreet-greeter.conf /etc/greetd/hyprland-greeter.lua
 
   session_user="$(awk '
     /^\[/ { sec = $0 }
@@ -141,5 +154,5 @@ EOF
 
   echo "Greeter dir: $greeter_dir (the session writes only $data_dir)"
   echo "greetd initial_session user: $session_user"
-  echo "Logs: /var/lib/regreet/state/qs.log and /tmp/sylenara-greeter-qs.log"
+  echo "Logs: /var/lib/sylenara-greeter/state/qs.log and /tmp/sylenara-greeter-qs.log"
 }
