@@ -5,7 +5,9 @@ import Quickshell
 import Quickshell.Bluetooth
 import Quickshell.Io
 import Sylenara
+import Sylenara.Config
 import Sylenara.I18n
+import qs.utils
 
 // Connecting a Bluetooth device from a single button. A device that was never paired (a new mouse, headset…)
 // cannot just connect: it is paired first, then trusted (so it reconnects by itself next time) and connected.
@@ -36,6 +38,30 @@ Singleton {
         root.pairingName = device.name || device.address;
         pairProc.command = ["python3", "-I", Quickshell.shellPath("scripts/bluetooth-pair.py"), device.dbusPath];
         pairProc.running = true;
+    }
+
+    // A toast when a device has just connected (Settings → Notifications → Toasts). Only on the change: the devices
+    // already connected when the shell starts do not announce themselves
+    function announce(device: BluetoothDevice): void {
+        if (!device?.connected || !GlobalConfig.utilities.toasts.bluetoothConnected)
+            return;
+        const name = device.name || device.address;
+        const body = device.batteryAvailable ? Tr.tr("%1 · %2% battery").arg(name).arg(Math.round(device.battery * 100)) : name;
+        Toaster.toast(Tr.tr("Bluetooth device connected"), body, Icons.getBluetoothIcon(device.icon));
+    }
+
+    Instantiator {
+        model: Bluetooth.devices
+
+        delegate: Connections {
+            required property BluetoothDevice modelData
+
+            target: modelData
+
+            function onConnectedChanged(): void {
+                root.announce(modelData);
+            }
+        }
     }
 
     // A device being paired from here (the button shows it as busy)

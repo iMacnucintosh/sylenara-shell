@@ -179,6 +179,12 @@ PageBase {
         }
 
         ToggleRow {
+            text: Tr.tr("Bluetooth device connected")
+            checked: GlobalConfig.utilities.toasts.bluetoothConnected
+            onToggled: GlobalConfig.utilities.toasts.bluetoothConnected = checked
+        }
+
+        ToggleRow {
             text: Tr.tr("Caps lock changes")
             checked: GlobalConfig.utilities.toasts.capsLockChanged
             onToggled: GlobalConfig.utilities.toasts.capsLockChanged = checked
