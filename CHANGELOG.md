@@ -6,6 +6,8 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 - **La pantalla de login ya no depende de regreet:** usa su propia carpeta (`/var/lib/sylenara-greeter`), que crea el instalador del sistema, y su configuración de Hyprland vive en `/etc/greetd/sylenara`. Antes tomaba prestada la de regreet, que en una instalación sin ese paquete no existía.
 - **`Super+R` abre el lanzador de la shell**, como segundo atajo; antes lanzaba `hyprlauncher`, que Sylenara no instala.
+- **Aviso al conectar un dispositivo Bluetooth**, con su nombre y su batería si la da; se apaga en Ajustes → Notificaciones → Avisos emergentes.
+- **Emparejar un dispositivo Bluetooth nuevo funciona** desde la barra y desde Ajustes: un ayudante responde a BlueZ solo para ese dispositivo y luego lo marca como de confianza y lo conecta (antes se quedaba sin conectar).
 - **El paquete pide menos:** fuera `playerctl` y `qt6-5compat`, que la shell no usa.
 
 ## 0.7.1 (2026-11-17)

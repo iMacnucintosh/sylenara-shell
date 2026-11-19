@@ -710,6 +710,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "dndChanged": true,
             "audioOutputChanged": true,
             "audioInputChanged": true,
+            "bluetoothConnected": true,
             "capsLockChanged": true,
             "numLockChanged": true,
             "kbLayoutChanged": true,
