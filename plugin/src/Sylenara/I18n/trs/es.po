@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 19:02+0100\n"
+"POT-Creation-Date: 2026-11-19 21:02+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2193,7 +2193,10 @@ msgid ""
 "Drag the displays to arrange them as they are on your desk. Pick one to "
 "change its settings. The star marks the main display: it shows the "
 "notifications, volume and brightness."
-msgstr "Arrastra las pantallas para colocarlas como están en tu mesa. Pulsa una para cambiar sus ajustes. La estrella marca la pantalla principal: muestra las notificaciones, el volumen y el brillo."
+msgstr ""
+"Arrastra las pantallas para colocarlas como están en tu mesa. Pulsa una para "
+"cambiar sus ajustes. La estrella marca la pantalla principal: muestra las "
+"notificaciones, el volumen y el brillo."
 
 #: modules/nexus/pages/DisplayPage.qml
 msgid "New arrangement, not applied yet"
@@ -5379,12 +5382,12 @@ msgid "Open the file manager"
 msgstr "Abrir el explorador de archivos"
 
 #: services/Keybinds.qml
-msgid "App menu"
-msgstr "Menú de aplicaciones"
+msgid "Launcher (second shortcut)"
+msgstr "Lanzador (segundo atajo)"
 
 #: services/Keybinds.qml
-msgid "Open the application launcher menu"
-msgstr "Abrir el menú lanzador de aplicaciones"
+msgid "Another shortcut to toggle the app launcher"
+msgstr "Otro atajo para abrir o cerrar el lanzador de aplicaciones"
 
 #: services/Keybinds.qml
 msgid "Exit Hyprland"
@@ -6516,3 +6519,9 @@ msgstr "Ajustes"
 #: plugin/src/Sylenara/Config/launcherconfig.hpp
 msgid "Configure the shell"
 msgstr "Configura el shell"
+
+#~ msgid "App menu"
+#~ msgstr "Menú de aplicaciones"
+
+#~ msgid "Open the application launcher menu"
+#~ msgstr "Abrir el menú lanzador de aplicaciones"

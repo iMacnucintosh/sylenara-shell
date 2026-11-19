@@ -380,10 +380,10 @@ Singleton {
         },
         {
             id: "openMenu",
-            label: () => Tr.tr("App menu"),
-            description: () => Tr.tr("Open the application launcher menu"),
+            label: () => Tr.tr("Launcher (second shortcut)"),
+            description: () => Tr.tr("Another shortcut to toggle the app launcher"),
             defaultBind: "SUPER + R",
-            dispatch: "hl.dsp.exec_cmd(\"hyprlauncher\")",
+            global: "sylenara:launcher",
             category: "apps"
         },
         {
