@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-19 21:02+0100\n"
+"POT-Creation-Date: 2026-11-19 22:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3681,6 +3681,11 @@ msgid "Audio input changes"
 msgstr ""
 
 #: modules/nexus/pages/services/NotificationsPage.qml
+#: services/BluetoothConnect.qml
+msgid "Bluetooth device connected"
+msgstr ""
+
+#: modules/nexus/pages/services/NotificationsPage.qml
 msgid "Caps lock changes"
 msgstr ""
 
@@ -4866,6 +4871,20 @@ msgstr ""
 
 #: services/Audio.qml
 msgid "Audio input changed"
+msgstr ""
+
+#: services/BluetoothConnect.qml
+#, qt-format
+msgid "%1 · %2% battery"
+msgstr ""
+
+#: services/BluetoothConnect.qml
+#, qt-format
+msgid "Could not connect %1"
+msgstr ""
+
+#: services/BluetoothConnect.qml
+msgid "Put it in pairing mode and try again. Devices that ask for a code pair from Settings → Bluetooth."
 msgstr ""
 
 #: services/Clipboard.qml

@@ -103,7 +103,7 @@ ColumnLayout {
                 id: device
 
                 readonly property BluetoothDevice modelData: deviceWrap.modelData
-                readonly property bool loading: modelData.state === BluetoothDeviceState.Connecting || modelData.state === BluetoothDeviceState.Disconnecting
+                readonly property bool loading: modelData.state === BluetoothDeviceState.Connecting || modelData.state === BluetoothDeviceState.Disconnecting || BluetoothConnect.isPairing(modelData)
                 // BlueZ battery, or the accessory-channel one for AirPods (-1 = unknown)
                 // Output node of this headset in its current profile (null when not connected)
                 readonly property var sink: BluetoothAudio.sinkFor(modelData.address)
@@ -166,7 +166,8 @@ ColumnLayout {
                         StateLayer {
                             color: device.playing ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
                             disabled: device.loading
-                            onClicked: device.modelData.connected = !device.modelData.connected
+                            // A new device is paired first, then trusted and connected
+                            onClicked: BluetoothConnect.toggle(device.modelData)
                         }
                     }
 

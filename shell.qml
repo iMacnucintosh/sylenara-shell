@@ -41,6 +41,7 @@ ShellRoot {
         Extensions;
         Welcome;
         KittySetup;
+        BluetoothConnect; // watches for devices connecting (its toast)
         // Weather: first Dash/Weather UI calls Weather.reload() — skip boot network hit
 
         if (GlobalConfig.utilities.vpn.enabled)

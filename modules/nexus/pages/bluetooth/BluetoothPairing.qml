@@ -109,10 +109,11 @@ PageBase {
                     radius: Tokens.rounding.extraSmall
                     bottomLeftRadius: newDevice.index === deviceList?.list.count - 1 ? Tokens.rounding.extraLarge : radius
                     bottomRightRadius: newDevice.index === deviceList?.list.count - 1 ? Tokens.rounding.extraLarge : radius
-                    disabled: newDevice.modelData?.pairing ?? false
+                    disabled: BluetoothConnect.isPairing(newDevice.modelData)
 
+                    // Through the helper: BlueZ only pairs with an agent that answers it (BluetoothConnect)
                     onClicked: {
-                        newDevice.modelData?.pair();
+                        BluetoothConnect.toggle(newDevice.modelData);
                         newDevice.wasPairing = true;
                     }
                 }

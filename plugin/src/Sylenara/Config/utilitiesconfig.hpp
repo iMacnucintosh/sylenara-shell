@@ -22,6 +22,8 @@ class UtilitiesToasts : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, dndChanged, true)
     CONFIG_PROPERTY(bool, audioOutputChanged, true)
     CONFIG_PROPERTY(bool, audioInputChanged, true)
+    // A Bluetooth device has just connected (not the ones already connected when the shell starts)
+    CONFIG_PROPERTY(bool, bluetoothConnected, true)
     CONFIG_PROPERTY(bool, capsLockChanged, true)
     CONFIG_PROPERTY(bool, numLockChanged, true)
     CONFIG_PROPERTY(bool, kbLayoutChanged, true)
