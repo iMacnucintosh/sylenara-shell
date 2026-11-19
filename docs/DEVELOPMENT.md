@@ -85,5 +85,5 @@ Configuración: `~/.config/sylenara/` (`shell.json`, `keybinds.json`, `cli.json`
 ## Antes de mandar un cambio
 
 - Tests: `cd tests && python3 -m unittest -q`.
-- Textos: todo lo visible pasa por `Tr.tr` y se traduce en `plugin/src/Sylenara/I18n/trs/es.po` (`fish scripts/trs.fish raw` + `msgmerge`, sin cadenas sin traducir ni `fuzzy`; `python3 scripts/trs-check.py`).
+- Textos: todo lo visible pasa por `Tr.tr` y se traduce en `plugin/src/Sylenara/I18n/trs/es.po` (`fish scripts/trs.fish raw` + `msgmerge`, sin cadenas sin traducir ni `fuzzy`; `python3 scripts/po-tool.py status` dice qué falta y `set <mapa.json>` aplica las traducciones; `python3 scripts/trs-check.py`).
 - Commits con *conventional commits* (`feat:`, `fix:`, `docs:`) y PR contra `main`.
