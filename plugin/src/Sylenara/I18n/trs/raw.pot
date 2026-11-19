@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-19 22:04+0100\n"
+"POT-Creation-Date: 2026-11-20 00:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,6 +196,10 @@ msgstr ""
 #: modules/nexus/pages/panels/LauncherPanel.qml
 #: modules/nexus/pages/PanelsPage.qml services/Keybinds.qml
 msgid "Launcher"
+msgstr ""
+
+#: modules/bar/components/Power.qml
+msgid "Power · restart recommended after the update"
 msgstr ""
 
 #: modules/bar/components/Power.qml
@@ -5736,14 +5740,6 @@ msgid "Update finished successfully."
 msgstr ""
 
 #: services/Updates.qml
-msgid "System updated"
-msgstr ""
-
-#: services/Updates.qml
-msgid "All updates were installed."
-msgstr ""
-
-#: services/Updates.qml
 #, qt-format
 msgid "Update failed (exit %1)."
 msgstr ""
@@ -5779,6 +5775,31 @@ msgstr[1] ""
 
 #: services/Updates.qml
 msgid "Update check failed"
+msgstr ""
+
+#: services/Updates.qml
+msgid "System updated"
+msgstr ""
+
+#: services/Updates.qml
+msgid "All updates were installed."
+msgstr ""
+
+#: services/Updates.qml
+msgid "A new kernel was installed, a restart is recommended to use it."
+msgstr ""
+
+#: services/Updates.qml
+#, qt-format
+msgid "%1 were updated, a restart is recommended to use them."
+msgstr ""
+
+#: services/Updates.qml
+msgid "Later"
+msgstr ""
+
+#: services/Updates.qml
+msgid "Restart now"
 msgstr ""
 
 #: services/Updates.qml
