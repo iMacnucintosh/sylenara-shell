@@ -4,6 +4,8 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## Sin publicar
 
+- **Reiniciar tras una actualización gorda:** si una actualización instala un kernel nuevo u otras piezas que solo se aplican al reiniciar (firmware, microcódigo, systemd, glibc, controladores gráficos…), el aviso de «Sistema actualizado» lo dice y ofrece **Reiniciar ahora** o **Más tarde**. Mientras no reinicies, el botón de apagado de la barra lleva un punto en el color de acento, con su explicación al pasar el ratón. También se nota cuando el kernel se actualiza desde una terminal.
+- **Los avisos emergentes admiten botones** (el de reiniciar es el primero que los usa).
 - **La pantalla de login ya no depende de regreet:** usa su propia carpeta (`/var/lib/sylenara-greeter`), que crea el instalador del sistema, y su configuración de Hyprland vive en `/etc/greetd/sylenara`. Antes tomaba prestada la de regreet, que en una instalación sin ese paquete no existía.
 - **`Super+R` abre el lanzador de la shell**, como segundo atajo; antes lanzaba `hyprlauncher`, que Sylenara no instala.
 - **Aviso al conectar un dispositivo Bluetooth**, con su nombre y su batería si la da; se apaga en Ajustes → Notificaciones → Avisos emergentes.
