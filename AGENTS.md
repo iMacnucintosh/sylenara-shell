@@ -31,7 +31,6 @@ Documentación por rol: [README.md](./README.md) (inglés) y [README.es.md](./RE
 - Steam: API key **solo en config local** (nunca commitearla; grep del diff antes de push). Perfil/logros públicos.
 - **Veo** (`~/Desarrollo/veo`, repo `iMacnucintosh/veo`): el reproductor de vídeo de la familia (libmpv + Qt Quick, qmake como Seeker/Things); el instalador lo trata como obligatorio (en el PKGBUILD de la shell va en `optdepends`: una shell anterior a la 0.6 actualiza con su instalador viejo, que no conoce Veo, y con `depends` el `makepkg -s` fallaba) y `setup-player.py` lo hace predeterminado. El nombre `veo` en GitHub redirigía antes a `Veo-Django` (proyecto antiguo del usuario): esa redirección ya no existe.
 - **synapsex** (`~/Desarrollo/Projects/synapsex`): proyecto propio del usuario (Rust) para configurar el Razer Basilisk V4 Pro. Hoy ninguna parte de la shell depende de él (la extensión de batería se quitó en la 0.3). El teclado Keychron K2 HE por el receptor Link **no** expone batería con el firmware oficial (hace falta firmware modificado): descartado.
-- OpenCode TUI: plugin sidebar file-tree es un **fork local** en `~/.config/opencode/plugins/opencode-file-tree` (colores git en el árbol; rebuild con `bun run build`, no npm; verificación en su `test.md`). El tema del TUI (`sylenara` + gemela `sylenara-alt` para el hot-reload por flip de nombre) lo genera `scripts/generate-opencode-theme.py` y lo engancha `sylenara-quiet.py`.
 
 ## 3. Convenciones de trabajo
 

@@ -633,9 +633,8 @@ def _patch_theme() -> None:
         flush_saves()
         # Templates land inside apply_colours; refresh Kitty after that.
         _reload_kitty()
-        # Not on screen now (login screen, OpenCode theme file): after the switch
+        # Not on screen now (login screen): after the switch
         _sync_greeter(colours)
-        _sync_opencode_theme(colours, mode)
 
     theme.apply_terms = apply_terms_quiet
     theme.apply_colours = apply_colours_quiet
@@ -716,63 +715,6 @@ def _sync_things(colours: dict[str, str], mode: str) -> None:
 def _sync_veo(colours: dict[str, str], mode: str) -> None:
     """Veo (Qt/QML video player) watches ~/.config/veo/theme.json."""
     _write_qt_app_theme("veo", colours, mode)
-
-
-def _sync_opencode_theme(colours: dict[str, str], mode: str) -> None:
-    """Push the activity scheme into OpenCode's TUI theme files and point
-    cli.json at them.
-
-    OpenCode hot-reloads cli.json keywords (theme *name*) but NOT theme file
-    contents, so the theme lives under two names (sylenara / sylenara-alt)
-    with identical content; each real palette change flips cli.json to the
-    other name, which forces running TUIs to re-read and re-apply the theme.
-    A no-op (same palette + same mode) is skipped to avoid reload churn.
-    """
-    import json as _json
-
-    gen = Path(__file__).resolve().parent / "generate-opencode-theme.py"
-    themes_dir = Path.home() / ".config/opencode/themes"
-    canonical = themes_dir / "sylenara.json"
-    naming = {"sylenara": "sylenara.json", "sylenara-alt": "sylenara-alt.json"}
-    cli_path = Path.home() / ".config/opencode/cli.json"
-    cli, current_name, current_payload = {}, None, ""
-    try:
-        cli = _json.loads(cli_path.read_text() or "{}") if cli_path.is_file() else {}
-        if not isinstance(cli, dict):
-            cli = {}
-        theme = cli.setdefault("theme", {})
-        current_name = theme.get("name") if isinstance(theme, dict) else None
-        if current_name in naming:
-            current_payload = (themes_dir / naming[current_name]).read_text()
-    except (OSError, ValueError):
-        return
-    try:
-        subprocess.run(
-            [sys.executable, str(gen), mode],
-            input=_json.dumps(colours),
-            text=True,
-            check=False,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        payload = canonical.read_text()
-    except (OSError, ValueError):
-        return
-
-    try:
-        theme = cli.setdefault("theme", {})
-        if current_payload == payload and theme.get("mode") == mode:
-            return  # nothing changed; do not churn running TUIs
-        if current_name == "sylenara":
-            # The TUI shows the canonical; the twin gets the new palette first
-            (themes_dir / naming["sylenara-alt"]).write_text(payload)
-        # current_name == "sylenara-alt" (or not ours): canonical already holds
-        # the new payload because the generator writes it directly.
-        theme["name"] = "sylenara-alt" if current_name == "sylenara" else "sylenara"
-        theme["mode"] = mode
-        cli_path.write_text(_json.dumps(cli, indent=2) + "\n")
-    except (OSError, ValueError):
-        pass
 
 
 def main() -> None:
