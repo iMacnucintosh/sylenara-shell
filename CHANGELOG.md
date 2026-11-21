@@ -2,7 +2,7 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
-## Sin publicar
+## 0.8.0 (2026-11-21)
 
 - **Reiniciar tras una actualización gorda:** si una actualización instala un kernel nuevo u otras piezas que solo se aplican al reiniciar (firmware, microcódigo, systemd, glibc, controladores gráficos…), el aviso de «Sistema actualizado» lo dice y ofrece **Reiniciar ahora** o **Más tarde**. Mientras no reinicies, el botón de apagado de la barra lleva un punto en el color de acento, con su explicación al pasar el ratón. También se nota cuando el kernel se actualiza desde una terminal.
 - **Los avisos emergentes admiten botones** (el de reiniciar es el primero que los usa).

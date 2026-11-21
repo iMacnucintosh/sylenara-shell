@@ -2,6 +2,33 @@
     "_comment": "What's new after an update (services/Welcome.qml, modules/welcome/WhatsNewWindow.qml): per version, the highlights worth a card, in every language, with an optional screenshot (whatsnew/<version>/<file>.webp, about 1280x800, 100-200 KB). The full list of changes is CHANGELOG.md. A version is shown once, to whoever updates to it or past it.",
     "versions": [
         {
+            "version": "0.8.0",
+            "highlights": [
+                {
+                    "icon": "restart_alt",
+                    "title": {
+                        "en": "Restart when it is needed",
+                        "es": "Reiniciar cuando hace falta"
+                    },
+                    "text": {
+                        "en": "After an update that installs a new kernel or other pieces that only apply on restart, the toast offers Restart now or Later, and the power button shows a dot until you do.",
+                        "es": "Tras una actualización que instala un kernel nuevo u otras piezas que solo se aplican al reiniciar, el aviso ofrece Reiniciar ahora o Más tarde, y el botón de apagado lleva un punto hasta que reinicies."
+                    }
+                },
+                {
+                    "icon": "bluetooth",
+                    "title": {
+                        "en": "Bluetooth that pairs",
+                        "es": "Bluetooth que empareja"
+                    },
+                    "text": {
+                        "en": "Pairing a new device works from the bar and from Settings, and a toast tells you when a device connects, with its battery if it reports it.",
+                        "es": "Emparejar un dispositivo nuevo funciona desde la barra y desde Ajustes, y un aviso te dice cuándo se conecta un dispositivo, con su batería si la da."
+                    }
+                }
+            ]
+        },
+        {
             "version": "0.7.1",
             "highlights": [
                 {
