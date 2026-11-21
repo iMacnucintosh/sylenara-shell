@@ -193,8 +193,10 @@ Item {
                 modelData: wrapper.modelData
                 implicitWidth: root.implicitWidth - root.padding - root.clampedPadding
 
+                // Under the content, so the toast's buttons get their clicks; a click elsewhere closes it
                 MouseArea {
                     anchors.fill: parent
+                    z: -1
                     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
                     onClicked: toast.modelData.close()
                 }
