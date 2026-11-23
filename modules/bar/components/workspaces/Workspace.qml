@@ -262,7 +262,16 @@ Item {
                                 break;
                             if (out.length > 0)
                                 out.push(root.dividers[Math.min(out.length, root.dividers.length - 1)]);
-                            const take = g.slice(0, budget);
+                            // One icon per app: its other windows on that monitor go in the same icon (with a count)
+                            const seen = new Set();
+                            const firsts = g.filter(t => {
+                                const cls = t.lastIpcObject?.class ?? "";
+                                if (seen.has(cls))
+                                    return false;
+                                seen.add(cls);
+                                return true;
+                            });
+                            const take = firsts.slice(0, budget);
                             out.push(...take);
                             budget -= take.length;
                         }
@@ -279,8 +288,9 @@ Item {
                     readonly property bool isDivider: modelData?.divider === true
                     readonly property int iconSize: Math.round((Tokens.sizes.bar.innerWidth - Tokens.padding.small) * 0.55)
                     readonly property string appClass: isDivider ? "" : (modelData.lastIpcObject?.class ?? "")
-                    // For the preview popout: which window this icon is
+                    // For the preview popout: which window this icon is, and every window of its app it stands for
                     readonly property var toplevel: isDivider ? null : modelData
+                    readonly property var toplevels: isDivider ? [] : (root.groups.find(g => g.includes(modelData)) ?? [modelData]).filter(t => (t.lastIpcObject?.class ?? "") === appClass)
 
                     Component.onCompleted: {
                         if (!win.isDivider)
@@ -308,12 +318,35 @@ Item {
                     opacity: LazyListView.adding || LazyListView.removing ? 0 : (root.onOtherMonitor ? 0.55 : 1)
 
                     // Real desktop/theme icons when the activities setting is on
-                    IconImage {
+                    AppIcon {
                         anchors.centerIn: parent
-                        asynchronous: true
                         visible: root.desktopAppIcons && !win.isDivider
-                        implicitSize: win.iconSize
-                        source: Icons.getAppIcon(win.appClass, "image-missing")
+                        appClass: win.appClass
+                        size: win.iconSize
+                        // On the active desktop the pill is the accent colour
+                        tint: root.focused ? Colours.palette.m3onPrimary : Colours.palette.m3primary
+                    }
+
+                    // How many windows of the app the icon stands for, when more than one
+                    StyledRect {
+                        visible: root.desktopAppIcons && !win.isDivider && win.toplevels.length > 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.horizontalCenterOffset: win.iconSize / 2
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: win.iconSize / 2 - height / 4
+                        implicitWidth: Math.max(implicitHeight, count.implicitWidth + Tokens.padding.extraSmall * 2)
+                        implicitHeight: count.implicitHeight
+                        radius: Tokens.rounding.full
+                        color: root.focused ? Colours.palette.m3onPrimary : Colours.palette.m3primary
+
+                        StyledText {
+                            id: count
+
+                            anchors.centerIn: parent
+                            text: win.toplevels.length
+                            font: Tokens.font.label.builders.small.weight(Font.Bold).scale(0.7).build()
+                            color: root.focused ? Colours.palette.m3primary : Colours.palette.m3onPrimary
+                        }
                     }
 
                     // Upstream category glyphs when the setting is off

@@ -8,6 +8,8 @@ QtObject {
     property string activityMenuId
     // The window whose preview is shown (hovering its app icon in the bar)
     property var previewToplevel: null
+    // Every window of that app on that monitor and desktop (the icon stands for all of them)
+    property var previewToplevels: []
     // A password/OTP/settings dialog is open and must survive hover-away. Requires
     // hasCurrent: several close paths (e.g. update started → UpdatesPassword) hide the
     // popout with hasCurrent = false and leave currentName untouched; without this the
