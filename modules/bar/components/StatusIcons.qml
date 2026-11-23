@@ -18,6 +18,13 @@ StyledRect {
 
     property color colour: Colours.palette.m3secondary
     readonly property alias items: iconColumn
+    // The tray and these icons collapsed into one button (the bar does not fit): it unfolds them over the bar
+    property bool trayCollapsed
+    // The bar has the collapsed tray unfolded (the button stays highlighted)
+    property bool trayOpen
+    readonly property alias collapseButton: collapseButton
+    // The height it takes when shown, also while collapsed (the bar measures whether it fits with it)
+    readonly property real fullHeight: iconColumn.implicitHeight + Tokens.padding.medium * 2
 
     readonly property int spacing: Tokens.spacing.medium / 2
     readonly property int iconPad: Tokens.padding.extraSmall
@@ -59,10 +66,66 @@ StyledRect {
 
     clip: true
     implicitWidth: Tokens.sizes.bar.innerWidth
-    implicitHeight: iconColumn.implicitHeight + Tokens.padding.medium * 2
+    implicitHeight: trayCollapsed ? collapseButton.implicitHeight + Tokens.padding.medium * 2 : fullHeight
+
+    Behavior on implicitHeight {
+        Anim {}
+    }
+
+    // Collapsed: one button; hovering it unfolds the tray and the status icons over the bar
+    Item {
+        id: collapseButton
+
+        readonly property bool open: root.trayOpen
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: Tokens.padding.medium
+        visible: root.trayCollapsed
+        implicitWidth: chevron.implicitWidth + root.iconPad * 2
+        implicitHeight: chevron.implicitHeight + root.iconPad * 2
+
+        StyledRect {
+            anchors.fill: parent
+            radius: Tokens.rounding.full
+            color: collapseButton.open || collapseHover.containsMouse ? Colours.palette.m3primary : "transparent"
+
+            Behavior on color {
+                CAnim {}
+            }
+        }
+
+        MaterialIcon {
+            id: chevron
+
+            anchors.centerIn: parent
+            // Up: the tray unfolds upwards; turned down while it is open (to fold it)
+            text: "expand_less"
+            rotation: collapseButton.open ? 180 : 0
+
+            Behavior on rotation {
+                Anim {}
+            }
+            color: collapseButton.open || collapseHover.containsMouse ? Colours.palette.m3onPrimary : root.colour
+            fontStyle: Tokens.font.icon.medium
+        }
+
+
+        MouseArea {
+            id: collapseHover
+
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.NoButton
+        }
+    }
 
     ColumnLayout {
         id: iconColumn
+
+        // Still laid out while collapsed (fullHeight), just not seen
+        opacity: root.trayCollapsed ? 0 : 1
+        enabled: !root.trayCollapsed
 
         anchors.left: parent.left
         anchors.right: parent.right

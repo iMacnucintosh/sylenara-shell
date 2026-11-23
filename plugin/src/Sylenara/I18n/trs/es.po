@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 00:27+0100\n"
+"POT-Creation-Date: 2026-11-23 10:21+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3343,6 +3343,30 @@ msgid "Tray"
 msgstr "Bandeja"
 
 #: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "When it does not fit"
+msgstr "Si no cabe"
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "Always"
+msgstr "Siempre"
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "Never"
+msgstr "Nunca"
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgid "Collapse"
+msgstr "Contraer"
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgid ""
+"The tray and the status icons in one button that shows them beside the bar"
+msgstr "La bandeja y los iconos de estado en un solo botón que los muestra junto a la barra"
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
 msgctxt "taskbar tray: draw a background behind the tray"
 msgid "Background"
 msgstr "Fondo"
@@ -5953,7 +5977,8 @@ msgstr "Se instalaron todas las actualizaciones."
 
 #: services/Updates.qml
 msgid "A new kernel was installed, a restart is recommended to use it."
-msgstr "Se ha instalado un nuevo kernel, se recomienda reiniciar para utilizarlo."
+msgstr ""
+"Se ha instalado un nuevo kernel, se recomienda reiniciar para utilizarlo."
 
 #: services/Updates.qml
 #, qt-format
