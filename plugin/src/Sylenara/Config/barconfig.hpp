@@ -87,6 +87,9 @@ class BarTray : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, background, true)
     CONFIG_PROPERTY(bool, recolour, false)
     CONFIG_PROPERTY(bool, compact, false)
+    // The tray and the status icons in one button that opens them beside the bar: "auto" (only when the bar
+    // does not fit the screen), "always" or "never"
+    CONFIG_PROPERTY(QString, collapse, u"auto"_s)
     CONFIG_GLOBAL_LIST(BarTrayIconSubList, iconSubs, {})
     CONFIG_GLOBAL_PROPERTY(QStringList, hiddenIcons, {})
 };

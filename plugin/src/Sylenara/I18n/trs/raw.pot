@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 00:27+0100\n"
+"POT-Creation-Date: 2026-11-23 10:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3281,6 +3281,29 @@ msgstr ""
 #: modules/nexus/pages/panels/taskbar/BarTray.qml
 #: modules/nexus/pages/panels/TaskbarPanel.qml
 msgid "Tray"
+msgstr ""
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "When it does not fit"
+msgstr ""
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "Always"
+msgstr ""
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgctxt "taskbar tray: collapse"
+msgid "Never"
+msgstr ""
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgid "Collapse"
+msgstr ""
+
+#: modules/nexus/pages/panels/taskbar/BarTray.qml
+msgid "The tray and the status icons in one button that shows them beside the bar"
 msgstr ""
 
 #: modules/nexus/pages/panels/taskbar/BarTray.qml

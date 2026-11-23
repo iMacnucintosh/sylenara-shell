@@ -2,6 +2,13 @@
 
 Cambios relevantes de este fork respecto a releases internas. El detalle de uso está en [FEATURES.md](./FEATURES.md).
 
+## Sin publicar
+
+- **La bandeja se recoge cuando la barra no cabe:** en una pantalla baja, la bandeja y los iconos de estado se juntan en un botón con una flecha; al pasar el ratón se despliegan hacia arriba sobre la barra y cada icono abre su popout como siempre. En Ajustes → Paneles → Barra de tareas → Bandeja → Contraer: si no cabe, siempre o nunca.
+- **Una app, un icono:** varias ventanas de la misma app en un escritorio salen como un solo icono con su número, y la vista previa al pasar el ratón las enseña todas.
+- **Iconos de los juegos que no son de Steam:** WoW, Battle.net o Minecraft lanzados desde Steam muestran su icono (el del acceso directo en Steam) en vez de un engranaje genérico.
+- **Ajustes con un engranaje Material** en la barra, en el color de acento, en vez del icono de Quickshell.
+
 ## 0.8.0 (2026-11-21)
 
 - **Reiniciar tras una actualización gorda:** si una actualización instala un kernel nuevo u otras piezas que solo se aplican al reiniciar (firmware, microcódigo, systemd, glibc, controladores gráficos…), el aviso de «Sistema actualizado» lo dice y ofrece **Reiniciar ahora** o **Más tarde**. Mientras no reinicies, el botón de apagado de la barra lleva un punto en el color de acento, con su explicación al pasar el ratón. También se nota cuando el kernel se actualiza desde una terminal.

@@ -20,6 +20,10 @@ StyledRect {
     readonly property int spacing: Config.bar.tray.background ? Tokens.spacing.medium : Tokens.spacing.extraSmall
 
     property bool expanded
+    // Collapsed into the status icons' button (the bar does not fit): nothing here, the popout shows the icons
+    property bool collapsed
+    // The height it takes when shown, also while collapsed (the bar measures whether it fits with it)
+    readonly property real fullHeight: nonAnimHeight
 
     readonly property real nonAnimHeight: {
         if (items.count === 0)
@@ -36,7 +40,7 @@ StyledRect {
     visible: height > 0
 
     implicitWidth: Tokens.sizes.bar.innerWidth
-    implicitHeight: nonAnimHeight
+    implicitHeight: collapsed ? 0 : nonAnimHeight
 
     color: (Config.bar.tray.background && items.count > 0) ? Colours.tPalette.m3surfaceContainer : "transparent"
     radius: Tokens.rounding.full

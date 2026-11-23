@@ -381,6 +381,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             "background": false,
             "recolour": false,
             "compact": false,
+            "collapse": "auto",
             "iconSubs": [],
             "hiddenIcons": []
         },
