@@ -32,13 +32,12 @@ Item {
             anchors.right: parent.right
             spacing: Tokens.spacing.medium
 
-            IconImage {
+            AppIcon {
                 id: icon
 
-                asynchronous: true
                 Layout.alignment: Qt.AlignVCenter
-                implicitSize: details.implicitHeight
-                source: Icons.getAppIcon(Hypr.activeToplevel?.lastIpcObject.class ?? "", "image-missing")
+                appClass: Hypr.activeToplevel?.lastIpcObject.class ?? ""
+                size: details.implicitHeight
             }
 
             ColumnLayout {

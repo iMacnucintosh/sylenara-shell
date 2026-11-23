@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
 import Sylenara.Config
+import qs.services
 
 Singleton {
     id: root
@@ -161,7 +162,15 @@ Singleton {
         return "";
     }
 
+    // The shell's own windows (Settings, welcome, what's new): Quickshell gives them its own class
+    function isShellWindow(name: string): bool {
+        return name === "org.quickshell" || name === "quickshell";
+    }
+
     function getAppIcon(name: string, fallback: string): string {
+        const game = SteamAppIcons.iconFor(name);
+        if (game)
+            return game;
         const icon = DesktopEntries.heuristicLookup(name)?.icon;
         const fb = fallback && fallback !== "undefined" ? fallback : "application-x-executable";
         return root.resolveThemeIcon(icon || "", fb);
