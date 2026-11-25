@@ -90,6 +90,7 @@ class Plan(unittest.TestCase):
         f.browser_policy_needed = True
         item = {i.id: i for i in inst.build_plan(f)}["browser-colours"]
         self.assertTrue(item.on and item.root)
+        self.assertTrue(item.hidden)  # automatic: not in the list, cannot be switched off
         self.assertEqual(item.steps[0].args[-2:], ["--only", "browser-policy"])  # not the login screen
         f.browser_policy_needed = False
         self.assertFalse({i.id: i for i in inst.build_plan(f)}["browser-colours"].todo)
