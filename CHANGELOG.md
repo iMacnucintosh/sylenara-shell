@@ -4,6 +4,8 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## Sin publicar
 
+- **Anclar una app a una actividad:** en Ajustes → Actividades, el bloque «Cualquier escritorio» de cada actividad ancla apps que se mueven libremente entre sus escritorios pero nunca salen de ella (por ejemplo, Steam en cualquier escritorio de Juegos). Al arrastrarlas en la vista de actividades, las otras actividades se atenúan y el cursor marca prohibido sobre ellas. El anclaje a un escritorio fijo sigue igual.
+- **Slider de 0 a 60 minutos** para crear temporizadores en el popout del reloj.
 - **La bandeja se recoge cuando la barra no cabe:** en una pantalla baja, la bandeja y los iconos de estado se juntan en un botón con una flecha; al pasar el ratón se despliegan hacia arriba sobre la barra y cada icono abre su popout como siempre. En Ajustes → Paneles → Barra de tareas → Bandeja → Contraer: si no cabe, siempre o nunca.
 - **Una app, un icono:** varias ventanas de la misma app en un escritorio salen como un solo icono con su número, y la vista previa al pasar el ratón las enseña todas.
 - **Iconos de los juegos que no son de Steam:** WoW, Battle.net o Minecraft lanzados desde Steam muestran su icono (el del acceso directo en Steam) en vez de un engranaje genérico.

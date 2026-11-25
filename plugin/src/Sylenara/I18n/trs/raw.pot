@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 10:21+0100\n"
+"POT-Creation-Date: 2026-11-25 08:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4058,7 +4058,16 @@ msgstr ""
 #. TRANSLATORS: %1 = 1-based desktop number within the activity
 #: modules/nexus/pages/ShellPage.qml
 #, qt-format
+msgid "Any desktop"
+msgstr ""
+
+#: modules/nexus/pages/ShellPage.qml
+#, qt-format
 msgid "Desktop %1"
+msgstr ""
+
+#: modules/nexus/pages/ShellPage.qml
+msgid "These apps move freely between the desktops of this activity, but never out of it"
 msgstr ""
 
 #: modules/nexus/pages/ShellPage.qml

@@ -17,6 +17,16 @@ ColumnLayout {
     required property real cardWidth
 
     readonly property bool isCurrent: Activities.currentActivity?.id === activity?.id
+    // While a window is dragged, an activity it cannot go to (it is pinned to another one) is dimmed
+    readonly property bool dropForbidden: !!Activities.overviewDragToplevel && !!activity && !Activities.canMoveWindowTo(Activities.overviewDragToplevel, activity.startWs)
+
+    opacity: dropForbidden ? 0.38 : 1
+
+    Behavior on opacity {
+        Anim {
+            type: Anim.DefaultEffects
+        }
+    }
 
     spacing: Tokens.spacing.medium
 
