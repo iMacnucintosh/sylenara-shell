@@ -119,12 +119,14 @@ Item {
 
                 property bool dragging
                 property bool didDrag
+                // Over a desktop it cannot go to (an app pinned to its activity, over another activity)
+                property bool overForbidden
                 property Item homeParent: stage
 
                 width: Math.max(8, ((ipc?.size?.[0] ?? monW) / monW) * stage.width)
                 height: Math.max(8, ((ipc?.size?.[1] ?? monH) / monH) * stage.height)
                 z: dragging ? 100 : (dragArea.containsMouse ? 10 : 1)
-                opacity: dragging ? 0.9 : (pinned ? 0.88 : 1)
+                opacity: dragging ? (overForbidden ? 0.55 : 0.9) : (pinned ? 0.88 : 1)
                 scale: dragging ? 1.06 : (dragArea.containsMouse ? 1.04 : 1)
 
                 Binding on x {
@@ -155,6 +157,7 @@ Item {
                     x = pos.x;
                     y = pos.y;
                     dragging = true;
+                    Activities.overviewDragToplevel = toplevel;
                 }
 
                 function updateDropTarget(): void {
@@ -164,7 +167,10 @@ Item {
                     const center = Qt.point(winItem.x + winItem.width / 2, winItem.y + winItem.height / 2);
                     const global = layer.mapToGlobal(center.x, center.y);
                     // Walk overview cards via drag layer siblings' content — use registered cards
-                    Activities.overviewDropTargetWs = Activities.hitTestOverviewWorkspace(global) ?? -1;
+                    const target = Activities.hitTestOverviewWorkspace(global) ?? -1;
+                    // A desktop it cannot go to is not a target: no highlight, forbidden cursor
+                    winItem.overForbidden = target > 0 && !Activities.canMoveWindowTo(winItem.toplevel, target);
+                    Activities.overviewDropTargetWs = winItem.overForbidden ? -1 : target;
                 }
 
                 function endDrag(): void {
@@ -175,6 +181,8 @@ Item {
                     if (didDrag)
                         Activities.finishWindowDrag(tl);
                     Activities.overviewDropTargetWs = -1;
+                    Activities.overviewDragToplevel = null;
+                    overForbidden = false;
                 }
 
                 ClipRect {
@@ -231,7 +239,7 @@ Item {
 
                     anchors.fill: parent
                     hoverEnabled: true
-                    cursorShape: winItem.pinned ? Qt.ForbiddenCursor : (pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor)
+                    cursorShape: winItem.pinned || winItem.overForbidden ? Qt.ForbiddenCursor : (pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor)
                     preventStealing: true
 
                     property real pressX
@@ -288,6 +296,8 @@ Item {
                         if (winItem.homeParent)
                             winItem.parent = winItem.homeParent;
                         Activities.overviewDropTargetWs = -1;
+                        Activities.overviewDragToplevel = null;
+                        winItem.overForbidden = false;
                         winItem.didDrag = false;
                     }
                 }

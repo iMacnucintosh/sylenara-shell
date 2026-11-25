@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylenara-shell\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 10:21+0100\n"
+"POT-Creation-Date: 2026-11-25 08:49+0100\n"
 "PO-Revision-Date: 2026-10-26 14:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3364,7 +3364,9 @@ msgstr "Contraer"
 #: modules/nexus/pages/panels/taskbar/BarTray.qml
 msgid ""
 "The tray and the status icons in one button that shows them beside the bar"
-msgstr "La bandeja y los iconos de estado en un solo botón que los muestra junto a la barra"
+msgstr ""
+"La bandeja y los iconos de estado en un solo botón que los muestra junto a "
+"la barra"
 
 #: modules/nexus/pages/panels/taskbar/BarTray.qml
 msgctxt "taskbar tray: draw a background behind the tray"
@@ -4152,8 +4154,19 @@ msgstr "Usar apariencia de Principal"
 #. TRANSLATORS: %1 = 1-based desktop number within the activity
 #: modules/nexus/pages/ShellPage.qml
 #, qt-format
+msgid "Any desktop"
+msgstr "Cualquier escritorio"
+
+#: modules/nexus/pages/ShellPage.qml
+#, qt-format
 msgid "Desktop %1"
 msgstr "Escritorio %1"
+
+#: modules/nexus/pages/ShellPage.qml
+msgid ""
+"These apps move freely between the desktops of this activity, but never out "
+"of it"
+msgstr "Estas apps se mueven libremente entre los escritorios de esta actividad, pero nunca salen de ella"
 
 #: modules/nexus/pages/ShellPage.qml
 msgid "Add app"

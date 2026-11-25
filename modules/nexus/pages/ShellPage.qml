@@ -123,6 +123,12 @@ PageBase {
         const existing = root.rulesFor(activityId, workspaceIndex);
         if (existing.some(r => (r.classMatch || "") === classMatch))
             return;
+        // An app has one place: pinning it here replaces where it was pinned before
+        const vals = GlobalConfig.activities.appRules.values;
+        for (let i = vals.length - 1; i >= 0; i--) {
+            if ((vals[i].classMatch || "") === classMatch)
+                GlobalConfig.activities.appRules.remove(i);
+        }
         const rule = {
             classMatch: classMatch,
             activityId: activityId,
@@ -579,14 +585,16 @@ PageBase {
                         onClicked: Activities.clearActivityStyle(actRow.activityId)
                     }
 
+                    // -1: apps pinned to the activity (any of its desktops), then one block per desktop
                     Repeater {
-                        model: Math.max(1, actRow.modelData.workspaceCount || 1)
+                        model: [-1, ...Array.from({length: Math.max(1, actRow.modelData.workspaceCount || 1)}, (_, i) => i)]
 
                         ColumnLayout {
                             id: deskBlock
 
-                            required property int index
-                            readonly property var deskRules: root.rulesFor(actRow.modelData.id, deskBlock.index)
+                            required property int modelData
+                            readonly property int deskIndex: modelData
+                            readonly property var deskRules: root.rulesFor(actRow.modelData.id, deskBlock.deskIndex)
 
                             Layout.fillWidth: true
                             spacing: Tokens.spacing.small
@@ -595,8 +603,17 @@ PageBase {
                                 Layout.fillWidth: true
                                 Layout.topMargin: Tokens.spacing.small
                                 // TRANSLATORS: %1 = 1-based desktop number within the activity
-                                text: Tr.tr("Desktop %1").arg(deskBlock.index + 1)
+                                text: deskBlock.deskIndex < 0 ? Tr.tr("Any desktop") : Tr.tr("Desktop %1").arg(deskBlock.deskIndex + 1)
                                 font: Tokens.font.label.large
+                            }
+
+                            StyledText {
+                                Layout.fillWidth: true
+                                visible: deskBlock.deskIndex < 0
+                                text: Tr.tr("These apps move freely between the desktops of this activity, but never out of it")
+                                color: Colours.palette.m3onSurfaceVariant
+                                font: Tokens.font.body.small
+                                wrapMode: Text.WordWrap
                             }
 
                             // Connected Material list: pins + trailing "Add app"
@@ -682,7 +699,7 @@ PageBase {
                                     onAccepted: {
                                         if (!selectedItem)
                                             return;
-                                        root.addRule(actRow.modelData.id, deskBlock.index, selectedItem);
+                                        root.addRule(actRow.modelData.id, deskBlock.deskIndex, selectedItem);
                                     }
                                 }
                             }

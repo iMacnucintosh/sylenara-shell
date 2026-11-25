@@ -53,6 +53,8 @@ El apply es **un solo proceso** (`scripts/apply-activity-style.py`): evita carre
 Desde **Ajustes → Actividades** puedes asociar aplicaciones a un desktop concreto de una activity.  
 Hyprland aplica esas reglas al arrancar (archivo generado `~/.config/hypr/sylenara-activity-rules.lua`).
 
+También puedes anclarla a **toda una actividad** (bloque **Cualquier escritorio**, arriba de los desktops de cada actividad; en la config, `workspaceIndex: -1`): se mueve libremente entre los desktops de esa actividad (atajos o arrastre en la vista de actividades), pero nunca sale de ella. Se abre donde estés si estás en su actividad y, si no, en su primer desktop; si la mandas a otra actividad, vuelve sola. Al arrastrarla en la vista de actividades, las demás actividades se atenúan y sobre ellas el cursor es de prohibido. Una app tiene un solo sitio: anclarla a la actividad quita su anclaje a un desktop, y al revés. Esta regla no va a Hyprland: la aplica la shell (`Activities.canMoveWindowTo`, `enforceOpenWindows`).
+
 ### Configuración
 
 **Ajustes → Actividades**:

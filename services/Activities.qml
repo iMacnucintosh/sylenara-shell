@@ -19,6 +19,8 @@ Singleton {
     property bool overviewOpen: false
     property Item overviewDragLayer: null
     property int overviewDropTargetWs: -1
+    // The window being dragged in the overview (null when none): the cards it cannot go to are dimmed
+    property var overviewDragToplevel: null
     property var overviewCards: []
     // Fullscreen XWayland games keep pointer/keyboard grab over Overlay OnDemand;
     // we briefly leave fullscreen while the overview is open, then restore on dismiss,
@@ -527,10 +529,18 @@ Singleton {
         return !!(a.wallpaper || a.scheme || a.flavour || a.variant || a.mode || (a.transparency ?? -1) >= 0 || (a.lightApps ?? -1) >= 0);
     }
 
+    // A rule pins an app to one desktop (workspaceIndex 0…) or to its activity (-1: any of its desktops)
+    function isActivityRule(rule: var): bool {
+        return (rule?.workspaceIndex ?? 0) < 0;
+    }
+
+    // The desktop a rule's app goes to: its desktop, or the first one of its activity
     function workspaceForRule(rule: var): int {
         const act = root.activityById(rule.activityId);
         if (!act)
             return 1;
+        if (root.isActivityRule(rule))
+            return act.startWs;
         const idx = Math.max(0, Math.min(act.workspaceCount - 1, rule.workspaceIndex || 0));
         return act.workspaceIds[idx];
     }
@@ -549,19 +559,36 @@ Singleton {
         return cls.toLowerCase() === m.toLowerCase();
     }
 
+    // A desktop rule wins over an activity rule for the same app
     function ruleForWindowClass(cls: string): var {
         const rules = GlobalConfig.activities.appRules.values;
+        let activityRule = null;
         for (let i = 0; i < rules.length; i++) {
             const rule = rules[i];
-            if (root.classMatches(cls, rule.classMatch || ""))
+            if (!root.classMatches(cls, rule.classMatch || ""))
+                continue;
+            if (!root.isActivityRule(rule))
                 return rule;
+            activityRule = activityRule ?? rule;
         }
-        return null;
+        return activityRule;
     }
 
+    // Pinned to one desktop: it never moves (an app pinned to an activity moves within it)
     function isWindowPinned(toplevel: var): bool {
-        const cls = toplevel?.lastIpcObject?.class ?? "";
-        return !!root.ruleForWindowClass(cls);
+        const rule = root.ruleForWindowClass(toplevel?.lastIpcObject?.class ?? "");
+        return !!rule && !root.isActivityRule(rule);
+    }
+
+    // Whether the window may go to that workspace: anywhere without a rule, nowhere when pinned to a desktop, and
+    // only to a desktop of its activity when pinned to one
+    function canMoveWindowTo(toplevel: var, ws: int): bool {
+        const rule = root.ruleForWindowClass(toplevel?.lastIpcObject?.class ?? "");
+        if (!rule)
+            return true;
+        if (!root.isActivityRule(rule))
+            return false;
+        return root.activityForWs(ws)?.id === rule.activityId;
     }
 
     function normalizeAddress(addr: string): string {
@@ -575,8 +602,9 @@ Singleton {
     function moveWindowToWorkspace(toplevel: var, ws: int, force = false, follow = false, exact = false): void {
         if (!toplevel || !ws)
             return;
-        // Overview drag must not move pins; rule enforcement may force them home
-        if (!force && root.isWindowPinned(toplevel))
+        // Overview drag must not move pins (out of their activity, for an activity pin); rule enforcement may force
+        // them home
+        if (!force && !root.canMoveWindowTo(toplevel, ws))
             return;
         const cur = toplevel.workspace?.id ?? -1;
         // A window on the second monitor stays on it when it changes desktop
@@ -652,6 +680,12 @@ Singleton {
             const t = tops[i];
             const cls = t.lastIpcObject?.class ?? "";
             if (!root.classMatches(cls, match))
+                continue;
+            // Another rule (a desktop one) has this window
+            if (root.ruleForWindowClass(cls) !== rule)
+                continue;
+            // Pinned to its activity: only brought back when it is out of it
+            if (root.isActivityRule(rule) && root.activityForWs(t.workspace?.id ?? -1)?.id === rule.activityId)
                 continue;
             const follow = followNorm.length > 0 && root.normalizeAddress(t.address) === followNorm;
             root.moveWindowToWorkspace(t, ws, true, follow);
@@ -796,7 +830,7 @@ Singleton {
     function wsHasRule(ws: int): bool {
         const rules = GlobalConfig.activities.appRules.values;
         for (let i = 0; i < rules.length; i++) {
-            if ((rules[i].classMatch || "").trim() && root.workspaceForRule(rules[i]) === ws)
+            if ((rules[i].classMatch || "").trim() && !root.isActivityRule(rules[i]) && root.workspaceForRule(rules[i]) === ws)
                 return true;
         }
         return false;
@@ -948,7 +982,7 @@ Singleton {
         root.overviewDropTargetWs = -1;
         if (!toplevel || target < 1)
             return;
-        if (root.isWindowPinned(toplevel))
+        if (!root.canMoveWindowTo(toplevel, target))
             return;
         root.moveWindowToWorkspace(toplevel, target, false, false, true);
         // Defer focus so Hyprland can apply the move first
@@ -961,6 +995,7 @@ Singleton {
             return;
         }
         root.overviewDropTargetWs = -1;
+        root.overviewDragToplevel = null;
         root.overviewCards = [];
         root.restoreFullscreenAfterOverview();
     }
@@ -994,7 +1029,9 @@ Singleton {
         for (let i = 0; i < rules.length; i++) {
             const rule = rules[i];
             const cls = (rule.classMatch || "").trim();
-            if (!cls)
+            // Pinned to an activity: no Hyprland rule, it opens where you are and is brought into its activity
+            // when it opens out of it (enforceOpenWindows)
+            if (!cls || root.isActivityRule(rule))
                 continue;
             const ws = root.workspaceForRule(rule);
             const name = `sylenara-activity-${i}-${Strings.luaString(cls).replace(/[^a-zA-Z0-9_-]/g, "_")}`;
