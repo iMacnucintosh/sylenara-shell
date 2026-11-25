@@ -18,20 +18,12 @@ ColumnLayout {
     width: 340
     spacing: Tokens.spacing.medium
 
-    function customMinutes(): real {
-        const field = customMins.contentItem;
-        if (field?.text !== undefined) {
-            const parsed = customMins.valueFromText(field.text, customMins.locale);
-            if (!Number.isNaN(parsed))
-                return Math.min(customMins.to, Math.max(customMins.from, parsed));
-        }
-        return customMins.value;
-    }
+    // Minutes picked on the new-timer slider (0–60)
+    property int customMinutes: 30
 
     function addCustomTimer(): void {
-        const mins = root.customMinutes();
-        customMins.value = mins;
-        Timers.addMinutes(mins, "");
+        if (root.customMinutes > 0)
+            Timers.addMinutes(root.customMinutes, "");
     }
 
     StyledRect {
@@ -117,50 +109,47 @@ ColumnLayout {
             Layout.fillWidth: true
             spacing: Tokens.spacing.small
 
-            StyledSpinBox {
-                id: customMins
+            CustomMouseArea {
+                function onWheel(event: WheelEvent): void {
+                    if (event.angleDelta.y > 0)
+                        root.customMinutes = Math.min(customMins.to, root.customMinutes + 1);
+                    else if (event.angleDelta.y < 0)
+                        root.customMinutes = Math.max(customMins.from, root.customMinutes - 1);
+                }
 
                 Layout.fillWidth: true
-                from: 1
-                to: 180
-                value: 30
-                editable: true
-                // Show unit in the field (same msgid as preset chips)
-                textFromValue: (value, locale) => Tr.trN("%n min", "%n mins", Math.round(value))
-                valueFromText: (text, locale) => {
-                    const m = String(text).match(/-?\d+/);
-                    return m ? Number(m[0]) : Number.NaN;
-                }
-                validator: RegularExpressionValidator {
-                    // Allow optional "min"/"mins" while editing
-                    regularExpression: /^\s*\d{0,3}\s*[a-zA-Z.]*\s*$/
-                }
+                implicitHeight: Tokens.padding.medium * 2
 
-                Component.onCompleted: {
-                    if (contentItem)
-                        contentItem.implicitWidth = 96;
-                }
+                StyledSlider {
+                    id: customMins
 
-                Keys.onReturnPressed: root.addCustomTimer()
-                Keys.onEnterPressed: root.addCustomTimer()
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    implicitHeight: parent.implicitHeight
 
-                Connections {
-                    target: customMins.contentItem
-
-                    function onAccepted(): void {
-                        root.addCustomTimer();
-                    }
+                    radius: Tokens.rounding.small
+                    from: 0
+                    to: 60
+                    stepSize: 1
+                    value: root.customMinutes
+                    onInteraction: v => root.customMinutes = Math.round(customMins.from + v * (customMins.to - customMins.from))
                 }
             }
 
+            StyledText {
+                // Same msgid as the preset chips
+                text: Tr.trN("%n min", "%n mins", root.customMinutes)
+                font: Tokens.font.label.large
+                horizontalAlignment: Text.AlignRight
+                Layout.preferredWidth: 64
+            }
+
             IconButton {
-                // Rounded square matching the manual minutes spinner height (not a FAB circle)
+                // Rounded square (not a FAB circle)
                 isRound: false
                 defaultRadius: Tokens.rounding.medium
-                Layout.preferredHeight: customMins.implicitHeight
-                Layout.preferredWidth: customMins.implicitHeight
-                implicitHeight: customMins.implicitHeight
-                implicitWidth: customMins.implicitHeight
+                enabled: root.customMinutes > 0
                 icon: "add"
                 tooltip: Tr.tr("Start timer")
                 type: IconButton.Tonal
