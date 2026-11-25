@@ -85,6 +85,18 @@ class Plan(unittest.TestCase):
         self.assertTrue(any(a.endswith("install-system.sh") for a in scripts))
         self.assertNotIn("login-screen", ids(inst.build_plan(bare(), login_screen=False)))
 
+    def test_the_browser_colours_run_only_their_own_root_step(self):
+        f = bare()
+        f.browser_policy_needed = True
+        item = {i.id: i for i in inst.build_plan(f)}["browser-colours"]
+        self.assertTrue(item.on and item.root)
+        self.assertEqual(item.steps[0].args[-2:], ["--only", "browser-policy"])  # not the login screen
+        f.browser_policy_needed = False
+        self.assertFalse({i.id: i for i in inst.build_plan(f)}["browser-colours"].todo)
+        step = Path(__file__).resolve().parent.parent / "scripts/system/20-browser-policy.sh"
+        self.assertTrue(step.is_file())
+        self.assertIn("caelestia.json", step.read_text())  # the old fixed colour goes
+
     def test_the_login_screen_script_does_what_the_installer_relies_on(self):
         script = (Path(__file__).resolve().parent.parent / "scripts/system/10-greeter.sh").read_text()
         # greetd becomes the display manager (the one in use is disabled, nothing is restarted)

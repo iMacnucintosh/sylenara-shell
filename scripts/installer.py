@@ -48,6 +48,10 @@ GITHUB = "https://github.com/iMacnucintosh"
 PACKAGES = [("sylenara-cli-git", "sylenara-cli"), ("seeker-git", "seeker"), ("things-git", "things"), ("veo-git", "veo"),
             ("sylenara-shell-git", "sylenara-shell")]
 # Commands of the usual web browsers: with one of them there, Zen is offered but not selected
+# Chromium browsers take their bar colour from a managed policy under /etc: the theme writes ours, a file of the user
+# that scripts/system/20-browser-policy.sh creates
+BROWSER_POLICIES = [("google-chrome-stable", "/etc/opt/chrome/policies/managed"), ("chromium", "/etc/chromium/policies/managed"),
+                    ("brave", "/etc/brave/policies/managed")]
 BROWSERS = ["zen-browser", "firefox", "chromium", "google-chrome-stable", "brave", "librewolf", "vivaldi-stable", "epiphany"]
 # Dependencies of the shell package that are not in the Arch repositories (makepkg -s cannot install them)
 AUR_DEPS = ["quickshell-git", "qt6-m3shapes-git", "python-materialyoucolor", "libcava", "ttf-rubik-vf"]
@@ -133,6 +137,9 @@ ES = {
     "Things": "Things", "Veo": "Veo", "the package manager and extension manager": "el gestor de paquetes y de extensiones",
     "Sylenara shell": "Shell de Sylenara", "the shell itself, with its icons, GTK theme, fonts and tools": "la shell, con sus iconos, tema GTK, fuentes y herramientas",
     "Zen browser": "Navegador Zen",
+    "Browser bar in your colours": "La barra del navegador con tus colores",
+    "Chrome, Chromium and Brave follow the colours of each activity; asks for root once":
+        "Chrome, Chromium y Brave siguen los colores de cada actividad; pide root una vez",
     "a Firefox-based web browser that suits Sylenara": "un navegador web basado en Firefox que encaja con Sylenara",
     "a Firefox-based web browser that suits Sylenara; not selected because you already have a browser":
         "un navegador web basado en Firefox que encaja con Sylenara; no viene marcado porque ya tienes un navegador",
@@ -198,6 +205,7 @@ class Facts:
     versions: dict[str, str] = field(default_factory=dict)  # our packages that are installed → their version
     releases: dict[str, str] = field(default_factory=dict)  # our repositories → the tag of their latest release
     browser: str | None = None                              # a web browser that is already there (then Zen is not preselected)
+    browser_policy_needed: bool = False                     # a Chromium browser whose colour policy the user cannot write
     repo_configured: bool = False                           # [sylenara] is in pacman.conf
     repo_online: bool = False                               # its database answers (only asked when not configured)
     from_source: bool = False                               # --from-source / --main: build, even with the repository
@@ -314,6 +322,8 @@ def scan(from_main: bool = False, from_source: bool = False) -> Facts:
     except OSError:
         f.greeter_version = ""
     f.browser = next((b for b in BROWSERS if shutil.which(b)), None)
+    f.browser_policy_needed = any(shutil.which(cmd) and not os.access(Path(d) / "sylenara.json", os.W_OK)
+                                  for cmd, d in BROWSER_POLICIES)
     f.versions = {p: v for p, _ in PACKAGES if (v := installed_version(p))}
     # Friends get what has been released, not every commit (--main builds the latest commit instead)
     f.releases = {} if from_main else {repo: tag for _, repo in PACKAGES if (tag := latest_release(repo))}
@@ -428,6 +438,10 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         "the video player of Sylenara becomes the default one; a player you chose yourself is kept", False,
         todo=f.player_status == "needed" or (f.player_status == "skipped" and not f.have("veo-git")),
         steps=[Step("user", [sys.executable, str(shell_dir / "scripts" / "setup-player.py")])])
+    add("browser-colours", "Setup", "Browser bar in your colours",
+        "Chrome, Chromium and Brave follow the colours of each activity; asks for root once", True,
+        todo=f.browser_policy_needed,
+        steps=[Step("root", [str(shell_dir / "scripts" / "install-system.sh"), "--only", "browser-policy"])])
     if login_screen:
         dm = f.display_manager if f.display_manager not in (None, "greetd") else None
         steps = [Step("pacman", [p for p in ("greetd", "rsync") if not f.have(p)])] if not (f.have("greetd") and f.have("rsync")) else []
