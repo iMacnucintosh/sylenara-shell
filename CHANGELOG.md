@@ -4,6 +4,7 @@ Cambios relevantes de este fork respecto a releases internas. El detalle de uso 
 
 ## Sin publicar
 
+- **La barra de Chrome, Chromium y Brave sigue tus colores** y cambia con la actividad y el escritorio. Antes el color se quedaba fijo (una política antigua) y cada cambio de tema intentaba usar sudo sin contraseña y abría Chrome en segundo plano (cientos de veces al día, unos 4 MB de métricas cada vez). Ahora el instalador da al usuario el fichero de política por debajo, dentro del sudo que ya pide (también al actualizar), el tema lo reescribe sin sudo y solo avisa al navegador si está abierto. Si el navegador tiene un tema propio, Sylenara no le impone el color.
 - **Anclar una app a una actividad:** en Ajustes → Actividades, el bloque «Cualquier escritorio» de cada actividad ancla apps que se mueven libremente entre sus escritorios pero nunca salen de ella (por ejemplo, Steam en cualquier escritorio de Juegos). Al arrastrarlas en la vista de actividades, las otras actividades se atenúan y el cursor marca prohibido sobre ellas. El anclaje a un escritorio fijo sigue igual.
 - **Slider de 0 a 60 minutos** para crear temporizadores en el popout del reloj.
 - **La bandeja se recoge cuando la barra no cabe:** en una pantalla baja, la bandeja y los iconos de estado se juntan en un botón con una flecha; al pasar el ratón se despliegan hacia arriba sobre la barra y cada icono abre su popout como siempre. En Ajustes → Paneles → Barra de tareas → Bandeja → Contraer: si no cabe, siempre o nunca.

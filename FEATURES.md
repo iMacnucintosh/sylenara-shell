@@ -241,6 +241,12 @@ require("sylenara-monitors")
 
 ---
 
+### Chrome, Chromium y Brave
+
+La barra de estos navegadores toma el color del esquema y cambia con la actividad y el escritorio. Su color viene de una política gestionada en `/etc` (`…/policies/managed/sylenara.json`), un fichero tuyo que crea el instalador sin preguntar, dentro del sudo que ya pide (también al actualizar Sylenara: un navegador instalado después se recoge en la siguiente actualización). El tema lo reescribe sin sudo, solo si el color cambió, y solo avisa al navegador si está abierto; nunca lo abre.
+
+- **Tu tema manda:** si algún perfil del navegador tiene un tema propio (de la tienda o un color elegido en «Personalizar Chrome»), Sylenara no impone su color y solo sigue el modo claro u oscuro. Con el color de Sylenara activo el navegador no deja elegir otro: para usar el tuyo, desactívalo con `"enableChromium": false` en la sección `theme` de `~/.config/sylenara/cli.json` y deja la política (que es tuya) solo con `{"BrowserColorScheme": "device"}`.
+
 ## Utilities / mantener activo
 
 - En **interruptores rápidos**: icono de café (**Keep awake**), a la izquierda del gamepad.

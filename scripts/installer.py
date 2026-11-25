@@ -48,6 +48,10 @@ GITHUB = "https://github.com/iMacnucintosh"
 PACKAGES = [("sylenara-cli-git", "sylenara-cli"), ("seeker-git", "seeker"), ("things-git", "things"), ("veo-git", "veo"),
             ("sylenara-shell-git", "sylenara-shell")]
 # Commands of the usual web browsers: with one of them there, Zen is offered but not selected
+# Chromium browsers take their bar colour from a managed policy under /etc: the theme writes ours, a file of the user
+# that scripts/system/20-browser-policy.sh creates
+BROWSER_POLICIES = [("google-chrome-stable", "/etc/opt/chrome/policies/managed"), ("chromium", "/etc/chromium/policies/managed"),
+                    ("brave", "/etc/brave/policies/managed")]
 BROWSERS = ["zen-browser", "firefox", "chromium", "google-chrome-stable", "brave", "librewolf", "vivaldi-stable", "epiphany"]
 # Dependencies of the shell package that are not in the Arch repositories (makepkg -s cannot install them)
 AUR_DEPS = ["quickshell-git", "qt6-m3shapes-git", "python-materialyoucolor", "libcava", "ttf-rubik-vf"]
@@ -133,6 +137,9 @@ ES = {
     "Things": "Things", "Veo": "Veo", "the package manager and extension manager": "el gestor de paquetes y de extensiones",
     "Sylenara shell": "Shell de Sylenara", "the shell itself, with its icons, GTK theme, fonts and tools": "la shell, con sus iconos, tema GTK, fuentes y herramientas",
     "Zen browser": "Navegador Zen",
+    "Browser bar in your colours": "La barra del navegador con tus colores",
+    "Chrome, Chromium and Brave follow the colours of each activity":
+        "Chrome, Chromium y Brave siguen los colores de cada actividad",
     "a Firefox-based web browser that suits Sylenara": "un navegador web basado en Firefox que encaja con Sylenara",
     "a Firefox-based web browser that suits Sylenara; not selected because you already have a browser":
         "un navegador web basado en Firefox que encaja con Sylenara; no viene marcado porque ya tienes un navegador",
@@ -198,6 +205,7 @@ class Facts:
     versions: dict[str, str] = field(default_factory=dict)  # our packages that are installed → their version
     releases: dict[str, str] = field(default_factory=dict)  # our repositories → the tag of their latest release
     browser: str | None = None                              # a web browser that is already there (then Zen is not preselected)
+    browser_policy_needed: bool = False                     # a Chromium browser whose colour policy the user cannot write
     repo_configured: bool = False                           # [sylenara] is in pacman.conf
     repo_online: bool = False                               # its database answers (only asked when not configured)
     from_source: bool = False                               # --from-source / --main: build, even with the repository
@@ -314,6 +322,8 @@ def scan(from_main: bool = False, from_source: bool = False) -> Facts:
     except OSError:
         f.greeter_version = ""
     f.browser = next((b for b in BROWSERS if shutil.which(b)), None)
+    f.browser_policy_needed = any(shutil.which(cmd) and not os.access(Path(d) / "sylenara.json", os.W_OK)
+                                  for cmd, d in BROWSER_POLICIES)
     f.versions = {p: v for p, _ in PACKAGES if (v := installed_version(p))}
     # Friends get what has been released, not every commit (--main builds the latest commit instead)
     f.releases = {} if from_main else {repo: tag for _, repo in PACKAGES if (tag := latest_release(repo))}
@@ -341,6 +351,8 @@ class Item:
     steps: list[Step] = field(default_factory=list)
     on: bool = True
     why_args: tuple = ()
+    # Done under the hood when needed: not in the list, cannot be switched off, run with the rest (within its sudo)
+    hidden: bool = False
 
 
 def installed_shell_dir() -> Path:
@@ -428,6 +440,12 @@ def build_plan(f: Facts, login_screen: bool = True) -> list[Item]:
         "the video player of Sylenara becomes the default one; a player you chose yourself is kept", False,
         todo=f.player_status == "needed" or (f.player_status == "skipped" and not f.have("veo-git")),
         steps=[Step("user", [sys.executable, str(shell_dir / "scripts" / "setup-player.py")])])
+    # Chrome, Chromium and Brave follow the colours of each activity: their policy file becomes the user's. Automatic,
+    # also on --update (a browser installed later is picked up by the next one)
+    add("browser-colours", "Setup", "Browser bar in your colours",
+        "Chrome, Chromium and Brave follow the colours of each activity", True,
+        todo=f.browser_policy_needed, hidden=True,
+        steps=[Step("root", [str(shell_dir / "scripts" / "install-system.sh"), "--only", "browser-policy"])])
     if login_screen:
         dm = f.display_manager if f.display_manager not in (None, "greetd") else None
         steps = [Step("pacman", [p for p in ("greetd", "rsync") if not f.have(p)])] if not (f.have("greetd") and f.have("rsync")) else []
@@ -580,12 +598,17 @@ class Runner:
 def execute(items: list[Item], r: Runner) -> list[tuple[Item, str, int]]:
     """[(item, "done" | "failed" | "skipped", seconds)]. A required item that fails stops the rest."""
     results: list[tuple[Item, str, int]] = []
-    todo = [i for i in items if i.on and i.todo]
+    todo = [i for i in items if i.on and i.todo and not i.hidden]
     for it in items:
         if not it.on or not it.todo:
             results.append((it, "skipped", 0))
             continue
-        n = len([x for x in results if x[1] != "skipped"]) + 1
+        if it.hidden:
+            # Under the hood: only the log tells
+            r._to_log(f"==> {it.title}")
+            results.append((it, "done" if all(r.step(s) for s in it.steps) else "failed", 0))
+            continue
+        n = len([x for x in results if x[1] != "skipped" and not x[0].hidden]) + 1
         title = f"[{n}/{len(todo)}] {tr(it.title)}"
         r.recent.clear()
         r._to_log(f"==> {it.title}")
@@ -732,7 +755,7 @@ def finish(results: list[tuple[Item, str, int]], dry: bool, log: Path) -> int:
     done = [it for it, s, _ in results if s == "done"]
     ui.rule(tr("Something did not go as planned") if failed else tr("Everything is ready"))
     for it, s, secs in results:
-        if s != "skipped":
+        if s != "skipped" and (not it.hidden or s == "failed"):
             print("  " + (ui.ok if s == "done" else ui.bad)(tr(it.title)))
     print()
     if failed:
@@ -785,12 +808,21 @@ def main(argv: list[str] | None = None) -> int:
             it.on = False
     if opts["list"]:
         print(json.dumps([{"id": i.id, "group": i.group, "title": i.title, "root": i.root, "todo": i.todo, "on": i.on, "required": i.required}
-                          for i in items]))
+                          for i in items if not i.hidden]))
         return 0
-    if not conversation(items, f, opts["yes"]):
-        if any(i.todo and i.on for i in items) or sys.stdin.isatty():
-            print("\n  " + tr("Cancelled. Nothing was changed.") + "\n")
-        return 0
+    # What is done under the hood is not shown: the conversation is about the rest
+    shown = [i for i in items if not i.hidden]
+    hidden_todo = [i for i in items if i.hidden and i.todo]
+    if not conversation(shown, f, opts["yes"]):
+        if any(i.todo and i.on for i in shown):
+            if sys.stdin.isatty():
+                print("\n  " + tr("Cancelled. Nothing was changed.") + "\n")
+            return 0
+        if not hidden_todo:
+            return 0
+        # Nothing else to do: just what goes under the hood
+        for it in shown:
+            it.on = False
     STATE.mkdir(parents=True, exist_ok=True)
     log = STATE / "install.log"
     r = Runner(opts["dry"], f.helper, log if not opts["dry"] else None, verbose=opts["verbose"])
@@ -804,6 +836,11 @@ def main(argv: list[str] | None = None) -> int:
         results = execute(items, r)
     finally:
         r.stop_sudo()
+    # Only what goes under the hood was done: no welcome, no restart
+    if all(it.hidden or s == "skipped" for it, s, _ in results):
+        failed = any(s == "failed" for _, s, _ in results)
+        print("  " + (ui.bad(tr("It did not finish: %s") % tr("Browser bar in your colours")) if failed else ui.ok(tr("Sylenara is up to date."))))
+        return 1 if failed else 0
     return finish(results, opts["dry"], log)
 
 

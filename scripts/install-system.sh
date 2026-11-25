@@ -9,6 +9,7 @@
 # outside sudo: the login screen's user/ folder belongs to the invoking user (the rest is root's).
 #
 #   scripts/install-system.sh
+#   scripts/install-system.sh --only browser-policy    # one step (its file name without number and .sh)
 #   greeter/install-greeter.sh    # same entry, kept for the old path
 set -euo pipefail
 
@@ -40,6 +41,11 @@ if [[ -z "$OWNER_HOME" || ! -d "$OWNER_HOME" ]]; then
   exit 1
 fi
 
+ONLY=""
+if [[ "${1:-}" == "--only" && -n "${2:-}" ]]; then
+  ONLY="$2"
+fi
+
 export SYLENARA_ROOT="$ROOT"
 export SYLENARA_OWNER="$OWNER"
 export SYLENARA_OWNER_HOME="$OWNER_HOME"
@@ -52,6 +58,8 @@ if [[ ${#steps[@]} -eq 0 ]]; then
 fi
 
 for step in "${steps[@]}"; do
+  name="$(basename "$step" .sh)"
+  [[ -z "$ONLY" || "${name#*-}" == "$ONLY" ]] || continue
   echo "== $(basename "$step") =="
   (
     # shellcheck disable=SC1090
