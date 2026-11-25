@@ -2,6 +2,44 @@
     "_comment": "What's new after an update (services/Welcome.qml, modules/welcome/WhatsNewWindow.qml): per version, the highlights worth a card, in every language, with an optional screenshot (whatsnew/<version>/<file>.webp, about 1280x800, 100-200 KB). The full list of changes is CHANGELOG.md. A version is shown once, to whoever updates to it or past it.",
     "versions": [
         {
+            "version": "0.9.0",
+            "highlights": [
+                {
+                    "icon": "unfold_less",
+                    "title": {
+                        "en": "A bar that fits small screens",
+                        "es": "Una barra que cabe en pantallas pequeñas"
+                    },
+                    "text": {
+                        "en": "When the bar does not fit, the tray and the status icons fold into one button that unfolds them over the bar. Several windows of one app show as a single icon with their number.",
+                        "es": "Cuando la barra no cabe, la bandeja y los iconos de estado se recogen en un botón que los despliega sobre la barra. Varias ventanas de una app salen como un solo icono con su número."
+                    }
+                },
+                {
+                    "icon": "push_pin",
+                    "title": {
+                        "en": "Pin apps to an activity",
+                        "es": "Ancla apps a una actividad"
+                    },
+                    "text": {
+                        "en": "In Settings → Activities, apps under Any desktop move freely between the desktops of their activity but never leave it.",
+                        "es": "En Ajustes → Actividades, las apps de «Cualquier escritorio» se mueven libremente entre los escritorios de su actividad, pero nunca salen de ella."
+                    }
+                },
+                {
+                    "icon": "palette",
+                    "title": {
+                        "en": "Your browser in your colours",
+                        "es": "Tu navegador con tus colores"
+                    },
+                    "text": {
+                        "en": "The bar of Chrome, Chromium and Brave follows the colours of each activity, unless the browser has a theme of its own.",
+                        "es": "La barra de Chrome, Chromium y Brave sigue los colores de cada actividad, salvo que el navegador tenga un tema propio."
+                    }
+                }
+            ]
+        },
+        {
             "version": "0.8.0",
             "highlights": [
                 {
